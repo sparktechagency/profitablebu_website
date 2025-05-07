@@ -7,6 +7,31 @@ import { FaRegUserCircle } from "react-icons/fa";
 
 export const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const handleMenuClick = e => {
+    if (e.key === '3') {
+      setOpen(false);
+    }
+  };
+  const handleOpenChange = (nextOpen, info) => {
+    if (info.source === 'trigger' || nextOpen) {
+      setOpen(nextOpen);
+    }
+  };
+  const itemss = [
+    {
+      label: 'Clicking me will not close the menu.',
+      key: '1',
+    },
+    {
+      label: 'Clicking me will not close the menu also.',
+      key: '2',
+    },
+    {
+      label: 'Clicking me will close the menu.',
+      key: '3',
+    },
+  ];
 
   const showDrawer = () => {
     setDrawerOpen(true);
@@ -116,26 +141,18 @@ export const Navbar = () => {
       key: "submitTicket",
       label: <Link to="/submit-a-ticket">Submit A Ticket</Link>,
     },
-    {
-      key: "profile",
-      label: (
-        <Dropdown menu={{ items: dropdownItemsProfile }} trigger={["click"]}>
-          <Link onClick={(e) => e.preventDefault()}>
-            <Space>
-              <FaRegUserCircle />
-              <DownOutlined />
-            </Space>
-          </Link>
-        </Dropdown>
-      ),
-    },
+
   ];
 
   return (
-    <div className="bg-[#2E4CB9] text-white">
+    <div className="container m-auto">
+      <div className="flex justify-between">
+        <img className="" src={Logo} alt="Logo" />
+        <button className="bg-[#22C55E] px-4 py-2 rounded text-white">List your Business</button>
+      </div>
       {/* Desktop Navbar */}
-      <nav className="flex items-center lg:justify-center justify-between gap-28 px-6 py-3">
-        <img className="w-[50px]" src={Logo} alt="Logo" />
+      <nav className="flex items-center  justify-between gap-28 py-3">
+
         <ul className="hidden md:flex lg:space-x-16 space-x-6">
           {items.map((item) => (
             <li key={item.key} className="list-none">
@@ -149,6 +166,26 @@ export const Navbar = () => {
         >
           <MenuOutlined />
         </button>
+        <div className="flex gap-3 items-center">
+          <div>
+            <Dropdown
+              menu={{
+                items,
+                onClick: handleMenuClick,
+              }}
+              onOpenChange={handleOpenChange}
+              open={open}
+            >
+              <a onClick={e => e.preventDefault()}>
+                <Space>
+                  INT
+
+                </Space>
+              </a>
+            </Dropdown>
+          </div>
+          <button className="bg-[#0091FF] px-5 py-2 text-white rounded">Login</button>
+        </div>
       </nav>
 
       {/* Mobile Drawer */}
