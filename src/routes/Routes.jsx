@@ -17,6 +17,9 @@ import { NewPassword } from "../Auth/NewPassword";
 import { SignUp } from "../Auth/SignUp";
 import { ProfilePage } from "../Pages/ProfilePage/ProfilePage";
 import { OngoingTicketPage } from "../Pages/ProfilePage/OngoingTicketPage";
+import Faqs from "../Pages/faq/Faqs";
+import Chat from "../Pages/chat/Chat";
+import Notification from "../Pages/notification/Notification";
 
 export const router = createBrowserRouter([
     {
@@ -50,6 +53,18 @@ export const router = createBrowserRouter([
             {
                 path: '/blog',
                 element: <BlogPage></BlogPage>
+            },
+            {
+                path: '/faqs',
+                element: <Faqs></Faqs>
+            },
+            {
+                path: '/notification',
+                element: <Notification></Notification>
+            },
+            {
+                path: '/chat',
+                element: <Chat></Chat>
             },
             {
                 path: '/submit-a-ticket',
