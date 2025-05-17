@@ -20,6 +20,7 @@ import { OngoingTicketPage } from "../Pages/ProfilePage/OngoingTicketPage";
 import Faqs from "../Pages/faq/Faqs";
 import Chat from "../Pages/chat/Chat";
 import Notification from "../Pages/notification/Notification";
+import Subscription from "../Pages/subscription/Subscription";
 
 export const router = createBrowserRouter([
     {
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
             {
                 path: '/blog',
                 element: <BlogPage></BlogPage>
+            },
+            {
+                path: '/subscription',
+                element: <Subscription></Subscription>
             },
             {
                 path: '/faqs',

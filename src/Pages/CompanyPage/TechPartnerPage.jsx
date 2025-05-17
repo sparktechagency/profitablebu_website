@@ -5,3 +5,4 @@ export const TechPartnerPage = () => {
     <div>TechPartnerPage</div>
   )
 }
+ 
