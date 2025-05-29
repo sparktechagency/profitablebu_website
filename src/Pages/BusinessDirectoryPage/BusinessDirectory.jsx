@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   Select,
   Input,
@@ -16,6 +16,7 @@ import {
   Collapse,
   Checkbox,
   Radio,
+  Drawer,
 } from 'antd';
 import {
   SearchOutlined,
@@ -24,6 +25,7 @@ import {
   DownOutlined,
   FilterOutlined,
   CaretRightOutlined,
+  CloseOutlined,
 } from '@ant-design/icons';
 
 const { Option } = Select;
@@ -84,7 +86,16 @@ const BusinessDirectory = () => {
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-  const [activeFilters, setActiveFilters] = useState(['1']); // Default open panels
+  const [activeFilters, setActiveFilters] = useState(['1']);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Filter options
   const categories = [
@@ -189,103 +200,72 @@ const BusinessDirectory = () => {
   // Handle filter changes
   const handleCategoryChange = (checkedValues) => {
     setSelectedCategories(checkedValues);
+    console.log('Selected Categories:', checkedValues); 
   };
 
   const handleCountryChange = (checkedValues) => {
     setSelectedCountries(checkedValues);
+    console.log('Selected Countries:', checkedValues);
   };
 
   const handlePriceChange = (checkedValues) => {
     setSelectedPriceRanges(checkedValues);
+    console.log('Selected Price Ranges:', checkedValues);
   };
 
   const handleBusinessTypeChange = (checkedValues) => {
     setSelectedBusinessTypes(checkedValues);
+    console.log('Selected Business Types:', checkedValues);
   };
 
   const handleOwnershipChange = (checkedValues) => {
     setSelectedOwnership(checkedValues);
+    console.log('Selected Ownership Types:', checkedValues);
   };
 
-  // Mobile filter menu
-  const mobileFilterMenu = (
-    <Menu className="w-64">
-      <Menu.SubMenu key="category" title="Business Category">
-        {categories.map((cat) => (
-          <Menu.Item key={cat} onClick={() => setSelectedCategory(cat)}>
-            {cat}
-          </Menu.Item>
-        ))}
-      </Menu.SubMenu>
-      <Menu.SubMenu key="country" title="Country">
-        {countries.map((country) => (
-          <Menu.Item key={country} onClick={() => setSelectedCountry(country)}>
-            {country}
-          </Menu.Item>
-        ))}
-      </Menu.SubMenu>
-      <Menu.SubMenu key="businessType" title="Business Type">
-        {businessTypes.map((type) => (
-          <Menu.Item key={type} onClick={() => setSelectedBusinessType(type)}>
-            {type}
-          </Menu.Item>
-        ))}
-      </Menu.SubMenu>
-      <Menu.SubMenu key="ownership" title="Ownership Type">
-        {ownershipTypes.map((type) => (
-          <Menu.Item key={type} onClick={() => setSelectedOwnershipType(type)}>
-            {type}
-          </Menu.Item>
-        ))}
-      </Menu.SubMenu>
-      <Menu.SubMenu key="priceRange" title="Price Range">
-        {priceRanges.map((range) => (
-          <Menu.Item key={range.label} onClick={() => setSelectedPriceRange(range)}>
-            {range.label}
-          </Menu.Item>
-        ))}
-      </Menu.SubMenu>
-      {sortOptions.map((option) => (
-        <Menu.Item key={option.value} onClick={() => setSelectedSort(option.value)}>
-          {option.label}
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value);
+    console.log('Sort By:', e.target.value);
+  };
 
   const BusinessCard = ({ business, viewMode }) => (
     <div
       className={`h-full rounded-md bg-white ${
-        viewMode === 'list' ? 'flex' : ''
-      } overflow-hidden shadow-md transition-shadow duration-300`}
+        viewMode === 'list' ? 'flex flex-col md:flex-row' : ''
+      } overflow-hidden shadow-md transition-shadow duration-300 hover:shadow-lg`}
       key={business.id}
     >
       <img
         alt={business.title}
         src={business.image}
-        className={`${viewMode === 'list' ? 'w-1/3' : 'w-full'} object-cover`}
+        className={`${
+          viewMode === 'list' ? 'md:w-1/3 w-full h-48 md:h-auto' : 'w-full h-48'
+        } object-cover`}
       />
-      <div className="space-y-3 p-2">
+      <div className={`p-4 ${viewMode === 'list' ? 'md:w-2/3' : ''}`}>
         <h3 className="text-lg font-semibold text-gray-800 line-clamp-2">
           {business.title}
         </h3>
-        <p className="text-gray-600 text-sm">{business.location}</p>
-        <div className="flex flex-wrap gap-1">
-          <h1 className="text-[#0091FF]">{business.category}</h1> ||
-          <h1 className="text-[#D97706]">{business.subcategory}</h1>
+        <p className="text-gray-600 text-sm mt-1">{business.location}</p>
+        <div className="flex flex-wrap gap-1 mt-2">
+          <span className="text-[#0091FF]">{business.category}</span>
+          <span className="text-gray-400">|</span>
+          <span className="text-[#D97706]">{business.subcategory}</span>
         </div>
         <div
-          className={`${
+          className={`mt-4 ${
             viewMode === 'list'
-              ? 'w-2/3 '
-              : 'w-full flex justify-between items-center gap-3'
+              ? 'flex flex-col md:flex-row md:items-center md:justify-between'
+              : 'flex flex-col sm:flex-row sm:items-center sm:justify-between'
           }`}
         >
-          <span className="text-base ">Starting from ${business.price}</span>
+          <span className="text-base font-medium">
+            Starting from ${business.price}
+          </span>
           <button
             className={`bg-blue-500 hover:bg-blue-600 ${
-              viewMode === 'list' ? 'mt-3' : ''
-            } text-white px-4 py-2 rounded`}
+              viewMode === 'list' ? 'mt-3 md:mt-0' : 'mt-3 sm:mt-0'
+            } text-white px-4 py-2 rounded transition-colors`}
           >
             View Details
           </button>
@@ -294,15 +274,159 @@ const BusinessDirectory = () => {
     </div>
   );
 
+  const renderFilters = () => (
+    <Collapse
+      activeKey={activeFilters}
+      onChange={setActiveFilters}
+      expandIcon={({ isActive }) => (
+        <CaretRightOutlined rotate={isActive ? 90 : 0} />
+      )}
+      className="bg-white"
+      size="small"
+    >
+      <Panel header="Business Category" key="1">
+        <Checkbox.Group
+          value={selectedCategories}
+          onChange={handleCategoryChange}
+          className="flex flex-col space-y-2"
+        >
+          {categories.map((cat) => (
+            <Checkbox key={cat} value={cat} className="text-sm">
+              {cat}
+            </Checkbox>
+          ))}
+        </Checkbox.Group>
+      </Panel>
+
+      <Panel header="Country" key="3">
+        <Checkbox.Group
+          value={selectedCountries}
+          onChange={handleCountryChange}
+          className="flex flex-col space-y-2"
+        >
+          {countries.map((country) => (
+            <Checkbox
+              key={country}
+              value={country}
+              className="text-sm flex items-center"
+            >
+              <span
+                className={`inline-block w-4 h-3 mr-2 rounded-sm ${
+                  country === 'United States'
+                    ? 'bg-blue-500'
+                    : country === 'United Kingdom'
+                    ? 'bg-red-500'
+                    : country === 'Canada'
+                    ? 'bg-red-600'
+                    : country === 'Australia'
+                    ? 'bg-blue-600'
+                    : country === 'Germany'
+                    ? 'bg-black'
+                    : country === 'France'
+                    ? 'bg-blue-700'
+                    : country === 'Italy'
+                    ? 'bg-green-600'
+                    : country === 'Spain'
+                    ? 'bg-yellow-500'
+                    : country === 'United Arab Emirates'
+                    ? 'bg-green-500'
+                    : 'bg-orange-500'
+                }`}
+              ></span>
+              {country}
+            </Checkbox>
+          ))}
+        </Checkbox.Group>
+      </Panel>
+
+      <Panel header="Location" key="4">
+        <div className="text-xs text-gray-500 mb-2">Select location...</div>
+      </Panel>
+
+      <Panel header="Asking Price" key="5">
+        <Checkbox.Group
+          value={selectedPriceRanges}
+          onChange={handlePriceChange}
+          className="flex flex-col space-y-2"
+        >
+          {priceRanges.map((range) => (
+            <Checkbox key={range.label} value={range.label} className="text-sm">
+              {range.label}
+            </Checkbox>
+          ))}
+        </Checkbox.Group>
+      </Panel>
+
+      <Panel header="Business Type" key="6">
+        <Checkbox.Group
+          value={selectedBusinessTypes}
+          onChange={handleBusinessTypeChange}
+          className="flex flex-col space-y-2"
+        >
+          {businessTypes.map((type) => (
+            <Checkbox key={type} value={type} className="text-sm">
+              {type}
+            </Checkbox>
+          ))}
+        </Checkbox.Group>
+      </Panel>
+
+      <Panel header="Ownership Type" key="7">
+        <Checkbox.Group
+          value={selectedOwnership}
+          onChange={handleOwnershipChange}
+          className="flex flex-col space-y-2"
+        >
+          {ownershipTypes.map((type) => (
+            <Checkbox key={type} value={type} className="text-sm">
+              {type}
+            </Checkbox>
+          ))}
+        </Checkbox.Group>
+      </Panel>
+
+      <Panel header="Sort By" key="8">
+        <Radio.Group
+          value={sortBy}
+          onChange={handleSortChange}
+          className="flex flex-col space-y-2"
+        >
+          {sortOptions.map((option) => (
+            <Radio key={option.value} value={option.value} className="text-sm">
+              {option.label}
+            </Radio>
+          ))}
+        </Radio.Group>
+      </Panel>
+
+      <Panel header="Age of Listing" key="9">
+        <div className="text-xs text-gray-500 mb-2">Select age range...</div>
+      </Panel>
+    </Collapse>
+  );
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-6">
         {/* Header with Search */}
         <div className="mb-6">
-          <div className="flex flex-col md:flex-row gap-4 w-full justify-between md:justify-end items-center">
-            <div className="flex items-center w-full md:justify-end justify-between gap-4">
-              <div className='flex items-center justify-center gap-2'>
-                <span className="text-sm text-gray-600">Items Per Page:</span>
+          <div className="flex flex-col md:flex-row gap-4 w-full justify-between items-center">
+            <div className="w-full md:w-auto">
+              <Search
+                placeholder="Search businesses..."
+                allowClear
+                size="large"
+                className="w-full"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+
+            <div className="flex items-center w-full md:w-auto justify-between md:justify-end gap-4">
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-600 hidden sm:inline">
+                  Items:
+                </span>
                 <Select
                   value={itemsPerPage}
                   onChange={setItemsPerPage}
@@ -315,7 +439,7 @@ const BusinessDirectory = () => {
                 </Select>
               </div>
 
-              <div className="flex border rounded">
+              <div className="border rounded md:flex hidden">
                 <Button
                   type={viewMode === 'grid' ? 'primary' : 'default'}
                   icon={<AppstoreOutlined />}
@@ -329,169 +453,54 @@ const BusinessDirectory = () => {
                   onClick={() => setViewMode('list')}
                 />
               </div>
+
+              <Button
+                icon={<FilterOutlined />}
+                onClick={() => setShowMobileFilters(true)}
+                className="lg:hidden"
+              >
+                Filters
+              </Button>
             </div>
           </div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Desktop Sidebar Filters */}
-          <div className="hidden lg:block w-64">
-            <Collapse
-              activeKey={activeFilters}
-              onChange={setActiveFilters}
-              expandIcon={({ isActive }) => (
-                <CaretRightOutlined rotate={isActive ? 90 : 0} />
-              )}
-              className="bg-white"
-              size="small"
-            >
-              <Panel header="Business Category" key="1">
-                <Checkbox.Group
-                  value={selectedCategories}
-                  onChange={handleCategoryChange}
-                  className="flex flex-col space-y-2"
-                >
-                  {categories.map((cat) => (
-                    <Checkbox key={cat} value={cat} className="text-sm">
-                      {cat}
-                    </Checkbox>
-                  ))}
-                </Checkbox.Group>
-              </Panel>
+          {windowWidth >= 992 && (
+            <div className="w-64 hidden lg:block">{renderFilters()}</div>
+          )}
 
-              <Panel header="Regions" key="2">
-                <div className="text-xs text-gray-500 mb-2">
-                  Select regions...
-                </div>
-              </Panel>
-
-              <Panel header="Country" key="3">
-                <Checkbox.Group
-                  value={selectedCountries}
-                  onChange={handleCountryChange}
-                  className="flex flex-col space-y-2"
-                >
-                  {countries.map((country) => (
-                    <Checkbox
-                      key={country}
-                      value={country}
-                      className="text-sm flex items-center"
-                    >
-                      <span
-                        className={`inline-block w-4 h-3 mr-2 rounded-sm ${
-                          country === 'United States'
-                            ? 'bg-blue-500'
-                            : country === 'United Kingdom'
-                            ? 'bg-red-500'
-                            : country === 'Canada'
-                            ? 'bg-red-600'
-                            : country === 'Australia'
-                            ? 'bg-blue-600'
-                            : country === 'Germany'
-                            ? 'bg-black'
-                            : country === 'France'
-                            ? 'bg-blue-700'
-                            : country === 'Italy'
-                            ? 'bg-green-600'
-                            : country === 'Spain'
-                            ? 'bg-yellow-500'
-                            : country === 'United Arab Emirates'
-                            ? 'bg-green-500'
-                            : 'bg-orange-500'
-                        }`}
-                      ></span>
-                      {country}
-                    </Checkbox>
-                  ))}
-                </Checkbox.Group>
-              </Panel>
-
-              <Panel header="Location" key="4">
-                <div className="text-xs text-gray-500 mb-2">
-                  Select location...
-                </div>
-              </Panel>
-
-              <Panel header="Asking Price" key="5">
-                <Checkbox.Group
-                  value={selectedPriceRanges}
-                  onChange={handlePriceChange}
-                  className="flex flex-col space-y-2"
-                >
-                  {priceRanges.map((range) => (
-                    <Checkbox
-                      key={range.label}
-                      value={range.label}
-                      className="text-sm"
-                    >
-                      {range.label}
-                    </Checkbox>
-                  ))}
-                </Checkbox.Group>
-              </Panel>
-
-              <Panel header="Business Type" key="6">
-                <Checkbox.Group
-                  value={selectedBusinessTypes}
-                  onChange={handleBusinessTypeChange}
-                  className="flex flex-col space-y-2"
-                >
-                  {businessTypes.map((type) => (
-                    <Checkbox key={type} value={type} className="text-sm">
-                      {type}
-                    </Checkbox>
-                  ))}
-                </Checkbox.Group>
-              </Panel>
-
-              <Panel header="Ownership Type" key="7">
-                <Checkbox.Group
-                  value={selectedOwnership}
-                  onChange={handleOwnershipChange}
-                  className="flex flex-col space-y-2"
-                >
-                  {ownershipTypes.map((type) => (
-                    <Checkbox key={type} value={type} className="text-sm">
-                      {type}
-                    </Checkbox>
-                  ))}
-                </Checkbox.Group>
-              </Panel>
-
-              <Panel header="Sort By" key="8">
-                <Radio.Group
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="flex flex-col space-y-2"
-                >
-                  {sortOptions.map((option) => (
-                    <Radio
-                      key={option.value}
-                      value={option.value}
-                      className="text-sm"
-                    >
-                      {option.label}
-                    </Radio>
-                  ))}
-                </Radio.Group>
-              </Panel>
-
-              <Panel header="Age of Listing" key="9">
-                <div className="text-xs text-gray-500 mb-2">
-                  Select age range...
-                </div>
-              </Panel>
-            </Collapse>
-          </div>
-
-          {/* Mobile Filter Button */}
-          <div className="lg:hidden mb-4">
-            <Dropdown overlay={mobileFilterMenu} trigger={['click']}>
-              <Button icon={<FilterOutlined />}>
-                Filters <DownOutlined />
+          {/* Mobile Filter Drawer */}
+          <Drawer
+            title={
+              <div className="flex justify-between items-center">
+                <span>Filters</span>
+                <Button
+                  type="text"
+                  icon={<CloseOutlined />}
+                  onClick={() => setShowMobileFilters(false)}
+                />
+              </div>
+            }
+            placement="left"
+            width={300}
+            onClose={() => setShowMobileFilters(false)}
+            visible={showMobileFilters}
+            className="lg:hidden"
+            bodyStyle={{ padding: '16px 0' }}
+          >
+            {renderFilters()}
+            <div className="p-4 border-t">
+              <Button
+                type="primary"
+                block
+                onClick={() => setShowMobileFilters(false)}
+              >
+                Apply Filters
               </Button>
-            </Dropdown>
-          </div>
+            </div>
+          </Drawer>
 
           {/* Main Content */}
           <div className="flex-1">
@@ -561,51 +570,66 @@ const BusinessDirectory = () => {
               </div>
             )}
 
-            {/* Results */}
+            {/* Results Count */}
             <div className="mb-4">
               <p className="text-gray-600">
                 Showing {filteredBusinesses.length} results
               </p>
             </div>
-            <Search
-              placeholder="Search your perfect event"
-              allowClear
-              size="large"
-              className="md:w-96 !mb-4"
-              //   prefix={<SearchOutlined />}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+
             {/* Business Cards */}
-            <Row gutter={[16, 16]}>
-              {filteredBusinesses.map((business) => (
-                <Col
-                  key={business.id}
-                  xs={24}
-                  sm={12}
-                  md={viewMode === 'grid' ? 12 : 24}
-                  lg={viewMode === 'grid' ? 12 : 24}
-                  xl={viewMode === 'grid' ? 12 : 24}
+            {filteredBusinesses.length > 0 ? (
+              <Row gutter={[16, 16]}>
+                {filteredBusinesses.map((business) => (
+                  <Col
+                    key={business.id}
+                    xs={24}
+                    sm={viewMode === 'grid' ? 24 : 24}
+                    md={viewMode === 'grid' ? 12 : 24}
+                    lg={viewMode === 'grid' ? 12 : 24}
+                    xl={viewMode === 'grid' ? 8 : 24}
+                  >
+                    <BusinessCard viewMode={viewMode} business={business} />
+                  </Col>
+                ))}
+              </Row>
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-gray-500 text-lg">
+                  No businesses found matching your criteria
+                </p>
+                <Button
+                  type="link"
+                  onClick={() => {
+                    setSearchTerm('');
+                    setSelectedCategories([]);
+                    setSelectedCountries([]);
+                    setSelectedBusinessTypes([]);
+                    setSelectedOwnership([]);
+                  }}
                 >
-                  <BusinessCard viewMode={viewMode} business={business} />
-                </Col>
-              ))}
-            </Row>
+                  Clear all filters
+                </Button>
+              </div>
+            )}
 
             {/* Pagination */}
-            <div className="mt-8 flex justify-center">
-              <Pagination
-                current={currentPage}
-                total={filteredBusinesses.length}
-                pageSize={itemsPerPage}
-                onChange={setCurrentPage}
-                showSizeChanger={false}
-                showQuickJumper
-                showTotal={(total, range) =>
-                  `${range[0]}-${range[1]} of ${total} items`
-                }
-              />
-            </div>
+            {filteredBusinesses.length > 0 && (
+              <div className="mt-8 flex justify-center">
+                <Pagination
+                  current={currentPage}
+                  total={filteredBusinesses.length}
+                  pageSize={itemsPerPage}
+                  onChange={setCurrentPage}
+                  showSizeChanger={false}
+                  showQuickJumper
+                  showTotal={(total, range) =>
+                    `${range[0]}-${range[1]} of ${total} items`
+                  }
+                  responsive
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
