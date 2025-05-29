@@ -1,7 +1,7 @@
 
 import { Root } from "../layout/Root";
 import { AboutPage } from "../Pages/CompanyPage/AboutPage";
-import { CompanyPage } from "../Pages/CompanyPage/CompanyPage";
+// import { CompanyPage } from "../Pages/CompanyPage/CompanyPage";
 import { TechPartnerPage } from "../Pages/CompanyPage/TechPartnerPage";
 import { ContuctUsPage } from "../Pages/ContactUsPage/ContuctUsPage";
 import { HomePage } from "../Pages/HomePage/HomePage";
@@ -21,11 +21,13 @@ import Faqs from "../Pages/faq/Faqs";
 import Chat from "../Pages/chat/Chat";
 import Notification from "../Pages/notification/Notification";
 import Subscription from "../Pages/subscription/Subscription";
+import ErrorPage from "../Pages/error-page/ErrorPage";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <Root />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 path: '/',
