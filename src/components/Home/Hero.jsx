@@ -1,5 +1,6 @@
 import React from "react"
 import hero from '../../assets/Home/hero.png'
+import { Link } from "react-router-dom"
 
 export default function Home() {
   return (
@@ -61,9 +62,9 @@ export default function Home() {
           </div>
 
           <div className="mt-3 text-right">
-            <a href="#" className="text-blue-600 hover:underline flex items-center justify-end gap-1">
+            <Link to="/advanced-search" className="text-blue-600 hover:underline flex items-center justify-end gap-1">
               <span className="text-blue-500">🔍</span> Advanced search
-            </a>
+            </Link>
           </div>
         </div>
       </div>

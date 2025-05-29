@@ -22,6 +22,7 @@ import Chat from "../Pages/chat/Chat";
 import Notification from "../Pages/notification/Notification";
 import Subscription from "../Pages/subscription/Subscription";
 import ErrorPage from "../Pages/error-page/ErrorPage";
+import BusinessDirectory from "../Pages/BusinessDirectoryPage/BusinessDirectory";
 
 export const router = createBrowserRouter([
     {
@@ -86,6 +87,10 @@ export const router = createBrowserRouter([
                 path: '/profilePage/ongoing-tickets',
                 element: <OngoingTicketPage></OngoingTicketPage>
             },
+            {
+                path: '/advanced-search',
+                element: <BusinessDirectory />
+            }
         ]
     },
     {
