@@ -23,6 +23,7 @@ import Notification from "../Pages/notification/Notification";
 import Subscription from "../Pages/subscription/Subscription";
 import ErrorPage from "../Pages/error-page/ErrorPage";
 import BusinessDirectory from "../Pages/BusinessDirectoryPage/BusinessDirectory";
+import BusinessDetails from "../Pages/BusinessDirectoryPage/BusinessDetails";
 
 export const router = createBrowserRouter([
     {
@@ -90,6 +91,10 @@ export const router = createBrowserRouter([
             {
                 path: '/advanced-search',
                 element: <BusinessDirectory />
+            },
+            {
+                path: '/business/:id',
+                element: <BusinessDetails />
             }
         ]
     },

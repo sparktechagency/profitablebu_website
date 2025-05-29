@@ -53,7 +53,13 @@ export  const sortOptions = [
     { label: 'Price (Low to High)', value: 'priceLow' },
     { label: 'Most Viewed', value: 'viewed' },
   ];
-
+export const ageOfListingOptions = [
+  { label: 'Anytime', value: 'anytime' },
+  { label: 'Last 3 Days', value: 'last3Days' },
+  { label: 'Last 14 Days', value: 'last14Days' },
+  { label: 'Last Month', value: 'lastMonth' },
+  { label: 'Last 3 Months', value: 'last3Months' },
+]
 export const businessData = [
   {
     id: 1,
