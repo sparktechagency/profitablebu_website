@@ -5,13 +5,9 @@ import {
   Select,
   Input,
   Button,
-  Card,
   Row,
   Col,
-  Space,
   Tag,
-  Dropdown,
-  Menu,
   Pagination,
   Collapse,
   Checkbox,
@@ -19,60 +15,35 @@ import {
   Drawer,
 } from 'antd';
 import {
-  SearchOutlined,
   AppstoreOutlined,
   UnorderedListOutlined,
-  DownOutlined,
   FilterOutlined,
   CaretRightOutlined,
   CloseOutlined,
 } from '@ant-design/icons';
-
+import {
+  businessData,
+  businessTypes,
+  categories,
+  countries,
+  ownershipTypes,
+  priceRanges,
+  sortOptions,
+} from '../../dummy-data/DummyData';
+import uk from '../../assets/country-icons/uk.png';
+import us from '../../assets/country-icons/us.png';
+import cn from '../../assets/country-icons/cn.png';
+import gr from '../../assets/country-icons/gr.png';
+import fr from '../../assets/country-icons/fr.png';
+import italy from '../../assets/country-icons/italy.png';
+import spain from '../../assets/country-icons/spain.png';
+import aus from '../../assets/country-icons/australia.png';
+import uae from '../../assets/country-icons/uae.png';
+import ind from '../../assets/country-icons/india.png';
+import { Link } from 'react-router-dom';
 const { Option } = Select;
 const { Search } = Input;
 const { Panel } = Collapse;
-
-const businessData = [
-  {
-    id: 1,
-    title: 'Powering Better Financial Solutions',
-    location: 'Los Angeles, CA',
-    category: 'Financial Services',
-    subcategory: 'Business Consulting',
-    price: 100,
-    image:
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=250&fit=crop',
-    businessType: 'Services',
-    ownership: 'LLC',
-    country: 'United States',
-  },
-  {
-    id: 2,
-    title: 'Powering Better Financial Solutions',
-    location: 'Los Angeles, CA',
-    category: 'Financial Services',
-    subcategory: 'Business Consulting',
-    price: 100,
-    image:
-      'https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&h=250&fit=crop',
-    businessType: 'Services',
-    ownership: 'Corporation',
-    country: 'United States',
-  },
-  {
-    id: 3,
-    title: 'Powering Better Financial Solutions',
-    location: 'Los Angeles, CA',
-    category: 'Financial Services',
-    subcategory: 'Business Consulting',
-    price: 100,
-    image:
-      'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=250&fit=crop',
-    businessType: 'Services',
-    ownership: 'Partnership',
-    country: 'United States',
-  },
-];
 
 const BusinessDirectory = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -88,7 +59,7 @@ const BusinessDirectory = () => {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [activeFilters, setActiveFilters] = useState(['1']);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
+  
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -96,63 +67,6 @@ const BusinessDirectory = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  // Filter options
-  const categories = [
-    'Restaurant',
-    'Retail',
-    'E-commerce',
-    'Franchise',
-    'Services',
-    'Manufacturing',
-    'Health & Beauty',
-    'Education',
-    'Automotive',
-    'Other',
-  ];
-
-  const countries = [
-    'United States',
-    'United Kingdom',
-    'Canada',
-    'Australia',
-    'Germany',
-    'France',
-    'Italy',
-    'Spain',
-    'United Arab Emirates',
-    'India',
-  ];
-
-  const priceRanges = [
-    { label: 'Under $50K', value: [0, 50000] },
-    { label: '$50K - $100K', value: [50000, 100000] },
-    { label: '$100K - $250K', value: [100000, 250000] },
-    { label: '$250K - $500K', value: [250000, 500000] },
-    { label: '$500K - $1M', value: [500000, 1000000] },
-    { label: 'Over $1M', value: [1000000, Infinity] },
-  ];
-
-  const businessTypes = [
-    'Franchise',
-    'Independent',
-    'Startup',
-    'Home-Based',
-    'Online',
-  ];
-
-  const ownershipTypes = [
-    'Sole Proprietorship',
-    'Partnership',
-    'Corporation',
-    'LLC',
-  ];
-
-  const sortOptions = [
-    { label: 'Newest First', value: 'newest' },
-    { label: 'Price (Low to High)', value: 'priceLow' },
-    { label: 'Most Viewed', value: 'viewed' },
-  ];
 
   // Filter logic
   const filteredBusinesses = useMemo(() => {
@@ -200,7 +114,7 @@ const BusinessDirectory = () => {
   // Handle filter changes
   const handleCategoryChange = (checkedValues) => {
     setSelectedCategories(checkedValues);
-    console.log('Selected Categories:', checkedValues); 
+    console.log('Selected Categories:', checkedValues);
   };
 
   const handleCountryChange = (checkedValues) => {
@@ -308,31 +222,33 @@ const BusinessDirectory = () => {
             <Checkbox
               key={country}
               value={country}
-              className="text-sm flex items-center"
+              className="text-sm !flex items-center"
             >
-              <span
-                className={`inline-block w-4 h-3 mr-2 rounded-sm ${
+              <img
+              className='inline-block h-4 w-6 object-cover mr-2'
+                src={
                   country === 'United States'
-                    ? 'bg-blue-500'
+                    ? us
                     : country === 'United Kingdom'
-                    ? 'bg-red-500'
+                    ? uk
                     : country === 'Canada'
-                    ? 'bg-red-600'
+                    ? cn
                     : country === 'Australia'
-                    ? 'bg-blue-600'
+                    ? aus
                     : country === 'Germany'
-                    ? 'bg-black'
+                    ? gr
                     : country === 'France'
-                    ? 'bg-blue-700'
+                    ? fr
                     : country === 'Italy'
-                    ? 'bg-green-600'
+                    ? italy
                     : country === 'Spain'
-                    ? 'bg-yellow-500'
+                    ? spain
                     : country === 'United Arab Emirates'
-                    ? 'bg-green-500'
-                    : 'bg-orange-500'
-                }`}
-              ></span>
+                    ? uae
+                    : ind
+                }
+                alt={country}
+              />
               {country}
             </Checkbox>
           ))}

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import card from '../../assets/Home/card1.png'
 const BusinessCard = () => {

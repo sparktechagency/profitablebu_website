@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react"
 import hero from '../../assets/Home/hero.png'
 import { Link } from "react-router-dom"
