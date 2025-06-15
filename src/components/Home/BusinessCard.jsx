@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import card from '../../assets/Home/card1.png'
 const BusinessCard = () => {
@@ -39,7 +40,7 @@ const BusinessCard = () => {
                             <div className="w-[5px] h-12 rounded-r bg-green-500 mr-4 "></div>
                             <div>
                                 <h2 className="text-2xl font-bold text-blue-500">Popular Business</h2>
-                                <p className="text-gray-600 text-sm">
+                                <p className="text-gray-600 text-sm md:block hidden">
                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultrices lectus sem.
                                 </p>
                             </div>
