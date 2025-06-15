@@ -14,6 +14,33 @@ const Notification = () => {
       avatar: "/placeholder.svg",
       read: false,
     },
+    {
+      id: "2",
+      type: "inquiry",
+      title: "New Inquiry Alert!",
+      message:
+        "You have a new inquiry from Emily Johnson (Los Angeles, CA) about your listed business. View and respond to keep the deal moving.",
+      avatar: "/placeholder.svg",
+      read: false,
+    },
+    {
+      id: "3",
+      type: "inquiry",
+      title: "New Inquiry Alert!",
+      message:
+        "You have a new inquiry from Emily Johnson (Los Angeles, CA) about your listed business. View and respond to keep the deal moving.",
+      avatar: "/placeholder.svg",
+      read: false,
+    },
+    {
+      id: "4",
+      type: "inquiry",
+      title: "New Inquiry Alert!",
+      message:
+        "You have a new inquiry from Emily Johnson (Los Angeles, CA) about your listed business. View and respond to keep the deal moving.",
+      avatar: "/placeholder.svg",
+      read: false,
+    },
     // অন্যান্য notifications...
   ]);
 
@@ -22,7 +49,7 @@ const Notification = () => {
   };
 
   return (
-    <div className=" bg-white rounded-lg shadow-sm border">
+    <div className=" container m-auto bg-white rounded-lg shadow-sm border">
       <div className="p-4 border-b flex items-center">
         <Link to="#" className="inline-flex items-center mr-2">
           <ArrowLeft className="h-5 w-5 text-gray-400" />

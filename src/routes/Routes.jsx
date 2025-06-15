@@ -24,6 +24,12 @@ import Subscription from "../Pages/subscription/Subscription";
 import ErrorPage from "../Pages/error-page/ErrorPage";
 import BusinessDirectory from "../Pages/BusinessDirectoryPage/BusinessDirectory";
 import BusinessDetails from "../Pages/BusinessDirectoryPage/BusinessDetails";
+import MyBusiness from "../Pages/mybusiness/MyBusiness";
+import MyBusinessDetails from "../Pages/mybusiness/MyBusinessDetails";
+import InterestedBuyer from "../Pages/mybusiness/InterestedBuyer";
+import InterestBuyerDetails from "../Pages/mybusiness/interestBuyerDetails";
+import AddNewBusiness from "../Pages/mybusiness/AddNewBusiness";
+import EditProfile from "../Pages/ProfilePage/EditProfile";
 
 export const router = createBrowserRouter([
     {
@@ -76,6 +82,26 @@ export const router = createBrowserRouter([
                 element: <Chat></Chat>
             },
             {
+                path: '/myBusiness/details',
+                element: <MyBusiness></MyBusiness>
+            },
+            {
+                path: '/interestBuyer',
+                element: <InterestedBuyer></InterestedBuyer>
+            },
+            {
+                path: '/interestBuyer/details',
+                element: <InterestBuyerDetails></InterestBuyerDetails>
+            },
+            {
+                path: '/details',
+                element: <MyBusinessDetails></MyBusinessDetails>
+            },
+             {
+                path: '/addnewbusiness',
+                element: <AddNewBusiness></AddNewBusiness>
+            },
+            {
                 path: '/submit-a-ticket',
                 element: <SubmitTicketPage></SubmitTicketPage>
             },
@@ -83,6 +109,10 @@ export const router = createBrowserRouter([
             {
                 path: '/profilePage',
                 element: <ProfilePage></ProfilePage>
+            },
+            {
+                path: '/profilePage/EditProfile',
+                element: <EditProfile></EditProfile>
             },
             {
                 path: '/profilePage/ongoing-tickets',

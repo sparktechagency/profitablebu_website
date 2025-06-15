@@ -5,9 +5,11 @@ import { Footer } from '../shared/Footer'
 
 export const Root = () => {
   return (
-    <div>
+    <div className='bg-[#F5FFFF]'>
         <Navbar></Navbar>
-        <Outlet></Outlet>
+        
+          <Outlet></Outlet>
+       
         <Footer></Footer>
     </div>
   )

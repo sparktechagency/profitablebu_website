@@ -1,15 +1,16 @@
 import React from 'react'
 import { Search, ArrowLeft, Paperclip, Send } from 'lucide-react';
+import { Navigate } from '../Navigate';
 const Chat = () => {
   return (
-    <div>
-      <div className="flex h-screen bg-gray-50">
+    <div className='container m-auto'>
+      <div className=''>
+        <Navigate title={'Message'}></Navigate>
+      </div>
+      <div className="flex h-screen bg-white">
       {/* Sidebar - Conversations */}
       <div className="w-full md:w-96 border-r bg-white">
-        <div className="p-4 border-b flex items-center gap-2">
-          <ArrowLeft className="h-5 w-5" />
-          <h1 className="text-xl font-semibold">Message</h1>
-        </div>
+      
 
         <div className="p-4">
           <div className="relative">
@@ -24,7 +25,7 @@ const Chat = () => {
 
         <div className="overflow-y-auto h-[calc(100vh-130px)]">
           {Array(8).fill(0).map((_, i) => (
-            <div key={i} className="p-4 hover:bg-gray-50 border-b flex items-start gap-3 bg-gray-100">
+            <div key={i} className="p-4 hover:bg-gray-50 border-b flex items-start gap-3 bg-white">
               <div className="h-10 w-10 rounded-full overflow-hidden">
                 <img 
                   src="/placeholder.svg" 
