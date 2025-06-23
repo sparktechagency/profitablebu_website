@@ -1,6 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { businessData } from '../../dummy-data/DummyData';
+import { Divider, Tag } from 'antd';
+import { FaCalendar } from 'react-icons/fa';
+import dayjs from 'dayjs';
 
 function BusinessDetails() {
   const { id } = useParams();
@@ -22,83 +25,38 @@ function BusinessDetails() {
             />
           </div>
           <div className="text-center lg:text-left">
-            <h1 className="text-3xl font-bold text-gray-800">
+            {business?.hashtags?.map((hashtag, index) => (
+              <Tag key={index} color="blue">
+                {hashtag}
+              </Tag>
+            ))}
+            <h1 className="text-3xl font-bold text-[#0091FF]">
               {business?.title}
             </h1>
-            <p className="text-lg text-gray-600">{business?.location}</p>
-            <p className="text-md text-gray-600">
-              {business?.category} - {business?.subcategory}
+            <p className="text-lg text-black">
+              <strong>Business Type:</strong> {business?.businessType}
             </p>
             <p className="text-xl font-semibold text-gray-900 mt-2">
-              ${business?.price}
+              <strong>Price:</strong>${business?.price}
+            </p>
+            <p className="text-md text-black">
+              <strong>Location:</strong> {business?.location}
+            </p>
+            <p className="text-md text-black">
+              <strong>Ownership:</strong> {business?.ownership}
+            </p>
+            <p className="text-md text-black">
+              <strong>Reason for Selling:</strong> {business?.reason}
             </p>
           </div>
         </div>
-
-        {/* Assets Included */}
-        <div className="mt-6">
-          <h2 className="text-2xl font-semibold text-gray-800">
-            Assets Included:
-          </h2>
-          <ul className="list-disc pl-5 mt-2 text-gray-700">
-            {business?.assetsIncluded?.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
+        <div>
+          <p dangerouslySetInnerHTML={{ __html: business?.description }} />
         </div>
-
-        {/* Financial Summary */}
-        <div className="mt-6">
-          <h2 className="text-2xl font-semibold text-gray-800">
-            Financial Summary:
-          </h2>
-          <ul className="mt-2 space-y-2 text-gray-700">
-            <li>
-              <strong>Monthly Revenue:</strong> $
-              {business?.financialSummary?.monthlyRevenue}
-            </li>
-            <li>
-              <strong>Net Profit:</strong> $
-              {business?.financialSummary?.netProfit}
-            </li>
-            <li>
-              <strong>Inventory Value:</strong> $
-              {business?.financialSummary?.inventoryValue}
-            </li>
-            <li>
-              <strong>Lease Terms:</strong>{' '}
-              {business?.financialSummary?.leaseTerms}
-            </li>
-            <li>
-              <strong>Royalty Fee:</strong>{' '}
-              {business?.financialSummary?.royaltyFee}
-            </li>
-          </ul>
-        </div>
-
-        {/* Sale Event */}
-        <div className="mt-6">
-          <h2 className="text-2xl font-semibold text-gray-800">Sale Event:</h2>
-          <p className="text-gray-700 mt-2">
-            <strong>Date:</strong> {business?.saleEvent?.date}
-          </p>
-          <p className="text-gray-700">
-            <strong>Time:</strong> {business?.saleEvent?.time}
-          </p>
-          <p className="text-gray-700">
-            <strong>Location:</strong> {business?.saleEvent?.location}
-          </p>
-        </div>
-
-        {/* Contact */}
-        <div className="mt-6">
-          <h2 className="text-2xl font-semibold text-gray-800">Contact:</h2>
-          <p className="text-gray-700 mt-2">
-            <strong>Host:</strong> {business?.contact?.hostName}
-          </p>
-          <p className="text-gray-700">
-            <strong>Email:</strong> {business?.contact?.email}
-          </p>
+        <Divider />
+        <div>
+          <FaCalendar />
+          <span>{dayjs(business?.createdAt).format('DD/MM/YYYY')}</span>
         </div>
       </div>
     </div>
