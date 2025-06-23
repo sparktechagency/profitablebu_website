@@ -13,6 +13,7 @@ import {
   Checkbox,
   Radio,
   Drawer,
+  Empty,
 } from 'antd';
 import {
   AppstoreOutlined,
@@ -41,13 +42,15 @@ import spain from '../../assets/country-icons/spain.png';
 import aus from '../../assets/country-icons/australia.png';
 import uae from '../../assets/country-icons/uae.png';
 import ind from '../../assets/country-icons/india.png';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 const { Option } = Select;
 const { Search } = Input;
 const { Panel } = Collapse;
 
 const BusinessDirectory = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get('query');
+  const [searchTerm, setSearchTerm] = useState(searchQuery || '');
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
@@ -354,7 +357,7 @@ const BusinessDirectory = () => {
             <div className="flex items-center w-full md:w-auto justify-between md:justify-end gap-4">
               <div className="flex items-center  p-2 rounded border-2 gap-2">
                 <span className="text-sm text-gray-600 hidden sm:inline">
-                 Items Per Page :
+                  Items Per Page :
                 </span>
                 <Select
                   value={itemsPerPage}
@@ -396,12 +399,8 @@ const BusinessDirectory = () => {
 
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Desktop Sidebar Filters */}
-          <div className="max-h-dvh h-screen">
-            {windowWidth >= 992 && (
-              <div className="w-64 hidden h-full overflow-y-scroll lg:block">
-                {renderFilters()}
-              </div>
-            )}
+          <div className="w-64 hidden h-full overflow-y-scroll lg:block">
+            {renderFilters()}
           </div>
 
           {/* Mobile Filter Drawer */}
@@ -528,9 +527,7 @@ const BusinessDirectory = () => {
               </Row>
             ) : (
               <div className="text-center py-12">
-                <p className="text-gray-500 text-lg">
-                  No businesses found matching your criteria
-                </p>
+                <Empty description="No businesses found matching your criteria" />
                 <Button
                   type="link"
                   onClick={() => {
@@ -539,6 +536,7 @@ const BusinessDirectory = () => {
                     setSelectedCountries([]);
                     setSelectedBusinessTypes([]);
                     setSelectedOwnership([]);
+                    setSearchParams({});
                   }}
                 >
                   Clear all filters
