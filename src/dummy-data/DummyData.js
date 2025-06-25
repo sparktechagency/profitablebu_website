@@ -48,6 +48,18 @@ export const ownershipTypes = [
   'LLC',
 ];
 
+export const location = [
+  'New York',
+  'Los Angeles',
+  'Chicago',
+  'Houston',
+  'Phoenix',
+  'Philadelphia',
+  'San Antonio',
+  'San Diego',
+  'Dallas',
+  'San Jose',
+];
 export const sortOptions = [
   { label: 'Newest First', value: 'newest' },
   { label: 'Price (Low to High)', value: 'priceLow' },
@@ -74,11 +86,7 @@ export const businessData = [
     ownership: 'LLC',
     country: 'United States',
     reason: 'Powering Better Financial Solutions',
-    hashtags: [
-      'Financial Services',
-      'Business Consulting',
-      'Business Consulting',
-    ],
+    hashtags: 'Financial Services',
     createdAt: '2025-06-23T04:40:33.060Z',
     updatedAt: '2025-06-23T04:40:33.060Z',
     sellerInfo: {
@@ -139,7 +147,7 @@ export const businessData = [
     ownership: 'Corporation',
     country: 'United States',
     reason: 'Powering Better Financial Solutions',
-    hashtags: ['Financial Services'],
+    hashtags: 'Financial Services',
     description: 'Powering Better Financial Solutions',
   },
   {
@@ -155,7 +163,7 @@ export const businessData = [
     ownership: 'Partnership',
     country: 'United States',
     reason: 'Powering Better Financial Solutions',
-    hashtags: ['Financial Services'],
+    hashtags: 'Financial Services',
     description: 'Powering Better Financial Solutions',
   },
 ];

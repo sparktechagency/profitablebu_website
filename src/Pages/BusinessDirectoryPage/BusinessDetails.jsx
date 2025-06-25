@@ -25,11 +25,7 @@ function BusinessDetails() {
             />
           </div>
           <div className="text-center lg:text-left">
-            {business?.hashtags?.map((hashtag, index) => (
-              <Tag key={index} color="blue">
-                {hashtag}
-              </Tag>
-            ))}
+            <Tag color="blue">{business?.hashtags}</Tag>
             <h1 className="text-3xl font-bold text-[#0091FF]">
               {business?.title}
             </h1>
