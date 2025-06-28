@@ -31,6 +31,7 @@ import InterestBuyerDetails from "../Pages/mybusiness/interestBuyerDetails";
 import AddNewBusiness from "../Pages/mybusiness/AddNewBusiness";
 import EditProfile from "../Pages/ProfilePage/EditProfile";
 import AdvenceSearch from "../Pages/advance-search/AdvenceSearch";
+import AboutUs from "../Pages/AboutUs/AboutUs";
 
 export const router = createBrowserRouter([
     {
@@ -98,7 +99,7 @@ export const router = createBrowserRouter([
                 path: '/details',
                 element: <MyBusinessDetails></MyBusinessDetails>
             },
-             {
+            {
                 path: '/addnewbusiness',
                 element: <AddNewBusiness></AddNewBusiness>
             },
@@ -130,6 +131,10 @@ export const router = createBrowserRouter([
             {
                 path: '/advanced-search',
                 element: <AdvenceSearch />
+            },
+            {
+                path: '/about-us',
+                element: <AboutUs />
             }
         ]
     },
