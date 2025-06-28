@@ -24,48 +24,49 @@ export const Navbar = () => {
       setOpen(nextOpen);
     }
   };
-  const itemss = [
-    {
-      label: (
-        <span className="flex items-center gap-2">
-          <img className="w-[20px]" src={united} alt="" />United States
-        </span>
-      ),
-      key: '1',
-    },
-    {
-      label: (
-        <span className="flex items-center gap-2">
-          <img className="w-[20px]" src={uk} alt="" />United Kingdom
-        </span>
-      ),
-      key: '2',
-    },
-    {
-      label: (
-        <span className="flex items-center gap-2">
-          <img className="w-[20px]" src={spain} alt="" /> Spain
-        </span>
-      ),
-      key: '3',
-    },
-    {
-      label: (
-        <span className="flex items-center gap-2">
-          <img className="w-[20px]" src={uae} alt="" />UAE
-        </span>
-      ),
-      key: '4',
-    },
-    {
-      label: (
-        <span className="flex items-center gap-2">
-          <img className="w-[20px]" src={india} alt="" />India
-        </span>
-      ),
-      key: '5',
-    },
-  ];
+
+const itemss = [
+  {
+    label: (
+      <span className="flex items-center gap-2">
+        <img className="w-[20px]" src={united} alt="" />United States
+      </span>
+    ),
+    key: '1',
+  },
+  {
+    label: (
+      <span className="flex items-center gap-2">
+        <img className="w-[20px]" src={uk} alt="" />United Kingdom
+      </span>
+    ),
+    key: '2',
+  },
+  {
+    label: (
+      <span className="flex items-center gap-2">
+       <img className="w-[20px]" src={spain} alt="" /> Spain
+      </span>
+    ),
+    key: '3',
+  },
+  {
+    label: (
+      <span className="flex items-center gap-2">
+        <img className="w-[20px]" src={uae} alt="" />UAE
+      </span>
+    ),
+    key: '4',
+  },
+  {
+    label: (
+      <span className="flex items-center gap-2">
+        <img className="w-[20px]" src={india} alt="" />India
+      </span>
+    ),
+    key: '5',
+  },
+];
 
   const showDrawer = () => {
     setDrawerOpen(true);
@@ -247,7 +248,9 @@ export const Navbar = () => {
 
 
   return (
-    <div className="container mx-auto pt-6 pb-4 px-4 lg:px-0">
+
+
+    <div className="container m-auto pt-6 pb-4 px-4 lg:px-0">
       <div className="flex justify-between">
         <img className="" src={Logo} alt="Logo" />
         <button className="bg-[#22C55E] px-4 py-2 rounded text-white">List your Business</button>
