@@ -33,6 +33,9 @@ import EditProfile from "../Pages/ProfilePage/EditProfile";
 import AdvenceSearch from "../Pages/advance-search/AdvenceSearch";
 import AboutUs from "../Pages/AboutUs/AboutUs";
 import TermsAndConditions from "../Pages/TermsAndConditions/TermsAndConditions";
+import RefundAndCancellationPolicy from "../Pages/RefundAndCancellationPolicy/RefundAndCancellationPolicy";
+import PrivacyPolicy from "../Pages/PrivacyPolicy/PrivacyPolicy";
+import ContactUs from "../Pages/ContactUs/ContactUs";
 
 export const router = createBrowserRouter([
     {
@@ -140,6 +143,18 @@ export const router = createBrowserRouter([
             {
                 path: '/terms-and-conditions',
                 element: <TermsAndConditions />
+            },
+            {
+                path: '/refund-and-cancellation-policy',
+                element: <RefundAndCancellationPolicy />
+            },
+            {
+                path: '/privacy-policy',
+                element: <PrivacyPolicy />
+            },
+            {
+                path: '/contact-us',
+                element: <ContactUs />
             }
         ]
     },

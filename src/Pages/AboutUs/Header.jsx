@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 export default function Header({ title, description }) {
           return (
                     <div
-                              className="relative w-full min-h-[500px] bg-cover bg-center bg-no-repeat flex items-center"
+                              className="relative w-full min-h-[350px] bg-cover bg-center bg-no-repeat flex items-center"
                               style={{
                                         backgroundImage: "url('/header.png')",
                               }}
@@ -12,7 +12,7 @@ export default function Header({ title, description }) {
                               <div className="absolute inset-0 bg-black/60" />
 
                               {/* Content */}
-                              <div className="relative container mx-auto z-10 w-full px-5 sm:px-6 lg:px-8 py-5">
+                              <div className="relative container mx-auto z-10 w-full py-5">
                                         <div>
                                                   {/* Back button */}
                                                   <button

@@ -3,21 +3,21 @@ import { Typography } from 'antd';
 
 const { Text } = Typography;
 
-export default function TermsAndConditions() {
+export default function PrivacyPolicy() {
           return (
                     <div className="text-[#000000]">
                               <Header
-                                        title="Terms and Conditions"
+                                        title="Privacy Policy"
                                         description="Please read these terms and conditions carefully before using our services."
                               />
 
                               <div className="container mx-auto my-10 ">
                                         <div>
-                                                  <h1 className="text-4xl font-bold mb-6">Terms and Conditions</h1>
+                                                  <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
 
                                                   <h2 className="text-2xl font-bold mb-4">Introduction</h2>
                                                   <p className="mb-6">
-                                                            Welcome to iLera . These Terms and Conditions ("Terms") govern your use of our services provided through the App. By accessing or using the App, you agree to comply with and be bound by these Terms. If you do not agree with these Terms, you should not use the App.
+                                                            Welcome to iLera . These Privacy Policy ("Privacy Policy") govern your use of our services provided through the App. By accessing or using the App, you agree to comply with and be bound by these Terms. If you do not agree with these Terms, you should not use the App.
                                                             Services
                                                             iLera allows users to book appointments with healthcare providers. We facilitate the booking process but are not responsible for the medical services provided by healthcare professionals. All medical services are provided by independent healthcare professionals..</p>
 
