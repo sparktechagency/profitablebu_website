@@ -13,7 +13,7 @@ import uae from '../assets/country-icons/uae.png'
 export const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [open, setOpen] = useState(false);
-  console.log(open)
+  // console.log(open)
   const handleMenuClick = e => {
     if (e.key === '3') {
       setOpen(false);
