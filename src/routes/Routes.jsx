@@ -1,13 +1,13 @@
 
 import { Root } from "../layout/Root";
-import { AboutPage } from "../Pages/CompanyPage/AboutPage";
+import { AboutPage } from "../Pages/selling/AboutPage";
 // import { CompanyPage } from "../Pages/CompanyPage/CompanyPage";
-import { TechPartnerPage } from "../Pages/CompanyPage/TechPartnerPage";
+import { TechPartnerPage } from "../Pages/selling/TechPartnerPage";
 import { ContuctUsPage } from "../Pages/ContactUsPage/ContuctUsPage";
 import { HomePage } from "../Pages/HomePage/HomePage";
 import { createBrowserRouter } from "react-router-dom";
-import { StructuredCabilingPage } from "../Pages/ServicesPage/StructuredCabilingPage";
-import { BreakFixServicesPage } from "../Pages/ServicesPage/BreakFixServicesPage";
+import { StructuredCabilingPage } from "../Pages/buying/StructuredCabilingPage";
+import { BreakFixServicesPage } from "../Pages/buying/BreakFixServicesPage";
 import { SubmitTicketPage } from "../Pages/SubmitTicketPage.jsx/SubmitTicketPage";
 import { BlogPage } from "../Pages/BlogPage/BlogPage";
 import { Login } from "../Auth/Login";
