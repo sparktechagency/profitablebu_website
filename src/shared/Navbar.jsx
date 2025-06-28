@@ -24,6 +24,7 @@ export const Navbar = () => {
       setOpen(nextOpen);
     }
   };
+
 const itemss = [
   {
     label: (
@@ -247,6 +248,8 @@ const itemss = [
 
 
   return (
+
+
     <div className="container m-auto pt-6 pb-4 px-4 lg:px-0">
       <div className="flex justify-between">
         <img className="" src={Logo} alt="Logo" />
