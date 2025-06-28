@@ -32,6 +32,7 @@ import AddNewBusiness from "../Pages/mybusiness/AddNewBusiness";
 import EditProfile from "../Pages/ProfilePage/EditProfile";
 import AdvenceSearch from "../Pages/advance-search/AdvenceSearch";
 import AboutUs from "../Pages/AboutUs/AboutUs";
+import TermsAndConditions from "../Pages/TermsAndConditions/TermsAndConditions";
 
 export const router = createBrowserRouter([
     {
@@ -135,6 +136,10 @@ export const router = createBrowserRouter([
             {
                 path: '/about-us',
                 element: <AboutUs />
+            },
+            {
+                path: '/terms-and-conditions',
+                element: <TermsAndConditions />
             }
         ]
     },
