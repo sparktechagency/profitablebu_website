@@ -3,7 +3,9 @@ import Header from "./Header";
 export default function AboutUs() {
           return (
                     <div className="py-5 px-5 lg:px-0">
-                              <Header />
+                              <Header
+                                        title="About Us"
+                                        description="Discover who we are, what we do, and why we're passionate about connecting buyers and sellers around the world." />
                               <section className="overflow-hidden py-10">
                                         <div className="container mx-auto">
                                                   <div className="flex flex-wrap items-center justify-between -mx-4">

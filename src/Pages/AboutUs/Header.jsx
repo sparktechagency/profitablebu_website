@@ -1,6 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 
-export default function Header() {
+export default function Header({ title, description }) {
           return (
                     <div
                               className="relative w-full min-h-[500px] bg-cover bg-center bg-no-repeat flex items-center"
@@ -19,8 +19,8 @@ export default function Header() {
                                                             className="mb-8 md:mb-12 flex items-center text-white hover:text-gray-300 transition-colors group"
                                                             onClick={() => window.history.back()}
                                                   >
-                                                            <ArrowLeft className="w-6 h-6 mr-2 group-hover:-translate-x-1 transition-transform" />
-                                                            <span className="text-lg font-medium">Back</span>
+                                                            <ArrowLeft className="w-10 h-10 mr-2 group-hover:-translate-x-1 transition-transform" />
+
                                                   </button>
 
                                                   <div className="relative flex flex-col items-start gap-5 pl-5">
@@ -28,10 +28,10 @@ export default function Header() {
 
                                                             <div className="ml-5">
                                                                       <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#0091FF] mb-6 leading-tight">
-                                                                                About Us
+                                                                                {title}
                                                                       </h1>
                                                                       <p className="text-lg md:text-xl text-white leading-relaxed max-w-2xl">
-                                                                                Discover who we are, what we do, and why we're passionate about connecting buyers and sellers around the world.
+                                                                                {description}
                                                                       </p>
                                                             </div>
                                                   </div>
