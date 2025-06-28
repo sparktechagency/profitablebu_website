@@ -30,12 +30,12 @@ import InterestedBuyer from "../Pages/mybusiness/InterestedBuyer";
 import InterestBuyerDetails from "../Pages/mybusiness/interestBuyerDetails";
 import AddNewBusiness from "../Pages/mybusiness/AddNewBusiness";
 import EditProfile from "../Pages/ProfilePage/EditProfile";
-import AdvenceSearch from "../Pages/advance-search/AdvenceSearch";
 import AboutUs from "../Pages/AboutUs/AboutUs";
 import TermsAndConditions from "../Pages/TermsAndConditions/TermsAndConditions";
 import RefundAndCancellationPolicy from "../Pages/RefundAndCancellationPolicy/RefundAndCancellationPolicy";
 import PrivacyPolicy from "../Pages/PrivacyPolicy/PrivacyPolicy";
 import ContactUs from "../Pages/ContactUs/ContactUs";
+import AdvanceSearch from "../Pages/AdvanceSearch/AdvanceSearch";
 
 export const router = createBrowserRouter([
     {
@@ -134,7 +134,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/advanced-search',
-                element: <AdvenceSearch />
+                element: <AdvanceSearch />
             },
             {
                 path: '/about-us',
@@ -155,7 +155,9 @@ export const router = createBrowserRouter([
             {
                 path: '/contact-us',
                 element: <ContactUs />
-            }
+            },
+            
+
         ]
     },
     {
