@@ -38,6 +38,7 @@ import AdvanceSearch from "../Pages/AdvanceSearch/AdvanceSearch";
 import BussinessDetails from "../Pages/BussinessDetails/BussinessDetails";
 import BussinessDetailsWithForm from "../Pages/BussinessDetailsWithForm/BussinessDetailsWithForm";
 import BuyerContactInfo from "../Pages/BussinessDetailsWithForm/BuyerContactInfo";
+import BusinessValuationForm from "../Pages/BussinessValuation/BussinessValuation";
 
 export const router = createBrowserRouter([
   {
@@ -152,6 +153,10 @@ export const router = createBrowserRouter([
       {
         path: "/buyer-contact-info",
         element: <BuyerContactInfo />,
+      },
+      {
+        path: "/business-valuaion",
+        element: <BusinessValuationForm />,
       },
       {
         path: "/about-us",

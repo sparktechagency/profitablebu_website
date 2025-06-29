@@ -8,7 +8,7 @@ export default function BuyerContactInfo() {
         Buyer Contact Info
       </h2>
 
-      <div className="grid lg:grid-cols-2 gap-8">
+      <div className="grid lg:grid-cols-2 gap-10 lg:gap-5">
         {/* Left Side - Profile Section */}
         <div className="p-5">
           <div className="flex items-start gap-4">
@@ -26,14 +26,14 @@ export default function BuyerContactInfo() {
                   <h3 className="text-xl font-semibold text-gray-900">
                     Sardor
                   </h3>
-                  <Tag className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">
+                  <Tag className="bg-blue-100 text-[#0091FF] text-xs px-2 py-1 rounded">
                     Buyer
                   </Tag>
                 </div>
                 <p className="text-gray-600">dric@gmail.com</p>
               </div>
 
-              <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 rounded-md">
+              <button className="bg-[#0091FF] px-5 py-2 text-white font-medium rounded-md">
                 Send Message
               </button>
             </div>
