@@ -114,16 +114,6 @@ export default function AdvanceSearch() {
 
           return (
                     <div className="relative max-w-7xl mx-auto p-5 rounded-lg shadow-sm my-10">
-                              {/* Header Section */}
-                              {/* <div className="flex items-start mb-8">
-                                        <div className="w-1 h-16 bg-blue-600 rounded-full mr-4 flex-shrink-0"></div>
-                                        <div>
-                                                  <h1 className="text-3xl font-bold text-gray-900 mb-2">Advanced Search</h1>
-                                                  <p className="text-gray-600 leading-relaxed">
-                                                            Find the perfect business opportunity by applying detailed filters to narrow down your search.
-                                                  </p>
-                                        </div>
-                              </div> */}
                               <div className="relative flex flex-col items-start gap-5 pl-5 mb-5">
                                         <div className="absolute top-0 left-0 w-2 h-full bg-[#00FF3A] z-[1] rounded-r-full"></div>
 

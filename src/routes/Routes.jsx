@@ -36,6 +36,8 @@ import RefundAndCancellationPolicy from "../Pages/RefundAndCancellationPolicy/Re
 import PrivacyPolicy from "../Pages/PrivacyPolicy/PrivacyPolicy";
 import ContactUs from "../Pages/ContactUs/ContactUs";
 import AdvanceSearch from "../Pages/AdvanceSearch/AdvanceSearch";
+import BussinessDetails from "../Pages/BussinessDetails/BussinessDetails";
+import BussinessDetailsWithForm from "../Pages/BussinessDetailsWithForm/BussinessDetailsWithForm";
 
 export const router = createBrowserRouter([
     {
@@ -132,9 +134,20 @@ export const router = createBrowserRouter([
                 path: '/business/:id',
                 element: <BusinessDetails />
             },
+
+            // aman
+
             {
                 path: '/advanced-search',
                 element: <AdvanceSearch />
+            },
+            {
+                path: '/business-details',
+                element: <BussinessDetails />
+            },
+            {
+                path: '/business-details-with-form',
+                element: <BussinessDetailsWithForm />
             },
             {
                 path: '/about-us',
@@ -156,7 +169,7 @@ export const router = createBrowserRouter([
                 path: '/contact-us',
                 element: <ContactUs />
             },
-            
+
 
         ]
     },
