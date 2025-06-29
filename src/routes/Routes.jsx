@@ -39,6 +39,7 @@ import BussinessDetails from "../Pages/BussinessDetails/BussinessDetails";
 import BussinessDetailsWithForm from "../Pages/BussinessDetailsWithForm/BussinessDetailsWithForm";
 import BuyerContactInfo from "../Pages/BussinessDetailsWithForm/BuyerContactInfo";
 import BusinessValuationForm from "../Pages/BussinessValuation/BussinessValuation";
+import BusinessValuationSubmission from "../Pages/BussinessValuation/BusinessValuationSubmission";
 
 export const router = createBrowserRouter([
   {
@@ -157,6 +158,10 @@ export const router = createBrowserRouter([
       {
         path: "/business-valuaion",
         element: <BusinessValuationForm />,
+      },
+      {
+        path: "/business-valuaion-submission",
+        element: <BusinessValuationSubmission />,
       },
       {
         path: "/about-us",
