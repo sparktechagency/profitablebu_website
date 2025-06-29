@@ -1,6 +1,6 @@
 import { Tag } from "antd"
 import { MapPin, Calendar, User, Mail } from "lucide-react"
-export default function Component() {
+export default function BussinessDetails() {
           return (
                     <div className="container mx-auto p-5 space-y-8">
                               {/* Main Business Listing */}
@@ -29,27 +29,27 @@ export default function Component() {
                                                   <div className="space-y-4">
                                                             <div className="grid grid-cols-1 gap-3 text-sm">
                                                                       <div className="flex justify-between">
-                                                                                <span className="font-semibold text-gray-700">Business Type:</span>
+                                                                                <span className="font-bold text-gray-700">Business Type:</span>
                                                                                 <span className="text-gray-600">Franchise Resale</span>
                                                                       </div>
                                                                       <div className="flex justify-between">
-                                                                                <span className="font-semibold text-gray-700">Price:</span>
+                                                                                <span className="font-bold text-gray-700">Price:</span>
                                                                                 <span className="text-gray-600">$75,000 USD</span>
                                                                       </div>
                                                                       <div className="flex justify-between">
-                                                                                <span className="font-semibold text-gray-700">Location:</span>
+                                                                                <span className="font-bold text-gray-700">Location:</span>
                                                                                 <span className="text-gray-600">Banani, Dhaka, Bangladesh</span>
                                                                       </div>
                                                                       <div className="flex justify-between">
-                                                                                <span className="font-semibold text-gray-700">Industry:</span>
+                                                                                <span className="font-bold text-gray-700">Industry:</span>
                                                                                 <span className="text-gray-600">Food & Beverage – Cafe & Coffee Shop</span>
                                                                       </div>
                                                                       <div className="flex justify-between">
-                                                                                <span className="font-semibold text-gray-700">Ownership Type:</span>
+                                                                                <span className="font-bold text-gray-700">Ownership Type:</span>
                                                                                 <span className="text-gray-600">Sole Proprietorship</span>
                                                                       </div>
                                                                       <div className="flex justify-between">
-                                                                                <span className="font-semibold text-gray-700">Reason for Selling:</span>
+                                                                                <span className="font-bold text-gray-700">Reason for Selling:</span>
                                                                                 <span className="text-gray-600">Owner relocating abroad</span>
                                                                       </div>
                                                             </div>
