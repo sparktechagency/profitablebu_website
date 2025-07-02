@@ -7,7 +7,7 @@ const BusinessCard = () => {
       id: 1,
       title: 'Powering Better Financial Solutions',
       location: 'Los Angeles, CA',
-      categories: ['Financial Services', 'Business Consulting'],
+      categories: 'Financial Services',
       price: '$100',
       image: card,
       imageAlt: 'Futuristic office space with purple lighting',
@@ -16,7 +16,7 @@ const BusinessCard = () => {
       id: 2,
       title: 'Powering Better Financial Solutions',
       location: 'Los Angeles, CA',
-      categories: ['Financial Services', 'Business Consulting'],
+      categories: 'Financial Services',
       price: '$100',
       image: card,
       imageAlt:
@@ -26,7 +26,7 @@ const BusinessCard = () => {
       id: 3,
       title: 'Powering Better Financial Solutions',
       location: 'Los Angeles, CA',
-      categories: ['Financial Services', 'Business Consulting'],
+      categories: 'Financial Services',
       price: '$100',
       image: card,
       imageAlt: 'Modern skyscrapers and office buildings',
@@ -73,13 +73,7 @@ const BusinessCard = () => {
                   </h3>
                   <p className="text-gray-600 mb-2">{business.location}</p>
                   <div className="mb-2">
-                    <span className="text-blue-500">
-                      {business.categories[0]}
-                    </span>
-                    <span className="mx-2 text-gray-400">||</span>
-                    <span className="text-orange-500">
-                      {business.categories[1]}
-                    </span>
+                    <span className="text-blue-500">{business.categories}</span>
                   </div>
                   <p className="text-gray-800 mb-4">
                     Starting from{' '}
