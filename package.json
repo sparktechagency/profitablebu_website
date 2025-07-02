@@ -13,6 +13,7 @@
     "@splidejs/react-splide": "^0.7.12",
     "antd": "^5.25.3",
     "dayjs": "^1.11.13",
+    "framer-motion": "^12.23.0",
     "jodit": "^4.6.2",
     "jodit-react": "^5.2.19",
     "lucide-react": "^0.510.0",

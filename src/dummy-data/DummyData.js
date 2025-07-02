@@ -24,6 +24,55 @@ export const countries = [
   'India',
 ];
 
+export const menuItems = {
+  selling: [
+    {
+      name: 'Businesses for Sale',
+      path: '/selling/businesses',
+    },
+    {
+      name: 'Business Assets for Sale',
+      path: '/selling/assets',
+    },
+    {
+      name: 'Business Ideas for Investors',
+      path: '/selling/ideas',
+    },
+    {
+      name: 'Franchises for Sale',
+      path: '/selling/franchises',
+    },
+  ],
+  buying: [
+    {
+      name: 'Buy a Business',
+      path: '/buying/business',
+    },
+    {
+      name: 'Buy a Business Asset',
+      path: '/buying/asset',
+    },
+    {
+      name: 'Buy a Franchise',
+      path: '/buying/franchise',
+    },
+    {
+      name: 'Contact Business Listers',
+      path: '/buying/contact',
+    },
+  ],
+  valuation: [
+    {
+      name: 'Schedule a Call',
+      path: '/valuation/call',
+    },
+    {
+      name: 'Get Business Valuations',
+      path: '/valuation/valuation',
+    },
+  ],
+};
+
 export const priceRanges = [
   { label: 'Under $50K', value: [0, 50000] },
   { label: '$50K - $100K', value: [50000, 100000] },
