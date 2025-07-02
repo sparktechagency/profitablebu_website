@@ -33,7 +33,7 @@ export default function Home() {
               advice, and seamless support to help your business grow stronger
               and faster.
             </p>
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-6 text-lg h-auto">
+            <button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded text-lg h-auto">
               Get Started
             </button>
           </div>
@@ -44,7 +44,7 @@ export default function Home() {
       <div className="relative z-20 mx-auto -mt-16 md:-mt-24 max-w-4xl px-4">
         <div className="bg-gradient-to-r from-sky-200/90 to-sky-300/30 backdrop-blur-sm rounded-lg p-8 shadow-lg">
           <h2 className="text-2xl md:text-3xl font-semibold text-center mb-6">
-            You Find A <span className="text-green-500">Business</span> For{' '}
+            You Find A <span className="text-green-400">Business</span> For{' '}
             <span className="text-blue-500">Yourself</span>.
           </h2>
 
