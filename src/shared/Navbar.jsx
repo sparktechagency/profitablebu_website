@@ -63,7 +63,12 @@ const Navbar = () => {
 
   const navItems = [
     { key: 'home', label: 'Home', path: '/' },
-    { key: 'selling', label: 'Selling', submenu: menuItems.selling },
+    {
+      key: 'selling',
+      label: 'Selling',
+      submenu: menuItems.selling,
+      state: menuItems.selling[0].state,
+    },
     { key: 'buying', label: 'Buying', submenu: menuItems.buying },
     { key: 'valuation', label: 'Valuation', submenu: menuItems.valuation },
     { key: 'business', label: 'Business Formation', path: '/business' },
@@ -117,12 +122,12 @@ const Navbar = () => {
                       />
                     </button>
                   ) : (
-                    <a
+                    <Link
                       href={item?.path}
                       className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
                     >
                       {item?.label}
-                    </a>
+                    </Link>
                   )}
 
                   {/* Dropdown Menu */}
@@ -142,6 +147,7 @@ const Navbar = () => {
                             <Link
                               key={subitem?.name}
                               to={subitem?.path}
+                              state={subitem?.state}
                               className="block p-3 rounded-lg hover:bg-gray-50 transition-colors group"
                             >
                               <div className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
