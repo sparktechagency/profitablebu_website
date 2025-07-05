@@ -1,9 +1,10 @@
 import React, { useRef } from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
-
+import profile from "../../assets/Home/pr.png";
 import { SlArrowRight, SlArrowLeft } from "react-icons/sl";
 import { MdStar } from "react-icons/md";
+import { HiArrowNarrowLeft, HiArrowNarrowRight } from "react-icons/hi";
 
 // import img1 from "../../assets/home/user1.png";
 // import img2 from "../../assets/home/user2.png";
@@ -17,6 +18,7 @@ const Review = () => {
       location: "New York, USA",
       review:
         "I was looking for the perfect engagement ring, and this website exceeded all my expectations! The craftsmanship is stunning, and the diamond sparkles beautifully. My fiancée absolutely loves it, and I couldn’t be happier with my purchase!",
+      img: profile,
     },
     {
       // img: img2,
@@ -24,6 +26,7 @@ const Review = () => {
       location: "New York, USA",
       review:
         "I was looking for the perfect engagement ring, and this website exceeded all my expectations! The craftsmanship is stunning, and the diamond sparkles beautifully. My fiancée absolutely loves it, and I couldn’t be happier with my purchase!",
+      img: profile,
     },
     {
       // img: img3,
@@ -31,6 +34,7 @@ const Review = () => {
       location: "New York, USA",
       review:
         "I was looking for the perfect engagement ring, and this website exceeded all my expectations! The craftsmanship is stunning, and the diamond sparkles beautifully. My fiancée absolutely loves it, and I couldn’t be happier with my purchase!",
+      img: profile,
     },
     {
       // img: img1,
@@ -38,6 +42,7 @@ const Review = () => {
       location: "New York, USA",
       review:
         "I was looking for the perfect engagement ring, and this website exceeded all my expectations! The craftsmanship is stunning, and the diamond sparkles beautifully. My fiancée absolutely loves it, and I couldn’t be happier with my purchase!",
+      img: profile,
     },
     {
       // img: img2,
@@ -45,6 +50,7 @@ const Review = () => {
       location: "New York, USA",
       review:
         "I was looking for the perfect engagement ring, and this website exceeded all my expectations! The craftsmanship is stunning, and the diamond sparkles beautifully. My fiancée absolutely loves it, and I couldn’t be happier with my purchase!",
+      img: profile,
     },
     {
       // img: img3,
@@ -52,6 +58,7 @@ const Review = () => {
       location: "New York, USA",
       review:
         "I was looking for the perfect engagement ring, and this website exceeded all my expectations! The craftsmanship is stunning, and the diamond sparkles beautifully. My fiancée absolutely loves it, and I couldn’t be happier with my purchase!",
+      img: profile,
     },
   ];
 
@@ -83,8 +90,6 @@ const Review = () => {
         </div>
 
         <div className="">
-          
-
           <div className=" w-full">
             <Splide
               ref={splideRef}
@@ -105,23 +110,29 @@ const Review = () => {
             >
               {category.map((item, index) => (
                 <SplideSlide key={index}>
-                  <div className="text-center border bg-[#FFFFFF] rounded-2xl p-4 py-8">
-                    <div className="flex justify-center">
-                      {/* <img
-                        className="rounded-full w-20 h-20 object-cover"
-                        src={item.img}
-                        alt={item.title}
-                      /> */}
+                  <div className="shadow-lg bg-[#FFFFFF] rounded-2xl p-4 py-8">
+                    <div className=" flex pb-3 text-yellow-500">
+                      <MdStar />
+                      <MdStar />
+                      <MdStar />
+                      <MdStar />
+                      <MdStar />
+                      <p className="-mt-1 pl-2">(4.5)</p>
                     </div>
-                    <h1 className="text-xl mt-3">{item.title}</h1>
-                    <h2 className="text-lg py-2">{item.location}</h2>
-                    <p className="text-sm">{item.review}</p>
-                    <div className="flex gap-1 justify-center pt-5 text-yellow-500">
-                      <MdStar />
-                      <MdStar />
-                      <MdStar />
-                      <MdStar />
-                      <MdStar />
+                    
+                    <p className="text-sm mt-1">{item.review}</p>
+                    <div className="flex items-center gap-4 mt-5">
+                      <div className="">
+                        <img
+                          className="rounded-full w-[70px] object-cover"
+                          src={item.img}
+                          alt={item.title}
+                        />
+                      </div>
+                      <div>
+                        <h1 className=" ">{item.title}</h1>
+                        <h2 className=" ">{item.location}</h2>
+                      </div>
                     </div>
                   </div>
                 </SplideSlide>
@@ -131,22 +142,22 @@ const Review = () => {
 
           <div className="flex gap-3 justify-center mt-5">
             <div
-            className=" bg-[#0091FF] p-2 rounded text-white"
-            onClick={handlePrevClick}
-          >
-            <div className="rounded-full text-2xl  cursor-pointer">
-              <SlArrowLeft />
+              className=" bg-[#0091FF] p-2 rounded text-white"
+              onClick={handlePrevClick}
+            >
+              <div className="rounded-full text-2xl  cursor-pointer">
+                <HiArrowNarrowLeft />
+              </div>
             </div>
-          </div>
 
-          <div
-            className=" bg-[#0091FF] p-2 rounded text-white "
-            onClick={handleNextClick}
-          >
-            <div className="rounded-full text-2xl  cursor-pointer">
-              <SlArrowRight />
+            <div
+              className=" bg-[#0091FF] p-2 rounded text-white "
+              onClick={handleNextClick}
+            >
+              <div className="rounded-full text-2xl  cursor-pointer">
+                <HiArrowNarrowRight />
+              </div>
             </div>
-          </div>
           </div>
         </div>
       </div>

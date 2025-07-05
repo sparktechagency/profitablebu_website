@@ -8,7 +8,7 @@ import {
 } from "react-icons/fa";
 import img from "../../assets/Home/cover.png";
 import { IoIosArrowForward } from "react-icons/io";
-const Faqs = () => {
+const FaqInvestors = () => {
   const items = [
     {
       key: "1",
@@ -128,7 +128,7 @@ const Faqs = () => {
       <div className=" container m-auto py-11 ">
         <h1 className="text-2xl font-bold ">
           {" "}
-          FAQ for <span className="text-[#00FF3A] ">Buyers</span>
+          FAQ for <span className="text-[#00FF3A] ">Investors</span>
         </h1>
 
         <Collapse
@@ -148,4 +148,4 @@ const Faqs = () => {
   );
 };
 
-export default Faqs;
+export default FaqInvestors;

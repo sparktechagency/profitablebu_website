@@ -41,7 +41,7 @@ export default function Home() {
       </div>
 
       {/* Search Section */}
-      <div className="relative z-20 mx-auto -mt-16 md:-mt-24 max-w-4xl px-4">
+      <div className="relative z-20 mx-auto lg:-mt-16 mt-16 md:mt-0 md:-mt-24 max-w-4xl px-4">
         <div className="bg-gradient-to-r from-sky-200/90 to-sky-300/30 backdrop-blur-sm rounded-lg p-8 shadow-lg">
           <h2 className="text-2xl md:text-3xl font-semibold text-center mb-6">
             You Find A <span className="text-green-400">Business</span> For{' '}

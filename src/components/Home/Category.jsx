@@ -1,5 +1,12 @@
 import React from "react";
 import card from "../../assets/Home/card.png";
+import card2 from "../../assets/Home/cat2.png";
+import card3 from "../../assets/Home/cat3.png";
+import card4 from "../../assets/Home/cat4.png";
+import card5 from "../../assets/Home/cat5.png";
+import card6 from "../../assets/Home/cat6.png";
+import card7 from "../../assets/Home/cat7.png";
+import card8 from "../../assets/Home/cat8.png";
 import { Link } from "react-router-dom";
 import { FaArrowRight, FaCircleArrowRight } from "react-icons/fa6";
 const Category = () => {
@@ -14,43 +21,43 @@ const Category = () => {
       id: "hospitality",
       title: "Hospitality",
       count: "255+",
-      image: card,
+      image: card2,
     },
     {
       id: "tourism",
       title: "Tourism",
       count: "255+",
-      image: card,
+      image: card3,
     },
     {
       id: "healthcare",
       title: "Healthcare",
       count: "255+",
-      image: card,
+      image: card4,
     },
     {
       id: "finance",
       title: "Finance",
       count: "255+",
-      image: card,
+      image: card5,
     },
     {
       id: "retail",
       title: "Retail",
       count: "255+",
-      image: card,
+      image: card6,
     },
     {
       id: "real-estate",
       title: "Real Estate",
       count: "255+",
-      image: card,
+      image: card7,
     },
     {
       id: "manufacturing",
       title: "Manufacturing",
       count: "255+",
-      image: card,
+      image: card8,
     },
   ];
   return (
@@ -60,7 +67,7 @@ const Category = () => {
           <div className="w-[5px] h-12 rounded-r bg-green-500 mr-4 "></div>
           <div>
             <h2 className="text-2xl font-bold text-blue-500">
-              Popular Business
+              Top Rated Category
             </h2>
             <p className="text-gray-600 text-sm md:block hidden">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras

@@ -43,6 +43,14 @@ import BusinessValuationSubmission from "../Pages/BussinessValuation/BusinessVal
 import BusinessFormation from "../Pages/BusinessFormation/BusinessFormation";
 import BusinessFormationDetails from "../Pages/BusinessFormation/BusinessFormationDetails";
 import SubscriptionPlane from "../Pages/plane/SubscriptionPlane";
+import Seller from "../Pages/seller/Seller";
+import AllFaq from "../Pages/faq/AllFaq";
+import FaqSeller from "../Pages/faq/FaqSeller";
+import FaqAsset from "../Pages/faq/FaqAsset";
+import FaqBrokers from "../Pages/faq/FaqBrokers";
+import FaqBusiness from "../Pages/faq/FaqBusiness ";
+import FaqFranchise from "../Pages/faq/FaqFranchise ";
+import FaqInvestors from "../Pages/faq/FaqInvestors";
 
 export const router = createBrowserRouter([
   {
@@ -87,9 +95,38 @@ export const router = createBrowserRouter([
         element: <SubscriptionPlane></SubscriptionPlane>
       },
       {
+        path: "/allFaqs",
+        element: <AllFaq></AllFaq>
+      },
+      {
         path: "/faqs",
         element: <Faqs></Faqs>,
       },
+      {
+        path: "/faqsSeller",
+        element: <FaqSeller></FaqSeller>
+      },
+      {
+        path: "/FaqAsset",
+        element: <FaqAsset></FaqAsset>
+      },
+      {
+        path: "/FaqBrokers",
+        element: <FaqBrokers></FaqBrokers>
+      },
+      {
+        path: "/FaqBusiness",
+        element: <FaqBusiness></FaqBusiness>
+      },
+      {
+        path: "/FaqFranchise",
+        element: <FaqFranchise></FaqFranchise>
+      },
+      {
+        path: "/FaqInvestors",
+        element: <FaqInvestors></FaqInvestors>
+      },
+      
       {
         path: "/notification",
         element: <Notification></Notification>,
@@ -126,6 +163,10 @@ export const router = createBrowserRouter([
       {
         path: "/profilePage",
         element: <ProfilePage></ProfilePage>,
+      },
+      {
+        path: "/Seller",
+        element: <Seller></Seller>
       },
       {
         path: "/profilePage/EditProfile",

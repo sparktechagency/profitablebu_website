@@ -1,12 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import card from "../../assets/Home/card1.png";
-import card2 from "../../assets/Home/card2.png";
-import card3 from "../../assets/Home/card3.png";
-import card4 from "../../assets/Home/card4.png";
-
+import card9 from "../../assets/Home/card9.png";
+import card10 from "../../assets/Home/card10.png";
+import card11 from "../../assets/Home/card11.png";
+import card12 from "../../assets/Home/card12.png";
 import backCard from "../../assets/Home/ii.png";
-const BusinessCard = () => {
+const FeaturedFranchises = () => {
   const businesses = [
     {
       id: 1,
@@ -14,7 +13,7 @@ const BusinessCard = () => {
       location: "Los Angeles, CA",
       categories: "Financial Services",
       price: "$100",
-      image: card,
+      image: card9,
       imageAlt: "Futuristic office space with purple lighting",
     },
     {
@@ -23,7 +22,7 @@ const BusinessCard = () => {
       location: "Los Angeles, CA",
       categories: "Financial Services",
       price: "$100",
-      image: card2,
+      image: card10,
       imageAlt:
         "Business professionals reviewing documents with city lights in background",
     },
@@ -33,7 +32,7 @@ const BusinessCard = () => {
       location: "Los Angeles, CA",
       categories: "Financial Services",
       price: "$100",
-      image: card3,
+      image: card11,
       imageAlt: "Modern skyscrapers and office buildings",
     },
      {
@@ -42,20 +41,20 @@ const BusinessCard = () => {
       location: "Los Angeles, CA",
       categories: "Financial Services",
       price: "$100",
-      image: card4,
+      image: card12,
       imageAlt: "Modern skyscrapers and office buildings",
     },
   ];
   return (
     <div>
-      <div className="-mt-16 md:-mt-0">
+      <div className="">
         <div className="">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center">
               <div className="w-[5px] h-12 rounded-r bg-green-500 mr-4 "></div>
               <div>
                 <h2 className="text-2xl font-bold text-blue-500">
-                  Popular Business
+                  FeaturedFranchises
                 </h2>
                 <p className="text-gray-600 text-sm md:block hidden">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
@@ -109,4 +108,4 @@ const BusinessCard = () => {
   );
 };
 
-export default BusinessCard;
+export default FeaturedFranchises;

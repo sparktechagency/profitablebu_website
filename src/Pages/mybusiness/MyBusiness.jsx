@@ -1,6 +1,7 @@
 import React from 'react'
 import { Navigate } from '../Navigate'
 import card from '../../assets/Home/card1.png'
+import backCard from '../../assets/Home/ii.png'
 const MyBusiness = () => {
     const businesses = [
         {
@@ -54,7 +55,10 @@ const MyBusiness = () => {
                             {businesses.map((business) => (
                                 <div
                                     key={business.id}
-                                    className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow"
+                                    className="  bg-cover bg-center rounded"
+                                                    style={{
+                                                      backgroundImage: `url(${backCard})`,
+                                                    }}
                                 >
                                     <div className="h-48 relative">
                                         <img

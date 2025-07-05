@@ -4,7 +4,7 @@ import { Navigate } from '../Navigate';
 const Chat = () => {
   return (
     <div className='container m-auto'>
-      <div className=''>
+      <div className='mt-11'>
         <Navigate title={'Message'}></Navigate>
       </div>
       <div className="flex h-screen bg-white">
