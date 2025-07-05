@@ -9,7 +9,7 @@ import { StructuredCabilingPage } from "../Pages/buying/StructuredCabilingPage";
 import { BreakFixServicesPage } from "../Pages/buying/BreakFixServicesPage";
 import { SubmitTicketPage } from "../Pages/SubmitTicketPage.jsx/SubmitTicketPage";
 import { BlogPage } from "../Pages/BlogPage/BlogPage";
-import { Login } from "../Auth/Login";
+import  Login  from "../Auth/Login";
 import { ForgotPassword } from "../Auth/ForgotPassword";
 import { Verification } from "../Auth/Verification";
 import { NewPassword } from "../Auth/NewPassword";
@@ -42,6 +42,7 @@ import BusinessValuationForm from "../Pages/BussinessValuation/BussinessValuatio
 import BusinessValuationSubmission from "../Pages/BussinessValuation/BusinessValuationSubmission";
 import BusinessFormation from "../Pages/BusinessFormation/BusinessFormation";
 import BusinessFormationDetails from "../Pages/BusinessFormation/BusinessFormationDetails";
+import SubscriptionPlane from "../Pages/plane/SubscriptionPlane";
 
 export const router = createBrowserRouter([
   {
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
       {
         path: "/subscription",
         element: <Subscription></Subscription>,
+      },
+      {
+        path: "/plane",
+        element: <SubscriptionPlane></SubscriptionPlane>
       },
       {
         path: "/faqs",
@@ -177,6 +182,7 @@ export const router = createBrowserRouter([
         path: "/about-us",
         element: <AboutUs />,
       },
+      
       {
         path: "/terms-and-conditions",
         element: <TermsAndConditions />,
