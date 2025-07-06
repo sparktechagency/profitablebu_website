@@ -127,11 +127,11 @@ export const router = createBrowserRouter([
         element: <FaqInvestors></FaqInvestors>
       },
       
-      {
-        path: "/notification",
-        path: '/faqs',
-        element: <Faqs></Faqs>,
-      },
+      // {
+      //   path: "/notification",
+      //   path: '/faqs',
+      //   element: <Faqs></Faqs>,
+      // },
       {
         path: '/notification',
         element: <Notification></Notification>,
@@ -228,7 +228,6 @@ export const router = createBrowserRouter([
         path: '/about-us',
         element: <AboutUs />,
       },
-
       {
         path: '/terms-and-conditions',
         element: <TermsAndConditions />,
@@ -238,7 +237,7 @@ export const router = createBrowserRouter([
         element: <RefundAndCancellationPolicy />,
       },
       {
-        path: '/privacy-policy',
+        path: '/<li>Privacy Policy</li>',
         element: <PrivacyPolicy />,
       },
       {

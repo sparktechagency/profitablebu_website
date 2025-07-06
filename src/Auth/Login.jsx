@@ -9,20 +9,35 @@ import {
   Row,
   Col,
   Divider,
+  message,
 } from 'antd';
 import { ArrowLeft } from 'lucide-react';
 import loginImg from './login.png';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 const { Title, Text } = Typography;
 
 export default function Login() {
   const location = useLocation();
+  const navigate = useNavigate();
   console.log(location?.state);
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const onFinish = (values) => {
-    console.log('Login values:', values);
-    console.log(location.state);
+    if (!values.email && !values.password) {
+      message.destroy();
+      message.error('Please enter email and password');
+      return;
+    }
+    if (localStorage.getItem('user')) {
+      localStorage.removeItem('user');
+    }
+    localStorage.setItem('user', true);
+    const user = localStorage.getItem('user');
+    if (user) {
+      message.destroy();
+      message.success('Login successful');
+      window.location.href = '/';
+    }
   };
 
   const handleGoogleLogin = () => {

@@ -72,7 +72,7 @@ export const menuItems = {
     },
     {
       name: 'Get Business Valuations',
-      path: '/valuation/valuation',
+      path: '/business-valuaion',
     },
   ],
 };

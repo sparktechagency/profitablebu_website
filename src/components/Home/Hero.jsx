@@ -21,7 +21,7 @@ export default function Home() {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 px-4 py-20 md:py-32 lg:py-40 max-w-6xl mx-auto">
+        <div className="relative z-10 px-4 py-20 md:py-32 lg:py-40 container mx-auto">
           <div className="max-w-2xl">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
               Empowering Your <span className="text-green-500">Business</span>{' '}

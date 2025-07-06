@@ -4,6 +4,7 @@ import img2 from '../../assets/Home/nn.png'
 import img3 from '../../assets/Home/oo.png'
 import back from '../../assets/Home/back.png'
 import { Navigate } from '../Navigate'
+import { Link } from 'react-router-dom'
 const MyBusinessDetails = () => {
   return (
     <div className='container m-auto pb-20 lg:mt-8 mt-11 lg:px-0 px-4'>
@@ -46,8 +47,8 @@ const MyBusinessDetails = () => {
                     <p><span className='font-semibold'>Reason for Selling :</span> Franchise Resale</p>
                 </div>
                 <div className='flex gap-5'>
-                    <button className='bg-[#0091FF] px-4 py-1 rounded text-white'>Edit Franchise information</button>
-                    <button className='bg-[#0091FF] px-4 py-1 rounded text-white'>interested buyers</button>
+                    <Link to={'/addnewbusiness'}><button className='bg-[#0091FF] px-4 py-1 rounded text-white'>Edit Franchise information</button></Link>
+                    <Link to={'/interestBuyer'}><button className='bg-[#0091FF] px-4 py-1 rounded text-white'>interested buyers</button></Link>
                 </div>
             </div>
         </div>

@@ -28,7 +28,7 @@ const Chat = () => {
             <div key={i} className="p-4 hover:bg-gray-50 border-b flex items-start gap-3 bg-white">
               <div className="h-10 w-10 rounded-full overflow-hidden">
                 <img 
-                  src="/placeholder.svg" 
+                  src="https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg" 
                   alt="User avatar" 
                   className="h-full w-full object-cover"
                 />
@@ -52,7 +52,7 @@ const Chat = () => {
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-full overflow-hidden">
               <img 
-                src="/placeholder.svg" 
+                src="https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg" 
                 alt="User avatar" 
                 className="h-full w-full object-cover"
               />
@@ -74,7 +74,7 @@ const Chat = () => {
           <div className="flex flex-col items-center my-6">
             <div className="h-16 w-16 rounded-full overflow-hidden">
               <img 
-                src="/placeholder.svg" 
+                src="https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg" 
                 alt="User profile" 
                 className="h-full w-full object-cover"
               />
@@ -91,7 +91,7 @@ const Chat = () => {
                 <div key={i} className="flex gap-3 mb-4">
                   <div className="h-8 w-8 rounded-full overflow-hidden mt-1">
                     <img 
-                      src="/placeholder.svg" 
+                      src="https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg" 
                       alt="User avatar" 
                       className="h-full w-full object-cover"
                     />

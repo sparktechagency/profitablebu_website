@@ -70,11 +70,11 @@ export const Footer = () => {
         <div>
           <h3 className="font-semibold mb-5">Quick Links</h3>
           <ul className="space-y-1">
-            <li>About Us</li>
-            <li>Contact Us</li>
-            <li>Privacy Policy</li>
-            <li>Terms of Condition</li>
-            <li>Refund and cancellation Policy</li>
+            <Link to={'/about-us'}><li>About Us</li></Link>
+            <Link to={'/contact-us'}><li>Contact Us</li></Link>
+            <Link to={'/<li>Privacy Policy</li>'}><li>Privacy Policy</li></Link>
+            <Link to={'/terms-and-conditions'}><li>Terms of Condition</li></Link>
+            <Link to={'/refund-and-cancellation-policy'}><li>Refund and cancellation Policy</li></Link>
           </ul>
         </div>
 

@@ -180,7 +180,7 @@ const BusinessDirectory = () => {
           <span className="text-base font-medium">
             Starting from ${business.price}
           </span>
-          <Link to={`/business/${business.id}`}>
+          <Link to={`/business-details`}>
             <button
               className={`bg-blue-500 hover:bg-blue-600 ${
                 viewMode === 'list' ? 'mt-3 md:mt-0' : 'mt-3 sm:mt-0'

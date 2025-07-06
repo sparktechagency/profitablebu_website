@@ -1,9 +1,33 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronDown, Menu, X, Globe, User, Search } from 'lucide-react';
+import {
+  ChevronDown,
+  Menu,
+  X,
+  Globe,
+  User,
+  Briefcase,
+  MessageSquare,
+  Bell,
+  Crown,
+  Settings,
+  FileText,
+  HelpCircle,
+  Info,
+  LogOut,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '../assets/Home/logo.png';
 import { menuItems } from '../dummy-data/DummyData';
+import BusinessIcon from './nav-icons/BusinessIcon';
+import MessageIcon from './nav-icons/MessageIcon';
+import BelIcon from './nav-icons/BelIcon';
+import CrownIcon from './nav-icons/CrownIcon';
+import SettingIcon from './nav-icons/SettingIcon';
+import NdaIcon from './nav-icons/NdaIcon';
+import HelpIcon from './nav-icons/HelpIcon';
+import InfoIcon from './nav-icons/InfoIcon';
+import { message } from 'antd';
 const countryFlags = {
   US: 'https://flagcdn.com/w20/us.png',
   GB: 'https://flagcdn.com/w20/gb.png',
@@ -22,10 +46,13 @@ const countries = [
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [countryModalOpen, setCountryModalOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
   const [scrolled, setScrolled] = useState(false);
+  const token = localStorage.getItem('user');
+  const user = token === null;
 
   const dropdownRef = useRef(null);
   const timeoutRef = useRef(null);
@@ -71,7 +98,7 @@ const Navbar = () => {
     },
     { key: 'buying', label: 'Buying', submenu: menuItems.buying },
     { key: 'valuation', label: 'Valuation', submenu: menuItems.valuation },
-    { key: 'business', label: 'Business Formation', path: '/business' },
+    { key: 'business', label: 'Business Formation', path: '/business-formation' },
     { key: 'resources', label: 'Resources', path: '/blog' },
   ];
 
@@ -123,7 +150,7 @@ const Navbar = () => {
                     </button>
                   ) : (
                     <Link
-                      href={item?.path}
+                      to={item?.path}
                       className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
                     >
                       {item?.label}
@@ -173,16 +200,6 @@ const Navbar = () => {
                 <span className="text-[#28A745]">INT</span>
               </button>
 
-              {/* CTA Buttons */}
-              <div className="hidden md:flex items-center space-x-3">
-                <a href="/auth/login">
-                  <button className="flex items-center space-x-2 px-4 py-2 bg-[#0091FF] text-white rounded transition-colors">
-                    <User className="w-4 h-4" />
-                    <span>Login</span>
-                  </button>
-                </a>
-              </div>
-
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -194,6 +211,31 @@ const Navbar = () => {
                   <Menu className="w-6 h-6 text-gray-600" />
                 )}
               </button>
+              {/* CTA Buttons */}
+              {user ? (
+                <div className="flex items-center space-x-3">
+                  <a href="/auth/login">
+                    <button className="flex items-center space-x-2 px-4 py-2 bg-[#0091FF] text-white rounded transition-colors">
+                      <User className="w-4 h-4" />
+                      <span>Login</span>
+                    </button>
+                  </a>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-3">
+                  <button
+                    onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+                    className="flex items-center rounded-full space-x-2 p-2 bg-[#0091FF] text-white transition-colors"
+                  >
+                    {profileMenuOpen ? (
+                      <X className="w-4 h-4" />
+                    ) : (
+                      <User className="w-4 h-4" />
+                    )}
+                  </button>
+                </div>
+              )}
+
             </div>
           </div>
         </div>
@@ -254,6 +296,113 @@ const Navbar = () => {
                   >
                     List Your Business
                   </Link>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+      {/* Profile Menu */}
+      <AnimatePresence>
+        {profileMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden"
+              onClick={() => setProfileMenuOpen(false)}
+            />
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 bottom-0 w-80 bg-white shadow-2xl z-50 overflow-y-auto"
+            >
+              <button
+                onClick={() => setProfileMenuOpen(false)}
+                className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              <div className="p-6">
+                {/* Profile Header */}
+                <div className="flex flex-col items-start space-y-2 mb-6">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                      <User className="w-5 h-5 text-gray-600" />
+                    </div>
+                    <div>
+                      <div className="flex items-center space-x-2">
+                        <span className="font-semibold">Sardor</span>
+                        <span className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-0.5 rounded">
+                          Buyer
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-500">sardor@mail.com</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Navigation Items */}
+                <nav className="space-y-4">
+                  {[
+                    {
+                      icon: BusinessIcon,
+                      label: 'Contacted Businesses',
+                      path: '/contact-us',
+                    },
+                    { icon: MessageIcon, label: 'Message', path: '/chat' },
+                    {
+                      icon: BelIcon,
+                      label: 'Notification',
+                      path: '/notification',
+                    },
+                    {
+                      icon: CrownIcon,
+                      label: 'Subscription',
+                      path: '/subscription',
+                    },
+                    {
+                      icon: SettingIcon,
+                      label: 'Profile Settings',
+                      path: '/profilePage',
+                    },
+                    { icon: NdaIcon, label: 'NDA', path: '/Seller' },
+                    {
+                      icon: HelpIcon,
+                      label: 'Help & Support',
+                      path: '/help-support',
+                    },
+                    { icon: InfoIcon, label: 'FAQs', path: '/faqs' },
+                  ].map((item, idx) => (
+                    <Link
+                      key={idx}
+                      to={item.path}
+                      onClick={() => setProfileMenuOpen(false)}
+                      className="flex cursor-pointer items-center space-x-3 hover:bg-gray-100 p-2 rounded-lg transition-colors"
+                    >
+                      <item.icon className="w-5 h-5 text-gray-600" />
+                      <span className="text-sm font-medium">{item.label}</span>
+                    </Link>
+                  ))}
+                </nav>
+
+                {/* Sign Out */}
+                <div className="border-t border-gray-200 mt-6 pt-4">
+                  <div
+                    onClick={() => {
+                      setProfileMenuOpen(false);
+                      localStorage.removeItem('token');
+                      localStorage.removeItem('user');
+                      message.success('You have been logged out');
+                    }}
+                    className="flex items-center space-x-3 hover:bg-gray-100 p-2 rounded-lg transition-colors cursor-pointer"
+                  >
+                    <LogOut className="w-5 h-5 text-gray-600" />
+                    <span className="text-sm font-medium">Sign Out</span>
+                  </div>
                 </div>
               </div>
             </motion.div>

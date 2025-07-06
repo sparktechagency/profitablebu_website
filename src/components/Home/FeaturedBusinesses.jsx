@@ -5,6 +5,7 @@ import card5 from "../../assets/Home/card5.png";
 import card6 from "../../assets/Home/card6.png";
 import card7 from "../../assets/Home/card7.png";
 import backCard from "../../assets/Home/ii.png";
+import { Link } from "react-router-dom";
 const FeaturedBusinesses = () => {
   const businesses = [
     {
@@ -95,9 +96,9 @@ const FeaturedBusinesses = () => {
                     Starting from{" "}
                     <span className="font-semibold">{business.price}</span>
                   </p>
-                  <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
+                   <Link to={'/details'}><button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
                     View Details
-                  </button>
+                  </button></Link>
                 </div>
               </div>
             ))}
