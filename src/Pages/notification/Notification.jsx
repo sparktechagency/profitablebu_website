@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom"; // React Router Link
 import { ArrowLeft, X } from "lucide-react";
+import { Navigate } from "../Navigate";
 
 
 const Notification = () => {
@@ -49,15 +50,12 @@ const Notification = () => {
   };
 
   return (
-    <div className=" container m-auto bg-white rounded-lg shadow-sm border">
-      <div className="p-4 border-b flex items-center">
-        <Link to="#" className="inline-flex items-center mr-2">
-          <ArrowLeft className="h-5 w-5 text-gray-400" />
-        </Link>
-        <h1 className="text-lg font-medium">Notification</h1>
-      </div>
+    <div className=" container m-auto  ">
+       <div className='mt-8 mb-5'>
+              <Navigate title={'Notification'}></Navigate>
+            </div>
 
-      <div className="divide-y">
+      <div className="divide-y bg-white mb-11">
         {notifications.map((notification) => (
           <div
             key={notification.id}

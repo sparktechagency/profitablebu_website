@@ -1,67 +1,86 @@
 import React from "react";
 import Logo from "../assets/Home/logo.png";
+import backImg from '../assets/Home/footer.png';
+import { FaFacebookF, FaLinkedinIn, FaTwitter, FaYoutube } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
-    <footer className="bg-[#0A0D53] text-white py-10">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Contact Information */}
+    <footer
+      className="bg-[#0A0D53] text-white pt-10 bg-cover bg-center lg:h-[50vh]"
+      style={{ backgroundImage: `url(${backImg})`}}
+    >
+      <div className="container m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 px-6 pb-10">
+
         <div>
-          <img src={Logo} alt="Logo" className="w-16 mb-4" />
-          <h2 className="text-lg font-bold mb-2">Contact Information</h2>
-          <p className="mb-1">Phone Number: +99 125 125894</p>
-          <p className="mb-1">Email: DamieMail@Gmail.Com</p>
-          <p className="mb-4">
-            Address: 2118 Thornridge Cir.
-            <br />
-            Syracuse, Connecticut 35624
-          </p>
-          <p className="font-semibold">
-            Have Questions? Reach Out Today For A Customized Solution!
-          </p>
+          <img src={Logo} alt="Logo" className="w-[200px] mb-4" />
+          <p className="text-sm">© 2023 PBFS.com</p>
+          <div className="flex space-x-3 mt-4">
+            <div className="bg-[#3758F9] flex justify-center items-center p-2 rounded-full">
+              <FaFacebookF />
+            </div>
+            <div className="bg-[#3758F9] flex justify-center items-center p-2 rounded-full">
+              <FaTwitter />
+            </div>
+            <div className="bg-[#3758F9] flex justify-center items-center p-2 rounded-full">
+              <FaYoutube />
+            </div>
+            <div className="bg-[#3758F9] flex justify-center items-center p-2 rounded-full">
+              <FaLinkedinIn />
+            </div>
+          </div>
         </div>
 
-        {/* Services */}
         <div>
-          <h2 className="text-lg font-bold mb-2">Services</h2>
-          <ul className="space-y-1">
-            <li>Structured Cabling (Copper And Fiber)</li>
-            <li>Rack And Device Installation</li>
-            <li>Break/Fix Services</li>
-            <li>Network Migrations And Cutovers</li>
-            <li>Site Surveys</li>
-            <li>Deployment Of New Network Devices</li>
-            <li>Consultations On Cutting-Edge Technologies</li>
+          <h3 className="font-semibold mb-5">Our Buyer Services</h3>
+          <ul className="space-y-1 ">
+            <li>Buy a Business</li>
+            <li>Buy a Franchise</li>
+            <li>Buy a Business Asset</li>
+            <li>Find a Business Idea</li>
+            <li>Buy a Franchise</li>
+            <li>Business Valuation</li>
+            <li>Business Formation</li>
           </ul>
         </div>
 
-        {/* Quick Links */}
         <div>
-          <h2 className="text-lg font-bold mb-2">Quick Link</h2>
+          <h3 className="font-semibold mb-5">Our Seller Services</h3>
           <ul className="space-y-1">
-            <li>Home</li>
-            <li>About Us</li>
-            <li>Blog</li>
-            <li>Contact Us</li>
-            <li>Feedback</li>
+            <li>Businesses for Sale</li>
+            <li>Business Assets for Sale</li>
+            <li>Business Ideas for Investors</li>
+            <li>Franchises for Sale</li>
           </ul>
         </div>
-      </div>
 
-      <div className="mt-8 text-center">
-        <p>Social Media</p>
-        <div className="flex justify-center space-x-4 mt-4">
-          <a href="#" className="hover:text-gray-400">
-            <i className="fab fa-facebook-f"></i>
-          </a>
-          <a href="#" className="hover:text-gray-400">
-            <i className="fab fa-twitter"></i>
-          </a>
-          <a href="#" className="hover:text-gray-400">
-            <i className="fab fa-instagram"></i>
-          </a>
+        <div>
+          <h3 className="font-semibold mb-5">FAQs</h3>
+          <ul className="space-y-3">
+            <Link to={'/faqsSeller'}><li>Seller FAQs</li></Link>
+            <Link to={'/faqs'}><li>Buyer FAQs</li></Link>
+            <Link to={'/FaqBrokers'}><li>Broker FAQs</li></Link>
+            <Link to={'/FaqInvestors'}><li>Investor FAQs</li></Link>
+            <Link to={'/FaqBusiness'}><li>Business Idea Lister FAQs</li></Link>
+            <Link to={'/FaqAsset'}><li>Business Asset Lister FAQs</li></Link>
+            <Link to={'/FaqFranchise'}><li>Franchisor FAQs</li></Link>
+          </ul>
         </div>
+
+        <div>
+          <h3 className="font-semibold mb-5">Quick Links</h3>
+          <ul className="space-y-1">
+            <Link to={'/about-us'}><li>About Us</li></Link>
+            <Link to={'/contact-us'}><li>Contact Us</li></Link>
+            <Link to={'/<li>Privacy Policy</li>'}><li>Privacy Policy</li></Link>
+            <Link to={'/terms-and-conditions'}><li>Terms of Condition</li></Link>
+            <Link to={'/refund-and-cancellation-policy'}><li>Refund and cancellation Policy</li></Link>
+          </ul>
+        </div>
+
       </div>
     </footer>
   );
 };
+
+export default Footer;

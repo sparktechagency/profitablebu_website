@@ -1,40 +1,55 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
-import card from '../../assets/Home/card1.png';
+import React from "react";
+import card from "../../assets/Home/card1.png";
+import card2 from "../../assets/Home/card2.png";
+import card3 from "../../assets/Home/card3.png";
+import card4 from "../../assets/Home/card4.png";
+
+import backCard from "../../assets/Home/ii.png";
+import { Link } from "react-router-dom";
 const BusinessCard = () => {
   const businesses = [
     {
       id: 1,
-      title: 'Powering Better Financial Solutions',
-      location: 'Los Angeles, CA',
-      categories: ['Financial Services', 'Business Consulting'],
-      price: '$100',
+      title: "Powering Better Financial Solutions",
+      location: "Los Angeles, CA",
+      categories: "Financial Services",
+      price: "$100",
       image: card,
-      imageAlt: 'Futuristic office space with purple lighting',
+      imageAlt: "Futuristic office space with purple lighting",
     },
     {
       id: 2,
-      title: 'Powering Better Financial Solutions',
-      location: 'Los Angeles, CA',
-      categories: ['Financial Services', 'Business Consulting'],
-      price: '$100',
-      image: card,
+      title: "Powering Better Financial Solutions",
+      location: "Los Angeles, CA",
+      categories: "Financial Services",
+      price: "$100",
+      image: card2,
       imageAlt:
-        'Business professionals reviewing documents with city lights in background',
+        "Business professionals reviewing documents with city lights in background",
     },
     {
       id: 3,
-      title: 'Powering Better Financial Solutions',
-      location: 'Los Angeles, CA',
-      categories: ['Financial Services', 'Business Consulting'],
-      price: '$100',
-      image: card,
-      imageAlt: 'Modern skyscrapers and office buildings',
+      title: "Powering Better Financial Solutions",
+      location: "Los Angeles, CA",
+      categories: "Financial Services",
+      price: "$100",
+      image: card3,
+      imageAlt: "Modern skyscrapers and office buildings",
+    },
+     {
+      id: 4,
+      title: "Powering Better Financial Solutions",
+      location: "Los Angeles, CA",
+      categories: "Financial Services",
+      price: "$100",
+      image: card4,
+      imageAlt: "Modern skyscrapers and office buildings",
     },
   ];
   return (
     <div>
-      <div className="">
+      <div className="-mt-16 md:-mt-0">
         <div className="">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center">
@@ -54,11 +69,14 @@ const BusinessCard = () => {
             </a>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {businesses.map((business) => (
               <div
                 key={business.id}
-                className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow"
+                className="  bg-cover bg-center rounded"
+                style={{
+                  backgroundImage: `url(${backCard})`,
+                }}
               >
                 <div className="h-48 relative">
                   <img
@@ -73,21 +91,15 @@ const BusinessCard = () => {
                   </h3>
                   <p className="text-gray-600 mb-2">{business.location}</p>
                   <div className="mb-2">
-                    <span className="text-blue-500">
-                      {business.categories[0]}
-                    </span>
-                    <span className="mx-2 text-gray-400">||</span>
-                    <span className="text-orange-500">
-                      {business.categories[1]}
-                    </span>
+                    <span className="text-blue-500">{business.categories}</span> || <span className="text-[#D97706]">Business Consulting</span>
                   </div>
                   <p className="text-gray-800 mb-4">
-                    Starting from{' '}
+                    Starting from{" "}
                     <span className="font-semibold">{business.price}</span>
                   </p>
-                  <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
+                  <Link to={'/details'}><button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
                     View Details
-                  </button>
+                  </button></Link>
                 </div>
               </div>
             ))}

@@ -7,6 +7,7 @@ import {
   FileText,
   Info,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function BusinessValuationForm() {
   const [formData, setFormData] = useState({
@@ -525,12 +526,12 @@ export default function BusinessValuationForm() {
               policy, and consent to cookies being stored on your computer.
             </p>
 
-            <button
+           <Link to={'/business-valuaion-submission'}> <button
               type="submit"
               className="w-full bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 text-lg font-medium rounded-md"
             >
               Get Valuations
-            </button>
+            </button></Link>
           </div>
         </div>
       </form>

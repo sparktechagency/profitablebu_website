@@ -5,7 +5,7 @@ export const Navigate = ({title}) => {
     const navigate = useNavigate()
   return (
    <div className=''>
-     <div className='bg-white shadow py-3 px-3 my-2 '>
+     <div className='bg-white shadow py-3 px-3 my-2'>
         <div
           style={{
             display: "flex",

@@ -6,7 +6,7 @@ import { Navigate } from '../Navigate';
 const Subscription = () => {
   return (
     <div>
-        <div className="container mx-auto p-4 space-y-4">
+        <div className="container mx-auto p-4 space-y-4 mt-11">
       {/* Header */}
       <Navigate title={'Subscription'}></Navigate>
 
