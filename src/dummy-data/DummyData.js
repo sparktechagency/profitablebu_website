@@ -28,19 +28,23 @@ export const menuItems = {
   selling: [
     {
       name: 'Businesses for Sale',
-      path: '/selling/businesses',
+      path: '/auth/login',
+      state: 'businesses',
     },
     {
       name: 'Business Assets for Sale',
-      path: '/selling/assets',
+      path: '/auth/login',
+      state: 'assets',
     },
     {
       name: 'Business Ideas for Investors',
-      path: '/selling/ideas',
+      path: '/auth/login',
+      state: 'ideas',
     },
     {
       name: 'Franchises for Sale',
-      path: '/selling/franchises',
+      path: '/auth/login',
+      state: 'franchises',
     },
   ],
   buying: [

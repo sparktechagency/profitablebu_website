@@ -1,5 +1,5 @@
-import { Root } from "../layout/Root";
-import { AboutPage } from "../Pages/selling/AboutPage";
+import { Root } from '../layout/Root';
+import { AboutPage } from '../Pages/selling/AboutPage';
 // import { CompanyPage } from "../Pages/CompanyPage/CompanyPage";
 import { TechPartnerPage } from "../Pages/selling/TechPartnerPage";
 import { ContuctUsPage } from "../Pages/ContactUsPage/ContuctUsPage";
@@ -54,45 +54,45 @@ import FaqInvestors from "../Pages/faq/FaqInvestors";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        path: '/',
         element: <HomePage></HomePage>,
       },
       {
-        path: "/company/about-us",
+        path: '/company/about-us',
         element: <AboutPage></AboutPage>,
       },
       {
-        path: "/company/tech-pertners",
+        path: '/company/tech-pertners',
         element: <TechPartnerPage></TechPartnerPage>,
       },
       {
-        path: "/services/Structure-Cabling",
+        path: '/services/Structure-Cabling',
         element: <StructuredCabilingPage></StructuredCabilingPage>,
       },
       {
-        path: "/services/Break-FixServices",
+        path: '/services/Break-FixServices',
         element: <BreakFixServicesPage></BreakFixServicesPage>,
       },
       {
-        path: "/contactUs",
+        path: '/contactUs',
         element: <ContuctUsPage></ContuctUsPage>,
       },
       {
-        path: "/blog",
+        path: '/blog',
         element: <BlogPage></BlogPage>,
       },
       {
-        path: "/subscription",
+        path: '/subscription',
         element: <Subscription></Subscription>,
       },
       {
-        path: "/plane",
-        element: <SubscriptionPlane></SubscriptionPlane>
+        path: '/plane',
+        element: <SubscriptionPlane></SubscriptionPlane>,
       },
       {
         path: "/allFaqs",
@@ -129,39 +129,44 @@ export const router = createBrowserRouter([
       
       {
         path: "/notification",
+        path: '/faqs',
+        element: <Faqs></Faqs>,
+      },
+      {
+        path: '/notification',
         element: <Notification></Notification>,
       },
       {
-        path: "/chat",
+        path: '/chat',
         element: <Chat></Chat>,
       },
       {
-        path: "/myBusiness/details",
+        path: '/myBusiness/details',
         element: <MyBusiness></MyBusiness>,
       },
       {
-        path: "/interestBuyer",
+        path: '/interestBuyer',
         element: <InterestedBuyer></InterestedBuyer>,
       },
       {
-        path: "/interestBuyer/details",
+        path: '/interestBuyer/details',
         element: <InterestBuyerDetails></InterestBuyerDetails>,
       },
       {
-        path: "/details",
+        path: '/details',
         element: <MyBusinessDetails></MyBusinessDetails>,
       },
       {
-        path: "/addnewbusiness",
+        path: '/addnewbusiness',
         element: <AddNewBusiness></AddNewBusiness>,
       },
       {
-        path: "/submit-a-ticket",
+        path: '/submit-a-ticket',
         element: <SubmitTicketPage></SubmitTicketPage>,
       },
 
       {
-        path: "/profilePage",
+        path: '/profilePage',
         element: <ProfilePage></ProfilePage>,
       },
       {
@@ -173,94 +178,94 @@ export const router = createBrowserRouter([
         element: <EditProfile></EditProfile>,
       },
       {
-        path: "/profilePage/ongoing-tickets",
+        path: '/profilePage/ongoing-tickets',
         element: <OngoingTicketPage></OngoingTicketPage>,
       },
       {
-        path: "/search",
+        path: '/search',
         element: <BusinessDirectory />,
       },
       {
-        path: "/business/:id",
+        path: '/business/:id',
         element: <BusinessDetails />,
       },
 
       // aman
 
       {
-        path: "/advanced-search",
+        path: '/advanced-search',
         element: <AdvanceSearch />,
       },
       {
-        path: "/business-details",
+        path: '/business-details',
         element: <BussinessDetails />,
       },
       {
-        path: "/business-details-with-form",
+        path: '/business-details-with-form',
         element: <BussinessDetailsWithForm />,
       },
       {
-        path: "/buyer-contact-info",
+        path: '/buyer-contact-info',
         element: <BuyerContactInfo />,
       },
       {
-        path: "/business-valuaion",
+        path: '/business-valuaion',
         element: <BusinessValuationForm />,
       },
       {
-        path: "/business-valuaion-submission",
+        path: '/business-valuaion-submission',
         element: <BusinessValuationSubmission />,
       },
       {
-        path: "/business-formation",
+        path: '/business-formation',
         element: <BusinessFormation />,
       },
       {
-        path: "/business-formation-details",
+        path: '/business-formation-details',
         element: <BusinessFormationDetails />,
       },
       {
-        path: "/about-us",
+        path: '/about-us',
         element: <AboutUs />,
       },
-      
+
       {
-        path: "/terms-and-conditions",
+        path: '/terms-and-conditions',
         element: <TermsAndConditions />,
       },
       {
-        path: "/refund-and-cancellation-policy",
+        path: '/refund-and-cancellation-policy',
         element: <RefundAndCancellationPolicy />,
       },
       {
-        path: "/privacy-policy",
+        path: '/privacy-policy',
         element: <PrivacyPolicy />,
       },
       {
-        path: "/contact-us",
+        path: '/contact-us',
         element: <ContactUs />,
       },
-    ],
-  },
-  {
-    path: "/auth/login",
-    element: <Login></Login>,
-  },
-  {
-    path: "/auth/signUp",
-    element: <SignUp></SignUp>,
-  },
-  {
-    path: "/auth/forgot-password",
-    element: <ForgotPassword></ForgotPassword>,
-  },
+      {
+        path: '/auth/login',
+        element: <Login></Login>,
+      },
+      {
+        path: '/auth/signUp',
+        element: <SignUp></SignUp>,
+      },
+      {
+        path: '/auth/forgot-password',
+        element: <ForgotPassword></ForgotPassword>,
+      },
 
-  {
-    path: "/auth/verification",
-    element: <Verification></Verification>,
-  },
-  {
-    path: "/auth/update-password",
-    element: <NewPassword></NewPassword>,
+      {
+        path: '/auth/verification',
+        element: <Verification></Verification>,
+      },
+      {
+        path: '/auth/update-password',
+        element: <NewPassword></NewPassword>,
+      },
+    ],
   },
 ]);
