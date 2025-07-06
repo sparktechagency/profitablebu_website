@@ -13,7 +13,6 @@ import Login from '../Auth/Login';
 import { ForgotPassword } from '../Auth/ForgotPassword';
 import { Verification } from '../Auth/Verification';
 import { NewPassword } from '../Auth/NewPassword';
-import { SignUp } from '../Auth/SignUp';
 import { ProfilePage } from '../Pages/ProfilePage/ProfilePage';
 import { OngoingTicketPage } from '../Pages/ProfilePage/OngoingTicketPage';
 import Faqs from '../Pages/faq/Faqs';
@@ -43,6 +42,8 @@ import BusinessValuationSubmission from '../Pages/BussinessValuation/BusinessVal
 import BusinessFormation from '../Pages/BusinessFormation/BusinessFormation';
 import BusinessFormationDetails from '../Pages/BusinessFormation/BusinessFormationDetails';
 import SubscriptionPlane from '../Pages/plane/SubscriptionPlane';
+import SignUp from '../Auth/SignUp';
+import ChooseRole from '../Auth/ChooseRole';
 
 export const router = createBrowserRouter([
   {
@@ -219,6 +220,10 @@ export const router = createBrowserRouter([
       {
         path: '/auth/update-password',
         element: <NewPassword></NewPassword>,
+      },
+      {
+        path: '/auth/choose-role',
+        element: <ChooseRole></ChooseRole>,
       },
     ],
   },
