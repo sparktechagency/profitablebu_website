@@ -3,13 +3,13 @@ import {
   Form,
   Input,
   Button,
-  Checkbox,
   Typography,
   Card,
   Row,
   Col,
   Divider,
   message,
+  Select,
 } from 'antd';
 import { ArrowLeft } from 'lucide-react';
 import loginImg from './login.png';
@@ -43,6 +43,59 @@ function SignUp() {
   const handleGoogleLogin = () => {
     console.log('Google login clicked');
   };
+
+  const countries = [
+    {
+      name: 'United States',
+      code: 'US',
+      flag: 'https://flagcdn.com/w20/us.png',
+    },
+    {
+      name: 'United Kingdom',
+      code: 'GB',
+      flag: 'https://flagcdn.com/w20/gb.png',
+    },
+    {
+      name: 'Canada',
+      code: 'CA',
+      flag: 'https://flagcdn.com/w20/ca.png',
+    },
+    {
+      name: 'Australia',
+      code: 'AU',
+      flag: 'https://flagcdn.com/w20/au.png',
+    },
+    {
+      name: 'Germany',
+      code: 'DE',
+      flag: 'https://flagcdn.com/w20/de.png',
+    },
+    {
+      name: 'France',
+      code: 'FR',
+      flag: 'https://flagcdn.com/w20/fr.png',
+    },
+    {
+      name: 'Italy',
+      code: 'IT',
+      flag: 'https://flagcdn.com/w20/it.png',
+    },
+    {
+      name: 'Spain',
+      code: 'ES',
+      flag: 'https://flagcdn.com/w20/es.png',
+    },
+    {
+      name: 'United Arab Emirates',
+      code: 'AE',
+      flag: 'https://flagcdn.com/w20/ae.png',
+    },
+    {
+      name: 'India',
+      code: 'IN',
+      flag: 'https://flagcdn.com/w20/in.png',
+    },
+  ];
 
   return (
     <div className="relative flex items-center justify-center md:p-20 p-4">
@@ -91,18 +144,8 @@ function SignUp() {
                 level={2}
                 style={{ marginBottom: '8px', color: '#1f2937' }}
               >
-                Login to Account
+                Create Your Account
               </Title>
-              <Text
-                style={{
-                  color: '#6b7280',
-                  marginBottom: '32px',
-                  display: 'block',
-                }}
-              >
-                Please enter your email and password to continue as{' '}
-                {location?.state}
-              </Text>
 
               <Form
                 requiredMark={false}
@@ -111,6 +154,16 @@ function SignUp() {
                 onFinish={onFinish}
                 autoComplete="off"
               >
+                <Form.Item
+                  label="Name"
+                  name="name"
+                  rules={[
+                    { required: true, message: 'Please input your name!' },
+                  ]}
+                >
+                  <Input placeholder="John Doe" style={{ height: '48px' }} />
+                </Form.Item>
+
                 <Form.Item
                   label="Email address"
                   name="email"
@@ -123,6 +176,42 @@ function SignUp() {
                     placeholder="esfutui_sch@gmail.com"
                     style={{ height: '48px' }}
                   />
+                </Form.Item>
+                <Form.Item
+                  label="Mobile Number"
+                  name="mobile"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input your mobile number!',
+                    },
+                  ]}
+                >
+                  <Input placeholder="1234567890" style={{ height: '48px' }} />
+                </Form.Item>
+                <Form.Item
+                  label="Select Your Country "
+                  name="country"
+                  rules={[
+                    { required: true, message: 'Please select your country!' },
+                  ]}
+                >
+                  <Select
+                    placeholder="Select your country"
+                    style={{ height: '48px' }}
+                    showSearch
+                  >
+                    {countries.map((country) => (
+                      <Select.Option
+                        key={country.code}
+                        value={country.code}
+                        className="flex items-center gap-2"
+                      >
+                        <img src={country.flag} alt={country.name} />{' '}
+                        {country.name}
+                      </Select.Option>
+                    ))}
+                  </Select>
                 </Form.Item>
 
                 <Form.Item
@@ -141,19 +230,34 @@ function SignUp() {
                     }}
                   />
                 </Form.Item>
-
-                <Row justify="space-between" style={{ marginBottom: '24px' }}>
-                  <Form.Item
-                    name="remember"
-                    valuePropName="checked"
-                    style={{ margin: 0 }}
-                  >
-                    <Checkbox>Remember Password</Checkbox>
-                  </Form.Item>
-                  <Button type="link" style={{ color: '#3b82f6', padding: 0 }}>
-                    Forgot Password?
-                  </Button>
-                </Row>
+                <Form.Item
+                  label="Confirm Password"
+                  name="confirmPassword"
+                  rules={[
+                    { required: true, message: 'Please input your password!' },
+                  ]}
+                >
+                  <Input.Password
+                    placeholder="••••••••"
+                    style={{ height: '48px' }}
+                    visibilityToggle={{
+                      visible: passwordVisible,
+                      onVisibleChange: setPasswordVisible,
+                    }}
+                  />
+                </Form.Item>
+                <h1>
+                  Already have an account?
+                  <Link type="link" to="/auth/login">
+                    <Button
+                      type="link"
+                      className="hover:underline"
+                      style={{ color: '#3b82f6', padding: 0 }}
+                    >
+                      Log In
+                    </Button>
+                  </Link>
+                </h1>
 
                 <Form.Item>
                   <Button

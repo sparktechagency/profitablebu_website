@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button } from 'antd';
+import { motion } from 'framer-motion';
 import img from '../../public/role-choose.png';
+import { useNavigate } from 'react-router-dom';
 
 function ChooseRole() {
   const data = [
@@ -8,36 +10,43 @@ function ChooseRole() {
       title: 'Buyer',
       description:
         '“List your business for sale, manage offers, and close deals securely.”',
+      state: 'buyer',
     },
     {
       title: 'Seller',
       description:
         '“Browse businesses for sale, compare options, and connect with sellers.”',
+      state: 'seller',
     },
     {
       title: 'Broker',
       description:
         '“Browse businesses for sale, compare options, and connect with sellers.”',
+      state: 'broker',
     },
     {
       title: 'Franchise Seller',
       description: '“Browse businesses for sale, compare options',
+      state: 'franchise-seller',
     },
     {
       title: 'Investor',
       description: '“Browse businesses for sale, compare options',
+      state: 'investor',
     },
     {
       title: 'Business Idea Lister',
       description: '“Browse businesses for sale, compare options',
+      state: 'business-idea-lister',
     },
     {
       title: 'Asset Seller',
       description: '“Browse businesses for sale, compare options',
+      state: 'asset-seller',
     },
   ];
   return (
-    <div className="container my-28 mx-auto">
+    <div className="container my-28 px-2 mx-auto">
       <div className="text-center">
         <h1 className="text-4xl font-bold">
           Choose <span className="text-[#00FF3A] ">Your Role</span> to Get
@@ -48,35 +57,56 @@ function ChooseRole() {
           experience.
         </p>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="grid grid-cols-1 lg:grid-cols-2 gap-4"
+      >
         {data.map((item, index) => (
-          <Card key={index} title={item.title} description={item.description} />
+          <Card
+            key={index}
+            title={item.title}
+            description={item.description}
+            state={item.state}
+          />
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }
 
 export default ChooseRole;
 
-const Card = ({ title, description }) => {
+const Card = ({ title, description, state }) => {
+  const navigate = useNavigate();
   return (
-    <div className="flex">
-      <div className="w-3/5 h-[300px]">
+    <motion.div
+      initial={{ scale: 0.9, opacity: 0, y: 20, backdropFilter: 'blur(100px)' }}
+      whileInView={{ scale: 1, opacity: 1, y: 0, backdropFilter: 'blur(0px)' }}
+      transition={{ duration: 0.5 }}
+      className="flex items-center justify-center"
+    >
+      <div className="sm:w-3/5 w-full  sm:block hidden h-[300px]">
         <img className="w-full h-full object-cover" src={img} alt={title} />
       </div>
-      <div className="w-3/5  relative h-full">
-        <div className="absolute backdrop-blur-xl bg-[#0091FF]/15  h-fit py-[42px] px-[20px] right-20 flex items-start justify-center flex-col  top-1/2 transform -translate-y-1/2 w-full rounded">
-          <div className="flex gap-2">
-            <h1 className="font-bold text-4xl">Become a </h1>
-            <span className="text-[#00FF3A] font-bold text-4xl">{title}</span>
-          </div>
+      <div className="sm:w-3/5 w-full h-[200px] mt-12 sm:mt-0 sm:h-full relative">
+        <div className="absolute backdrop-blur-xl bg-[#0091FF]/15 h-fit py-[42px] px-[20px] sm:right-20 flex items-start justify-center flex-col  top-1/2 transform -translate-y-1/2 w-full rounded">
+          <h1 className="font-bold sm:text-4xl text-2xl">
+            Become a{' '}
+            <span className="text-[#00FF3A] font-bold sm:text-4xl text-2xl">
+              {title}
+            </span>
+          </h1>
           <p className="text-black font-bold text-base">{description}</p>
-          <Button className="mt-4 px-12 py-6 text-base bg-[#0091FF] text-white hover:!bg-[#0091FF]/80 hover:!text-white border-none font-semibold">
+          <Button
+            onClick={() => navigate(`/auth/signUp`, { state })}
+            className="mt-4 sm:px-12 sm:py-6 py-4 text-base bg-[#0091FF] text-white hover:!bg-[#0091FF]/80 hover:!text-white border-none font-semibold"
+          >
             Get Started
           </Button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
