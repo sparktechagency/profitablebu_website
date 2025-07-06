@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Form,
   Input,
@@ -10,92 +10,44 @@ import {
   Divider,
   message,
   Select,
-} from 'antd';
-import { ArrowLeft } from 'lucide-react';
-import loginImg from './login.png';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+} from "antd";
+import { ArrowLeft } from "lucide-react";
+import loginImg from "./login.png";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import ReactPhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import { countryData } from "../dummy-data/DummyData";
 const { Title, Text } = Typography;
 
 function SignUp() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [contactNo, setContactNo] = useState("");
   console.log(location?.state);
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const onFinish = (values) => {
     if (!values.email && !values.password) {
       message.destroy();
-      message.error('Please enter email and password');
+      message.error("Please enter email and password");
       return;
     }
-    if (localStorage.getItem('user')) {
-      localStorage.removeItem('user');
+    if (localStorage.getItem("user")) {
+      localStorage.removeItem("user");
     }
-    localStorage.setItem('user', true);
-    const user = localStorage.getItem('user');
+    localStorage.setItem("user", true);
+    const user = localStorage.getItem("user");
     if (user) {
       message.destroy();
-      message.success('Login successful');
-      window.location.href = '/';
+      message.success("Login successful");
+      window.location.href = "/";
     }
   };
 
   const handleGoogleLogin = () => {
-    console.log('Google login clicked');
+    console.log("Google login clicked");
   };
 
-  const countries = [
-    {
-      name: 'United States',
-      code: 'US',
-      flag: 'https://flagcdn.com/w20/us.png',
-    },
-    {
-      name: 'United Kingdom',
-      code: 'GB',
-      flag: 'https://flagcdn.com/w20/gb.png',
-    },
-    {
-      name: 'Canada',
-      code: 'CA',
-      flag: 'https://flagcdn.com/w20/ca.png',
-    },
-    {
-      name: 'Australia',
-      code: 'AU',
-      flag: 'https://flagcdn.com/w20/au.png',
-    },
-    {
-      name: 'Germany',
-      code: 'DE',
-      flag: 'https://flagcdn.com/w20/de.png',
-    },
-    {
-      name: 'France',
-      code: 'FR',
-      flag: 'https://flagcdn.com/w20/fr.png',
-    },
-    {
-      name: 'Italy',
-      code: 'IT',
-      flag: 'https://flagcdn.com/w20/it.png',
-    },
-    {
-      name: 'Spain',
-      code: 'ES',
-      flag: 'https://flagcdn.com/w20/es.png',
-    },
-    {
-      name: 'United Arab Emirates',
-      code: 'AE',
-      flag: 'https://flagcdn.com/w20/ae.png',
-    },
-    {
-      name: 'India',
-      code: 'IN',
-      flag: 'https://flagcdn.com/w20/in.png',
-    },
-  ];
 
   return (
     <div className="relative flex items-center justify-center md:p-20 p-4">
@@ -116,10 +68,10 @@ function SignUp() {
               type="text"
               icon={<ArrowLeft size={20} />}
               style={{
-                position: 'absolute',
-                top: '20px',
-                left: '20px',
-                color: 'white',
+                position: "absolute",
+                top: "20px",
+                left: "20px",
+                color: "white",
                 zIndex: 1,
               }}
             />
@@ -129,20 +81,20 @@ function SignUp() {
         <Col xs={24} md={12}>
           <Card
             style={{
-              height: '100%',
-              border: 'none',
+              height: "100%",
+              border: "none",
             }}
             bodyStyle={{
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
             }}
           >
-            <div style={{ width: '100%', margin: '0 auto' }}>
+            <div style={{ width: "100%", margin: "0 auto" }}>
               <Title
                 level={2}
-                style={{ marginBottom: '8px', color: '#1f2937' }}
+                style={{ marginBottom: "8px", color: "#1f2937" }}
               >
                 Create Your Account
               </Title>
@@ -158,57 +110,65 @@ function SignUp() {
                   label="Name"
                   name="name"
                   rules={[
-                    { required: true, message: 'Please input your name!' },
+                    { required: true, message: "Please input your name!" },
                   ]}
                 >
-                  <Input placeholder="John Doe" style={{ height: '48px' }} />
+                  <Input placeholder="John Doe" style={{ height: "48px" }} />
                 </Form.Item>
 
                 <Form.Item
                   label="Email address"
                   name="email"
                   rules={[
-                    { required: true, message: 'Please input your email!' },
-                    { type: 'email', message: 'Please enter a valid email!' },
+                    { required: true, message: "Please input your email!" },
+                    { type: "email", message: "Please enter a valid email!" },
                   ]}
                 >
                   <Input
                     placeholder="esfutui_sch@gmail.com"
-                    style={{ height: '48px' }}
+                    style={{ height: "48px" }}
                   />
                 </Form.Item>
                 <Form.Item
-                  label="Mobile Number"
-                  name="mobile"
+                  label="Phone Number"
+                  name="contactNo"
+                  required
                   rules={[
                     {
                       required: true,
-                      message: 'Please input your mobile number!',
+                      message: "Please enter your phone number!",
                     },
                   ]}
                 >
-                  <Input placeholder="1234567890" style={{ height: '48px' }} />
+                  <ReactPhoneInput
+                    country={"us"}
+                    value={contactNo}
+                    onChange={(value) => setContactNo(value)}
+                    inputStyle={{ width: "100%" }}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Select Your Country "
                   name="country"
                   rules={[
-                    { required: true, message: 'Please select your country!' },
+                    { required: true, message: "Please select your country!" },
                   ]}
                 >
                   <Select
                     placeholder="Select your country"
-                    style={{ height: '48px' }}
+                    style={{ height: "48px" }}
                     showSearch
+                    allowClear
                   >
-                    {countries.map((country) => (
+                    {countryData.map((country) => (
                       <Select.Option
                         key={country.code}
                         value={country.code}
-                        className="flex items-center gap-2"
                       >
-                        <img src={country.flag} alt={country.name} />{' '}
-                        {country.name}
+                        <div className="flex items-center gap-2">
+                          <img src={country.flag} alt={country.name} />{" "}
+                          {country.name}
+                        </div>
                       </Select.Option>
                     ))}
                   </Select>
@@ -218,12 +178,12 @@ function SignUp() {
                   label="Password"
                   name="password"
                   rules={[
-                    { required: true, message: 'Please input your password!' },
+                    { required: true, message: "Please input your password!" },
                   ]}
                 >
                   <Input.Password
                     placeholder="••••••••"
-                    style={{ height: '48px' }}
+                    style={{ height: "48px" }}
                     visibilityToggle={{
                       visible: passwordVisible,
                       onVisibleChange: setPasswordVisible,
@@ -234,12 +194,12 @@ function SignUp() {
                   label="Confirm Password"
                   name="confirmPassword"
                   rules={[
-                    { required: true, message: 'Please input your password!' },
+                    { required: true, message: "Please input your password!" },
                   ]}
                 >
                   <Input.Password
                     placeholder="••••••••"
-                    style={{ height: '48px' }}
+                    style={{ height: "48px" }}
                     visibilityToggle={{
                       visible: passwordVisible,
                       onVisibleChange: setPasswordVisible,
@@ -252,7 +212,7 @@ function SignUp() {
                     <Button
                       type="link"
                       className="hover:underline"
-                      style={{ color: '#3b82f6', padding: 0 }}
+                      style={{ color: "#3b82f6", padding: 0 }}
                     >
                       Log In
                     </Button>
@@ -265,11 +225,11 @@ function SignUp() {
                     htmlType="submit"
                     block
                     style={{
-                      height: '48px',
-                      background: '#3b82f6',
-                      borderColor: '#3b82f6',
+                      height: "48px",
+                      background: "#3b82f6",
+                      borderColor: "#3b82f6",
                       // borderRadius: '8px',
-                      fontSize: '16px',
+                      fontSize: "16px",
                       fontWeight: 500,
                     }}
                   >
@@ -278,22 +238,22 @@ function SignUp() {
                 </Form.Item>
               </Form>
 
-              <Divider style={{ margin: '24px 0' }}>
-                <Text style={{ color: '#6b7280' }}>Or continue with</Text>
+              <Divider style={{ margin: "24px 0" }}>
+                <Text style={{ color: "#6b7280" }}>Or continue with</Text>
               </Divider>
 
               <Button
                 block
                 onClick={handleGoogleLogin}
                 style={{
-                  height: '48px',
+                  height: "48px",
                   // borderRadius: '8px',
-                  border: '1px solid #d1d5db',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  marginBottom: '24px',
+                  border: "1px solid #d1d5db",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px",
+                  marginBottom: "24px",
                 }}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24">
@@ -319,17 +279,17 @@ function SignUp() {
 
               <Text
                 style={{
-                  textAlign: 'center',
-                  display: 'block',
-                  color: '#6b7280',
+                  textAlign: "center",
+                  display: "block",
+                  color: "#6b7280",
                 }}
               >
-                Don&apos; have an account?{' '}
+                Don&apos; have an account?{" "}
                 <Link to="/auth/signUp">
                   <Button
                     type="link"
                     className="hover:underline"
-                    style={{ color: '#3b82f6', padding: 0 }}
+                    style={{ color: "#3b82f6", padding: 0 }}
                   >
                     Sign up
                   </Button>
