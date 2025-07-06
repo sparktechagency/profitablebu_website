@@ -5,14 +5,6 @@ import {
   X,
   Globe,
   User,
-  Briefcase,
-  MessageSquare,
-  Bell,
-  Crown,
-  Settings,
-  FileText,
-  HelpCircle,
-  Info,
   LogOut,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
