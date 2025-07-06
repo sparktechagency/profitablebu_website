@@ -5,14 +5,6 @@ import {
   X,
   Globe,
   User,
-  Briefcase,
-  MessageSquare,
-  Bell,
-  Crown,
-  Settings,
-  FileText,
-  HelpCircle,
-  Info,
   LogOut,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -150,7 +142,7 @@ const Navbar = () => {
                     </button>
                   ) : (
                     <Link
-                      href={item?.path}
+                      to={item?.path}
                       className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
                     >
                       {item?.label}
