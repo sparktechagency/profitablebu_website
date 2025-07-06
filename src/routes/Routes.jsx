@@ -238,7 +238,7 @@ export const router = createBrowserRouter([
         element: <RefundAndCancellationPolicy />,
       },
       {
-        path: '/<li>Privacy Policy</li>',
+        path: '/privacy-policy',
         element: <PrivacyPolicy />,
       },
       {
