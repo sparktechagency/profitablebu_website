@@ -40,7 +40,7 @@ function SignUp() {
     if (user) {
       message.destroy();
       message.success('Login successful');
-      navigate('/auth/forgot-password');
+      navigate('/plane');
     }
   };
 
