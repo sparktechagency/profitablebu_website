@@ -3,6 +3,7 @@ import img1 from "../../assets/country-icons/afg.png";
 import img2 from "../../assets/country-icons/pak.png";
 import img3 from "../../assets/country-icons/un.png";
 import backImg from "../../assets/Home/aaa.png";
+import { Link } from "react-router-dom";
 const Country = () => {
   return (
     <div>
@@ -25,7 +26,7 @@ const Country = () => {
       </div>
       <div className="grid grid-cols-3 gap-4 mt-10">
         {[img1, img2, img3].map((img, index) => (
-          <div
+          <Link to={'/search'}><div
             key={index}
             className="relative group overflow-hidden rounded-lg shadow-md"
           >
@@ -42,7 +43,7 @@ const Country = () => {
                 <p className="text-white text-2xl">Business Available</p>
               </div>
             </div>
-          </div>
+          </div></Link>
         ))}
       </div>
       <div
@@ -68,7 +69,7 @@ const Country = () => {
              <div className="">
               <h1 className="text-4xl font-bold pb-4 text-black">Subscribe Now</h1>
               <div className="flex gap-3">
-                <input className="border p-3 border-black w-full rounded" placeholder="Enter Your Email" type="text" />
+                <input className="border p-3 text-black border-black w-full rounded" placeholder="Enter Your Email" type="text" />
               <button className="bg-[#D97706] px-4 py-2 rounded">Submit</button>
               </div>
               <p className="text-xl pt-3 text-black">you will receive every news and pro tips</p>

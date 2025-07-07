@@ -50,7 +50,7 @@ const FeaturedBusinesses = () => {
     <div>
       <div className="">
         <div className="">
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-6 md:mt-28 ">
             <div className="flex items-center">
               <div className="w-[5px] h-12 rounded-r bg-[#00FF3A] mr-4 "></div>
               <div>
