@@ -47,7 +47,7 @@ const MyBusinessDetails = () => {
                     <p><span className='font-semibold'>Reason for Selling :</span> Franchise Resale</p>
                 </div>
                 <div className='flex gap-5'>
-                    <Link to={'/addnewbusiness'}><button className='bg-[#0091FF] px-4 py-1 rounded text-white'>Edit Franchise information</button></Link>
+                    <Link to={'/EditNewBusiness'}><button className='bg-[#0091FF] px-4 py-1 rounded text-white'>Edit Franchise information</button></Link>
                     <Link to={'/interestBuyer'}><button className='bg-[#0091FF] px-4 py-1 rounded text-white'>interested buyers</button></Link>
                 </div>
             </div>

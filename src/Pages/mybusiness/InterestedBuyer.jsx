@@ -1,5 +1,6 @@
 import React from 'react'
 import { Navigate } from '../Navigate'
+import { Link } from 'react-router-dom'
 
 const buyers = [
   {
@@ -71,9 +72,9 @@ const InterestedBuyer = () => {
           </div>
 
           {/* Right Section */}
-          <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-sm">
+          <Link to={'/interestBuyer/details'}><button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-sm">
             view Details
-          </button>
+          </button></Link>
         </div>
       ))}
     </div>

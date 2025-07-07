@@ -22,18 +22,18 @@ export default function Home() {
 
         {/* Hero Content */}
         <div className="relative z-10 px-4 py-20 md:py-32 lg:py-40 container mx-auto">
-          <div className="max-w-2xl">
+          <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Empowering Your <span className="text-green-500">Business</span>{' '}
+              Empowering Your <span className="text-[#00FF3A]">Business</span>{' '}
               with Smart{' '}
-              <span className="text-blue-500">Financial Solutions</span>
+              <span className="text-[#0091FF]">Financial Solutions</span>
             </h1>
             <p className="text-white text-lg mb-8">
               At PBFS.com, we provide tailored financial strategies, expert
               advice, and seamless support to help your business grow stronger
               and faster.
             </p>
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded text-lg h-auto">
+            <button className="bg-[#0091FF] hover:bg-blue-600 text-white px-8 py-3 rounded text-lg h-auto">
               Get Started
             </button>
           </div>
@@ -41,11 +41,11 @@ export default function Home() {
       </div>
 
       {/* Search Section */}
-      <div className="relative z-20 mx-auto lg:-mt-16 mt-16 md:mt-0 md:-mt-24 max-w-4xl px-4">
+      <div className="relative z-20 mx-auto lg:-mt-28 mt-16  md:-mt-28 max-w-4xl px-4">
         <div className="bg-gradient-to-r from-sky-200/90 to-sky-300/30 backdrop-blur-sm rounded-lg p-8 shadow-lg">
-          <h2 className="text-2xl md:text-3xl font-semibold text-center mb-6">
-            You Find A <span className="text-green-400">Business</span> For{' '}
-            <span className="text-blue-500">Yourself</span>.
+          <h2 className="text-2xl md:text-3xl font-semibold text-white text-center mb-6">
+            You Find A <span className="text-[#00FF3A]">Business</span> For{' '}
+            <span className="text-[#0091FF]">Yourself</span>.
           </h2>
 
           <form

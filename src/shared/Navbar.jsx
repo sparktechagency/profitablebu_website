@@ -343,7 +343,7 @@ const Navbar = () => {
                     {
                       icon: BusinessIcon,
                       label: 'Contacted Businesses',
-                      path: '/contact-us',
+                      path: '/myBusiness/details',
                     },
                     { icon: MessageIcon, label: 'Message', path: '/chat' },
                     {

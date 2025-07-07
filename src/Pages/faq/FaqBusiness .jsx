@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa";
 import img from "../../assets/Home/cover.png";
 import { IoIosArrowForward } from "react-icons/io";
+import Header from "../AboutUs/Header";
 const FaqBusiness  = () => {
   const items = [
     {
@@ -92,27 +93,10 @@ const FaqBusiness  = () => {
   return (
     <div>
       <div></div>
-      <div
-        className="relative bg-cover bg-center py-32 px-4 lg:px-0 text-white"
-        style={{ backgroundImage: `url(${img})` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black to-black opacity-20"></div>
-
-        <div className="container m-auto relative z-10  ">
-          <div className="flex items-center">
-            <div className="w-[5px] h-12 rounded-r bg-green-500 mr-4 "></div>
-            <div>
-              <h2 className="text-2xl font-bold text-blue-500">
-                Frequently Asked Questions
-              </h2>
-              <p className="text-white text-sm md:block hidden">
-                Answers to common questions about buying, selling, and using our
-                platform.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <Header
+                  title="Frequently Asked Questions"
+                  description="Answers to common questions about buying, selling, and using our platform."
+                />
 
       {/* <div
         className="relative bg-cover bg-center py-36 text-white"

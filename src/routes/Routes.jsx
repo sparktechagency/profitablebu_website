@@ -13,7 +13,7 @@ import Login from '../Auth/Login';
 import { ForgotPassword } from '../Auth/ForgotPassword';
 import { Verification } from '../Auth/Verification';
 import { NewPassword } from '../Auth/NewPassword';
-import { SignUp } from '../Auth/SignUp';
+import  SignUp  from '../Auth/SignUp';
 import { ProfilePage } from '../Pages/ProfilePage/ProfilePage';
 import { OngoingTicketPage } from '../Pages/ProfilePage/OngoingTicketPage';
 import Faqs from '../Pages/faq/Faqs';
@@ -43,6 +43,16 @@ import BusinessValuationSubmission from '../Pages/BussinessValuation/BusinessVal
 import BusinessFormation from '../Pages/BusinessFormation/BusinessFormation';
 import BusinessFormationDetails from '../Pages/BusinessFormation/BusinessFormationDetails';
 import SubscriptionPlane from '../Pages/plane/SubscriptionPlane';
+import AllFaq from '../Pages/faq/AllFaq';
+import FaqSeller from '../Pages/faq/FaqSeller';
+import FaqAsset from '../Pages/faq/FaqAsset';
+import FaqBrokers from '../Pages/faq/FaqBrokers';
+import FaqBusiness from '../Pages/faq/FaqBusiness ';
+import FaqFranchise from '../Pages/faq/FaqFranchise ';
+import FaqInvestors from '../Pages/faq/FaqInvestors';
+import Seller from '../Pages/seller/Seller';
+import ChooseRole from '../Auth/ChooseRole';
+import EditNewBusiness from '../Pages/mybusiness/EditNewBusiness';
 
 export const router = createBrowserRouter([
   {
@@ -151,6 +161,10 @@ export const router = createBrowserRouter([
       {
         path: '/addnewbusiness',
         element: <AddNewBusiness></AddNewBusiness>,
+      },
+      {
+        path: '/editnewbusiness',
+        element: <EditNewBusiness></EditNewBusiness>
       },
       {
         path: '/submit-a-ticket',
