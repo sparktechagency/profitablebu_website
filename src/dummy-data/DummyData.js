@@ -80,40 +80,44 @@ export const menuItems = {
     {
       name: "Businesses for Sale",
       path: "/auth/login",
-      state: "businesses",
+      state: "sellerBusinesses",
     },
     {
       name: "Business Assets for Sale",
       path: "/auth/login",
-      state: "assets",
+      state: "sellerAssets",
     },
     {
       name: "Business Ideas for Investors",
       path: "/auth/login",
-      state: "ideas",
+      state: "sellerIdeas",
     },
     {
       name: "Franchises for Sale",
       path: "/auth/login",
-      state: "franchises",
+      state: "sellerFranchises",
     },
   ],
   buying: [
     {
       name: "Buy a Business",
-      path: "/buying/business",
+      path: "/auth/login",
+      state: "buyerBusiness",
     },
     {
       name: "Buy a Business Asset",
-      path: "/buying/asset",
+      path: "/auth/login",
+      state: "buyerAsset",
     },
     {
       name: "Buy a Franchise",
-      path: "/buying/franchise",
+      path: "/auth/login",
+      state: "buyerFranchise",
     },
     {
       name: "Contact Business Listers",
-      path: "/buying/contact",
+      path: "/auth/login",
+      state: "businessListers",
     },
   ],
   valuation: [
