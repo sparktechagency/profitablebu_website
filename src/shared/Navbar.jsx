@@ -363,7 +363,7 @@ const Navbar = () => {
                     {
                       icon: HelpIcon,
                       label: 'Help & Support',
-                      path: '/help-support',
+                      path: '/contact-us',
                     },
                     { icon: InfoIcon, label: 'FAQs', path: '/faqs' },
                   ].map((item, idx) => (
