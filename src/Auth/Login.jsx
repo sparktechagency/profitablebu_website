@@ -221,7 +221,7 @@ export default function Login() {
                 }}
               >
                 Don&apos; have an account?{' '}
-                <Link to="/auth/signUp">
+                <Link to="/auth/choose-role">
                   <Button
                     type="link"
                     className="hover:underline"

@@ -1,5 +1,5 @@
 import { Tag } from "antd";
-import { MapPin, Calendar, User, Mail } from "lucide-react";
+import { MapPin, Calendar, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 export default function BussinessDetails() {
   return (
@@ -12,7 +12,6 @@ export default function BussinessDetails() {
             <img
               src="./Home.png"
               alt="Modern urban cafe with glass architecture"
-              fill
               className="object-cover"
             />
           </div>

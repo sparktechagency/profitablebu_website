@@ -3,22 +3,26 @@ import {
   Form,
   Input,
   Button,
-  Checkbox,
   Typography,
   Card,
   Row,
   Col,
   Divider,
   message,
+  Select,
 } from 'antd';
 import { ArrowLeft } from 'lucide-react';
 import loginImg from './login.png';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import ReactPhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import { countryData } from '../dummy-data/DummyData';
 const { Title, Text } = Typography;
 
 function SignUp() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [contactNo, setContactNo] = useState('');
   console.log(location?.state);
   const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -36,7 +40,7 @@ function SignUp() {
     if (user) {
       message.destroy();
       message.success('Login successful');
-      window.location.href = '/';
+      navigate('/auth/forgot-password');
     }
   };
 
@@ -91,18 +95,8 @@ function SignUp() {
                 level={2}
                 style={{ marginBottom: '8px', color: '#1f2937' }}
               >
-                Login to Account
+                Create Your Account
               </Title>
-              <Text
-                style={{
-                  color: '#6b7280',
-                  marginBottom: '32px',
-                  display: 'block',
-                }}
-              >
-                Please enter your email and password to continue as{' '}
-                {location?.state}
-              </Text>
 
               <Form
                 requiredMark={false}
@@ -111,6 +105,16 @@ function SignUp() {
                 onFinish={onFinish}
                 autoComplete="off"
               >
+                <Form.Item
+                  label="Name"
+                  name="name"
+                  rules={[
+                    { required: true, message: 'Please input your name!' },
+                  ]}
+                >
+                  <Input placeholder="John Doe" style={{ height: '48px' }} />
+                </Form.Item>
+
                 <Form.Item
                   label="Email address"
                   name="email"
@@ -123,6 +127,47 @@ function SignUp() {
                     placeholder="esfutui_sch@gmail.com"
                     style={{ height: '48px' }}
                   />
+                </Form.Item>
+                <Form.Item
+                  label="Phone Number"
+                  name="contactNo"
+                  required
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please enter your phone number!',
+                    },
+                  ]}
+                >
+                  <ReactPhoneInput
+                    country={'us'}
+                    value={contactNo}
+                    onChange={(value) => setContactNo(value)}
+                    inputStyle={{ width: '100%' }}
+                  />
+                </Form.Item>
+                <Form.Item
+                  label="Select Your Country "
+                  name="country"
+                  rules={[
+                    { required: true, message: 'Please select your country!' },
+                  ]}
+                >
+                  <Select
+                    placeholder="Select your country"
+                    style={{ height: '48px' }}
+                    showSearch
+                    allowClear
+                  >
+                    {countryData.map((country) => (
+                      <Select.Option key={country.code} value={country.code}>
+                        <div className="flex items-center gap-2">
+                          <img src={country.flag} alt={country.name} />{' '}
+                          {country.name}
+                        </div>
+                      </Select.Option>
+                    ))}
+                  </Select>
                 </Form.Item>
 
                 <Form.Item
@@ -141,20 +186,22 @@ function SignUp() {
                     }}
                   />
                 </Form.Item>
-
-                <Row justify="space-between" style={{ marginBottom: '24px' }}>
-                  <Form.Item
-                    name="remember"
-                    valuePropName="checked"
-                    style={{ margin: 0 }}
-                  >
-                    <Checkbox>Remember Password</Checkbox>
-                  </Form.Item>
-                  <Button type="link" style={{ color: '#3b82f6', padding: 0 }}>
-                    Forgot Password?
-                  </Button>
-                </Row>
-
+                <Form.Item
+                  label="Confirm Password"
+                  name="confirmPassword"
+                  rules={[
+                    { required: true, message: 'Please input your password!' },
+                  ]}
+                >
+                  <Input.Password
+                    placeholder="••••••••"
+                    style={{ height: '48px' }}
+                    visibilityToggle={{
+                      visible: passwordVisible,
+                      onVisibleChange: setPasswordVisible,
+                    }}
+                  />
+                </Form.Item>
                 <Form.Item>
                   <Button
                     type="primary"
@@ -169,7 +216,7 @@ function SignUp() {
                       fontWeight: 500,
                     }}
                   >
-                    Log In
+                    Sign Up
                   </Button>
                 </Form.Item>
               </Form>
@@ -220,14 +267,14 @@ function SignUp() {
                   color: '#6b7280',
                 }}
               >
-                Don&apos; have an account?{' '}
+                Already have an account?{' '}
                 <Link to="/auth/signUp">
                   <Button
                     type="link"
                     className="hover:underline"
                     style={{ color: '#3b82f6', padding: 0 }}
                   >
-                    Sign up
+                    Sign In
                   </Button>
                 </Link>
               </Text>

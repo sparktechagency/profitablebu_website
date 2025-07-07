@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState, useMemo, useEffect } from 'react';
 import {
@@ -28,6 +27,7 @@ import {
   businessTypes,
   categories,
   countries,
+  location,
   ownershipTypes,
   priceRanges,
   sortOptions,
@@ -56,6 +56,8 @@ const BusinessDirectory = () => {
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
   const [selectedBusinessTypes, setSelectedBusinessTypes] = useState([]);
   const [selectedOwnership, setSelectedOwnership] = useState([]);
+  const [selectedLocations, setSelectedLocations] = useState([]);
+  const [selectedAgeOfListing, setSelectedAgeOfListing] = useState([]);
   const [sortBy, setSortBy] = useState('newest');
   const [viewMode, setViewMode] = useState('grid');
   const [itemsPerPage, setItemsPerPage] = useState(20);
@@ -72,78 +74,215 @@ const BusinessDirectory = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Filter logic
-  const filteredBusinesses = useMemo(() => {
-    return businessData.filter((business) => {
-      if (
-        searchTerm &&
-        !business.title.toLowerCase().includes(searchTerm.toLowerCase())
-      ) {
-        return false;
-      }
-      if (
-        selectedCategories.length > 0 &&
-        !selectedCategories.includes(business.category)
-      ) {
-        return false;
-      }
-      if (
-        selectedCountries.length > 0 &&
-        !selectedCountries.includes(business.country)
-      ) {
-        return false;
-      }
-      if (
-        selectedBusinessTypes.length > 0 &&
-        !selectedBusinessTypes.includes(business.businessType)
-      ) {
-        return false;
-      }
-      if (
-        selectedOwnership.length > 0 &&
-        !selectedOwnership.includes(business.ownership)
-      ) {
-        return false;
-      }
-      return true;
-    });
+  // Update URL search params when filters change
+  useEffect(() => {
+    const params = {};
+    if (searchTerm) params.query = searchTerm;
+    if (selectedCategories.length > 0)
+      params.categories = selectedCategories.join(',');
+    if (selectedCountries.length > 0)
+      params.countries = selectedCountries.join(',');
+    if (selectedLocations.length > 0)
+      params.locations = selectedLocations.join(',');
+    if (selectedPriceRanges.length > 0)
+      params.prices = selectedPriceRanges.join(',');
+    if (selectedBusinessTypes.length > 0)
+      params.businessTypes = selectedBusinessTypes.join(',');
+    if (selectedOwnership.length > 0)
+      params.ownership = selectedOwnership.join(',');
+    if (selectedAgeOfListing.length > 0)
+      params.age = selectedAgeOfListing.join(',');
+
+    setSearchParams(params);
   }, [
     searchTerm,
     selectedCategories,
     selectedCountries,
+    selectedLocations,
+    selectedPriceRanges,
     selectedBusinessTypes,
     selectedOwnership,
+    selectedAgeOfListing,
+    setSearchParams,
   ]);
+
+  // Initialize filters from URL on component mount
+  useEffect(() => {
+    const params = Object.fromEntries([...searchParams]);
+    if (params.query) setSearchTerm(params.query);
+    if (params.categories) setSelectedCategories(params.categories.split(','));
+    if (params.countries) setSelectedCountries(params.countries.split(','));
+    if (params.locations) setSelectedLocations(params.locations.split(','));
+    if (params.prices) setSelectedPriceRanges(params.prices.split(','));
+    if (params.businessTypes)
+      setSelectedBusinessTypes(params.businessTypes.split(','));
+    if (params.ownership) setSelectedOwnership(params.ownership.split(','));
+    if (params.age) setSelectedAgeOfListing(params.age.split(','));
+  }, [searchParams]);
+
+  // Filter and sort logic
+  const filteredBusinesses = useMemo(() => {
+    let results = [...businessData];
+
+    // Apply filters
+    if (searchTerm) {
+      results = results.filter(
+        (business) =>
+          business.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          business.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    if (selectedCategories.length > 0) {
+      results = results.filter((business) =>
+        selectedCategories.includes(business.category)
+      );
+    }
+
+    if (selectedCountries.length > 0) {
+      results = results.filter((business) =>
+        selectedCountries.includes(business.country)
+      );
+    }
+
+    if (selectedLocations.length > 0) {
+      results = results.filter((business) =>
+        selectedLocations.some((loc) =>
+          business.location.toLowerCase().includes(loc.toLowerCase())
+        )
+      );
+    }
+
+    if (selectedPriceRanges.length > 0) {
+      results = results.filter((business) => {
+        const price = business.price;
+        return selectedPriceRanges.some((range) => {
+          const rangeObj = priceRanges.find((r) => r.label === range);
+          if (!rangeObj) return false;
+          return price >= rangeObj.value[0] && price <= rangeObj.value[1];
+        });
+      });
+    }
+
+    if (selectedBusinessTypes.length > 0) {
+      results = results.filter((business) =>
+        selectedBusinessTypes.includes(business.businessType)
+      );
+    }
+
+    if (selectedOwnership.length > 0) {
+      results = results.filter((business) =>
+        selectedOwnership.includes(business.ownership)
+      );
+    }
+
+    if (selectedAgeOfListing.length > 0) {
+      const now = new Date();
+      results = results.filter((business) => {
+        const createdAt = new Date(business.createdAt);
+        const ageInDays = Math.floor((now - createdAt) / (1000 * 60 * 60 * 24));
+
+        return selectedAgeOfListing.some((age) => {
+          switch (age) {
+            case 'last3Days':
+              return ageInDays <= 3;
+            case 'last14Days':
+              return ageInDays <= 14;
+            case 'lastMonth':
+              return ageInDays <= 30;
+            case 'last3Months':
+              return ageInDays <= 90;
+            default:
+              return true;
+          }
+        });
+      });
+    }
+
+    // Apply sorting
+    switch (sortBy) {
+      case 'newest':
+        results.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        break;
+      case 'priceLow':
+        results.sort((a, b) => a.price - b.price);
+        break;
+      case 'priceHigh':
+        results.sort((a, b) => b.price - a.price);
+        break;
+      case 'viewed':
+        // Assuming there's a views property on businesses
+        results.sort((a, b) => (b.views || 0) - (a.views || 0));
+        break;
+      default:
+        break;
+    }
+
+    return results;
+  }, [
+    businessData,
+    searchTerm,
+    selectedCategories,
+    selectedCountries,
+    selectedLocations,
+    selectedPriceRanges,
+    selectedBusinessTypes,
+    selectedOwnership,
+    selectedAgeOfListing,
+    sortBy,
+  ]);
+
+  // Pagination logic
+  const paginatedBusinesses = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredBusinesses.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredBusinesses, currentPage, itemsPerPage]);
 
   // Handle filter changes
   const handleCategoryChange = (checkedValues) => {
     setSelectedCategories(checkedValues);
-    console.log('Selected Categories:', checkedValues);
   };
 
   const handleCountryChange = (checkedValues) => {
     setSelectedCountries(checkedValues);
-    console.log('Selected Countries:', checkedValues);
+  };
+
+  const handleLocationChange = (checkedValues) => {
+    setSelectedLocations(checkedValues);
   };
 
   const handlePriceChange = (checkedValues) => {
     setSelectedPriceRanges(checkedValues);
-    console.log('Selected Price Ranges:', checkedValues);
   };
 
   const handleBusinessTypeChange = (checkedValues) => {
     setSelectedBusinessTypes(checkedValues);
-    console.log('Selected Business Types:', checkedValues);
   };
 
   const handleOwnershipChange = (checkedValues) => {
     setSelectedOwnership(checkedValues);
-    console.log('Selected Ownership Types:', checkedValues);
+  };
+
+  const handleAgeOfListingChange = (checkedValues) => {
+    setSelectedAgeOfListing(checkedValues);
   };
 
   const handleSortChange = (e) => {
     setSortBy(e.target.value);
-    console.log('Sort By:', e.target.value);
+  };
+
+  const clearAllFilters = () => {
+    setSearchTerm('');
+    setSelectedCategories([]);
+    setSelectedCountries([]);
+    setSelectedLocations([]);
+    setSelectedPriceRanges([]);
+    setSelectedBusinessTypes([]);
+    setSelectedOwnership([]);
+    setSelectedAgeOfListing([]);
+    setSortBy('newest');
+    setCurrentPage(1);
+    setSearchParams({});
   };
 
   const BusinessCard = ({ business, viewMode }) => (
@@ -178,9 +317,9 @@ const BusinessDirectory = () => {
           }`}
         >
           <span className="text-base font-medium">
-            Starting from ${business.price}
+            Starting from ${business.price.toLocaleString()}
           </span>
-          <Link to={`/business-details`}>
+          <Link to={`/business-details/${business.id}`}>
             <button
               className={`bg-blue-500 hover:bg-blue-600 ${
                 viewMode === 'list' ? 'mt-3 md:mt-0' : 'mt-3 sm:mt-0'
@@ -262,7 +401,17 @@ const BusinessDirectory = () => {
       </Panel>
 
       <Panel header="Location" key="4">
-        <div className="text-xs text-gray-500 mb-2">Select location...</div>
+        <Checkbox.Group
+          value={selectedLocations}
+          onChange={handleLocationChange}
+          className="flex flex-col space-y-2"
+        >
+          {location.map((loc) => (
+            <Checkbox key={loc} value={loc} className="text-sm">
+              {loc}
+            </Checkbox>
+          ))}
+        </Checkbox.Group>
       </Panel>
 
       <Panel header="Asking Price" key="5">
@@ -307,6 +456,20 @@ const BusinessDirectory = () => {
         </Checkbox.Group>
       </Panel>
 
+      <Panel header="Age of Listing" key="9">
+        <Checkbox.Group
+          value={selectedAgeOfListing}
+          onChange={handleAgeOfListingChange}
+          className="flex flex-col space-y-2"
+        >
+          {ageOfListingOptions.map((type) => (
+            <Checkbox key={type.value} value={type.value} className="text-sm">
+              {type.label}
+            </Checkbox>
+          ))}
+        </Checkbox.Group>
+      </Panel>
+
       <Panel header="Sort By" key="8">
         <Radio.Group
           value={sortBy}
@@ -320,20 +483,6 @@ const BusinessDirectory = () => {
           ))}
         </Radio.Group>
       </Panel>
-
-      <Panel header="Age of Listing" key="9">
-        <Checkbox.Group
-          value={selectedOwnership}
-          onChange={handleOwnershipChange}
-          className="flex flex-col space-y-2"
-        >
-          {ageOfListingOptions.map((type) => (
-            <Checkbox key={type?.value} value={type?.value} className="text-sm">
-              {type?.label}
-            </Checkbox>
-          ))}
-        </Checkbox.Group>
-      </Panel>
     </Collapse>
   );
 
@@ -345,19 +494,20 @@ const BusinessDirectory = () => {
           <div className="flex flex-col md:flex-row gap-4 w-full justify-between items-center">
             <div className="w-full md:w-auto">
               <Search
-                placeholder="Search your perfect events..."
+                placeholder="Search businesses..."
                 allowClear
                 size="large"
                 className="w-full"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                onSearch={(value) => setSearchTerm(value)}
               />
             </div>
 
             <div className="flex items-center w-full md:w-auto justify-between md:justify-end gap-4">
-              <div className="flex items-center  p-2 rounded border-2 gap-2">
+              <div className="flex items-center p-2 rounded border-2 gap-2">
                 <span className="text-sm text-gray-600 hidden sm:inline">
-                  Items Per Page :
+                  Items Per Page:
                 </span>
                 <Select
                   value={itemsPerPage}
@@ -437,15 +587,24 @@ const BusinessDirectory = () => {
           {/* Main Content */}
           <div className="flex-1">
             {/* Active Filters */}
-            {(selectedCategories.length > 0 ||
+            {(searchTerm ||
+              selectedCategories.length > 0 ||
               selectedCountries.length > 0 ||
+              selectedLocations.length > 0 ||
+              selectedPriceRanges.length > 0 ||
               selectedBusinessTypes.length > 0 ||
-              selectedOwnership.length > 0) && (
+              selectedOwnership.length > 0 ||
+              selectedAgeOfListing.length > 0) && (
               <div className="mb-4 p-3 bg-white rounded-lg border">
                 <div className="flex flex-wrap gap-2 items-center">
                   <span className="text-sm font-medium text-gray-600">
                     Active Filters:
                   </span>
+                  {searchTerm && (
+                    <Tag closable onClose={() => setSearchTerm('')}>
+                      Search: {searchTerm}
+                    </Tag>
+                  )}
                   {selectedCategories.map((cat) => (
                     <Tag
                       key={cat}
@@ -470,6 +629,32 @@ const BusinessDirectory = () => {
                       }
                     >
                       Country: {country}
+                    </Tag>
+                  ))}
+                  {selectedLocations.map((loc) => (
+                    <Tag
+                      key={loc}
+                      closable
+                      onClose={() =>
+                        setSelectedLocations((prev) =>
+                          prev.filter((l) => l !== loc)
+                        )
+                      }
+                    >
+                      Location: {loc}
+                    </Tag>
+                  ))}
+                  {selectedPriceRanges.map((range) => (
+                    <Tag
+                      key={range}
+                      closable
+                      onClose={() =>
+                        setSelectedPriceRanges((prev) =>
+                          prev.filter((r) => r !== range)
+                        )
+                      }
+                    >
+                      Price: {range}
                     </Tag>
                   ))}
                   {selectedBusinessTypes.map((type) => (
@@ -498,6 +683,28 @@ const BusinessDirectory = () => {
                       Ownership: {ownership}
                     </Tag>
                   ))}
+                  {selectedAgeOfListing.map((age) => (
+                    <Tag
+                      key={age}
+                      closable
+                      onClose={() =>
+                        setSelectedAgeOfListing((prev) =>
+                          prev.filter((a) => a !== age)
+                        )
+                      }
+                    >
+                      Age:{' '}
+                      {ageOfListingOptions.find((a) => a.value === age)?.label}
+                    </Tag>
+                  ))}
+                  <Button
+                    type="link"
+                    size="small"
+                    onClick={clearAllFilters}
+                    className="ml-2"
+                  >
+                    Clear all
+                  </Button>
                 </div>
               </div>
             )}
@@ -506,13 +713,19 @@ const BusinessDirectory = () => {
             <div className="mb-4">
               <p className="text-gray-600">
                 Showing {filteredBusinesses.length} results
+                {paginatedBusinesses.length < filteredBusinesses.length && (
+                  <span>
+                    {' '}
+                    (displaying {paginatedBusinesses.length} on this page)
+                  </span>
+                )}
               </p>
             </div>
 
             {/* Business Cards */}
-            {filteredBusinesses.length > 0 ? (
+            {paginatedBusinesses.length > 0 ? (
               <Row gutter={[16, 16]}>
-                {filteredBusinesses.map((business) => (
+                {paginatedBusinesses.map((business) => (
                   <Col
                     key={business.id}
                     xs={24}
@@ -528,17 +741,7 @@ const BusinessDirectory = () => {
             ) : (
               <div className="text-center py-12">
                 <Empty description="No businesses found matching your criteria" />
-                <Button
-                  type="link"
-                  onClick={() => {
-                    setSearchTerm('');
-                    setSelectedCategories([]);
-                    setSelectedCountries([]);
-                    setSelectedBusinessTypes([]);
-                    setSelectedOwnership([]);
-                    setSearchParams({});
-                  }}
-                >
+                <Button type="link" onClick={clearAllFilters}>
                   Clear all filters
                 </Button>
               </div>
@@ -551,7 +754,7 @@ const BusinessDirectory = () => {
                   current={currentPage}
                   total={filteredBusinesses.length}
                   pageSize={itemsPerPage}
-                  onChange={setCurrentPage}
+                  onChange={(page) => setCurrentPage(page)}
                   showSizeChanger={false}
                   showQuickJumper
                   showTotal={(total, range) =>

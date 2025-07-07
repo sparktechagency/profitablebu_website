@@ -10,10 +10,9 @@ import { BreakFixServicesPage } from '../Pages/buying/BreakFixServicesPage';
 import { SubmitTicketPage } from '../Pages/SubmitTicketPage.jsx/SubmitTicketPage';
 import { BlogPage } from '../Pages/BlogPage/BlogPage';
 import Login from '../Auth/Login';
-import { ForgotPassword } from '../Auth/ForgotPassword';
-import { Verification } from '../Auth/Verification';
-import { NewPassword } from '../Auth/NewPassword';
-import  SignUp  from '../Auth/SignUp';
+import ForgotPassword from '../Auth/ForgotPassword';
+import Verification from '../Auth/Verification';
+import NewPassword from '../Auth/NewPassword';
 import { ProfilePage } from '../Pages/ProfilePage/ProfilePage';
 import { OngoingTicketPage } from '../Pages/ProfilePage/OngoingTicketPage';
 import Faqs from '../Pages/faq/Faqs';
@@ -53,6 +52,7 @@ import FaqInvestors from '../Pages/faq/FaqInvestors';
 import Seller from '../Pages/seller/Seller';
 import ChooseRole from '../Auth/ChooseRole';
 import EditNewBusiness from '../Pages/mybusiness/EditNewBusiness';
+import SignUp from '../Auth/SignUp';
 
 export const router = createBrowserRouter([
   {
@@ -97,38 +97,38 @@ export const router = createBrowserRouter([
         element: <SubscriptionPlane></SubscriptionPlane>,
       },
       {
-        path: "/allFaqs",
-        element: <AllFaq></AllFaq>
+        path: '/allFaqs',
+        element: <AllFaq></AllFaq>,
       },
       {
-        path: "/faqs",
+        path: '/faqs',
         element: <Faqs></Faqs>,
       },
       {
-        path: "/faqsSeller",
-        element: <FaqSeller></FaqSeller>
+        path: '/faqsSeller',
+        element: <FaqSeller></FaqSeller>,
       },
       {
-        path: "/FaqAsset",
-        element: <FaqAsset></FaqAsset>
+        path: '/FaqAsset',
+        element: <FaqAsset></FaqAsset>,
       },
       {
-        path: "/FaqBrokers",
-        element: <FaqBrokers></FaqBrokers>
+        path: '/FaqBrokers',
+        element: <FaqBrokers></FaqBrokers>,
       },
       {
-        path: "/FaqBusiness",
-        element: <FaqBusiness></FaqBusiness>
+        path: '/FaqBusiness',
+        element: <FaqBusiness></FaqBusiness>,
       },
       {
-        path: "/FaqFranchise",
-        element: <FaqFranchise></FaqFranchise>
+        path: '/FaqFranchise',
+        element: <FaqFranchise></FaqFranchise>,
       },
       {
-        path: "/FaqInvestors",
-        element: <FaqInvestors></FaqInvestors>
+        path: '/FaqInvestors',
+        element: <FaqInvestors></FaqInvestors>,
       },
-      
+
       // {
       //   path: "/notification",
       //   path: '/faqs',
@@ -176,11 +176,11 @@ export const router = createBrowserRouter([
         element: <ProfilePage></ProfilePage>,
       },
       {
-        path: "/Seller",
-        element: <Seller></Seller>
+        path: '/Seller',
+        element: <Seller></Seller>,
       },
       {
-        path: "/profilePage/EditProfile",
+        path: '/profilePage/EditProfile',
         element: <EditProfile></EditProfile>,
       },
       {
@@ -203,7 +203,7 @@ export const router = createBrowserRouter([
         element: <AdvanceSearch />,
       },
       {
-        path: '/business-details',
+        path: '/business-details/:id',
         element: <BussinessDetails />,
       },
       {
@@ -243,7 +243,7 @@ export const router = createBrowserRouter([
         element: <RefundAndCancellationPolicy />,
       },
       {
-        path: '/<li>Privacy Policy</li>',
+        path: '/privacy-policy',
         element: <PrivacyPolicy />,
       },
       {
