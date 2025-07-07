@@ -150,9 +150,14 @@ export default function Login() {
                   >
                     <Checkbox>Remember Password</Checkbox>
                   </Form.Item>
-                  <Button type="link" style={{ color: '#3b82f6', padding: 0 }}>
-                    Forgot Password?
-                  </Button>
+                  <Link to="/auth/forgot-password">
+                    <Button
+                      type="link"
+                      style={{ color: '#3b82f6', padding: 0 }}
+                    >
+                      Forgot Password?
+                    </Button>
+                  </Link>
                 </Row>
 
                 <Form.Item>
