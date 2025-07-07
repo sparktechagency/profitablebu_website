@@ -109,7 +109,7 @@ const Navbar = () => {
             </Link>
             <button className="w-fit hidden md:block px-4 py-2 bg-[#22C55E] text-white text-center rounded-lg font-medium">
               <Link
-                to="/list-business"
+                to="/auth/login"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 List Your Business
@@ -280,7 +280,7 @@ const Navbar = () => {
                     <span className="font-medium">Login</span>
                   </Link>
                   <Link
-                    to="/list-business"
+                    to="/auth/login"
                     onClick={() => setMobileMenuOpen(false)}
                     className="block w-full md:hidden bg-[#22C55E] text-white text-center py-3 rounded-lg font-medium"
                   >
