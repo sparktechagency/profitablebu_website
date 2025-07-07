@@ -205,12 +205,12 @@ const Navbar = () => {
               {/* CTA Buttons */}
               {user ? (
                 <div className="flex items-center space-x-3">
-                  <a href="/auth/login">
+                  <Link to="/auth/login">
                     <button className="flex items-center space-x-2 px-4 py-2 bg-[#0091FF] text-white rounded transition-colors">
                       <User className="w-4 h-4" />
                       <span>Login</span>
                     </button>
-                  </a>
+                  </Link>
                 </div>
               ) : (
                 <div className="flex items-center space-x-3">

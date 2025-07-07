@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const InterestBuyerDetails = () => {
   return (
     <div className="container mx-auto p-6 space-y-6 bg-[#f6fcff] min-h-screen">
-      {/* Header */}
+      {/* Header d*/}
       <div className="flex items-center justify-between bg-white p-4 rounded-xl shadow">
         <div className="flex items-center gap-4">
           <img

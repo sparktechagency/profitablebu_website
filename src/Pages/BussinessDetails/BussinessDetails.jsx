@@ -1,7 +1,11 @@
 import { Tag } from "antd";
 import { MapPin, Calendar, Mail } from "lucide-react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 export default function BussinessDetails() {
+  useEffect(()=>{
+      window.scrollTo(0,0)
+    },[])
   return (
     <div className="container mx-auto p-5 space-y-8">
       {/* Main Business Listing */}
