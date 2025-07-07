@@ -53,7 +53,7 @@ const BusinessCard = () => {
         <div className="">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center">
-              <div className="w-[5px] h-12 rounded-r bg-green-500 mr-4 "></div>
+              <div className="w-[5px] h-12 rounded-r bg-[#00FF3A] mr-4 "></div>
               <div>
                 <h2 className="text-2xl font-bold text-blue-500">
                   Popular Business
@@ -64,16 +64,16 @@ const BusinessCard = () => {
                 </p>
               </div>
             </div>
-            <a href="#" className="text-blue-500 hover:underline">
+            <Link to="/search" className="text-blue-500 hover:underline">
               Explore More
-            </a>
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {businesses.map((business) => (
               <div
                 key={business.id}
-                className="  bg-cover bg-center rounded"
+                className=" border border-[#0091FF] bg-cover bg-center rounded "
                 style={{
                   backgroundImage: `url(${backCard})`,
                 }}
@@ -97,7 +97,7 @@ const BusinessCard = () => {
                     Starting from{" "}
                     <span className="font-semibold">{business.price}</span>
                   </p>
-                  <Link to={'/details'}><button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
+                  <Link to={'/business-details'}><button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
                     View Details
                   </button></Link>
                 </div>

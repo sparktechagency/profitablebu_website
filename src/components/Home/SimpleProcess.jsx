@@ -1,6 +1,7 @@
 import React from "react";
 import backImg from "../../assets/Home/bb.png";
 import img from "../../assets/Home/mmm.png";
+import { Link } from "react-router-dom";
 const SimpleProcess = () => {
   const steps = [
     {
@@ -100,9 +101,9 @@ const SimpleProcess = () => {
                 listing with a clear description and image ── and let motivated
                 buyers discover your opportunity.
               </p>
-              <button className="bg-[#0091FF] md:mt-11 mt-5 mb-5 py-3 px-4 rounded">
+              <Link to={'/auth/login'}><button className="bg-[#0091FF] md:mt-11 mt-5 mb-5 py-3 px-4 rounded">
                 Create Listing Now
-              </button>
+              </button></Link>
             </div>
           </div>
           <div className="w-full">

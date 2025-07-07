@@ -14,26 +14,26 @@ const Review = () => {
   const category = [
     {
       // img: img1,
-      title: "Earings",
-      location: "New York, USA",
+      title: "Guy Hawkins",
+      location: "Financial Advisor",
       review:
-        "I was looking for the perfect engagement ring, and this website exceeded all my expectations! The craftsmanship is stunning, and the diamond sparkles beautifully. My fiancée absolutely loves it, and I couldn’t be happier with my purchase!",
+        "“Super smooth experience listing my business — found a serious buyer in just two weeks!”",
       img: profile,
     },
     {
       // img: img2,
-      title: "Necklaces",
-      location: "New York, USA",
+      title: "Theresa Webb",
+      location: "Chief Executive Officer.",
       review:
-        "I was looking for the perfect engagement ring, and this website exceeded all my expectations! The craftsmanship is stunning, and the diamond sparkles beautifully. My fiancée absolutely loves it, and I couldn’t be happier with my purchase!",
+        "“Highly recommend BFS! It made the complex process of selling my business feel effortless.”",
       img: profile,
     },
     {
       // img: img3,
-      title: "Rings",
-      location: "New York, USA",
+      title: "Arlene McCoy",
+      location: "Certified Financial Planner",
       review:
-        "I was looking for the perfect engagement ring, and this website exceeded all my expectations! The craftsmanship is stunning, and the diamond sparkles beautifully. My fiancée absolutely loves it, and I couldn’t be happier with my purchase!",
+        "“The platform is easy to use, professional, and helped me close a great deal fast.”",
       img: profile,
     },
     {
@@ -79,15 +79,15 @@ const Review = () => {
   return (
     <div className=" mt-20">
       <div className="mb-11">
-        <div className="text-center max-w-2xl mx-auto mb-6 px-4">
-          <h1 className="text-3xl font-semibold">
-            What Our Happy Customers Say
-          </h1>
-          <p className="text-[#2E2E2E] pt-3">
-            Real stories of love, elegance, and unforgettable moments—discover
-            why our customers trust us for their most precious jewelry.
-          </p>
-        </div>
+       <div className="text-center mb-12">
+            <p className="text-blue-500 font-medium mb-2">Our Testimonials </p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              What our customers say
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+             "Whether you're buying or selling, our platform makes the process seamless and straightforward."Here’s how it works according to our satisfied users:
+            </p>
+          </div>
 
         <div className="">
           <div className=" w-full">

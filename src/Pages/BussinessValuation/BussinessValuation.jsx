@@ -83,7 +83,7 @@ export default function BusinessValuationForm() {
 
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Owner & Business Information */}
-        <div className="border border-gray-300 p-6 rounded-lg shadow-sm">
+        <div className=" ">
           <div className="flex items-center gap-2 mb-6">
             <User className="h-5 w-5 text-green-500" />
             <h3 className="text-lg font-semibold text-blue-600">
@@ -234,7 +234,7 @@ export default function BusinessValuationForm() {
         </div>
 
         {/* Financial Details */}
-        <div className="border border-gray-300 p-6 rounded-lg shadow-sm">
+        <div className="">
           <div className="flex items-center gap-2 mb-6">
             <DollarSign className="h-5 w-5 text-green-500" />
             <h3 className="text-lg font-semibold text-blue-600">
@@ -338,7 +338,7 @@ export default function BusinessValuationForm() {
         </div>
 
         {/* Valuation Input for Accuracy */}
-        <div className="border border-gray-300 p-6 rounded-lg shadow-sm">
+        <div className="">
           <div className="flex items-center gap-2 mb-6">
             <BarChart3 className="h-5 w-5 text-green-500" />
             <h3 className="text-lg font-semibold text-blue-600">
@@ -408,7 +408,7 @@ export default function BusinessValuationForm() {
         </div>
 
         {/* File Uploads */}
-        <div className="border border-gray-300 p-6 rounded-lg shadow-sm">
+        <div className="">
           <div className="flex items-center gap-2 mb-6">
             <FileText className="h-5 w-5 text-green-500" />
             <h3 className="text-lg font-semibold text-blue-600">
@@ -447,7 +447,7 @@ export default function BusinessValuationForm() {
         </div>
 
         {/* Additional Info */}
-        <div className="border border-gray-300 p-6 rounded-lg shadow-sm">
+        <div className="">
           <div className="flex items-center gap-2 mb-6">
             <Info className="h-5 w-5 text-green-500" />
             <h3 className="text-lg font-semibold text-blue-600">
@@ -508,13 +508,14 @@ export default function BusinessValuationForm() {
                   className="text-sm leading-relaxed"
                 >
                   I have read and accept the{" "}
+                  <Link to={'/terms-and-conditions'}>
                   <span className="text-blue-600 underline cursor-pointer">
                     TERMS & CONDITION
-                  </span>{" "}
+                  </span></Link>{" "}
                   &{" "}
-                  <span className="text-blue-600 underline cursor-pointer">
+                  <Link to={'/<li>Privacy Policy</li>'}><span className="text-blue-600 underline cursor-pointer">
                     PRIVACY POLICY
-                  </span>
+                  </span></Link>
                   .
                 </label>
               </div>

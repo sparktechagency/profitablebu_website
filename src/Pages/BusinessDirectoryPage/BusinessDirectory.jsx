@@ -74,6 +74,10 @@ const BusinessDirectory = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(()=>{
+    window.scrollTo(0,0)
+  },[])
+
   // Update URL search params when filters change
   useEffect(() => {
     const params = {};

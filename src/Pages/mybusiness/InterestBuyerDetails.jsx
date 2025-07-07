@@ -1,5 +1,6 @@
 import React from 'react'
 import img from '../../assets/Home/back.png'
+import { Link } from 'react-router-dom'
 
 const InterestBuyerDetails = () => {
   return (
@@ -40,9 +41,9 @@ const InterestBuyerDetails = () => {
               Starting from <span className="font-semibold">$100</span>
             </p>
           </div>
-          <button className="mt-4 w-max bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600">
+          <Link to={'/business-details'}> <button className="mt-4 w-max bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600">
             View Details
-          </button>
+          </button></Link>
         </div>
       </div>
 

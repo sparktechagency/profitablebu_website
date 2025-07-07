@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :where(.css-dev-only-do-not-override-7ny38l).ant-collapse-ghost
   > .ant-collapse-item {
   border-bottom: 1px solid black;

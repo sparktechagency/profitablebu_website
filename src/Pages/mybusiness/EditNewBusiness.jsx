@@ -27,7 +27,7 @@ const props = {
     console.log("Dropped files", e.dataTransfer.files);
   },
 };
-const AddNewBusiness = () => {
+const EditNewBusiness = () => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
   const [form] = Form.useForm();
@@ -56,7 +56,7 @@ const AddNewBusiness = () => {
 
   return (
     <div className="container m-auto pb-20 pt-3">
-      <Navigate title={"Add New Business Information"}></Navigate>
+      <Navigate title={"Edit Business Information"}></Navigate>
       <div className="bg-white p-3">
         <Form form={form} onFinish={handleSubmit} layout="vertical">
           <Dragger {...props}>
@@ -285,4 +285,4 @@ const AddNewBusiness = () => {
   );
 };
 
-export default AddNewBusiness;
+export default EditNewBusiness;

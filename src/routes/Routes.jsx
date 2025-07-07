@@ -51,6 +51,7 @@ import FaqFranchise from '../Pages/faq/FaqFranchise ';
 import FaqInvestors from '../Pages/faq/FaqInvestors';
 import Seller from '../Pages/seller/Seller';
 import ChooseRole from '../Auth/ChooseRole';
+import EditNewBusiness from '../Pages/mybusiness/EditNewBusiness';
 import SignUp from '../Auth/SignUp';
 
 export const router = createBrowserRouter([
@@ -160,6 +161,10 @@ export const router = createBrowserRouter([
       {
         path: '/addnewbusiness',
         element: <AddNewBusiness></AddNewBusiness>,
+      },
+      {
+        path: '/editnewbusiness',
+        element: <EditNewBusiness></EditNewBusiness>
       },
       {
         path: '/submit-a-ticket',

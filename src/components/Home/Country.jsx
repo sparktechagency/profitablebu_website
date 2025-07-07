@@ -8,7 +8,7 @@ const Country = () => {
     <div>
       <div className="flex justify-between items-center mt-20">
         <div className="flex items-center">
-          <div className="w-[5px] h-12 rounded-r bg-green-500 mr-4 "></div>
+          <div className="w-[5px] h-12 rounded-r bg-[#00FF3A] mr-4 "></div>
           <div>
             <h2 className="text-2xl font-bold text-blue-500">
               Trending Countries
