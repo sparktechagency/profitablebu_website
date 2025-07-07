@@ -1,206 +1,197 @@
-import { useState } from "react"
-import { ChevronDown, Filter } from 'lucide-react';
+import { Button, Form, Input, Select, Space } from 'antd';
+import { FilterOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+const { Option } = Select;
+
+const businessCategories = [
+  'Restaurant',
+  'Retail',
+  'Service',
+  'Technology',
+  'Healthcare',
+];
+
+const countries = ['United States', 'United Kingdom', 'India', 'Spain', 'UAE'];
+
+const priceRanges = [
+  'Less than $100,000',
+  '$100,000 to $500,000',
+  '$500,000 to $1,000,000',
+  '$1,000,000 to $5,000,000',
+  'More than $5,000,000',
+];
+
+const businessTypes = [
+  'Sole Proprietorship',
+  'Partnership',
+  'Limited Liability Company (LLC)',
+  'Corporation',
+];
+
+const ownershipTypes = ['Individual', 'Partnership', 'Family', 'Institutional'];
+
+const sortOptions = [
+  'Oldest',
+  'Newest',
+  'Price: Low to High',
+  'Price: High to Low',
+  'Name: A to Z',
+  'Name: Z to A',
+];
 
 export default function AdvanceSearch() {
-          const [filters, setFilters] = useState({
-                    businessCategory: "",
-                    country: "",
-                    location: "",
-                    askingPrice: "",
-                    businessType: "",
-                    ownershipType: "",
-                    sortBy: "",
-          });
+  const [form] = Form.useForm();
 
-          const handleFilterChange = (key, value) => {
-                    setFilters((prev) => ({
-                              ...prev,
-                              [key]: value,
-                    }));
-          };
+  const navigate = useNavigate();
 
-          const handleApplyFilter = () => {
-                    console.log("Applied filters:", filters);
-          };
+  const handleSearch = (values) => {
+    console.log('Applied filters:', values);
+    navigate('/search', { state: { filters: values } });
+  };
 
-          const businessCategories = [
-                    "Technology",
-                    "Healthcare",
-                    "Retail",
-                    "Manufacturing",
-                    "Services",
-                    "Real Estate",
-                    "Food & Beverage",
-                    "Education",
-          ]
+  return (
+    <div className="relative max-w-7xl mx-auto p-5 rounded-lg shadow-sm my-10">
+      <div className="relative flex flex-col items-start gap-5 pl-5 mb-5">
+        <div className="absolute top-0 left-0 w-2 h-full bg-[#00FF3A] z-[1] rounded-r-full"></div>
 
-          const countries = [
-                    "United States",
-                    "Canada",
-                    "United Kingdom",
-                    "Australia",
-                    "Germany",
-                    "France",
-                    "Japan",
-                    "Singapore",
-          ]
+        <div className="ml-5">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0091FF] mb-6 leading-tight">
+            Advanced Search
+          </h1>
+          <p className="text-lg md:text-xl text-[#000000] leading-relaxed max-w-2xl">
+            Find the perfect business opportunity by applying detailed filters
+            to narrow down your search.
+          </p>
+        </div>
+      </div>
 
-          const locations = [
-                    "New York",
-                    "Los Angeles",
-                    "Chicago",
-                    "Houston",
-                    "Phoenix",
-                    "Philadelphia",
-                    "San Antonio",
-                    "San Diego",
-          ]
+      {/* Search Form */}
+      <Form
+        form={form}
+        onFinish={handleSearch}
+        layout="vertical"
+        className="grid grid-cols-1 md:grid-cols-2 gap-5"
+      >
+        <Form.Item label="Business Category">
+          <Select
+            placeholder="Select One"
+            allowClear
+            onChange={(value) =>
+              form.setFieldsValue({ businessCategory: value })
+            }
+            style={{ height: '50px' }}
+          >
+            {businessCategories.map((category) => (
+              <Option key={category} value={category}>
+                {category}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
 
-          const askingPrices = [
-                    "Under $50K",
-                    "$50K - $100K",
-                    "$100K - $250K",
-                    "$250K - $500K",
-                    "$500K - $1M",
-                    "$1M - $5M",
-                    "Over $5M",
-          ]
+        <Form.Item label="Country">
+          <Select
+            placeholder="Select One"
+            allowClear
+            onChange={(value) => form.setFieldsValue({ country: value })}
+            style={{ height: '50px' }}
+          >
+            {countries.map((country) => (
+              <Option key={country} value={country}>
+                {country}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
 
-          const businessTypes = [
-                    "Franchise",
-                    "Independent",
-                    "Chain",
-                    "Online Business",
-                    "Brick & Mortar",
-                    "Home-based",
-                    "Mobile Business",
-          ]
+        <Form.Item label="Location">
+          <Select
+            placeholder="Select One"
+            allowClear
+            onChange={(value) => form.setFieldsValue({ location: value })}
+            style={{ height: '50px' }}
+          >
+            {countries.map((country) => (
+              <Option key={country} value={country}>
+                {country}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
 
-          const ownershipTypes = ["Sole Proprietorship", "Partnership", "Corporation", "LLC", "Cooperative", "Non-profit"]
+        <Form.Item label="Asking Price">
+          <Select
+            placeholder="Select One"
+            allowClear
+            onChange={(value) => form.setFieldsValue({ askingPrice: value })}
+            style={{ height: '50px' }}
+          >
+            {priceRanges.map((priceRange) => (
+              <Option key={priceRange} value={priceRange}>
+                {priceRange}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
 
-          const sortOptions = [
-                    "Price: Low to High",
-                    "Price: High to Low",
-                    "Newest First",
-                    "Oldest First",
-                    "Most Popular",
-                    "Alphabetical",
-          ]
+        <Form.Item className="col-span-2" label="Business Type">
+          <Select
+            placeholder="Select One"
+            allowClear
+            onChange={(value) => form.setFieldsValue({ businessType: value })}
+            style={{ height: '50px' }}
+          >
+            {businessTypes.map((type) => (
+              <Option key={type} value={type}>
+                {type}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
 
-          const CustomSelect = ({ label, value, onChange, options, placeholder = "Select One" }) => (
-                    <div className="space-y-1">
-                              <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        {label}
-                              </label>
-                              <div className="relative">
-                                        <select
-                                                  value={value}
-                                                  onChange={(e) => onChange(e.target.value)}
-                                                  className="block w-full pl-3 pr-10 py-2.5 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md appearance-none bg-white cursor-pointer"
-                                        >
-                                                  <option value="">{placeholder}</option>
-                                                  {options?.map((option) => (
-                                                            <option key={option} value={option}>
-                                                                      {option}
-                                                            </option>
-                                                  ))}
-                                        </select>
-                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                                  <ChevronDown className="h-4 w-4" />
-                                        </div>
-                              </div>
-                    </div>
-          );
+        <Form.Item label="Ownership Type">
+          <Select
+            placeholder="Select One"
+            allowClear
+            onChange={(value) => form.setFieldsValue({ ownershipType: value })}
+            style={{ height: '50px' }}
+          >
+            {ownershipTypes.map((type) => (
+              <Option key={type} value={type}>
+                {type}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
 
-          return (
-                    <div className="relative max-w-7xl mx-auto p-5 rounded-lg shadow-sm my-10">
-                              <div className="relative flex flex-col items-start gap-5 pl-5 mb-5">
-                                        <div className="absolute top-0 left-0 w-2 h-full bg-[#00FF3A] z-[1] rounded-r-full"></div>
+        <Form.Item label="Sort By">
+          <Select
+            placeholder="Select One"
+            allowClear
+            onChange={(value) => form.setFieldsValue({ sortBy: value })}
+            style={{ height: '50px' }}
+          >
+            {sortOptions.map((option) => (
+              <Option key={option} value={option}>
+                {option}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
 
-                                        <div className="ml-5">
-                                                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0091FF] mb-6 leading-tight">
-                                                            Advanced Search
-                                                  </h1>
-                                                  <p className="text-lg md:text-xl text-[#000000] leading-relaxed max-w-2xl">
-                                                            Find the perfect business opportunity by applying detailed filters to narrow down your search.
-                                                  </p>
-                                        </div>
-                              </div>
-
-                              {/* Search Form */}
-                              <div className="space-y-6">
-                                        {/* First Row - Business Category and Country */}
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                  <CustomSelect
-                                                            label="Business Category"
-                                                            value={filters.businessCategory}
-                                                            onChange={(value) => handleFilterChange("businessCategory", value)}
-                                                            options={businessCategories}
-                                                  />
-
-                                                  <CustomSelect
-                                                            label="Country"
-                                                            value={filters.country}
-                                                            onChange={(value) => handleFilterChange("country", value)}
-                                                            options={countries}
-                                                  />
-                                        </div>
-
-                                        {/* Second Row - Location and Asking Price */}
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                  <CustomSelect
-                                                            label="Location"
-                                                            value={filters.location}
-                                                            onChange={(value) => handleFilterChange("location", value)}
-                                                            options={locations}
-                                                  />
-
-                                                  <CustomSelect
-                                                            label="Asking Price"
-                                                            value={filters.askingPrice}
-                                                            onChange={(value) => handleFilterChange("askingPrice", value)}
-                                                            options={askingPrices}
-                                                  />
-                                        </div>
-
-                                        {/* Third Row - Business Type */}
-                                        <div className="space-y-2">
-                                                  <CustomSelect
-                                                            label="Business Type"
-                                                            value={filters.businessType}
-                                                            onChange={(value) => handleFilterChange("businessType", value)}
-                                                            options={businessTypes}
-                                                  />
-                                        </div>
-
-                                        {/* Fourth Row - Ownership Type and Sort By */}
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                  <CustomSelect
-                                                            label="Ownership Type"
-                                                            value={filters.ownershipType}
-                                                            onChange={(value) => handleFilterChange("ownershipType", value)}
-                                                            options={ownershipTypes}
-                                                  />
-
-                                                  <CustomSelect
-                                                            label="Sort By"
-                                                            value={filters.sortBy}
-                                                            onChange={(value) => handleFilterChange("sortBy", value)}
-                                                            options={sortOptions}
-                                                  />
-                                        </div>
-
-                                        {/* Apply Filter Button */}
-                                        <div className="pt-2">
-                                                  <button
-                                                            onClick={handleApplyFilter}
-                                                            className="w-full md:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition duration-150 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm flex items-center justify-center gap-2"
-                                                  >
-                                                            <Filter className="h-5 w-5" />
-                                                            Apply Filters
-                                                  </button>
-                                        </div>
-                              </div>
-                    </div>
-          );
+        <Form.Item>
+          <Space>
+            <Button
+              className="bg-[#0091FF] hover:bg-[#0091FF] py-4 px-6"
+              type="primary"
+              htmlType="submit"
+            >
+              <FilterOutlined />
+              Apply Filters
+            </Button>
+          </Space>
+        </Form.Item>
+      </Form>
+    </div>
+  );
 }

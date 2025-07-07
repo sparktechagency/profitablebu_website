@@ -183,7 +183,7 @@ export const businessData = [
     location: "Los Angeles, CA",
     category: "Financial Services",
     subcategory: "Business Consulting",
-    price: 100,
+    price: 1000000000,
     image:
       "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=250&fit=crop",
     businessType: "Services",

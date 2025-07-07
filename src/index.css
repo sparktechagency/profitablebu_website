@@ -2,18 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-:where(.css-dev-only-do-not-override-7ny38l).ant-collapse-ghost >.ant-collapse-item {
-    border-bottom: 1px solid black;
-    padding: 10px 0px;
+:where(.css-dev-only-do-not-override-7ny38l).ant-collapse-ghost
+  > .ant-collapse-item {
+  border-bottom: 1px solid black;
+  padding: 10px 0px;
 }
 
-:where(.css-dev-only-do-not-override-7ny38l).ant-collapse>.ant-collapse-item >.ant-collapse-header .ant-collapse-header-text {
-    margin-inline-end: auto;
-    font-weight: 500;
-    font-size: 17px;
-}
-
-:where(.css-dev-only-do-not-override-5uvb3z).ant-collapse>.ant-collapse-item {
-    border-bottom: 1px solid black;
-    padding: 20px 0;
+:where(.css-dev-only-do-not-override-7ny38l).ant-collapse
+  > .ant-collapse-item
+  > .ant-collapse-header
+  .ant-collapse-header-text {
+  margin-inline-end: auto;
+  font-weight: 500;
+  font-size: 17px;
 }

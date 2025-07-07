@@ -1,12 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  ChevronDown,
-  Menu,
-  X,
-  Globe,
-  User,
-  LogOut,
-} from 'lucide-react';
+import { ChevronDown, Menu, X, Globe, User, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '../assets/Home/logo.png';
@@ -90,7 +83,11 @@ const Navbar = () => {
     },
     { key: 'buying', label: 'Buying', submenu: menuItems.buying },
     { key: 'valuation', label: 'Valuation', submenu: menuItems.valuation },
-    { key: 'business', label: 'Business Formation', path: '/business-formation' },
+    {
+      key: 'business',
+      label: 'Business Formation',
+      path: '/business-formation',
+    },
     { key: 'resources', label: 'Resources', path: '/blog' },
   ];
 
@@ -105,9 +102,11 @@ const Navbar = () => {
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-3 border-b border-gray-100">
-            <div className="flex items-center space-x-4">
-              <img src={Logo} alt="Logo" className="h-10 w-auto" />
-            </div>
+            <Link to="/">
+              <div className="flex items-center space-x-4">
+                <img src={Logo} alt="Logo" className="h-10 w-auto" />
+              </div>
+            </Link>
             <button className="w-fit hidden md:block px-4 py-2 bg-[#22C55E] text-white text-center rounded-lg font-medium">
               <Link
                 to="/list-business"
@@ -227,7 +226,6 @@ const Navbar = () => {
                   </button>
                 </div>
               )}
-
             </div>
           </div>
         </div>

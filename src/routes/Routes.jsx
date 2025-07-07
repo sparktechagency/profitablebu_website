@@ -198,7 +198,7 @@ export const router = createBrowserRouter([
         element: <AdvanceSearch />,
       },
       {
-        path: '/business-details',
+        path: '/business-details/:id',
         element: <BussinessDetails />,
       },
       {
