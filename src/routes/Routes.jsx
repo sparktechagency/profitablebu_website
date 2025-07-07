@@ -203,7 +203,7 @@ export const router = createBrowserRouter([
         element: <AdvanceSearch />,
       },
       {
-        path: '/business-details/:id',
+        path: '/business-details',
         element: <BussinessDetails />,
       },
       {
