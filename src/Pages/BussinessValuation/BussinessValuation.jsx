@@ -46,7 +46,6 @@ export default function BusinessValuationForm() {
     console.log("Form submitted:", formData);
   };
 
-
   const FileUploadArea = ({ label }) => (
     <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors">
       <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
@@ -223,6 +222,47 @@ export default function BusinessValuationForm() {
                 onChange={(e) => handleInputChange("location", e.target.value)}
                 className="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-blue-500"
               />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label
+                  htmlFor="businessType"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Business Type
+                </label>
+                <select
+                  value={formData.businessType}
+                  onChange={(e) =>
+                    handleInputChange("businessType", e.target.value)
+                  }
+                  className="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-blue-500"
+                >
+                  <option value="retail">Retail</option>
+                  <option value="wholesale">Wholesale</option>
+                  <option value="service">Service</option>
+                </select>
+              </div>
+              <div className="space-y-2">
+                <label
+                  htmlFor="businessType"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Business Category
+                </label>
+                <select
+                  value={formData.businessType}
+                  onChange={(e) =>
+                    handleInputChange("businessType", e.target.value)
+                  }
+                  className="w-full border border-gray-300 px-4 py-2 rounded-md focus:ring-blue-500"
+                >
+                  <option value="retail">Retail</option>
+                  <option value="wholesale">Wholesale</option>
+                  <option value="service">Service</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -501,14 +541,17 @@ export default function BusinessValuationForm() {
                   className="text-sm leading-relaxed"
                 >
                   I have read and accept the{" "}
-                  <Link to={'/terms-and-conditions'}>
-                  <span className="text-blue-600 underline cursor-pointer">
-                    TERMS & CONDITION
-                  </span></Link>{" "}
+                  <Link to={"/terms-and-conditions"}>
+                    <span className="text-blue-600 underline cursor-pointer">
+                      TERMS & CONDITION
+                    </span>
+                  </Link>{" "}
                   &{" "}
-                  <Link to={'/<li>Privacy Policy</li>'}><span className="text-blue-600 underline cursor-pointer">
-                    PRIVACY POLICY
-                  </span></Link>
+                  <Link to={"/<li>Privacy Policy</li>"}>
+                    <span className="text-blue-600 underline cursor-pointer">
+                      PRIVACY POLICY
+                    </span>
+                  </Link>
                   .
                 </label>
               </div>
@@ -520,12 +563,15 @@ export default function BusinessValuationForm() {
               policy, and consent to cookies being stored on your computer.
             </p>
 
-           <Link to={'/business-valuaion-submission'}> <button
-              type="submit"
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 text-lg font-medium rounded-md"
-            >
-              Get Valuations
-            </button></Link>
+            <Link to={"/business-valuaion-submission"}>
+              {" "}
+              <button
+                type="submit"
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 text-lg font-medium rounded-md"
+              >
+                Get Valuations
+              </button>
+            </Link>
           </div>
         </div>
       </form>
