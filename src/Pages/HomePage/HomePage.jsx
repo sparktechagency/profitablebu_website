@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useEffect } from 'react'
 import Hero from '../../components/Home/Hero'
 import BusinessCard from '../../components/Home/BusinessCard'
 import Category from '../../components/Home/Category'
@@ -11,6 +11,9 @@ import FeaturedFranchises from '../../components/Home/FeaturedFranchises'
 import FeaturedBusinessAssets from '../../components/Home/FeaturedBusinessAssets'
 
 export const HomePage = () => {
+  useEffect(()=>{
+      window.scrollTo(0,0)
+    },[])
   return (
     <div>
       <Hero></Hero>

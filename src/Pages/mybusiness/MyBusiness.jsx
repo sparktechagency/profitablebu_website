@@ -52,9 +52,7 @@ const MyBusiness = () => {
                     </h2>
                   </div>
                 </div>
-                <Link to="/search" className="text-blue-500 hover:underline">
-                  Explore More
-                </Link>
+              
               </div>
               
             </div>
@@ -118,9 +116,7 @@ const MyBusiness = () => {
                   </h2>
                 </div>
               </div>
-              <Link to="/search" className="text-blue-500 hover:underline">
-              Explore More
-            </Link>
+              
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -182,9 +178,7 @@ const MyBusiness = () => {
                   </h2>
                 </div>
               </div>
-              <Link to="/search" className="text-blue-500 hover:underline">
-              Explore More
-            </Link>
+             
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -246,9 +240,7 @@ const MyBusiness = () => {
                   </h2>
                 </div>
               </div>
-              <Link to="/search" className="text-blue-500 hover:underline">
-              Explore More
-            </Link>
+              
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

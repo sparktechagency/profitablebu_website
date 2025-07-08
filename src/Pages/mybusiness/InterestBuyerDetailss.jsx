@@ -2,7 +2,7 @@ import React from 'react'
 import img from '../../assets/Home/back.png'
 import { Link } from 'react-router-dom'
 
-const InterestBuyerDetails = () => {
+const InterestBuyerDetailss = () => {
   return (
     <div className="container mx-auto p-6 space-y-6 bg-[#f6fcff] min-h-screen">
       {/* Header */}
@@ -94,4 +94,4 @@ const InterestBuyerDetails = () => {
   )
 }
 
-export default InterestBuyerDetails
+export default InterestBuyerDetailss

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import img from "../../assets/Home/cover.png";
 import AddSubPlane from "./AddSubPlane";
+import Header from "../AboutUs/Header";
 const plans = [
   {
     title: "Free Plan",
@@ -53,26 +54,10 @@ const SubscriptionPlan = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
   return (
     <div className=" py-16 ">
-      <div
-        className="relative bg-cover bg-center py-32 px-4 lg:px-0 text-white"
-        style={{ backgroundImage: `url(${img})` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black to-black opacity-20"></div>
-
-        <div className="container m-auto relative z-10  ">
-          <div className="flex items-center">
-            <div className="w-[5px] h-12 rounded-r bg-green-500 mr-4 "></div>
-            <div>
-              <h2 className="text-2xl font-bold text-blue-500">
-                Subscription Plans for Buyers
-              </h2>
-              <p className="text-white text-sm md:block hidden">
-                Unlock premium features and connect with top listings tailored to your investment goals.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+       <Header
+              title="Subscription Plans for Buyers"
+              description="Unlock premium features and connect with top listings tailored to your investment goals."
+            />
       <div className="max-w-6xl mx-auto text-center pt-11">
         <p className="text-sm text-[#0091FF] font-semibold">Pricing Table</p>
         <h2 className="text-3xl font-bold mb-12">Our Pricing Plan</h2>

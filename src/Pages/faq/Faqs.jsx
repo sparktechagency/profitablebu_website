@@ -7,6 +7,7 @@ import {
   FaPlusCircle,
 } from 'react-icons/fa';
 import img from '../../assets/Home/cover.png';
+import Header from '../AboutUs/Header';
 const Faqs = () => {
   const items = [
     {
