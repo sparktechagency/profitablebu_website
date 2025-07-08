@@ -118,7 +118,7 @@ const Navbar = () => {
           </div>
 
           {/* Main Navigation */}
-          <div className="flex justify-between items-center py-4">
+          <div className="flex justify-end lg:justify-between items-center py-4">
             {/* Desktop Navigation */}
             <nav
               className="hidden lg:flex items-center space-x-8"
