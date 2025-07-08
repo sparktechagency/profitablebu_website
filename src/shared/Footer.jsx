@@ -139,7 +139,7 @@ const FooterSection = ({ section }) => {
 
   return (
     <div className="mt-6 sm:mt-0">
-      <h3 className="font-semibold text-lg sm:text-xl mb-4 sm:mb-6 lg:mb-8 text-[#F59E0B] border-b border-[#F59E0B]/20 pb-2">
+      <h3 className="font-semibold text-lg sm:text-xl mb-4 sm:mb-6 lg:mb-8 text-white">
         {section.title}
       </h3>
       <ul className="space-y-2 sm:space-y-3">
