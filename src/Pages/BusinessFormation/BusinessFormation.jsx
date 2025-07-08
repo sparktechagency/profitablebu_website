@@ -35,7 +35,7 @@ const services = [
 
 export default function BusinessFormation() {
   return (
-    <div className="container mx-auto p-5">
+    <div className="container mx-auto px-5 pt-20 pb-10">
       {/* Header Section */}
       <div className="relative flex flex-col items-start gap-5 pl-5 mb-5">
         <div className="absolute top-0 left-0 w-2 h-full bg-[#22C55E] z-[1] rounded-r-full"></div>
