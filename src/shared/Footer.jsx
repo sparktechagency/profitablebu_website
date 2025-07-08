@@ -59,7 +59,7 @@ export const Footer = () => {
             <li>Franchises for Sale</li>
           </ul>
         </div>
-
+{/* rk branch */}
         <div>
           <h3 className="font-semibold mb-11 text-xl">FAQs</h3>
           <ul className="space-y-3 text-lg">
