@@ -1,8 +1,9 @@
 import { CheckCircle, Mail } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function BusinessValuationSubmission() {
   return (
-    <div className="container mx-auto p-5 py-5 md:py-10 ">
+    <div className="container mx-auto px-5 pt-20 pb-10">
       {/* Header Section */}
       <div className="text-center mb-12">
         <h1 className="text-5xl font-bold text-[#0091FF] mb-5">
@@ -84,18 +85,18 @@ export default function BusinessValuationSubmission() {
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-          <button
+          <Link
+            to="/"
             className="flex-1 border border-[#0091FF] text-[#0091FF] px-5 py-2 whitespace-nowrap rounded-md"
-            onClick={() => (window.location.href = "/")}
           >
             Back To Homepage
-          </button>
-          <button
+          </Link>
+          <Link
+            to="/business-valuaion"
             className="flex-1 bg-[#0091FF] text-white px-5 py-2 whitespace-nowrap rounded-md"
-            onClick={() => window.location.reload()}
           >
             Submit Another Valuation
-          </button>
+          </Link>
         </div>
       </div>
     </div>
