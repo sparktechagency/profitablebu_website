@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../assets/Home/logo.png";
+import Logo from "../assets/Home/logo2.png";
 import backImg from '../assets/Home/footer.png';
 import { FaFacebookF, FaLinkedinIn, FaTwitter, FaYoutube } from "react-icons/fa6";
 import { Link } from "react-router-dom";
@@ -13,9 +13,15 @@ export const Footer = () => {
       <div className="container m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 px-6 pb-10">
 
         <div>
-          <img src={Logo} alt="Logo" className="w-[200px] mb-4" />
-          <p className="text-sm">© 2023 PBFS.com</p>
-          <div className="flex space-x-3 mt-4">
+          <div className="flex items-center gap-3">
+            <img src={Logo} alt="Logo" className="w-[50px]" />
+            <div>
+              <h1 className="text-2xl font-bold text-[#F59E0B] ">P B S F</h1>
+              <p className="text-[#F59E0B]">From Listings to Legacy</p>
+            </div>
+          </div>
+          <p className="text-sm pt-6">© 2023 PBFS.com</p>
+          <div className="flex space-x-3 mt-3">
             <div className="bg-[#3758F9] flex justify-center items-center p-2 rounded-full">
               <FaFacebookF />
             </div>
@@ -32,8 +38,8 @@ export const Footer = () => {
         </div>
 
         <div>
-          <h3 className="font-semibold mb-5">Our Buyer Services</h3>
-          <ul className="space-y-1 ">
+          <h3 className="font-semibold text-xl mb-11">Our Buyer Services</h3>
+          <ul className="space-y-3 text-lg">
             <li>Buy a Business</li>
             <li>Buy a Franchise</li>
             <li>Buy a Business Asset</li>
@@ -45,8 +51,8 @@ export const Footer = () => {
         </div>
 
         <div>
-          <h3 className="font-semibold mb-5">Our Seller Services</h3>
-          <ul className="space-y-1">
+          <h3 className="font-semibold text-xl mb-11">Our Seller Services</h3>
+          <ul className="space-y-3 text-lg">
             <li>Businesses for Sale</li>
             <li>Business Assets for Sale</li>
             <li>Business Ideas for Investors</li>
@@ -55,26 +61,26 @@ export const Footer = () => {
         </div>
 
         <div>
-          <h3 className="font-semibold mb-5">FAQs</h3>
-          <ul className="space-y-3">
-            <Link to={'/faqsSeller'}><li>Seller FAQs</li></Link>
-            <Link to={'/faqs'}><li>Buyer FAQs</li></Link>
-            <Link to={'/FaqBrokers'}><li>Broker FAQs</li></Link>
-            <Link to={'/FaqInvestors'}><li>Investor FAQs</li></Link>
-            <Link to={'/FaqBusiness'}><li>Business Idea Lister FAQs</li></Link>
-            <Link to={'/FaqAsset'}><li>Business Asset Lister FAQs</li></Link>
-            <Link to={'/FaqFranchise'}><li>Franchisor FAQs</li></Link>
+          <h3 className="font-semibold mb-11 text-xl">FAQs</h3>
+          <ul className="space-y-3 text-lg">
+            <li><Link to={'/faqsSeller'}>Seller FAQs</Link></li>
+            <li><Link to={'/faqs'}>Buyer FAQs</Link></li>
+            <li><Link to={'/FaqBrokers'}>Broker FAQs</Link></li>
+            <li><Link to={'/FaqInvestors'}>Investor FAQs</Link></li>
+            <li><Link to={'/FaqBusiness'}>Business Idea Lister FAQs</Link></li>
+            <li><Link to={'/FaqAsset'}>Business Asset Lister FAQs</Link></li>
+            <li><Link to={'/FaqFranchise'}>Franchisor FAQs</Link></li>
           </ul>
         </div>
 
         <div>
-          <h3 className="font-semibold mb-5">Quick Links</h3>
-          <ul className="space-y-1">
-            <Link to={'/about-us'}><li>About Us</li></Link>
-            <Link to={'/contact-us'}><li>Contact Us</li></Link>
-            <Link to={'/privacy-policy'}><li>Privacy Policy</li></Link>
-            <Link to={'/terms-and-conditions'}><li>Terms of Condition</li></Link>
-            <Link to={'/refund-and-cancellation-policy'}><li>Refund and cancellation Policy</li></Link>
+          <h3 className="font-semibold text-xl mb-11">Quick Links</h3>
+          <ul className="space-y-3 text-lg">
+            <li><Link to={'/about-us'}>About Us</Link></li>
+            <li><Link to={'/contact-us'}>Contact Us</Link></li>
+            <li><Link to={'/<li>Privacy Policy</li>'}>Privacy Policy</Link></li>
+            <li><Link to={'/terms-and-conditions'}>Terms of Condition</Link></li>
+            <li><Link to={'/refund-and-cancellation-policy'}>Refund and cancellation Policy</Link></li>
           </ul>
         </div>
 
