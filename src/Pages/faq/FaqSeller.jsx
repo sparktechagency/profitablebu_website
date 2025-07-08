@@ -1,18 +1,18 @@
-import { Collapse } from "antd";
-import React from "react";
+import { Collapse, ConfigProvider } from 'antd';
+import React from 'react';
 import {
   FaArrowDown,
   FaArrowUp,
   FaMinusCircle,
   FaPlusCircle,
-} from "react-icons/fa";
-import img from "../../assets/Home/cover.png";
-import { IoIosArrowForward } from "react-icons/io";
+} from 'react-icons/fa';
+import img from '../../assets/Home/cover.png';
+import Header from '../AboutUs/Header';
 const FaqSeller = () => {
   const items = [
     {
-      key: "1",
-      label: "What is included in your Break/Fix services?",
+      key: '1',
+      label: 'What is included in your Break/Fix services?',
       children: (
         <p>
           We Provide On-Demand Troubleshooting And Repair Services For Hardware
@@ -24,8 +24,8 @@ const FaqSeller = () => {
       ),
     },
     {
-      key: "2",
-      label: "Do you offer remote IT support?",
+      key: '2',
+      label: 'Do you offer remote IT support?',
       children: (
         <p>
           Yes, We Provide Comprehensive Remote IT Support. Our Team Can
@@ -37,8 +37,8 @@ const FaqSeller = () => {
       ),
     },
     {
-      key: "3",
-      label: "Do you offer remote IT support?",
+      key: '3',
+      label: 'Do you offer remote IT support?',
       children: (
         <p>
           Yes, We Provide Comprehensive Remote IT Support. Our Team Can
@@ -50,8 +50,8 @@ const FaqSeller = () => {
       ),
     },
     {
-      key: "4",
-      label: "Do you offer remote IT support?",
+      key: '4',
+      label: 'Do you offer remote IT support?',
       children: (
         <p>
           Yes, We Provide Comprehensive Remote IT Support. Our Team Can
@@ -63,8 +63,8 @@ const FaqSeller = () => {
       ),
     },
     {
-      key: "5",
-      label: "Do you offer remote IT support?",
+      key: '5',
+      label: 'Do you offer remote IT support?',
       children: (
         <p>
           Yes, We Provide Comprehensive Remote IT Support. Our Team Can
@@ -76,8 +76,8 @@ const FaqSeller = () => {
       ),
     },
     {
-      key: "6",
-      label: "How soon can you deliver network migration services?",
+      key: '6',
+      label: 'How soon can you deliver network migration services?',
       children: (
         <p>
           Our Network Migration Services Are Planned And Delivered Based On The
@@ -92,27 +92,10 @@ const FaqSeller = () => {
   return (
     <div>
       <div></div>
-      <div
-        className="relative bg-cover bg-center py-32 px-4 lg:px-0 text-white"
-        style={{ backgroundImage: `url(${img})` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black to-black opacity-20"></div>
-
-        <div className="container m-auto relative z-10  ">
-          <div className="flex items-center">
-            <div className="w-[5px] h-12 rounded-r bg-green-500 mr-4 "></div>
-            <div>
-              <h2 className="text-2xl font-bold text-blue-500">
-                Frequently Asked Questions
-              </h2>
-              <p className="text-white text-sm md:block hidden">
-                Answers to common questions about buying, selling, and using our
-                platform.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+        <Header
+              title="Frequently Asked Questions"
+              description="Answers to common questions about buying, selling, and using our platform."
+            />
 
       {/* <div
         className="relative bg-cover bg-center py-36 text-white"
@@ -126,23 +109,36 @@ const FaqSeller = () => {
         </div>
       </div> */}
       <div className=" container m-auto py-11 ">
-        <h1 className="text-2xl font-bold ">
-          {" "}
+        <h1 className="text-3xl mb-4 font-bold ">
+          {' '}
           FAQ for <span className="text-[#00FF3A] ">Sellers</span>
         </h1>
-
-        <Collapse
-          ghost
-          items={items}
-          expandIconPosition="right"
-          expandIcon={({ isActive }) =>
-            isActive ? (
-              <FaMinusCircle style={{ fontSize: "16px", color: "black" }} />
-            ) : (
-              <FaPlusCircle style={{ fontSize: "16px", color: "black" }} />
-            )
-          }
-        />
+        <ConfigProvider
+          theme={{
+            components: {
+              Collapse: {
+                fontHeight: 32,
+                fontSize: 20,
+                fontHeightLG: 20,
+                fontSizeIcon: 20,
+              },
+            },
+          }}
+        >
+          <Collapse
+            defaultActiveKey={['1']}
+            items={items}
+            style={{ border: 'none' }}
+            expandIconPosition="right"
+            expandIcon={({ isActive }) =>
+              isActive ? (
+                <FaMinusCircle style={{ fontSize: '16px', color: 'black' }} />
+              ) : (
+                <FaPlusCircle style={{ fontSize: '16px', color: 'black' }} />
+              )
+            }
+          />
+        </ConfigProvider>
       </div>
     </div>
   );
