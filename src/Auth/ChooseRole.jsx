@@ -49,7 +49,7 @@ function ChooseRole() {
     <div className="container my-28 px-2 mx-auto">
       <div className="text-center">
         <h1 className="text-4xl font-bold">
-          Choose <span className="text-[#00FF3A] ">Your Role</span> to Get
+          Choose <span className="text-[#172554] ">Your Role</span> to Get
           Started
         </h1>
         <p className="text-center text-base mt-4 mb-12">
@@ -91,10 +91,10 @@ const Card = ({ title, description, state }) => {
         <img className="w-full h-full object-cover" src={img} alt={title} />
       </div>
       <div className="sm:w-3/5 w-full h-[200px] mt-12 sm:mt-0 sm:h-full relative">
-        <div className="absolute backdrop-blur-xl bg-[#0091FF]/15 h-fit py-[42px] px-[20px] sm:right-20 flex items-start justify-center flex-col  top-1/2 transform -translate-y-1/2 w-full rounded">
+        <div className="absolute backdrop-blur-sm border border-gray-200 bg-white shadow h-fit py-[42px] px-[20px] sm:right-20 flex items-start justify-center flex-col  top-1/2 transform -translate-y-1/2 w-full rounded">
           <h1 className="font-bold sm:text-4xl text-2xl">
             Become a{' '}
-            <span className="text-[#00FF3A] font-bold sm:text-4xl text-2xl">
+            <span className="text-[#172554] font-bold sm:text-4xl text-2xl">
               {title}
             </span>
           </h1>
