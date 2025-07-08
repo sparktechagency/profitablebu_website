@@ -1,18 +1,22 @@
-import { Collapse, ConfigProvider } from 'antd';
-import React from 'react';
+import { Collapse, ConfigProvider } from "antd";
+import React from "react";
 import {
   FaArrowDown,
   FaArrowUp,
   FaMinusCircle,
   FaPlusCircle,
-} from 'react-icons/fa';
-import img from '../../assets/Home/cover.png';
-import Header from '../AboutUs/Header';
+} from "react-icons/fa";
+import img from "../../assets/Home/cover.png";
+import Header from "../AboutUs/Header";
+import { useLocation } from "react-router-dom";
 const Faqs = () => {
+  const location = useLocation();
+  const state = location.state;
+  
   const items = [
     {
-      key: '1',
-      label: 'What is included in your Break/Fix services?',
+      key: "1",
+      label: "What is included in your Break/Fix services?",
       children: (
         <p>
           We Provide On-Demand Troubleshooting And Repair Services For Hardware
@@ -24,8 +28,8 @@ const Faqs = () => {
       ),
     },
     {
-      key: '2',
-      label: 'Do you offer remote IT support?',
+      key: "2",
+      label: "Do you offer remote IT support?",
       children: (
         <p>
           Yes, We Provide Comprehensive Remote IT Support. Our Team Can
@@ -37,8 +41,8 @@ const Faqs = () => {
       ),
     },
     {
-      key: '3',
-      label: 'Do you offer remote IT support?',
+      key: "3",
+      label: "Do you offer remote IT support?",
       children: (
         <p>
           Yes, We Provide Comprehensive Remote IT Support. Our Team Can
@@ -50,8 +54,8 @@ const Faqs = () => {
       ),
     },
     {
-      key: '4',
-      label: 'Do you offer remote IT support?',
+      key: "4",
+      label: "Do you offer remote IT support?",
       children: (
         <p>
           Yes, We Provide Comprehensive Remote IT Support. Our Team Can
@@ -63,8 +67,8 @@ const Faqs = () => {
       ),
     },
     {
-      key: '5',
-      label: 'Do you offer remote IT support?',
+      key: "5",
+      label: "Do you offer remote IT support?",
       children: (
         <p>
           Yes, We Provide Comprehensive Remote IT Support. Our Team Can
@@ -76,8 +80,8 @@ const Faqs = () => {
       ),
     },
     {
-      key: '6',
-      label: 'How soon can you deliver network migration services?',
+      key: "6",
+      label: "How soon can you deliver network migration services?",
       children: (
         <p>
           Our Network Migration Services Are Planned And Delivered Based On The
@@ -92,10 +96,10 @@ const Faqs = () => {
   return (
     <div>
       <div></div>
-        <Header
-              title="Frequently Asked Questions"
-              description="Answers to common questions about buying, selling, and using our platform."
-            />
+      <Header
+        title="Frequently Asked Questions"
+        description="Answers to common questions about buying, selling, and using our platform."
+      />
 
       {/* <div
         className="relative bg-cover bg-center py-36 text-white"
@@ -110,8 +114,8 @@ const Faqs = () => {
       </div> */}
       <div className=" container m-auto py-11 ">
         <h1 className="text-3xl mb-4 font-bold ">
-          {' '}
-          FAQ for <span className="text-[#00FF3A] ">Buyers</span>
+          {" "}
+          FAQ for <span className="text-[#22C55E] ">{state}</span>
         </h1>
         <ConfigProvider
           theme={{
@@ -126,15 +130,15 @@ const Faqs = () => {
           }}
         >
           <Collapse
-            defaultActiveKey={['1']}
+            defaultActiveKey={["1"]}
             items={items}
-            style={{ border: 'none' }}
+            style={{ border: "none" }}
             expandIconPosition="right"
             expandIcon={({ isActive }) =>
               isActive ? (
-                <FaMinusCircle style={{ fontSize: '16px', color: 'black' }} />
+                <FaMinusCircle style={{ fontSize: "16px", color: "black" }} />
               ) : (
-                <FaPlusCircle style={{ fontSize: '16px', color: 'black' }} />
+                <FaPlusCircle style={{ fontSize: "16px", color: "black" }} />
               )
             }
           />

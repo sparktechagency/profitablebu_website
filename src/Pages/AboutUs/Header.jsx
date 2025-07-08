@@ -23,7 +23,7 @@ export default function Header({ title, description }) {
           </button>
 
           <div className="relative flex flex-col items-start gap-5 pl-5">
-            <div className="absolute top-0 left-0 w-2 h-full bg-[#00FF3A] z-[-1] rounded-r-full"></div>
+            <div className="absolute top-0 left-0 w-2 h-full bg-[#22C55E] z-[-1] rounded-r-full"></div>
 
             <div className="ml-5">
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#0091FF] mb-6 leading-tight">

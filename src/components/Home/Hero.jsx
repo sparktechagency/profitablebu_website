@@ -24,7 +24,7 @@ export default function Home() {
         <div className="relative z-10 px-4 py-20 md:py-32 lg:py-40 container mx-auto">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Empowering Your <span className="text-[#00FF3A]">Business</span>{' '}
+              Empowering Your <span className="text-[#22C55E]">Business</span>{' '}
               with Smart{' '}
               <span className="text-[#0091FF]">Financial Solutions</span>
             </h1>
@@ -44,7 +44,7 @@ export default function Home() {
       <div className="relative z-20 mx-auto lg:-mt-28 mt-16  md:-mt-28 max-w-4xl px-4">
         <div className="bg-gradient-to-r from-sky-200/90 to-sky-300/30 backdrop-blur-sm rounded-lg p-8 shadow-lg">
           <h2 className="text-2xl md:text-3xl font-semibold text-white text-center mb-6">
-            You Find A <span className="text-[#00FF3A]">Business</span> For{' '}
+            You Find A <span className="text-[#22C55E]">Business</span> For{' '}
             <span className="text-[#0091FF]">Yourself</span>.
           </h2>
 

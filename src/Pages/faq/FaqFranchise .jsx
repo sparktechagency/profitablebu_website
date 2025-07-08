@@ -111,7 +111,7 @@ const FaqFranchise  = () => {
       <div className=" container m-auto py-11 ">
         <h1 className="text-3xl mb-4 font-bold ">
           {' '}
-          FAQ for <span className="text-[#00FF3A] ">Franchise Owners</span>
+          FAQ for <span className="text-[#22C55E] ">Franchise Owners</span>
         </h1>
         <ConfigProvider
           theme={{

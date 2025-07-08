@@ -93,7 +93,7 @@ const SimpleProcess = () => {
           <div className=" md:flex justify-center items-center">
             <div className="">
               <h1 className="md:text-6xl text-4xl pb-4 text-black font-bold">
-                ── Start Your <span className="text-[#00FF3A]">Business</span>{" "}
+                ── Start Your <span className="text-[#22C55E]">Business</span>{" "}
                 Journey
               </h1>
               <p className="text-black text-xl pt-4">

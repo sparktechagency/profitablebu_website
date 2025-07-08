@@ -25,8 +25,8 @@ export default function AboutUs() {
                 </span>
                 <h2 className="mb-5 text-3xl font-bold text-dark sm:text-[40px]/[48px]">
                   Your Step-by-Step Guide to{" "}
-                  <span className="text-[#00FF3A]">Buying</span> &{" "}
-                  <span className="text-[#00FF3A]">Selling Businesses</span>
+                  <span className="text-[#22C55E]">Buying</span> &{" "}
+                  <span className="text-[#22C55E]">Selling Businesses</span>
                 </h2>
                 <p className="mb-5 text-base text-[#000000]">
                   At PBFS.com, we connect aspiring entrepreneurs, seasoned

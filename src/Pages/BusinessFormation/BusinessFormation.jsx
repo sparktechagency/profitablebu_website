@@ -38,7 +38,7 @@ export default function BusinessFormation() {
     <div className="container mx-auto p-5">
       {/* Header Section */}
       <div className="relative flex flex-col items-start gap-5 pl-5 mb-5">
-        <div className="absolute top-0 left-0 w-2 h-full bg-[#00FF3A] z-[1] rounded-r-full"></div>
+        <div className="absolute top-0 left-0 w-2 h-full bg-[#22C55E] z-[1] rounded-r-full"></div>
 
         <div className="ml-5">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0091FF] mb-6 leading-tight">
