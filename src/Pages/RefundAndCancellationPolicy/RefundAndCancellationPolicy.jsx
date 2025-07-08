@@ -11,7 +11,7 @@ export default function RefundAndCancellationPolicy() {
                                         description="Please read these terms and conditions carefully before using our services."
                               />
 
-                              <div className="container mx-auto my-10 ">
+                              <div className="container mx-auto px-5 pt-20 pb-10">
                                         <div>
                                                   <h1 className="text-4xl font-bold mb-6">Refund and Cancellation Policy</h1>
 

@@ -36,11 +36,10 @@ export default function ContactUs() {
         title="Contact Us"
         description="Get in touch with us for any inquiries or questions."
       />
-      <div className="flex items-center justify-center">
-        <div className="max-w-6xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden my-20">
+      <div className="flex items-center justify-center px-5 py-10">
+        <div className="container mx-auto w-full bg-white rounded-2xl shadow-2xl overflow-hidden my-20">
           <div className="flex flex-col lg:flex-row">
-            {/* Left Side - Gradient Background */}
-            <div className="lg:w-2/5 bg-gradient-to-br from-blue-500 via-blue-400 to-green-400 p-8 lg:p-12 flex flex-col justify-between relative overflow-hidden">
+            <section className="lg:w-2/6 bg-gradient-to-br from-blue-500 via-blue-400 to-green-400 p-5 lg:p-10 flex flex-col justify-between relative overflow-hidden">
               {/* Decorative dots pattern */}
               <div className="absolute top-8 right-8 grid grid-cols-6 gap-2 opacity-30">
                 {Array.from({ length: 24 }).map((_, i) => (
@@ -50,7 +49,7 @@ export default function ContactUs() {
 
               {/* Contact Us Text */}
               <div className="flex-1 flex items-center">
-                <h1 className="text-white text-2xl lg:text-3xl font-bold tracking-wider transform -rotate-90 origin-center whitespace-nowrap">
+                <h1 className="text-white text-xl lg:text-2xl font-bold tracking-wider transform rotate-0 md:-rotate-90 origin-center whitespace-nowrap">
                   — CONTACT US
                 </h1>
               </div>
@@ -93,11 +92,8 @@ export default function ContactUs() {
                   </a>
                 </div>
               </div>
-            </div>
-
-            {/* Right Side - Contact Form */}
-            <div className="lg:w-3/5 p-8 lg:p-12">
-              <div className="max-w-lg">
+            </section>
+            <section className="lg:w-4/6 p-5 lg:p-10">
                 <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
                   Get In Touch With Us
                 </h2>
@@ -116,7 +112,7 @@ export default function ContactUs() {
                         placeholder="First Name"
                         value={formData.firstName}
                         onChange={handleInputChange}
-                        className="h-12 border-0 border-b-2 border-gray-200 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 px-0"
+                        className="h-12 border-0 border-b-2 border-gray-200 rounded-none bg-transparent px-2 "
                         required
                       />
                     </div>
@@ -127,7 +123,7 @@ export default function ContactUs() {
                         placeholder="Last Name"
                         value={formData.lastName}
                         onChange={handleInputChange}
-                        className="h-12 border-0 border-b-2 border-gray-200 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 px-0"
+                        className="h-12 border-0 border-b-2 border-gray-200 rounded-none bg-transparent px-2"
                         required
                       />
                     </div>
@@ -141,7 +137,7 @@ export default function ContactUs() {
                       placeholder="Email Address"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="h-12 border-0 border-b-2 border-gray-200 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 px-0"
+                      className="h-12 border-0 border-b-2 border-gray-200 rounded-none bg-transparent px-2"
                       required
                     />
                   </div>
@@ -154,7 +150,7 @@ export default function ContactUs() {
                       placeholder="Phone Number"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="h-12 border-0 border-b-2 border-gray-200 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 px-0"
+                      className="h-12 border-0 border-b-2 border-gray-200 rounded-none bg-transparent px-2"
                       required
                     />
                   </div>
@@ -167,7 +163,7 @@ export default function ContactUs() {
                       value={formData.message}
                       onChange={handleInputChange}
                       rows={4}
-                      className="border-0 border-b-2 border-gray-200 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 px-0 resize-none"
+                      className="border-0 border-b-2 border-gray-200 rounded-none bg-transparent px-2 resize-none"
                       required
                     />
                   </div>
@@ -182,11 +178,10 @@ export default function ContactUs() {
                     </button>
                   </div>
                 </form>
-              </div>
+              </section>
             </div>
           </div>
         </div>
-      </div>
     </>
   );
 }

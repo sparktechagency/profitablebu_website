@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react";
 export default function Header({ title, description }) {
   return (
     <div
-      className="relative w-full min-h-[350px] bg-cover bg-center bg-no-repeat flex items-center"
+      className="relative w-full min-h-[350px] bg-cover bg-center bg-no-repeat flex items-center px-5 md:px-0"
       style={{
         backgroundImage: "url('/header.png')",
       }}

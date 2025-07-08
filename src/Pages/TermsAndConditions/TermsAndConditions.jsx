@@ -5,13 +5,13 @@ const { Text } = Typography;
 
 export default function TermsAndConditions() {
   return (
-    <div className="text-[#000000]">
+    <div className="text-[#000000] ">
       <Header
         title="Terms and Conditions"
         description="Please read these terms and conditions carefully before using our services."
       />
 
-      <div className="container mx-auto my-10 ">
+      <div className="container mx-auto px-5 pt-20 pb-10">
         <div>
           <h1 className="text-4xl font-bold mb-6">Terms and Conditions</h1>
 
