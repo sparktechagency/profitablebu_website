@@ -72,7 +72,7 @@ export const Footer = () => {
           <ul className="space-y-1">
             <Link to={'/about-us'}><li>About Us</li></Link>
             <Link to={'/contact-us'}><li>Contact Us</li></Link>
-            <Link to={'/<li>Privacy Policy</li>'}><li>Privacy Policy</li></Link>
+            <Link to={'/privacy-policy'}><li>Privacy Policy</li></Link>
             <Link to={'/terms-and-conditions'}><li>Terms of Condition</li></Link>
             <Link to={'/refund-and-cancellation-policy'}><li>Refund and cancellation Policy</li></Link>
           </ul>
