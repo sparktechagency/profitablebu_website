@@ -3,20 +3,20 @@ import { MapPin } from "lucide-react";
 import InterestForm from "./InterestedForm";
 export default function BussinessDetailsWithForm() {
   return (
-    <div className="container mx-auto flex flex-col md:flex-row gap-5 w-full">
+    <div className="container mx-auto flex flex-col md:flex-row gap-5 w-full px-5 pt-20 pb-10">
       <div className="p-5 space-y-8 w-full md:w-1/2">
         {/* Main Business Listing */}
         <div className="flex flex-col gap-5">
           {/* Image Section */}
-          <div className="space-y-4">
-            <div className="relative md:w-[850px] md:h-[400px] rounded-lg overflow-hidden">
+          {/* <div className="space-y-4"> */}
+            <div className="relative md:w-full md:h-[400px] rounded-lg overflow-hidden">
               <img
                 src="./Home.png"
                 alt="Modern urban cafe with glass architecture"
                 className="object-cover w-full h-full"
               />
             </div>
-          </div>
+          {/* </div> */}
 
           {/* Business Details */}
           <div className="space-y-6 mt-5">

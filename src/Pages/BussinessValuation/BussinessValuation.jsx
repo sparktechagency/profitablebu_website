@@ -46,12 +46,6 @@ export default function BusinessValuationForm() {
     console.log("Form submitted:", formData);
   };
 
-  const SectionHeader = ({ icon: Icon, title }) => (
-    <div className="flex items-center gap-2 mb-6">
-      <Icon className="h-5 w-5 text-green-500" />
-      <h3 className="text-lg font-semibold text-blue-600">{title}</h3>
-    </div>
-  );
 
   const FileUploadArea = ({ label }) => (
     <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors">
@@ -65,9 +59,9 @@ export default function BusinessValuationForm() {
   );
 
   return (
-    <div className="container mx-auto p-5">
+    <div className="container mx-auto px-5 pt-20 pb-10">
       {/* Header */}
-      <div className="relative flex flex-col items-start gap-5 pl-5 mb-5">
+      <div className="relative flex flex-col items-start gap-5 pl-5 mb-10">
         <div className="absolute top-0 left-0 w-2 h-full bg-[#22C55E] z-[1] rounded-r-full"></div>
 
         <div className="ml-5">
@@ -415,7 +409,6 @@ export default function BusinessValuationForm() {
               File Uploads (PDF Only - Max 9 MB Each)
             </h3>
           </div>
-
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">

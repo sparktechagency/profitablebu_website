@@ -7,7 +7,7 @@ export default function BussinessDetails() {
       window.scrollTo(0,0)
     },[])
   return (
-    <div className="container mx-auto p-5 space-y-8">
+    <div className="container mx-auto px-5 pt-20 pb-10 space-y-8">
       {/* Main Business Listing */}
       <div className="flex flex-col md:flex-row gap-5">
         {/* Image Section */}

@@ -3,7 +3,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
 
 export default function BuyerContactInfo() {
   return (
-    <div className="container mx-auto p-5">
+    <div className="container mx-auto px-5 pt-20 pb-10">
       <h2 className="text-2xl font-bold text-blue-600 mb-6">
         Buyer Contact Info
       </h2>
