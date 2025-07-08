@@ -17,8 +17,6 @@ const footerConfig = {
     logo: Logo,
     backgroundImage: backImg,
     copyright: "© 2023 PBFS.com",
-    description:
-      "Your trusted partner in business buying and selling solutions.",
   },
 
   socialLinks: [
@@ -52,21 +50,57 @@ const footerConfig = {
     {
       title: "Our Buyer Services",
       links: [
-        { text: "Buy a Business", to: "/auth/login",state: "Business buyer" },
-        { text: "Buy a Franchise", to: "/auth/login",state: "Franchise buyer" },
-        { text: "Buy a Business Asset", to: "/auth/login",state: "Business asset buyer" },
-        { text: "Find a Business Idea", to: "/auth/login",state: "Business idea buyer" },
-        { text: "Business Valuation", to: "/auth/login",state: "Business valuation buyer" },
-        { text: "Business Formation", to: "/auth/login",state: "Business formation buyer" },
+        { text: "Buy a Business", to: "/auth/login", state: "Business buyer" },
+        {
+          text: "Buy a Franchise",
+          to: "/auth/login",
+          state: "Franchise buyer",
+        },
+        {
+          text: "Buy a Business Asset",
+          to: "/auth/login",
+          state: "Business asset buyer",
+        },
+        {
+          text: "Find a Business Idea",
+          to: "/auth/login",
+          state: "Business idea buyer",
+        },
+        {
+          text: "Business Valuation",
+          to: "/auth/login",
+          state: "Business valuation buyer",
+        },
+        {
+          text: "Business Formation",
+          to: "/auth/login",
+          state: "Business formation buyer",
+        },
       ],
     },
     {
       title: "Our Seller Services",
       links: [
-        { text: "Businesses for Sale", to: "/auth/login",state: "Business seller" },
-        { text: "Business Assets for Sale", to: "/auth/login",state: "Business asset seller" },
-        { text: "Business Ideas for Investors", to: "/auth/login",state: "Business idea seller" },
-        { text: "Franchises for Sale", to: "/auth/login",state: "Franchise seller" },
+        {
+          text: "Businesses for Sale",
+          to: "/auth/login",
+          state: "Business seller",
+        },
+        {
+          text: "Business Assets for Sale",
+          to: "/auth/login",
+          state: "Business asset seller",
+        },
+        {
+          text: "Business Ideas for Investors",
+          to: "/auth/login",
+          state: "Business idea seller",
+        },
+        {
+          text: "Franchises for Sale",
+          to: "/auth/login",
+          state: "Franchise seller",
+        },
       ],
     },
     {
@@ -147,10 +181,9 @@ const FooterSection = ({ section }) => {
           <li key={index}>
             <h1
               onClick={() => handleNavigation(link)}
-              className="text-sm cursor-pointer sm:text-base lg:text-lg hover:text-[#F59E0B] transition-all duration-300 hover:translate-x-1 inline-block relative group"
+              className="text-sm cursor-pointer hover:text-white/90 sm:text-base lg:text-lg transition-all duration-300 inline-block relative group"
             >
               {link.text}
-              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-[#F59E0B] transition-all duration-300 group-hover:w-full"></span>
             </h1>
           </li>
         ))}
@@ -191,11 +224,6 @@ export const Footer = () => {
                 </p>
               </div>
             </div>
-
-            <p className="text-gray-300 text-sm sm:text-base mb-3 sm:mb-4">
-              {company.description}
-            </p>
-
             <p className="text-xs sm:text-sm mb-3 sm:mb-4 text-gray-400">
               {company.copyright}
             </p>
