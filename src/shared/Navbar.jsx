@@ -88,7 +88,13 @@ const Navbar = () => {
       label: 'Business Formation',
       path: '/business-formation',
     },
-    { key: 'resources', label: 'Resources', path: '/blog' },
+    {
+      key: 'resources',
+      label: 'Resources',
+      path: '/blog',
+      submenu: menuItems.resources,
+      state: menuItems.resources.state,
+    },
   ];
 
   return (
@@ -108,10 +114,7 @@ const Navbar = () => {
               </div>
             </Link>
             <button className="w-fit hidden md:block px-4 py-2 bg-[#22C55E] text-white text-center rounded-lg font-medium">
-              <Link
-                to="/auth/login"
-                onClick={() => setMobileMenuOpen(false)}
-              >
+              <Link to="/auth/login" onClick={() => setMobileMenuOpen(false)}>
                 List Your Business
               </Link>
             </button>
