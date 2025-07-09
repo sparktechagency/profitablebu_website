@@ -1,32 +1,32 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ChevronDown, Menu, X, Globe, User, LogOut } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import Logo from '../assets/Home/logo.png';
-import { menuItems } from '../dummy-data/DummyData';
-import BusinessIcon from './nav-icons/BusinessIcon';
-import MessageIcon from './nav-icons/MessageIcon';
-import BelIcon from './nav-icons/BelIcon';
-import CrownIcon from './nav-icons/CrownIcon';
-import SettingIcon from './nav-icons/SettingIcon';
-import NdaIcon from './nav-icons/NdaIcon';
-import HelpIcon from './nav-icons/HelpIcon';
-import InfoIcon from './nav-icons/InfoIcon';
-import { message } from 'antd';
+import React, { useState, useEffect, useRef } from "react";
+import { ChevronDown, Menu, X, Globe, User, LogOut } from "lucide-react";
+import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import Logo from "../assets/Home/logo2.png";
+import { menuItems } from "../dummy-data/DummyData";
+import BusinessIcon from "./nav-icons/BusinessIcon";
+import MessageIcon from "./nav-icons/MessageIcon";
+import BelIcon from "./nav-icons/BelIcon";
+import CrownIcon from "./nav-icons/CrownIcon";
+import SettingIcon from "./nav-icons/SettingIcon";
+import NdaIcon from "./nav-icons/NdaIcon";
+import HelpIcon from "./nav-icons/HelpIcon";
+import InfoIcon from "./nav-icons/InfoIcon";
+import { message } from "antd";
 const countryFlags = {
-  US: 'https://flagcdn.com/w20/us.png',
-  GB: 'https://flagcdn.com/w20/gb.png',
-  IN: 'https://flagcdn.com/w20/in.png',
-  ES: 'https://flagcdn.com/w20/es.png',
-  AE: 'https://flagcdn.com/w20/ae.png',
+  US: "https://flagcdn.com/w20/us.png",
+  GB: "https://flagcdn.com/w20/gb.png",
+  IN: "https://flagcdn.com/w20/in.png",
+  ES: "https://flagcdn.com/w20/es.png",
+  AE: "https://flagcdn.com/w20/ae.png",
 };
 
 const countries = [
-  { name: 'United States', code: 'US', flag: countryFlags.US },
-  { name: 'United Kingdom', code: 'GB', flag: countryFlags.GB },
-  { name: 'India', code: 'IN', flag: countryFlags.IN },
-  { name: 'Spain', code: 'ES', flag: countryFlags.ES },
-  { name: 'UAE', code: 'AE', flag: countryFlags.AE },
+  { name: "United States", code: "US", flag: countryFlags.US },
+  { name: "United Kingdom", code: "GB", flag: countryFlags.GB },
+  { name: "India", code: "IN", flag: countryFlags.IN },
+  { name: "Spain", code: "ES", flag: countryFlags.ES },
+  { name: "UAE", code: "AE", flag: countryFlags.AE },
 ];
 
 const Navbar = () => {
@@ -36,7 +36,7 @@ const Navbar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
   const [scrolled, setScrolled] = useState(false);
-  const token = localStorage.getItem('user');
+  const token = localStorage.getItem("user");
   const user = token === null;
 
   const dropdownRef = useRef(null);
@@ -46,8 +46,8 @@ const Navbar = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -56,8 +56,8 @@ const Navbar = () => {
         setActiveDropdown(null);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleDropdownEnter = (key) => {
@@ -74,21 +74,21 @@ const Navbar = () => {
   };
 
   const navItems = [
-    { key: 'home', label: 'Home', path: '/' },
+    { key: "home", label: "Home", path: "/" },
     {
-      key: 'selling',
-      label: 'Selling',
+      key: "selling",
+      label: "Selling",
       submenu: menuItems.selling,
       state: menuItems.selling[0].state,
     },
-    { key: 'buying', label: 'Buying', submenu: menuItems.buying },
-    { key: 'valuation', label: 'Valuation', submenu: menuItems.valuation },
+    { key: "buying", label: "Buying", submenu: menuItems.buying },
+    { key: "valuation", label: "Valuation", submenu: menuItems.valuation },
     {
-      key: 'business',
-      label: 'Business Formation',
-      path: '/business-formation',
+      key: "business",
+      label: "Business Formation",
+      path: "/business-formation",
     },
-    { key: 'resources', label: 'Resources', path: '/blog' },
+    { key: "resources", label: "Resources", path: "/blog" },
   ];
 
   return (
@@ -96,22 +96,27 @@ const Navbar = () => {
       <motion.header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-white/95 backdrop-blur-md  border-b border-gray-100'
-            : 'bg-white shadow-sm'
+            ? "bg-white/95 backdrop-blur-md  border-b border-gray-100"
+            : "bg-white shadow-sm"
         }`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-3 border-b border-gray-100">
             <Link to="/">
               <div className="flex items-center space-x-4">
-                <img src={Logo} alt="Logo" className="h-10 w-auto" />
+                <div className="flex items-center gap-3">
+                  <img src={Logo} alt="Logo" className="w-[50px]" />
+                  <div>
+                    <h1 className="text-2xl font-bold text-[#F59E0B] ">
+                      P B S F
+                    </h1>
+                    <p className="text-[#F59E0B]">From Listings to Legacy</p>
+                  </div>
+                </div>
               </div>
             </Link>
             <button className="w-fit hidden md:block px-4 py-2 bg-[#22C55E] text-white text-center rounded-lg font-medium">
-              <Link
-                to="/auth/login"
-                onClick={() => setMobileMenuOpen(false)}
-              >
+              <Link to="/auth/login" onClick={() => setMobileMenuOpen(false)}>
                 List Your Business
               </Link>
             </button>
@@ -135,7 +140,7 @@ const Navbar = () => {
                       <span>{item?.label}</span>
                       <ChevronDown
                         className={`w-4 h-4 transition-transform ${
-                          activeDropdown === item?.key ? 'rotate-180' : ''
+                          activeDropdown === item?.key ? "rotate-180" : ""
                         }`}
                       />
                     </button>
@@ -187,7 +192,7 @@ const Navbar = () => {
                 onClick={() => setCountryModalOpen(true)}
                 className="flex items-center space-x-1 text-gray-600"
               >
-                <Globe className="w-5 h-5" />{' '}
+                <Globe className="w-5 h-5" />{" "}
                 <span className="text-[#28A745]">INT</span>
               </button>
 
@@ -243,15 +248,23 @@ const Navbar = () => {
               onClick={() => setMobileMenuOpen(false)}
             />
             <motion.div
-              initial={{ x: '100%' }}
+              initial={{ x: "100%" }}
               animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="fixed top-0 right-0 bottom-0 w-80 bg-white shadow-2xl z-50 lg:hidden overflow-y-auto"
             >
               <div className="p-6">
                 <div className="flex items-center justify-between mb-8">
-                  <img src={Logo} alt="Logo" className="h-8" />
+                  <div className="flex items-center gap-3">
+                    <img src={Logo} alt="Logo" className="w-[50px]" />
+                    <div>
+                      <h1 className="text-2xl font-bold text-[#F59E0B] ">
+                        P B S F
+                      </h1>
+                      <p className="text-[#F59E0B]">From Listings to Legacy</p>
+                    </div>
+                  </div>
                   <button
                     onClick={() => setMobileMenuOpen(false)}
                     className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
@@ -304,10 +317,10 @@ const Navbar = () => {
               onClick={() => setProfileMenuOpen(false)}
             />
             <motion.div
-              initial={{ x: '100%' }}
+              initial={{ x: "100%" }}
               animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="fixed top-0 right-0 bottom-0 w-80 bg-white shadow-2xl z-50 overflow-y-auto"
             >
               <button
@@ -340,32 +353,32 @@ const Navbar = () => {
                   {[
                     {
                       icon: BusinessIcon,
-                      label: 'Contacted Businesses',
-                      path: '/myBusiness/details',
+                      label: "Contacted Businesses",
+                      path: "/myBusiness/details",
                     },
-                    { icon: MessageIcon, label: 'Message', path: '/chat' },
+                    { icon: MessageIcon, label: "Message", path: "/chat" },
                     {
                       icon: BelIcon,
-                      label: 'Notification',
-                      path: '/notification',
+                      label: "Notification",
+                      path: "/notification",
                     },
                     {
                       icon: CrownIcon,
-                      label: 'Subscription',
-                      path: '/subscription',
+                      label: "Subscription",
+                      path: "/subscription",
                     },
                     {
                       icon: SettingIcon,
-                      label: 'Profile Settings',
-                      path: '/profilePage',
+                      label: "Profile Settings",
+                      path: "/profilePage",
                     },
-                    { icon: NdaIcon, label: 'NDA', path: '/Seller' },
+                    { icon: NdaIcon, label: "NDA", path: "/Seller" },
                     {
                       icon: HelpIcon,
-                      label: 'Help & Support',
-                      path: '/contact-us',
+                      label: "Help & Support",
+                      path: "/contact-us",
                     },
-                    { icon: InfoIcon, label: 'FAQs', path: '/faqs' },
+                    { icon: InfoIcon, label: "FAQs", path: "/faqs" },
                   ].map((item, idx) => (
                     <Link
                       key={idx}
@@ -384,9 +397,9 @@ const Navbar = () => {
                   <div
                     onClick={() => {
                       setProfileMenuOpen(false);
-                      localStorage.removeItem('token');
-                      localStorage.removeItem('user');
-                      message.success('You have been logged out');
+                      localStorage.removeItem("token");
+                      localStorage.removeItem("user");
+                      message.success("You have been logged out");
                     }}
                     className="flex items-center space-x-3 hover:bg-gray-100 p-2 rounded-lg transition-colors cursor-pointer"
                   >
@@ -440,8 +453,8 @@ const Navbar = () => {
                       }}
                       className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-colors ${
                         selectedCountry.code === country.code
-                          ? 'bg-blue-50 border border-blue-200'
-                          : 'hover:bg-gray-50'
+                          ? "bg-blue-50 border border-blue-200"
+                          : "hover:bg-gray-50"
                       }`}
                     >
                       <img
@@ -479,7 +492,7 @@ const MobileNavItem = ({ item, onClose }) => {
           <span className="font-medium">{item?.label}</span>
           <ChevronDown
             className={`w-4 h-4 transition-transform ${
-              isOpen ? 'rotate-180' : ''
+              isOpen ? "rotate-180" : ""
             }`}
           />
         </button>
@@ -487,7 +500,7 @@ const MobileNavItem = ({ item, onClose }) => {
           {isOpen && (
             <motion.div
               initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
+              animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               className="overflow-hidden"
             >

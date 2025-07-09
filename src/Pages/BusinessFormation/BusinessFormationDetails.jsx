@@ -1,26 +1,70 @@
 import { Tag } from "antd";
 import InterestForm from "../BussinessDetailsWithForm/InterestedForm";
+import img from "../../assets/Home/bbb.png";
 export default function BusinessFormationDetails() {
   return (
     <div className="container mx-auto flex flex-col md:flex-row gap-5 w-full px-5 pt-20 pb-10">
       <div className="p-5 space-y-8 w-full md:w-1/2">
         <div className="flex flex-col gap-5">
-          <div className="relative md:w-full md:h-[400px] rounded-lg overflow-hidden">
-            <img
-              src="./Home.png"
-              alt="Modern urban cafe with glass architecture"
-              className="object-cover w-full h-full"
-            />
-          </div>
-          <div className="space-y-5 mt-5">
-            <div className="space-y-3">
-              <Tag className="bg-blue-100 border-[#0091FF] text-[#0091FF] px-5 py-2 font-bold">
-                #Franchise
-              </Tag>
-              <h1 className="text-3xl font-bold text-[#0091FF]">
-                Trendy Urban Cafe in Dhaka City
-              </h1>
+          {/* Image Section */}
+          <div className=" mt-11">
+            <div className="md:flex gap-5 items-center">
+              <img
+                src={img}
+                alt="Modern urban cafe with glass architecture"
+                className="object-cover md:w-[200px]"
+              />
+              <div className="space-y-3 mt-6 md:mt-0">
+                <Tag className="bg-blue-100 border-[#0091FF] text-[#0091FF] px-5 py-2 font-bold">
+                  #Franchise
+                </Tag>
+                <h1 className="text-3xl font-bold text-[#0091FF]">
+                  Trendy Urban Cafe in Dhaka City
+                </h1>
+              </div>
             </div>
+          </div>
+
+          {/* Business Details */}
+          <div className="space-y-6 ">
+            {/* <div className="space-y-4">
+              <div className="grid grid-cols-1 gap-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="font-bold text-gray-700">
+                    Business Type:
+                  </span>
+                  <span className="text-gray-600">Franchise Resale</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-bold text-gray-700">Price:</span>
+                  <span className="text-gray-600">$75,000 USD</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-bold text-gray-700">Location:</span>
+                  <span className="text-gray-600">
+                    Banani, Dhaka, Bangladesh
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-bold text-gray-700">Industry:</span>
+                  <span className="text-gray-600">
+                    Food & Beverage – Cafe & Coffee Shop
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-bold text-gray-700">
+                    Ownership Type:
+                  </span>
+                  <span className="text-gray-600">Sole Proprietorship</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="font-bold text-gray-700">
+                    Reason for Selling:
+                  </span>
+                  <span className="text-gray-600">Owner relocating abroad</span>
+                </div>
+              </div>
+            </div> */}
           </div>
         </div>
 
@@ -69,7 +113,7 @@ export default function BusinessFormationDetails() {
           </div>
         </div>
       </div>
-      <div className="w-full md:w-1/2">
+      <div className="w-full mt-11 md:w-1/2">
         <InterestForm />
       </div>
     </div>
