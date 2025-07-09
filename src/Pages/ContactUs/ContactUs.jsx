@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { useState } from 'react';
+import { Form, Input, Button } from 'antd';
 import {
   Facebook,
   Twitter,
   Linkedin,
   Instagram,
   MessageCircle,
-} from "lucide-react";
-import Header from "../AboutUs/Header";
-
+} from 'lucide-react';
+import Header from '../AboutUs/Header';
+import img from '../../../public/contact-us.png';
 export default function ContactUs() {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    message: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: '',
   });
 
   const handleInputChange = (e) => {
@@ -25,9 +26,8 @@ export default function ContactUs() {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
+  const handleSubmit = (values) => {
+    console.log('Form submitted:', values);
     // Handle form submission here
   };
   return (
@@ -39,20 +39,15 @@ export default function ContactUs() {
       <div className="flex items-center justify-center px-5 py-10">
         <div className="container mx-auto w-full bg-white rounded-2xl shadow-2xl overflow-hidden my-20">
           <div className="flex flex-col lg:flex-row">
-            <section className="lg:w-2/6 bg-gradient-to-br from-blue-500 via-blue-400 to-green-400 p-5 lg:p-10 flex flex-col justify-between relative overflow-hidden">
-              {/* Decorative dots pattern */}
-              <div className="absolute top-8 right-8 grid grid-cols-6 gap-2 opacity-30">
-                {Array.from({ length: 24 }).map((_, i) => (
-                  <div key={i} className="w-2 h-2 bg-white rounded-full"></div>
-                ))}
-              </div>
-
+            <section
+              style={{
+                backgroundImage: `url(${img})`,
+                backgroundSize: 'cover',
+              }}
+              className="lg:w-2/6 bg-gradient-to-br from-blue-500 via-blue-400 to-green-400 p-5 lg:p-10 flex flex-col justify-between relative overflow-hidden"
+            >
               {/* Contact Us Text */}
-              <div className="flex-1 flex items-center">
-                <h1 className="text-white text-xl lg:text-2xl font-bold tracking-wider transform rotate-0 md:-rotate-90 origin-center whitespace-nowrap">
-                  — CONTACT US
-                </h1>
-              </div>
+              <div className="flex-1 flex items-center"></div>
 
               {/* Social Media Section */}
               <div className="mt-8">
@@ -94,94 +89,126 @@ export default function ContactUs() {
               </div>
             </section>
             <section className="lg:w-4/6 p-5 lg:p-10">
-                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                  Get In Touch With Us
-                </h2>
-                <p className="text-gray-600 mb-8 leading-relaxed">
-                  There are many variations of passages of Lorem Ipsum available
-                  but the majority have suffered alteration in some form.
-                </p>
+              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                Get In Touch With Us
+              </h2>
+              <p className="text-gray-600 mb-8 leading-relaxed">
+                There are many variations of passages of Lorem Ipsum available
+                but the majority have suffered alteration in some form.
+              </p>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Name Fields */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <input
-                        type="text"
-                        name="firstName"
-                        placeholder="First Name"
-                        value={formData.firstName}
-                        onChange={handleInputChange}
-                        className="h-12 border-0 border-b-2 border-gray-200 rounded-none bg-transparent px-2 "
-                        required
-                      />
-                    </div>
-                    <div>
-                      <input
-                        type="text"
-                        name="lastName"
-                        placeholder="Last Name"
-                        value={formData.lastName}
-                        onChange={handleInputChange}
-                        className="h-12 border-0 border-b-2 border-gray-200 rounded-none bg-transparent px-2"
-                        required
-                      />
-                    </div>
-                  </div>
+              <Form
+                requiredMark={false}
+                layout="vertical"
+                onFinish={handleSubmit}
+                className="grid grid-cols-2 gap-4"
+              >
+                {/* Name Fields */}
+                <Form.Item
+                  label="First Name"
+                  name="firstName"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input your first name!',
+                    },
+                  ]}
+                  className="col-span-2 md:col-span-1"
+                >
+                  <Input
+                    className="!border-t-0 !border-l-0 !h-10 !rounded-none !border-r-0 !ring-0 !focus:ring-0 !border-b-1 !border-gray-300 !focus:border-b-1 !focus:border-gray-300"
+                    placeholder="First Name"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                  />
+                </Form.Item>
+                <Form.Item
+                  label="Last Name"
+                  name="lastName"
+                  rules={[
+                    { required: true, message: 'Please input your last name!' },
+                  ]}
+                  className="col-span-2 md:col-span-1"
+                >
+                  <Input
+                    className="!border-t-0 !border-l-0 !h-10 !rounded-none !border-r-0 !ring-0 !focus:ring-0 !border-b-1 !border-gray-300 !focus:border-b-1 !focus:border-gray-300"
+                    placeholder="Last Name"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                  />
+                </Form.Item>
 
-                  {/* Email Field */}
-                  <div>
-                    <input
-                      type="email"
-                      name="email"
-                      placeholder="Email Address"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="h-12 border-0 border-b-2 border-gray-200 rounded-none bg-transparent px-2"
-                      required
-                    />
-                  </div>
+                {/* Email Field */}
+                <Form.Item
+                  label="Email Address"
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input your email address!',
+                    },
+                  ]}
+                  className="col-span-2"
+                >
+                  <Input
+                    type="email"
+                    className="!border-t-0 !border-l-0 !h-10 !rounded-none !border-r-0 !ring-0 !focus:ring-0 !border-b-1 !border-gray-300 !focus:border-b-1 !focus:border-gray-300"
+                    placeholder="Email Address"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                  />
+                </Form.Item>
 
-                  {/* Phone Field */}
-                  <div>
-                    <input
-                      type="tel"
-                      name="phone"
-                      placeholder="Phone Number"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="h-12 border-0 border-b-2 border-gray-200 rounded-none bg-transparent px-2"
-                      required
-                    />
-                  </div>
+                {/* Phone Field */}
+                <Form.Item
+                  label="Phone Number"
+                  name="phone"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input your phone number!',
+                    },
+                  ]}
+                  className="col-span-2"
+                >
+                  <Input
+                    type="tel"
+                    className="!border-t-0 !border-l-0 !h-10 !rounded-none !border-r-0 !ring-0 !focus:ring-0 !border-b-1 !border-gray-300 !focus:border-b-1 !focus:border-gray-300"
+                    placeholder="Phone Number"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                  />
+                </Form.Item>
 
-                  {/* Message Field */}
-                  <div>
-                    <textarea
-                      name="message"
-                      placeholder="Type Your Message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      rows={4}
-                      className="border-0 border-b-2 border-gray-200 rounded-none bg-transparent px-2 resize-none"
-                      required
-                    />
-                  </div>
+                {/* Message Field */}
+                <Form.Item
+                  label="Message"
+                  name="message"
+                  rules={[
+                    { required: true, message: 'Please input your message!' },
+                  ]}
+                  className="col-span-2"
+                >
+                  <Input.TextArea
+                    rows={4}
+                    className="!border-t-0 !border-l-0 !h-32 !rounded-none !border-r-0 !ring-0 !focus:ring-0 !border-b-1 !border-gray-300 !focus:border-b-1 !focus:border-gray-300"
+                    placeholder="Type Your Message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                  />
+                </Form.Item>
 
-                  {/* Submit Button */}
-                  <div className="pt-4">
-                    <button
-                      type="submit"
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
-                    >
-                      Send Message
-                    </button>
-                  </div>
-                </form>
-              </section>
-            </div>
+                {/* Submit Button */}
+                <Form.Item>
+                  <Button type="primary" htmlType="submit" className="w-full">
+                    Send Message
+                  </Button>
+                </Form.Item>
+              </Form>
+            </section>
           </div>
         </div>
+      </div>
     </>
   );
 }
