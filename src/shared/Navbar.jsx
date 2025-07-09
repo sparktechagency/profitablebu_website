@@ -88,7 +88,13 @@ const Navbar = () => {
       label: "Business Formation",
       path: "/business-formation",
     },
-    { key: "resources", label: "Resources", path: "/blog" },
+    {
+      key: 'resources',
+      label: 'Resources',
+      path: '/blog',
+      submenu: menuItems.resources,
+      state: menuItems.resources.state,
+    },
   ];
 
   return (
