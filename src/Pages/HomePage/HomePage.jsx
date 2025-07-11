@@ -17,7 +17,7 @@ export const HomePage = () => {
   return (
     <div>
       <Hero></Hero>
-      <div className='container m-auto lg:px-0 px-4'>
+      <div className='container m-auto lg:px-4 px-4'>
         <BusinessCard></BusinessCard>
        <div className='mt-16'>
          <FeaturedBusinesses></FeaturedBusinesses>

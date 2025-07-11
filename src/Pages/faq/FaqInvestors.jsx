@@ -108,7 +108,7 @@ const FaqInvestors = () => {
           <p className='flex items-center gap-2'>Home <IoIosArrowForward /> Faq</p>
         </div>
       </div> */}
-      <div className=" container m-auto py-11 ">
+      <div className=" container m-auto py-11 px-4">
         <h1 className="text-3xl mb-4 font-bold ">
           {' '}
           FAQ for <span className="text-[#22C55E] ">Investors</span>

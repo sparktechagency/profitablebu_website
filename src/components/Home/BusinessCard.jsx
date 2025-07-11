@@ -49,7 +49,7 @@ const BusinessCard = () => {
   ];
   return (
     <div>
-      <div className="-mt-16 md:-mt-0">
+      <div className="mt-8 lg:-mt-11 md:-mt-28">
         <div className="">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center">

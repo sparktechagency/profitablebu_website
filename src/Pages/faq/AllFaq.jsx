@@ -24,9 +24,9 @@ const AllFaq = () => {
   return (
     <div>
       <Header
-                    title="Frequently Asked Questions"
-                    description="Answers to common questions about buying, selling, and using our platform."
-                  />
+        title="Frequently Asked Questions"
+        description="Answers to common questions about buying, selling, and using our platform."
+      />
       <div className="min-h-screen py-10 px-4 flex justify-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-7xl w-full">
           {faqs.map((faq, index) => (

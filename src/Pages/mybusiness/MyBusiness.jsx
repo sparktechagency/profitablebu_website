@@ -29,7 +29,7 @@ const MyBusiness = () => {
   ];
 
   return (
-    <div className="container m-auto pb-20">
+    <div className="container m-auto pb-20 mt-11 px-4">
       <Navigate title={"My Business"}></Navigate>
       <div className="pt-6">
         <div className="">
@@ -42,7 +42,7 @@ const MyBusiness = () => {
                 </button>
               </Link>
             </div>
-            <div className="mb-6">
+            <div className="mb-6 mt-11">
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
                   <div className="w-[5px] h-12 rounded-r bg-green-500 mr-4 "></div>
