@@ -140,7 +140,7 @@ export const menuItems = {
   valuation: [
     {
       name: 'Schedule a Call',
-      path: '/valuation/call',
+      path: '/business-schedule',
     },
     {
       name: 'Get Business Valuations',

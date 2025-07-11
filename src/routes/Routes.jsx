@@ -53,6 +53,7 @@ import Seller from '../Pages/seller/Seller';
 import ChooseRole from '../Auth/ChooseRole';
 import EditNewBusiness from '../Pages/mybusiness/EditNewBusiness';
 import SignUp from '../Auth/SignUp';
+import SchedualeCall from '../Pages/BussinessValuation/SchedualeCall';
 
 export const router = createBrowserRouter([
   {
@@ -217,6 +218,10 @@ export const router = createBrowserRouter([
       {
         path: '/business-valuaion',
         element: <BusinessValuationForm />,
+      },
+      {
+        path: '/business-schedule',
+        element: <SchedualeCall></SchedualeCall>
       },
       {
         path: '/business-valuaion-submission',
