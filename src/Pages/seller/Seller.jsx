@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Input, Button, Upload, Form, Typography, Divider } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import { div } from 'framer-motion/client';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -12,8 +13,9 @@ const Seller = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f5f5] py-10 px-4">
-      <Card className="container m-auto p-10  shadow-xl">
+    <div className='pt-11 lg:pt-0'>
+      <div className="min-h-screen  py-10 px-4 ">
+      <Card className="container m-auto lg:p-10  shadow-xl">
         <Title level={3} className="text-center mb-2">Seller Non-Disclosure Agreement (NDA)</Title>
         <Text className="block text-center text-gray-500 mb-8">ProfitableBusinessesForSale.com<br />From Listings To Legacy</Text>
 
@@ -148,6 +150,7 @@ const Seller = () => {
           </div>
         </Form>
       </Card>
+    </div>
     </div>
   );
 };
