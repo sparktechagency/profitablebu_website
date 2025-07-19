@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import { Search, ArrowLeft, Paperclip, Send } from 'lucide-react';
-import { Navigate } from '../Navigate';
+import React, { useEffect } from "react";
+import { Search, ArrowLeft, Paperclip, Send } from "lucide-react";
+import { Navigate } from "../Navigate";
 const Chat = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   return (
     <div className="container m-auto">
-      <div className="mt-11">
-        <Navigate title={'Message'}></Navigate>
+      <div className="mt-20 md:mt-11">
+        <Navigate title={"Message"}></Navigate>
       </div>
       <div className="flex h-screen bg-white">
         {/* Sidebar - Conversations */}

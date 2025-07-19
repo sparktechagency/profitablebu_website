@@ -29,7 +29,7 @@ const MyBusiness = () => {
   ];
 
   return (
-    <div className="container m-auto pb-20 mt-11 px-4">
+    <div className="container m-auto pb-20 mt-20 md:mt-11 px-4">
       <Navigate title={"My Business"}></Navigate>
       <div className="pt-6">
         <div className="">

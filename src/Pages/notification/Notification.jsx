@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"; // React Router Link
 import { ArrowLeft, X } from "lucide-react";
 import { Navigate } from "../Navigate";
 
-
 const Notification = () => {
   const [notifications, setNotifications] = useState([
     {
@@ -46,14 +45,16 @@ const Notification = () => {
   ]);
 
   const dismissNotification = (id) => {
-    setNotifications(notifications.filter((notification) => notification.id !== id));
+    setNotifications(
+      notifications.filter((notification) => notification.id !== id)
+    );
   };
 
   return (
     <div className=" container m-auto  ">
-       <div className='mt-8 mb-5'>
-              <Navigate title={'Notification'}></Navigate>
-            </div>
+      <div className="mt-20 md:mt-8 mb-5">
+        <Navigate title={"Notification"}></Navigate>
+      </div>
 
       <div className="divide-y bg-white mb-11">
         {notifications.map((notification) => (
