@@ -3,25 +3,53 @@ import { Button, Card, Col, Form, Input, Row } from 'antd';
 import loginImg from './login.png';
 import { Typography, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { useResetPasswordMutation } from '../Pages/redux/api/userApi';
 const { Title, Text } = Typography;
 
 function NewPassword() {
+  const[newPasseord] = useResetPasswordMutation()
   const navigate = useNavigate();
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const onFinish = (values) => {
-    if (newPassword !== confirmPassword) {
-      message.destroy();
-      message.error('Passwords do not match');
-      return;
+ const onFinish = async () => {
+  const email = localStorage.getItem('email');
+
+  if (!email) {
+    message.error('Email not found in local storage');
+    return;
+  }
+
+  if (!newPassword || !confirmPassword) {
+    message.error('Please fill in both password fields');
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    message.error('Passwords do not match');
+    return;
+  }
+
+    const data = {
+     email,
+      newPassword,
+      confirmPassword,
+    };
+
+  try {
+    const res = await newPasseord(data).unwrap();
+
+    if (res?.success) {
+      message.success(res?.message);
+      localStorage.removeItem('email');
+      navigate('/auth/login');
+    } else {
+      message.error(res?.message || 'Failed to update password');
     }
-    localStorage.setItem('newPassword', newPassword);
-    message.destroy();
-    message.success('Password updated successfully');
-    navigate('/auth/login');
-    console.log('Received values of form:', values);
-  };
+  } catch (error) {
+    message.error(error?.data?.message );
+  }
+};
 
   return (
     <div className="relative flex items-center justify-center md:p-20 p-4">

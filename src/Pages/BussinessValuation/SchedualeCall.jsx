@@ -1,5 +1,6 @@
-import { Button, Form, Select, Space } from "antd";
+import { Button, Form, message, Select, Space } from "antd";
 import { useNavigate } from "react-router-dom";
+import { usePostScheduleMutation } from "../redux/api/metaApi";
 const { Option } = Select;
 
 const businessCategories = [
@@ -39,13 +40,35 @@ const sortOptions = [
 ];
 
 const SchedualeCall = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?._id
+  const [addSchedule] = usePostScheduleMutation()
   const [form] = Form.useForm();
 
   // const navigate = useNavigate();
 
-  const handleSearch = (values) => {
-    console.log("Applied filters:", values);
-    // navigate("/search", { state: { filters: values } });
+const handleSearch = async (values) => {
+    const data = {
+      userId,
+      name: values.fullName,
+      email: values.email,
+      date: values.preferredDate, 
+      time: values.preferredTime, 
+      timeZone: values.timeZone,
+      topic: values.meetingTopic,
+      note: values.notes || "",
+    };
+
+    try {
+      const res = await addSchedule(data).unwrap();
+     
+        message.success(res?.message);
+        form.resetFields();
+    
+    } catch (error) {
+      console.error(error);
+      message.error(error?.data?.message || "Failed to schedule call.");
+    }
   };
   return (
     <div className="relative max-w-7xl mx-auto px-5 pt-20 pb-10 rounded-lg shadow-sm">
@@ -86,7 +109,7 @@ const SchedualeCall = () => {
         >
           <input
             type="email"
-            placeholder="Enter your email (e.g., you@example.com)"
+            placeholder="Enter your email"
             className="w-full border border-gray-300 px-4 py-3 rounded-md"
           />
         </Form.Item>
@@ -119,10 +142,17 @@ const SchedualeCall = () => {
           className="col-span-2"
           rules={[{ required: true, message: "Please select your time zone" }]}
         >
-          <Select style={{height:'50px'}} placeholder="Select your time zone (e.g., GMT+6 – Bangladesh Time)">
-            <Option value="GMT+6">GMT+6 – Bangladesh Time</Option>
-            <Option value="GMT+5.5">GMT+5.5 – India Standard Time</Option>
-            <Option value="GMT+0">GMT+0 – UTC</Option>
+          <Select
+            style={{ height: "50px" }}
+            placeholder="Select your time zone"
+          >
+            <Option value="GMT + 6 - Bangladesh time zone">
+              GMT + 6 - Bangladesh time zone
+            </Option>
+            <Option value="GMT + 5.5 - India Standard Time">
+              GMT + 5.5 - India Standard Time
+            </Option>
+            <Option value="GMT + 0 - UTC">GMT + 0 - UTC</Option>
           </Select>
         </Form.Item>
 
@@ -130,11 +160,11 @@ const SchedualeCall = () => {
           label="Meeting Topic"
           name="meetingTopic"
           className="col-span-2"
-          rules={[{ required: true, message: "Please describe the purpose" }]}
+          rules={[{ required: true, message: "Please enter the topic" }]}
         >
           <input
             type="text"
-            placeholder="Briefly describe the purpose of the meeting"
+            placeholder="Briefly describe the purpose"
             className="w-full border border-gray-300 px-4 py-3 rounded-md"
           />
         </Form.Item>
@@ -146,7 +176,7 @@ const SchedualeCall = () => {
         >
           <textarea
             rows={4}
-            placeholder="Add any extra details or requests (optional)"
+            placeholder="Add any extra details or requests"
             className="w-full border border-gray-300 px-4 py-3 rounded-md"
           />
         </Form.Item>
@@ -160,8 +190,12 @@ const SchedualeCall = () => {
           </Button>
         </Form.Item>
       </Form>
-    </div>
+    </div> 
   );
 };
 
 export default SchedualeCall;
+
+// secondery flute cinema free market bythwaita actor
+// A B C
+// mountains host horse farm

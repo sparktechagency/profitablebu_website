@@ -4,6 +4,7 @@ import { businessData } from '../../dummy-data/DummyData';
 import { Divider, Tag } from 'antd';
 import { FaCalendar } from 'react-icons/fa';
 import dayjs from 'dayjs';
+import { imageUrl } from '../redux/api/baseApi';
 
 function BusinessDetails() {
   const { id } = useParams();
@@ -19,7 +20,8 @@ function BusinessDetails() {
           {/* Image */}
           <div className="mt-6 lg:mt-0 lg:w-1/3">
             <img
-              src={business?.image}
+             
+              src={`${imageUrl}/uploads/business-image/${business?.image}` }
               alt={business?.title}
               className="w-full h-auto rounded-lg shadow-md"
             />

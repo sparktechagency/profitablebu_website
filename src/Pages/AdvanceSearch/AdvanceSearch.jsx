@@ -5,38 +5,59 @@ const { Option } = Select;
 const businessCategories = [
   "Restaurant",
   "Retail",
-  "Service",
-  "Technology",
-  "Healthcare",
+  "E-commerce",
+  "Franchise",
+  "Services",
+  "Manufacturing",
+  "Health & Beauty",
+  "Education",
+  "Automotive",
+  "Other",
 ];
 
-const countries = ["United States", "United Kingdom", "India", "Spain", "UAE"];
+const country = ["United States",
+  "United Kingdom",
+  "Canada",
+  "Australia",
+  "Germany",
+  "Franch",
+  "Italy",
+  "Spain",
+  "United Arab Emirates",
+  "India",];
 
-const priceRanges = [
-  "Less than $100,000",
-  "$100,000 to $500,000",
-  "$500,000 to $1,000,000",
-  "$1,000,000 to $5,000,000",
-  "More than $5,000,000",
+  const location = [  "Dubai",
+  "Sharjah",
+  "Ajman",
+  "Umm Al-Quwain",
+  "Fujairah",
+  "Ras Al Khaimah",];
+
+const askingPrice = [
+  "Under $50K",
+  "$50K - $100K",
+  "$100K - $250K",
+  "$250K - $500K",
+  "$500K - $1M",
+  "Over $1M",
 ];
 
-const businessTypes = [
+const businessType = [
+  "Franchise",
+  "Independent",
+  "Startup",
+  "Home-Based",
+  "Online",
+];
+
+const ownerShipType = [
   "Sole Proprietorship",
   "Partnership",
-  "Limited Liability Company (LLC)",
   "Corporation",
+  "LLC",
 ];
 
-const ownershipTypes = ["Individual", "Partnership", "Family", "Institutional"];
-
-const sortOptions = [
-  "Oldest",
-  "Newest",
-  "Price: Low to High",
-  "Price: High to Low",
-  "Name: A to Z",
-  "Name: Z to A",
-];
+const sortBy = ["Newest First", "Price Low to High", "Most Viewed"];
 
 export default function AdvanceSearch() {
   const [form] = Form.useForm();
@@ -44,8 +65,9 @@ export default function AdvanceSearch() {
   const navigate = useNavigate();
 
   const handleSearch = (values) => {
-    console.log("Applied filters:", values);
-    navigate("/search", { state: { filters: values } });
+    console.log(values);
+    const params = new URLSearchParams(values).toString();
+    navigate(`/search?${params}`);
   };
 
   return (
@@ -70,15 +92,8 @@ export default function AdvanceSearch() {
         layout="vertical"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5"
       >
-        <Form.Item label="Business Category">
-          <Select
-            placeholder="Select One"
-            allowClear
-            onChange={(value) =>
-              form.setFieldsValue({ businessCategory: value })
-            }
-            style={{ height: "50px" }}
-          >
+        <Form.Item label="Business Category" name="businessCategory">
+          <Select placeholder="Select One" allowClear style={{ height: "50px" }}>
             {businessCategories.map((category) => (
               <Option key={category} value={category}>
                 {category}
@@ -87,14 +102,9 @@ export default function AdvanceSearch() {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Country">
-          <Select
-            placeholder="Select One"
-            allowClear
-            onChange={(value) => form.setFieldsValue({ country: value })}
-            style={{ height: "50px" }}
-          >
-            {countries.map((country) => (
+        <Form.Item label="Country" name="country">
+          <Select placeholder="Select One" allowClear style={{ height: "50px" }}>
+            {country.map((country) => (
               <Option key={country} value={country}>
                 {country}
               </Option>
@@ -102,14 +112,9 @@ export default function AdvanceSearch() {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Location">
-          <Select
-            placeholder="Select One"
-            allowClear
-            onChange={(value) => form.setFieldsValue({ location: value })}
-            style={{ height: "50px" }}
-          >
-            {countries.map((country) => (
+        <Form.Item label="Location" name="location">
+          <Select placeholder="Select One" allowClear style={{ height: "50px" }}>
+            {location.map((country) => (
               <Option key={country} value={country}>
                 {country}
               </Option>
@@ -117,14 +122,9 @@ export default function AdvanceSearch() {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Asking Price">
-          <Select
-            placeholder="Select One"
-            allowClear
-            onChange={(value) => form.setFieldsValue({ askingPrice: value })}
-            style={{ height: "50px" }}
-          >
-            {priceRanges.map((priceRange) => (
+        <Form.Item label="Asking Price" name="askingPrice">
+          <Select placeholder="Select One" allowClear style={{ height: "50px" }}>
+            {askingPrice.map((priceRange) => (
               <Option key={priceRange} value={priceRange}>
                 {priceRange}
               </Option>
@@ -132,14 +132,9 @@ export default function AdvanceSearch() {
           </Select>
         </Form.Item>
 
-        <Form.Item className="col-span-2" label="Business Type">
-          <Select
-            placeholder="Select One"
-            allowClear
-            onChange={(value) => form.setFieldsValue({ businessType: value })}
-            style={{ height: "50px" }}
-          >
-            {businessTypes.map((type) => (
+        <Form.Item label="Business Type" name="businessType" className="col-span-2">
+          <Select placeholder="Select One" allowClear style={{ height: "50px" }}>
+            {businessType.map((type) => (
               <Option key={type} value={type}>
                 {type}
               </Option>
@@ -147,14 +142,9 @@ export default function AdvanceSearch() {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Ownership Type">
-          <Select
-            placeholder="Select One"
-            allowClear
-            onChange={(value) => form.setFieldsValue({ ownershipType: value })}
-            style={{ height: "50px" }}
-          >
-            {ownershipTypes.map((type) => (
+        <Form.Item label="Ownership Type" name="ownerShipType">
+          <Select placeholder="Select One" allowClear style={{ height: "50px" }}>
+            {ownerShipType.map((type) => (
               <Option key={type} value={type}>
                 {type}
               </Option>
@@ -162,14 +152,9 @@ export default function AdvanceSearch() {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Sort By">
-          <Select
-            placeholder="Select One"
-            allowClear
-            onChange={(value) => form.setFieldsValue({ sortBy: value })}
-            style={{ height: "50px" }}
-          >
-            {sortOptions.map((option) => (
+        <Form.Item label="Sort By" name="sortBy">
+          <Select placeholder="Select One" allowClear style={{ height: "50px" }}>
+            {sortBy.map((option) => (
               <Option key={option} value={option}>
                 {option}
               </Option>
@@ -177,7 +162,7 @@ export default function AdvanceSearch() {
           </Select>
         </Form.Item>
 
-        <Form.Item>
+        <Form.Item className="col-span-2">
           <Space>
             <Button
               className="bg-[#0091FF] text-white font-bold py-4 px-6 "

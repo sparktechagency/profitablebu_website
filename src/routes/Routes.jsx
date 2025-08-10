@@ -54,6 +54,10 @@ import ChooseRole from '../Auth/ChooseRole';
 import EditNewBusiness from '../Pages/mybusiness/EditNewBusiness';
 import SignUp from '../Auth/SignUp';
 import SchedualeCall from '../Pages/BussinessValuation/SchedualeCall';
+import AllBusinessFilter from '../Pages/BusinessDirectoryPage/AllBusinessFilter';
+import VerifyRegister from '../Auth/VerifyRegister';
+import SuccessfullPage from '../Pages/plane/SuccessfullPage';
+import ErrorPay from '../Pages/plane/ErrorPay';
 
 export const router = createBrowserRouter([
   {
@@ -148,15 +152,16 @@ export const router = createBrowserRouter([
         element: <MyBusiness></MyBusiness>,
       },
       {
-        path: '/interestBuyer',
+        path: '/interestBuyer/:id',
         element: <InterestedBuyer></InterestedBuyer>,
       },
+     {
+  path: '/interestBuyer/details/:interestedId/iterestDetails/:businessId',
+  element: <InterestBuyerDetailss />
+},
+
       {
-        path: '/interestBuyer/details',
-        element: <InterestBuyerDetailss></InterestBuyerDetailss>
-      },
-      {
-        path: '/details',
+        path: '/details/:id',
         element: <MyBusinessDetails></MyBusinessDetails>,
       },
       {
@@ -164,7 +169,7 @@ export const router = createBrowserRouter([
         element: <AddNewBusiness></AddNewBusiness>,
       },
       {
-        path: '/editnewbusiness',
+        path: '/editnewbusiness/:id',
         element: <EditNewBusiness></EditNewBusiness>
       },
       {
@@ -190,7 +195,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/search',
-        element: <BusinessDirectory />,
+        element: <AllBusinessFilter></AllBusinessFilter>
       },
       {
         path: '/business/:id',
@@ -208,7 +213,7 @@ export const router = createBrowserRouter([
         element: <BussinessDetails />,
       },
       {
-        path: '/business-details-with-form',
+        path: '/business-details-with-form/:id',
         element: <BussinessDetailsWithForm />,
       },
       {
@@ -263,9 +268,22 @@ export const router = createBrowserRouter([
         path: '/auth/signUp',
         element: <SignUp></SignUp>,
       },
+       {
+        path: '/payment-successfull',
+        element: <SuccessfullPage></SuccessfullPage>
+      },
+       {
+        path: '/Error-payment',
+        element: <ErrorPay></ErrorPay>
+      },
       {
         path: '/auth/forgot-password',
         element: <ForgotPassword></ForgotPassword>,
+      },
+      
+       {
+        path: '/auth/verifyCreator',
+        element: <VerifyRegister></VerifyRegister>
       },
 
       {

@@ -80,46 +80,50 @@ export const menuItems = {
     {
       name: 'Businesses for Sale',
       path: '/auth/login',
-      state: 'sellerBusinesses',
+      state: 'Seller',
     },
     {
       name: 'Business Assets for Sale',
       path: '/auth/login',
-      state: 'sellerAssets',
+      state: 'Asset Seller',
     },
     {
-      name: 'Business Ideas for Investors',
+      name: 'Business Ideas for Lister',
       path: '/auth/login',
-      state: 'sellerIdeas',
+      state: 'Business Idea Lister',
     },
     {
       name: 'Franchises for Sale',
       path: '/auth/login',
-      state: 'sellerFranchises',
+      state: 'Francise Seller',
+    },
+    {
+      name: 'Become a Broker',
+      path: '/auth/login',
+      state: 'Broker',
     },
   ],
+
   buying: [
     {
       name: 'Buy a Business',
-      path: '/auth/login',
-      state: 'buyerBusiness',
+      path: '/search?businessRole=Sellers-business',
     },
     {
       name: 'Buy a Business Asset',
-      path: '/auth/login',
-      state: 'buyerAsset',
+      path: '/search?businessRole=Asset-seller',
     },
     {
       name: 'Buy a Franchise',
-      path: '/auth/login',
-      state: 'buyerFranchise',
+      path: '/search?businessRole=Franchise',
     },
     {
-      name: 'Contact Business Listers',
-      path: '/auth/login',
-      state: 'businessListers',
+      name: 'Investor on Business Idea',
+      path: '/auth/login?businessRole=Investor',
     },
   ],
+
+
   resources: [
     { name: 'FAQs', path: '/faqs', state: 'faqs' },
     { name: 'About Us', path: '/about-us', state: 'aboutUs' },

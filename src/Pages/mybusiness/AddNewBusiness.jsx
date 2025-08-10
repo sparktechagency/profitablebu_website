@@ -1,11 +1,24 @@
-import { Button, ConfigProvider, DatePicker, Form, Input, Select } from "antd";
+import {
+  Button,
+  ConfigProvider,
+  DatePicker,
+  Form,
+  Input,
+  message,
+  Select,
+  Upload,
+} from "antd";
+const { Option } = Select;
 import Dragger from "antd/es/upload/Dragger";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { InboxOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Navigate } from "../Navigate";
 import JoditEditor from "jodit-react";
+import { countryData } from "../../dummy-data/DummyData";
+import { Country, State, City } from "country-state-city";
+import { useAddBusinessMutation } from "../redux/api/businessApi";
 dayjs.extend(customParseFormat);
 const dateFormat = "YYYY-MM-DD";
 const props = {
@@ -28,13 +41,80 @@ const props = {
   },
 };
 const AddNewBusiness = () => {
+  const [addBusiness] = useAddBusinessMutation();
   const editor = useRef(null);
+  const [fileList, setFileList] = useState([]);
   const [content, setContent] = useState("");
   const [form] = Form.useForm();
-  const handleSubmit = (values) => {
-    console.log(values);
+  const onChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedState, setSelectedState] = useState(null);
+
+  useEffect(() => {
+    setCountries(Country.getAllCountries());
+  }, []);
+
+  const handleCountryChange = (value) => {
+    setSelectedCountry(value);
+    setStates(State.getStatesOfCountry(value));
+    setCities([]); // reset cities
+    form.setFieldsValue({ state: undefined, city: undefined });
   };
 
+  const handleStateChange = (value) => {
+    setSelectedState(value);
+    setCities(City.getCitiesOfState(selectedCountry, value));
+    form.setFieldsValue({ city: undefined });
+  };
+
+  const onPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
+  const handleSubmit = async (values) => {
+    console.log(values);
+
+    try {
+      const formData = new FormData();
+
+      fileList.forEach((file) => {
+        formData.append("business-image", file.originFileObj);
+      });
+      formData.append("title", values?.title);
+      formData.append("category", values?.category);
+      formData.append("country", values?.country);
+      formData.append("location", values?.location);
+      formData.append("askingPrice", values?.askingPrice);
+      formData.append("businessType", values?.businessType);
+      formData.append("ownerShipType", values?.ownerShipType);
+      formData.append("industryName", values?.industryName);
+      formData.append("description", content);
+
+      const res = await addBusiness(formData);
+      console.log(res);
+      message.success(res.data.message);
+    } catch (error) {
+      console.error(error);
+      message.error(message?.data?.error);
+    } finally {
+    }
+  };
   const config = {
     readonly: false,
     placeholder: "Start typings...",
@@ -59,22 +139,28 @@ const AddNewBusiness = () => {
       <Navigate title={"Add New Business Information"}></Navigate>
       <div className="bg-white p-3">
         <Form form={form} onFinish={handleSubmit} layout="vertical">
-          <Dragger {...props}>
-            <p className="ant-upload-drag-icon">
-              <InboxOutlined />
-            </p>
-            <p className="ant-upload-text">
-              Click or drag file to this area to upload
-            </p>
-            <p className="ant-upload-hint">
-              Support for a single or bulk upload. Strictly prohibited from
-              uploading company data or other banned files.
-            </p>
-          </Dragger>
+          <Form.Item label="Photos">
+            <Upload
+              style={{ width: "100%" }}
+              listType="picture-card"
+              fileList={fileList}
+              onChange={onChange}
+              onPreview={onPreview}
+              multiple={true}
+            >
+              <p className="text-4xl">
+                <InboxOutlined />
+              </p>
+
+              <p className="">Click or drag file to this area to upload</p>
+
+              {fileList.length < 1 && "+ Upload"}
+            </Upload>
+          </Form.Item>
           <div className=" ">
             <Form.Item
               label="Business Title"
-              name="type"
+              name="title"
               rules={[
                 {
                   required: true,
@@ -83,176 +169,204 @@ const AddNewBusiness = () => {
               ]}
             >
               <Input
-                className="w-full bg-transparent  py-2"
+                className="w-full bg-transparent  py-3"
                 placeholder="Fuel Type"
               />
             </Form.Item>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="">
             <Form.Item
               label="Business Category"
-              name="mileage"
+              name="category"
               rules={[
                 { required: true, message: "Please input Buisiness Category!" },
               ]}
             >
-              <ConfigProvider
-                theme={{
-                  token: {
-                    colorPrimary: "#1d4ed8",
-                    borderRadius: 8,
-                    controlHeight: 40,
-                  },
-                }}
+              <Select
+                style={{ height: "48px" }}
+                placeholder="Select Category"
+                className="w-full"
               >
-                <Select placeholder="Select Inquiry" className="w-full">
-                  <Option value="General_Inquiry">Select</Option>
-                  <Option value="Service_Request">Part</Option>
-                  <Option value="Partnership_Inquiry">Qz</Option>
-                </Select>
-              </ConfigProvider>
-            </Form.Item>
-            <Form.Item
-              label="Country"
-              name="mileage"
-              rules={[{ required: true, message: "Please input Country!" }]}
-            >
-              <ConfigProvider
-                theme={{
-                  token: {
-                    colorPrimary: "#1d4ed8",
-                    borderRadius: 8,
-                    controlHeight: 40,
-                  },
-                }}
-              >
-                <Select placeholder="Select Inquiry" className="w-full">
-                  <Option value="General_Inquiry">Select</Option>
-                  <Option value="Service_Request">United States</Option>
-                  <Option value="Partnership_Inquiry">Canada</Option>
-                  <Option value="Partnership_Inquiry">Australia</Option>
-                  <Option value="Partnership_Inquiry">Germany</Option>
-                  <Option value="Partnership_Inquiry">France</Option>
-                  <Option value="Partnership_Inquiry">Italy</Option>
-                  <Option value="Partnership_Inquiry">Spain</Option>
-                  <Option value="Partnership_Inquiry">United Arab Emirat</Option>
-                  <Option value="Partnership_Inquiry">India</Option>
-
-                </Select>
-              </ConfigProvider>
+                <Option>Select</Option>
+                <Option value="Restaurant">Restaurant</Option>
+                <Option value="Retail">Retail</Option>
+                <Option value="E-commerce">E-commerce</Option>
+                <Option value="Franchise">Franchise</Option>
+                <Option value="Services">Services</Option>
+                <Option value="Manufacturing">Manufacturing</Option>
+                <Option value="Education">Education</Option>
+                <Option value="Automotive">Automotive</Option>
+                <Option value="Other">Other</Option>
+              </Select>
             </Form.Item>
           </div>
+
+          <div className="grid grid-cols-3 gap-4">
+            {/* Country */}
+            <Form.Item
+  label="Select Your Country"
+  name="country"
+  rules={[{ required: true, message: "Please select your country!" }]}
+>
+  <Select
+    placeholder="Select your country"
+    style={{ height: "48px" }}
+    showSearch
+    allowClear
+    onChange={handleCountryChange}
+    optionLabelProp="label"
+  >
+    {countries.map((country) => (
+      <Select.Option
+        key={country.isoCode}
+        value={country.isoCode}
+        label={country.name}
+      >
+        <div className="flex items-center gap-2">
+          <img
+            src={`https://flagcdn.com/w20/${country.isoCode.toLowerCase()}.png`}
+            alt={country.name}
+            className="w-5 h-3 object-cover"
+          />
+          {country.name}
+        </div>
+      </Select.Option>
+    ))}
+  </Select>
+</Form.Item>
+
+
+            {/* State */}
+            <Form.Item
+              label="Select State"
+              name="state"
+              rules={[{ required: true, message: "Please select your state!" }]}
+            >
+              <Select
+                placeholder="Select your state"
+                style={{ height: "48px" }}
+                showSearch
+                allowClear
+                onChange={handleStateChange}
+                disabled={!selectedCountry}
+              >
+                {states.map((state) => (
+                  <Select.Option key={state.isoCode} value={state.isoCode}>
+                    {state.name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+
+            {/* City */}
+            <Form.Item
+              label="Select City"
+              name="city"
+              rules={[{ required: true, message: "Please select your city!" }]}
+            >
+              <Select
+                placeholder="Select your city"
+                style={{ height: "48px" }}
+                showSearch
+                allowClear
+                disabled={!selectedState}
+              >
+                {cities.map((city) => (
+                  <Select.Option key={city.name} value={city.name}>
+                    {city.name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Form.Item
               label="Location"
-              name="mileage"
+              name="location"
               rules={[{ required: true, message: "Please input Location!" }]}
             >
-              <ConfigProvider
-                theme={{
-                  token: {
-                    colorPrimary: "#1d4ed8",
-                    borderRadius: 8,
-                    controlHeight: 40,
-                  },
-                }}
+              <Select
+                style={{ height: "48px" }}
+                placeholder="Select Location"
+                className="w-full"
               >
-                <Select placeholder="Select Inquiry" className="w-full">
-                  <Option value="General_Inquiry">Select</Option>
-                  <Option value="Service_Request">Dubai</Option>
-                  <Option value="Partnership_Inquiry">Sharjah</Option>
-                  <Option value="Partnership_Inquiry">Ajman</Option>
-                  <Option value="Partnership_Inquiry">Umm Ai-Quwain</Option>
-                  <Option value="Partnership_Inquiry">Fujairah</Option>
-                  <Option value="Partnership_Inquiry">Ras Ai Khaimah</Option>
-                </Select>
-              </ConfigProvider>
+                <Option value="">Select</Option>
+                <Option value="Dubai">Dubai</Option>
+                <Option value="Sharjah">Sharjah</Option>
+                <Option value="Ajman">Ajman</Option>
+                <Option value="Umm Ai-Quwain">Umm Ai-Quwain</Option>
+                <Option value="Fujairah">Fujairah</Option>
+                <Option value="Ras Ai Khaimah">Ras Ai Khaimah</Option>
+              </Select>
             </Form.Item>
             <Form.Item
               label="Asking Price"
-              name="mileage"
+              name="askingPrice"
               rules={[
                 { required: true, message: "Please input Asking Price!" },
               ]}
             >
-              <ConfigProvider
-                theme={{
-                  token: {
-                    colorPrimary: "#1d4ed8",
-                    borderRadius: 8,
-                    controlHeight: 40,
-                  },
-                }}
+              <Select
+                style={{ height: "48px" }}
+                placeholder="Select Asking Price"
+                className="w-full"
               >
-                <Select placeholder="Select Inquiry" className="w-full">
-                  <Option value="General_Inquiry">Select</Option>
-                  <Option value="Service_Request">Under $50k</Option>
-                  <Option value="Partnership_Inquiry">$50k - $100k</Option>
-                  <Option value="Partnership_Inquiry">$100k - $250k</Option>
-                  <Option value="Partnership_Inquiry">$250k - $500k</Option>
-                  <Option value="Partnership_Inquiry">$500k - $1M</Option>
-                  <Option value="Partnership_Inquiry">Over $1M</Option>
-                </Select>
-              </ConfigProvider>
+                <Option value="General_Inquiry">Select</Option>
+                <Option value="Under $50k">Under $50k</Option>
+                <Option value="$50k - $100k">$50k - $100k</Option>
+                <Option value="$100k - $250k">$100k - $250k</Option>
+                <Option value="$250k - $500k">$250k - $500k</Option>
+                <Option value="$500k - $1M">$500k - $1M</Option>
+                <Option value="Over $1M">Over $1M</Option>
+              </Select>
             </Form.Item>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Form.Item
               label="Ownership Type"
-              name="mileage"
+              name="ownerShipType"
               rules={[
                 { required: true, message: "Please input Ownership type!" },
               ]}
             >
-              <ConfigProvider
-                theme={{
-                  token: {
-                    colorPrimary: "#1d4ed8",
-                    borderRadius: 8,
-                    controlHeight: 40,
-                  },
-                }}
+              <Select
+                style={{ height: "48px" }}
+                placeholder="Select Ownership Type"
+                className="w-full"
               >
-                <Select placeholder="Select Inquiry" className="w-full">
-                  <Option value="General_Inquiry">Select</Option>
-                  <Option value="Service_Request">Sole Proprietorship</Option>
-                  <Option value="Partnership_Inquiry">Partnership</Option>
-                  <Option value="Partnership_Inquiry">Corporation</Option>
-                   <Option value="Partnership_Inquiry">LLC</Option>
-                </Select>
-              </ConfigProvider>
+                <Option>Select</Option>
+                <Option value="Service_Request">Sole Proprietorship</Option>
+                <Option value="Partnership_Inquiry">Partnership</Option>
+                <Option value="Partnership_Inquiry">Corporation</Option>
+                <Option value="Partnership_Inquiry">LLC</Option>
+              </Select>
             </Form.Item>
             <Form.Item
               label="Buisiness Type"
-              name="mileage"
+              name="businessType"
               rules={[
                 { required: true, message: "Please input business Type!" },
               ]}
             >
-              <ConfigProvider
-                theme={{
-                  token: {
-                    colorPrimary: "#1d4ed8",
-                    borderRadius: 8,
-                    controlHeight: 40,
-                  },
-                }}
+              <Select
+                style={{ height: "48px" }}
+                placeholder="Select Inquiry"
+                className="w-full"
               >
-                <Select placeholder="Select Inquiry" className="w-full">
-                  <Option value="General_Inquiry">Select</Option>
-                  <Option value="Service_Request">Franchise</Option>
-                  <Option value="Partnership_Inquiry">Independent</Option>
-                  <Option value="Partnership_Inquiry">Startup</Option>
-                  <Option value="Partnership_Inquiry">Home-Based</Option>
-                  <Option value="Partnership_Inquiry">Online</Option>
-                </Select>
-              </ConfigProvider>
+                <Option>Select</Option>
+                <Option value="Franchise">Franchise</Option>
+                <Option value="Independent">Independent</Option>
+                <Option value="Startup">Startup</Option>
+                <Option value="Home-Based">Home-Based</Option>
+                <Option value="Online">Online</Option>
+              </Select>
             </Form.Item>
           </div>
 
           <Form.Item
             label="Industry Name"
-            name="type"
+            name="industryName"
             rules={[{ required: true, message: "Please input Indersty Name!" }]}
           >
             <Input
@@ -267,7 +381,6 @@ const AddNewBusiness = () => {
             config={config}
             tabIndex={1}
             onBlur={(newContent) => setContent(newContent)}
-            // onChange={newContent => { }}
           />
 
           <Form.Item className=" pt-3">
