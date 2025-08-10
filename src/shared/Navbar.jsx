@@ -13,6 +13,8 @@ import NdaIcon from "./nav-icons/NdaIcon";
 import HelpIcon from "./nav-icons/HelpIcon";
 import InfoIcon from "./nav-icons/InfoIcon";
 import { message } from "antd";
+import { useGetProfileQuery } from "../Pages/redux/api/userApi";
+import { imageUrl } from "../Pages/redux/api/baseApi";
 const countryFlags = {
   US: "https://flagcdn.com/w20/us.png",
   GB: "https://flagcdn.com/w20/gb.png",
@@ -30,6 +32,10 @@ const countries = [
 ];
 
 const Navbar = () => {
+  const { data: profileData, isLoading } = useGetProfileQuery();
+  const accessToken = localStorage.getItem("accessToken");
+  const users = profileData?.data;
+  console.log(users);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [countryModalOpen, setCountryModalOpen] = useState(false);
@@ -89,9 +95,9 @@ const Navbar = () => {
       path: "/business-formation",
     },
     {
-      key: 'resources',
-      label: 'Resources',
-      path: '/blog',
+      key: "resources",
+      label: "Resources",
+      path: "/blog",
       submenu: menuItems.resources,
       state: menuItems.resources.state,
     },
@@ -114,7 +120,7 @@ const Navbar = () => {
                   <img src={Logo} alt="Logo" className="w-[50px]" />
                   <div>
                     <h1 className="text-2xl font-bold text-[#F59E0B] ">
-                      P B S F
+                      P B F S
                     </h1>
                     <p className="text-[#F59E0B]">From Listings to Legacy</p>
                   </div>
@@ -214,10 +220,10 @@ const Navbar = () => {
                 )}
               </button>
               {/* CTA Buttons */}
-              {user ? (
+              {!accessToken ? (
                 <div className="flex items-center space-x-3">
                   <Link to="/auth/login">
-                    <button className="flex items-center space-x-2 px-4 py-2 bg-[#0091FF] text-white rounded transition-colors">
+                    <button className="flex items-center bg-[#0091FF] space-x-2 px-4 py-2  text-white rounded transition-colors">
                       <User className="w-4 h-4" />
                       <span>Login</span>
                     </button>
@@ -227,12 +233,22 @@ const Navbar = () => {
                 <div className="flex items-center space-x-3">
                   <button
                     onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                    className="flex items-center rounded-full space-x-2 p-2 bg-[#0091FF] text-white transition-colors"
+                    className="flex items-center rounded-full border-2 border-[#0091FF] space-x-2   text-white "
                   >
-                    {profileMenuOpen ? (
-                      <X className="w-4 h-4" />
+                    {users?.image ? (
+                      <img
+                        src={`${imageUrl}/uploads/profile-image/${users.image}`}
+                        alt={users?.name || "User"}
+                        className="w-[30px] h-[30px] rounded-full object-cover"
+                      />
                     ) : (
-                      <User className="w-4 h-4" />
+                      <div className="w-[30px] h-[30px] rounded-full bg-gray-200 flex items-center justify-center">
+                        {profileMenuOpen ? (
+                          <X className="w-4 h-4" />
+                        ) : (
+                          <User className="w-4 h-4" />
+                        )}
+                      </div>
                     )}
                   </button>
                 </div>
@@ -339,17 +355,27 @@ const Navbar = () => {
                 {/* Profile Header */}
                 <div className="flex flex-col items-start space-y-2 mb-6">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
-                      <User className="w-5 h-5 text-gray-600" />
+                    <div className=" rounded-full bg-gray-200 flex items-center justify-center">
+                      {users?.image ? (
+                        <img
+                          src={`${imageUrl}/uploads/profile-image/${users.image}`}
+                          alt={users?.name || "User"}
+                          className="w-[50px] h-[50px] rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
+                          <User className="w-[50px] h-[50px] rounded-full text-gray-500" />{" "}
+                        </div>
+                      )}
                     </div>
                     <div>
                       <div className="flex items-center space-x-2">
-                        <span className="font-semibold">Sardor</span>
+                        <span className="font-semibold">{users?.name}</span>
                         <span className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-0.5 rounded">
-                          Buyer
+                          {users?.role}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-500">sardor@mail.com</p>
+                      <p className="text-sm text-gray-500">{users?.email}</p>
                     </div>
                   </div>
                 </div>
@@ -403,7 +429,7 @@ const Navbar = () => {
                   <div
                     onClick={() => {
                       setProfileMenuOpen(false);
-                      localStorage.removeItem("token");
+                      localStorage.removeItem("accessToken");
                       localStorage.removeItem("user");
                       message.success("You have been logged out");
                     }}

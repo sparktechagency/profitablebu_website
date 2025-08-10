@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Form,
   Input,
@@ -10,38 +10,56 @@ import {
   Col,
   Divider,
   message,
-} from 'antd';
-import { ArrowLeft } from 'lucide-react';
-import loginImg from './login.png';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+  Select,
+} from "antd";
+import { ArrowLeft } from "lucide-react";
+import loginImg from "./login.png";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLoginUserMutation } from "../Pages/redux/api/userApi";
 const { Title, Text } = Typography;
 
 export default function Login() {
+  const [form] = Form.useForm();
+  const [loginUser] = useLoginUserMutation();
   const location = useLocation();
   const navigate = useNavigate();
   console.log(location?.state);
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const onFinish = (values) => {
-    if (!values.email && !values.password) {
-      message.destroy();
-      message.error('Please enter email and password');
-      return;
-    }
-    if (localStorage.getItem('user')) {
-      localStorage.removeItem('user');
-    }
-    localStorage.setItem('user', true);
-    const user = localStorage.getItem('user');
-    if (user) {
-      message.destroy();
-      message.success('Login successful');
-      window.location.href = '/';
+  const onFinish = async (values) => {
+    console.log(values);
+    const data = {
+      ...values,
+    };
+    console.log(data);
+    try {
+      const res = await loginUser(data).unwrap();
+
+      if (res?.success) {
+        message.success(res?.message);
+
+        localStorage.setItem("accessToken", res.data.accessToken);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+
+        // navigate(location?.state?.from || "/", { replace: true });
+      navigate('/')
+            window.location.reload();
+
+        //       const userRole = res.data.user.role;
+        // if (userRole === "Seller") navigate("/dashboard/seller");
+      }
+    } catch (err) {
+      console.error(err);
+      message.error(err?.data?.message || "Login failed");
     }
   };
-
+  useEffect(() => {
+    if (location?.state) {
+      form.setFieldsValue({ role: location.state });
+    }
+  }, [location?.state, form]);
   const handleGoogleLogin = () => {
-    console.log('Google login clicked');
+    console.log("Google login clicked");
   };
 
   return (
@@ -63,10 +81,10 @@ export default function Login() {
               type="text"
               icon={<ArrowLeft size={20} />}
               style={{
-                position: 'absolute',
-                top: '20px',
-                left: '20px',
-                color: 'white',
+                position: "absolute",
+                top: "20px",
+                left: "20px",
+                color: "white",
                 zIndex: 1,
               }}
             />
@@ -76,35 +94,36 @@ export default function Login() {
         <Col xs={24} md={12}>
           <Card
             style={{
-              height: '100%',
-              border: 'none',
+              height: "100%",
+              border: "none",
             }}
             bodyStyle={{
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
             }}
           >
-            <div style={{ width: '100%', margin: '0 auto' }}>
+            <div style={{ width: "100%", margin: "0 auto" }}>
               <Title
                 level={2}
-                style={{ marginBottom: '8px', color: '#1f2937' }}
+                style={{ marginBottom: "8px", color: "#1f2937" }}
               >
                 Login to Account
               </Title>
               <Text
                 style={{
-                  color: '#6b7280',
-                  marginBottom: '32px',
-                  display: 'block',
+                  color: "#6b7280",
+                  marginBottom: "32px",
+                  display: "block",
                 }}
               >
-                Please enter your email and password to continue as{' '}
+                Please enter your email and password to continue as{" "}
                 {location?.state}
               </Text>
 
               <Form
+                form={form}
                 requiredMark={false}
                 name="login"
                 layout="vertical"
@@ -115,13 +134,13 @@ export default function Login() {
                   label="Email address"
                   name="email"
                   rules={[
-                    { required: true, message: 'Please input your email!' },
-                    { type: 'email', message: 'Please enter a valid email!' },
+                    { required: true, message: "Please input your email!" },
+                    { type: "email", message: "Please enter a valid email!" },
                   ]}
                 >
                   <Input
-                    placeholder="esfutui_sch@gmail.com"
-                    style={{ height: '48px' }}
+                    className="py-3"
+                    placeholder="your_email@example.com"
                   />
                 </Form.Item>
 
@@ -129,12 +148,12 @@ export default function Login() {
                   label="Password"
                   name="password"
                   rules={[
-                    { required: true, message: 'Please input your password!' },
+                    { required: true, message: "Please input your password!" },
                   ]}
                 >
                   <Input.Password
+                    className="py-3"
                     placeholder="••••••••"
-                    style={{ height: '48px' }}
                     visibilityToggle={{
                       visible: passwordVisible,
                       onVisibleChange: setPasswordVisible,
@@ -142,7 +161,31 @@ export default function Login() {
                   />
                 </Form.Item>
 
-                <Row justify="space-between" style={{ marginBottom: '24px' }}>
+                <Form.Item
+                  label="Select Role"
+                  name="role"
+                  rules={[{ required: true, message: "Please select Role!" }]}
+                >
+                  <Select
+                    style={{ height: "48px" }}
+                    placeholder="Select Role"
+                    className="w-full"
+                  >
+                    <Option value="Buyer">Become a Buyer</Option>
+                    <Option value="Seller">Become a Seller</Option>
+                    <Option value="Broker">Become a Broker</Option>
+                    <Option value="Francise Seller">
+                      Become a Franchise Seller
+                    </Option>
+                    <Option value="Investor">Become Investor</Option>
+                    <Option value="Business Idea Lister">
+                      Become Business Idea Lister
+                    </Option>
+                    <Option value="Asset Seller">Business Asset Seller</Option>
+                  </Select>
+                </Form.Item>
+
+                <Row justify="space-between" style={{ marginBottom: "24px" }}>
                   <Form.Item
                     name="remember"
                     valuePropName="checked"
@@ -153,7 +196,7 @@ export default function Login() {
                   <Link to="/auth/forgot-password">
                     <Button
                       type="link"
-                      style={{ color: '#3b82f6', padding: 0 }}
+                      style={{ color: "#3b82f6", padding: 0 }}
                     >
                       Forgot Password?
                     </Button>
@@ -161,40 +204,28 @@ export default function Login() {
                 </Row>
 
                 <Form.Item>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    block
-                    style={{
-                      height: '48px',
-                      background: '#3b82f6',
-                      borderColor: '#3b82f6',
-                      // borderRadius: '8px',
-                      fontSize: '16px',
-                      fontWeight: 500,
-                    }}
-                  >
+                  <Button type="primary" htmlType="submit" block>
                     Log In
                   </Button>
                 </Form.Item>
               </Form>
 
-              <Divider style={{ margin: '24px 0' }}>
-                <Text style={{ color: '#6b7280' }}>Or continue with</Text>
+              <Divider style={{ margin: "24px 0" }}>
+                <Text style={{ color: "#6b7280" }}>Or continue with</Text>
               </Divider>
 
               <Button
                 block
                 onClick={handleGoogleLogin}
                 style={{
-                  height: '48px',
+                  height: "48px",
                   // borderRadius: '8px',
-                  border: '1px solid #d1d5db',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  marginBottom: '24px',
+                  border: "1px solid #d1d5db",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px",
+                  marginBottom: "24px",
                 }}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24">
@@ -220,17 +251,17 @@ export default function Login() {
 
               <Text
                 style={{
-                  textAlign: 'center',
-                  display: 'block',
-                  color: '#6b7280',
+                  textAlign: "center",
+                  display: "block",
+                  color: "#6b7280",
                 }}
               >
-                Don&apos; have an account?{' '}
+                Don&apos; have an account?{" "}
                 <Link to="/auth/choose-role">
                   <Button
                     type="link"
                     className="hover:underline"
-                    style={{ color: '#3b82f6', padding: 0 }}
+                    style={{ color: "#3b82f6", padding: 0 }}
                   >
                     Sign up
                   </Button>

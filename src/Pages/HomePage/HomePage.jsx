@@ -19,7 +19,7 @@ export const HomePage = () => {
       <Hero></Hero>
       <div className='container m-auto lg:px-4 px-4'>
         <BusinessCard></BusinessCard>
-       <div className='mt-16'>
+       {/* <div className='mt-16'>
          <FeaturedBusinesses></FeaturedBusinesses>
        </div>
         <div className='mt-16'>
@@ -27,7 +27,7 @@ export const HomePage = () => {
         </div>
         <div className='mt-16'>
           <FeaturedBusinessAssets></FeaturedBusinessAssets>
-        </div>
+        </div> */}
         <Category></Category>
         <Country></Country>
         <SimpleProcess></SimpleProcess>

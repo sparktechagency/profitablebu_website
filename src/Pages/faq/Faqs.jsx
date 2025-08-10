@@ -9,11 +9,28 @@ import {
 import img from "../../assets/Home/cover.png";
 import Header from "../AboutUs/Header";
 import { useLocation } from "react-router-dom";
+import { useGetFaqQuery } from "../redux/api/metaApi";
+import { useGetProfileQuery } from "../redux/api/userApi";
 const Faqs = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user?.name);
+  console.log(user?.role);
+  const role = user?.role;
+   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
+    const userRole = profileData?.data?.role;
+    console.log(userRole)
+  const { data: faq } = useGetFaqQuery({ userRole });
+  console.log(faq);
+  const items =
+    faq?.data?.map((item, index) => ({
+      key: String(index + 1),
+      label: item.question,
+      children: <p>{item.answer}</p>,
+    })) || [];
+
   const location = useLocation();
   const state = location.state;
-  
-  const items = [
+  const item = [
     {
       key: "1",
       label: "What is included in your Break/Fix services?",
@@ -115,7 +132,7 @@ const Faqs = () => {
       <div className=" container m-auto py-11 px-4">
         <h1 className="text-3xl mb-4 font-bold ">
           {" "}
-          FAQ for <span className="text-[#22C55E] ">{state}</span>
+          FAQ for <span className="text-[#22C55E] ">{user?.role}</span>
         </h1>
         <ConfigProvider
           theme={{

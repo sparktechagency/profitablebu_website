@@ -3,19 +3,36 @@ import { Button, Card, Col, Form, Input, Row } from 'antd';
 import loginImg from './login.png';
 import { Typography, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { useForgotPasswordMutation } from '../Pages/redux/api/userApi';
 const { Title, Text } = Typography;
 function ForgotPassword() {
+  const [fogetPass] = useForgotPasswordMutation()
   const navigate = useNavigate();
-  const onFinish = (values) => {
-    if (!values.email) {
-          message.destroy();
-          message.error('Please enter email');
-          return;
-        }
-        localStorage.setItem('email', values.email);
-        navigate('/auth/verification');
-        console.log('Received values of form:', values);
-  };
+const onFinish = async (values) => {
+  if (!values.email) {
+    message.destroy();
+    message.error('Please enter email');
+    return;
+  }
+    const { email } = values;
+    const data = {
+      email: email, 
+    };
+
+  try {
+    const res = await fogetPass(data).unwrap();
+
+    if (res?.success) {
+      message.success(res?.message);
+      localStorage.setItem('email',  values?.email);
+      navigate('/auth/verification');
+    }
+  } catch (error) {
+    message.error(error?.data?.message || 'Something went wrong');
+    console.error('Forgot password error:', error);
+  }
+};
+
   return (
     <div className="relative flex items-center justify-center md:p-20 p-4">
       <div className="absolute w-full h-full flex">
@@ -77,6 +94,8 @@ function ForgotPassword() {
                     style={{ height: '48px' }}
                   />
                 </Form.Item>
+
+                
 
                 <Form.Item>
                   <Button

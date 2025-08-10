@@ -33,9 +33,9 @@ export default function Home() {
               advice, and seamless support to help your business grow stronger
               and faster.
             </p>
-            <button className="bg-[#0091FF] hover:bg-blue-600 text-white px-8 py-3 rounded text-lg h-auto">
+          <Link to={'/auth/login'}>  <button className="bg-[#0091FF] hover:bg-blue-600 text-white px-8 py-3 rounded text-lg h-auto">
               Get Started
-            </button>
+            </button></Link>
           </div>
         </div>
       </div>
@@ -52,9 +52,9 @@ export default function Home() {
             onSubmit={(e) => {
               e.preventDefault();
               const searchInput = e.target.elements.searchInput;
-              const searchQuery = searchInput.value.trim();
-              if (searchQuery) {
-                navigate(`/search?query=${searchQuery}`);
+              const query = searchInput.value.trim();
+              if (query) {
+                navigate(`/search?query=${encodeURIComponent(query)}`);
               }
             }}
           >

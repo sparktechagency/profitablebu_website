@@ -8,11 +8,12 @@ import {
   FaTwitter,
   FaYoutube,
 } from "react-icons/fa6";
+import { div } from "framer-motion/client";
 
 // Dynamic footer configuration
 const footerConfig = {
   company: {
-    name: "P B S F",
+    name: "P B F S",
     tagline: "From Listings to Legacy",
     logo: Logo,
     backgroundImage: backImg,
@@ -197,7 +198,8 @@ export const Footer = () => {
   const { company, socialLinks, sections } = footerConfig;
 
   return (
-    <footer
+   <div>
+     <footer
       className="bg-[#0A0D53] text-white pt-6 sm:pt-8 md:pt-10 bg-cover bg-center min-h-[40vh] sm:min-h-[45vh] lg:min-h-[50vh] relative"
       style={{ backgroundImage: `url(${company.backgroundImage})` }}
     >
@@ -249,6 +251,7 @@ export const Footer = () => {
         </div>
       </div>
     </footer>
+   </div>
   );
 };
 

@@ -10,39 +10,39 @@ function ChooseRole() {
       title: 'Buyer',
       description:
         '“List your business for sale, manage offers, and close deals securely.”',
-      state: 'buyer',
+      state: 'Buyer',
     },
     {
       title: 'Seller',
       description:
         '“Browse businesses for sale, compare options, and connect with sellers.”',
-      state: 'seller',
+      state: 'Seller',
     },
     {
       title: 'Broker',
       description:
         '“Browse businesses for sale, compare options, and connect with sellers.”',
-      state: 'broker',
+      state: 'Broker',
     },
     {
       title: 'Franchise Seller',
       description: '“Browse businesses for sale, compare options',
-      state: 'franchise-seller',
+      state: 'Francise Seller',
     },
     {
       title: 'Investor',
       description: '“Browse businesses for sale, compare options',
-      state: 'investor',
+      state: 'Investor',
     },
     {
       title: 'Business Idea Lister',
       description: '“Browse businesses for sale, compare options',
-      state: 'business-idea-lister',
+      state: 'Business Idea Lister',
     },
     {
       title: 'Asset Seller',
       description: '“Browse businesses for sale, compare options',
-      state: 'asset-seller',
+      state: 'Asset Seller',
     },
   ];
   return (

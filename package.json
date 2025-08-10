@@ -10,18 +10,25 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
     "@splidejs/react-splide": "^0.7.12",
     "antd": "^5.25.3",
+    "country-state-city": "^3.2.1",
     "dayjs": "^1.11.13",
     "framer-motion": "^12.23.0",
     "jodit": "^4.6.2",
     "jodit-react": "^5.2.19",
+    "konva": "^9.3.22",
     "lucide-react": "^0.510.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.4.0",
+    "react-konva": "^19.0.7",
     "react-phone-input-2": "^2.15.1",
-    "react-router-dom": "^7.1.1"
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.1.1",
+    "react-toastify": "^11.0.5",
+    "use-image": "^1.1.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
