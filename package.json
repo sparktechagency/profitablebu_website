@@ -9,6 +9,10 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "engines": {
+  "node": "18.x"
+},
+  
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
     "@splidejs/react-splide": "^0.7.12",
