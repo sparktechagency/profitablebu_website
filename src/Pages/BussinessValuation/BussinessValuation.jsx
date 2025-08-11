@@ -650,13 +650,14 @@ import { Form, Input, Select, Checkbox, Button, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { User, DollarSign } from "lucide-react";
 import { useAddBusinessValuationMutation } from "../redux/api/businessApi";
+import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 
 export default function BusinessValuationForm() {
   const [form] = Form.useForm();
   const [addBusinessValuation] = useAddBusinessValuationMutation();
-
+const navigate = useNavigate()
   const MAX_FILE_SIZE = 9 * 1024 * 1024; // 9MB
 
   const beforeUpload = (file) => {
@@ -711,6 +712,7 @@ export default function BusinessValuationForm() {
       console.log(res);
       message.success(res.message || "Submitted successfully");
       form.resetFields();
+      navigate('/business-valuaion-submission')
     } catch (error) {
       console.error(error);
       message.error(error?.data?.error || "Submission failed");

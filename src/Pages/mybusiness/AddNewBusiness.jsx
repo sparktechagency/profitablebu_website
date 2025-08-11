@@ -18,7 +18,7 @@ import { Navigate } from "../Navigate";
 import JoditEditor from "jodit-react";
 import { countryData } from "../../dummy-data/DummyData";
 import { Country, State, City } from "country-state-city";
-import { useAddBusinessMutation } from "../redux/api/businessApi";
+import { useAddBusinessMutation, useGetCategtoryQuery } from "../redux/api/businessApi";
 dayjs.extend(customParseFormat);
 const dateFormat = "YYYY-MM-DD";
 const props = {
@@ -41,6 +41,7 @@ const props = {
   },
 };
 const AddNewBusiness = () => {
+    const { data: categorie, isLoading, isError } = useGetCategtoryQuery();
   const [addBusiness] = useAddBusinessMutation();
   const editor = useRef(null);
   const [fileList, setFileList] = useState([]);
@@ -134,6 +135,14 @@ const AddNewBusiness = () => {
     ],
   };
 
+  useEffect(() => {
+      if (categorie) {
+        form.setFieldsValue({
+          category: categorie?.categoryName,
+        });
+      }
+    }, [categorie]);
+
   return (
     <div className="container m-auto pb-20 pt-3">
       <Navigate title={"Add New Business Information"}></Navigate>
@@ -176,29 +185,24 @@ const AddNewBusiness = () => {
           </div>
           <div className="">
             <Form.Item
-              label="Business Category"
-              name="category"
-              rules={[
-                { required: true, message: "Please input Buisiness Category!" },
-              ]}
-            >
-              <Select
-                style={{ height: "48px" }}
-                placeholder="Select Category"
-                className="w-full"
-              >
-                <Option>Select</Option>
-                <Option value="Restaurant">Restaurant</Option>
-                <Option value="Retail">Retail</Option>
-                <Option value="E-commerce">E-commerce</Option>
-                <Option value="Franchise">Franchise</Option>
-                <Option value="Services">Services</Option>
-                <Option value="Manufacturing">Manufacturing</Option>
-                <Option value="Education">Education</Option>
-                <Option value="Automotive">Automotive</Option>
-                <Option value="Other">Other</Option>
-              </Select>
-            </Form.Item>
+  label="Business Category"
+  name="category"
+  rules={[{ required: true, message: "Please input Business Category!" }]}
+>
+  <Select
+    style={{ height: "48px" }}
+    placeholder="Select Category"
+    className="w-full"
+  >
+    <Option value="">Select</Option>
+    {categorie?.data?.map((cat) => (
+      <Option key={cat._id} value={cat.categoryName}>
+        {cat.categoryName}
+      </Option>
+    ))}
+  </Select>
+</Form.Item>
+
           </div>
 
           <div className="grid grid-cols-3 gap-4">
@@ -336,10 +340,10 @@ const AddNewBusiness = () => {
                 className="w-full"
               >
                 <Option>Select</Option>
-                <Option value="Service_Request">Sole Proprietorship</Option>
-                <Option value="Partnership_Inquiry">Partnership</Option>
-                <Option value="Partnership_Inquiry">Corporation</Option>
-                <Option value="Partnership_Inquiry">LLC</Option>
+                <Option value="Sole Proprietorship">Sole Proprietorship</Option>
+                <Option value="Partnership">Partnership</Option>
+                <Option value="Corporation">Corporation</Option>
+                <Option value="LLC">LLC</Option>
               </Select>
             </Form.Item>
             <Form.Item

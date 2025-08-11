@@ -51,18 +51,10 @@ const AddSubPlane = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
         </h2>
 
         <Form form={form} onFinish={handleSubmit} layout="vertical">
-          {/* Price */}
-          <Form.Item label="Amount:-" name="price" >
-            <Input
-              prefix="$"
-              suffix="(-0%)"
-              type="price"
-              className="py-2"
-              disabled
-            />
-          </Form.Item>
+  
+          <h1 className="border p-2 my-4">{subscriptionId?.price}$</h1>
 
-          {/* Coupon Toggle */}
+      
           <div className="flex items-center justify-between mb-2">
             <label className="font-medium">Apply a coupon code</label>
             <Checkbox
@@ -71,7 +63,7 @@ const AddSubPlane = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
             />
           </div>
 
-          {/* Coupon Code Input */}
+        
           {showCoupon && (
             <Form.Item name="couponCode" label="Coupon Code">
               <div className="flex ">

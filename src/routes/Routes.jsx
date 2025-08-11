@@ -58,6 +58,8 @@ import AllBusinessFilter from '../Pages/BusinessDirectoryPage/AllBusinessFilter'
 import VerifyRegister from '../Auth/VerifyRegister';
 import SuccessfullPage from '../Pages/plane/SuccessfullPage';
 import ErrorPay from '../Pages/plane/ErrorPay';
+import SingleSubscription from '../Pages/plane/SingleSubscription';
+import SubmissionDone from '../Pages/BussinessValuation/SubmissionDone';
 
 export const router = createBrowserRouter([
   {
@@ -100,6 +102,10 @@ export const router = createBrowserRouter([
       {
         path: '/plane',
         element: <SubscriptionPlane></SubscriptionPlane>,
+      },
+       {
+        path: '/plane/singlePlane/:id',
+        element: <SingleSubscription></SingleSubscription>
       },
       {
         path: '/allFaqs',
@@ -232,12 +238,16 @@ export const router = createBrowserRouter([
         path: '/business-valuaion-submission',
         element: <BusinessValuationSubmission />,
       },
+        {
+        path: '/business-valuaion-submission/submissionDone',
+        element: <SubmissionDone></SubmissionDone>
+      },
       {
         path: '/business-formation',
         element: <BusinessFormation />,
       },
       {
-        path: '/business-formation-details',
+        path: '/business-formation-details/:id',
         element: <BusinessFormationDetails />,
       },
       {

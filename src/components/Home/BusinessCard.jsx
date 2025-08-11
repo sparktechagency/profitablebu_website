@@ -31,6 +31,7 @@ const BusinessCard = () => {
     isLoading,
     isError,
   } = useGetAllBusinessHomeQuery();
+  console.log(businessData)
 
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
   if (isError)
@@ -52,7 +53,7 @@ const BusinessCard = () => {
           <div className="flex items-center">
             <div className="w-[5px] h-12 rounded-r bg-[#22C55E] mr-4 "></div>
             <div>
-              <h2 className="text-2xl font-bold text-blue-500">Business</h2>
+              <h2 className="text-2xl font-bold text-blue-500">Popular Business</h2>
               <p className="text-gray-600 text-sm md:block hidden">
                 Discover top opportunities curated for entrepreneurs.
               </p>
@@ -64,7 +65,7 @@ const BusinessCard = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {business.map((business) => (
+          {business?.slice(0,4)?.map((business) => (
             <div
               key={business._id}
               className="border border-[#0091FF] bg-cover bg-center rounded"
@@ -127,7 +128,7 @@ const BusinessCard = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {interestData?.data?.length > 0 ? (
-              interestData.data.map((business) => {
+              interestData.data?.slice(0,4)?.map((business) => {
                 return (
                   <div
                     key={business._id}
@@ -196,7 +197,7 @@ const BusinessCard = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {interestDataa?.data?.length > 0 ? (
-              interestDataa.data.map((business) => {
+              interestDataa.data?.slice(0,4)?.map((business) => {
                 return (
                   <div
                     key={business._id}
@@ -265,7 +266,7 @@ const BusinessCard = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {interestDataaa?.data?.length > 0 ? (
-              interestDataaa.data.map((business) => {
+              interestDataaa.data?.slice(0,4)?.map((business) => {
                 return (
                   <div
                     key={business._id}
@@ -334,7 +335,7 @@ const BusinessCard = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {interestDataaaa?.data?.length > 0 ? (
-              interestDataaaa.data.map((business) => {
+              interestDataaaa.data?.slice(0,4)?.map((business) => {
                 return (
                   <div
                     key={business._id}

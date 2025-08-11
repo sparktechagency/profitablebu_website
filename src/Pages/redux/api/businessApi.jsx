@@ -22,6 +22,16 @@ const businessApi = baseApi.injectEndpoints({
       providesTags: ["updateProfile"],
     }),
 
+    getSingleSubscription: builder.query({
+      query: ({ subscriptionId }) => {
+        return {
+          url: `/subscription/get-single-subscription-plan?subscriptionId=${subscriptionId}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["updateProfile"],
+    }),
+
     getSingleIterestUser: builder.query({
       query: ({ businessId }) => {
         return {
@@ -46,6 +56,16 @@ const businessApi = baseApi.injectEndpoints({
       query: () => {
         return {
           url: `/interested/interested-business`,
+          method: "GET",
+        };
+      },
+      providesTags: ["updateProfile"],
+    }),
+
+      getSingleFormat: builder.query({
+      query: ({formationId}) => {
+        return {
+          url: `/formation/single-format?formationId=${formationId}`,
           method: "GET",
         };
       },
@@ -205,6 +225,27 @@ const businessApi = baseApi.injectEndpoints({
         providesTags: ["updateProfile"],
     }),
 
+
+     getTopCategtory: builder.query({
+        query: () => {
+            return {
+                url: "/business/top-category",
+                method: "GET",
+            };
+        },
+        providesTags: ["updateProfile"],
+    }),
+
+     getAllFormate: builder.query({
+        query: () => {
+            return {
+                url: "/formation/get-all-format",
+                method: "GET",
+            };
+        },
+        providesTags: ["updateProfile"],
+    }),
+
     // postPrivecy: builder.mutation({
     //     query: (data) => {
     //         return {
@@ -232,5 +273,9 @@ export const {
   useGetAllHomeBusinessQuery,
   useGetPlaneQuery,
   usePostCheckoutMutation,
-  useGetCategtoryQuery
+  useGetCategtoryQuery,
+  useGetSingleSubscriptionQuery,
+  useGetTopCategtoryQuery,
+  useGetAllFormateQuery,
+  useGetSingleFormatQuery
 } = businessApi;

@@ -61,7 +61,7 @@ const SubscriptionPlan = () => {
                 </div>
                 <button
                   onClick={() => {
-                    setSelectedPlanId(plan); // এখানে plan._id পাঠাচ্ছি
+                    setSelectedPlanId(plan); 
                     setOpenAddModal(true);
                   }}
                   className="mt-auto bg-[#0091FF] text-white rounded-md py-2 px-4 hover:bg-blue-600 transition"

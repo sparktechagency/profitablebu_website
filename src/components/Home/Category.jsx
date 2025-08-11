@@ -4,7 +4,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import { useGetCategtoryQuery } from "../../Pages/redux/api/businessApi";
 import { imageUrl } from "../../Pages/redux/api/baseApi";
 
-const imageBaseUrl = "https://yourdomain.com/uploads/"; // এখানে তোমার ইমেজের বেস URL দাও
+
 
 const Category = () => {
   const { data: categorie, isLoading, isError } = useGetCategtoryQuery();
