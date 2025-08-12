@@ -72,10 +72,30 @@ const businessApi = baseApi.injectEndpoints({
       providesTags: ["updateProfile"],
     }),
 
+    getSingleBusinessContact: builder.query({
+      query: ({userId}) => {
+        return {
+          url: `/user/seller-detail?userId=${userId}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["updateProfile"],
+    }),
+
       getAllHomeBusiness: builder.query({
       query: ({businessRole}) => {
         return {
           url: `/business/filter-business-by-business-role?businessRole=${businessRole}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["updateProfile"],
+    }),
+
+     getAllFeturesBusiness: builder.query({
+      query: ({businessRole}) => {
+        return {
+          url: `/business/featured-business?businessRole=${businessRole}`,
           method: "GET",
         };
       },
@@ -146,10 +166,22 @@ const businessApi = baseApi.injectEndpoints({
       invalidatesTags: ["updateProfile"],
     }),
 
-    updateSingle: builder.mutation({
-      query: ({ formData, id }) => {
+        addContact: builder.mutation({
+      query: (data) => {
         return {
-          url: `/business/update-business/${id}`,
+          url: "/home/help-and-support",
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["updateProfile"],
+    }),
+
+
+    updateSingle: builder.mutation({
+      query: ({ formData, businessId , user }) => {
+        return {
+          url: `/business/update-business?businessId=${businessId}&user=${user}`,
           method: "PATCH",
           body: formData,
         };
@@ -185,15 +217,15 @@ const businessApi = baseApi.injectEndpoints({
       providesTags: ["updateProfile"],
     }),
 
-    // deleteFaq: builder.mutation({
-    //     query: (id) => {
-    //         return {
-    //             url: `/manage/delete-faq/${id}`,
-    //             method: 'DELETE'
-    //         }
-    //     },
-    //     invalidatesTags: ['updateProfile']
-    // }),
+    updateSold: builder.mutation({
+        query: (businessId) => {
+            return {
+                url: `/business/sold-business?businessId=${businessId}`,
+                method: 'PATCH'
+            }
+        },
+        invalidatesTags: ['updateProfile']
+    }),
 
     getPlane: builder.query({
         query: ({role}) => {
@@ -214,6 +246,18 @@ const businessApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ["updateProfile"],
     }),
+
+    
+singleGetCoupon: builder.query({
+  query: ({ couponCode }) => ({
+    url: `/coupon/get-single-coupon?couponCode=${couponCode}`,
+    method: "GET",
+  }),
+  providesTags: ["updateProfile"],
+}),
+
+
+
 
       getCategtory: builder.query({
         query: () => {
@@ -246,16 +290,16 @@ const businessApi = baseApi.injectEndpoints({
         providesTags: ["updateProfile"],
     }),
 
-    // postPrivecy: builder.mutation({
-    //     query: (data) => {
-    //         return {
-    //             url: "/manage/add-privacy-policy",
-    //             method: "POST",
-    //             body: data,
-    //         };
-    //     },
-    //     invalidatesTags: ["terms"],
-    // }),
+    postInterestFormation: builder.mutation({
+        query: (data) => {
+            return {
+                url: "/formation/make-user-interested",
+                method: "POST",
+                body: data,
+            };
+        },
+        invalidatesTags: ["updateProfile"],
+    }),
   }),
 });
 
@@ -277,5 +321,12 @@ export const {
   useGetSingleSubscriptionQuery,
   useGetTopCategtoryQuery,
   useGetAllFormateQuery,
-  useGetSingleFormatQuery
+  useGetSingleFormatQuery,
+    useSingleGetCouponQuery,      
+  useLazySingleGetCouponQuery,
+  useUpdateSoldMutation,
+  useGetAllFeturesBusinessQuery,
+  useGetSingleBusinessContactQuery,
+  useAddContactMutation,
+  usePostInterestFormationMutation
 } = businessApi;

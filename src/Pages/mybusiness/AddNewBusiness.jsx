@@ -18,7 +18,10 @@ import { Navigate } from "../Navigate";
 import JoditEditor from "jodit-react";
 import { countryData } from "../../dummy-data/DummyData";
 import { Country, State, City } from "country-state-city";
-import { useAddBusinessMutation, useGetCategtoryQuery } from "../redux/api/businessApi";
+import {
+  useAddBusinessMutation,
+  useGetCategtoryQuery,
+} from "../redux/api/businessApi";
 dayjs.extend(customParseFormat);
 const dateFormat = "YYYY-MM-DD";
 const props = {
@@ -41,7 +44,7 @@ const props = {
   },
 };
 const AddNewBusiness = () => {
-    const { data: categorie, isLoading, isError } = useGetCategtoryQuery();
+  const { data: categorie, isLoading, isError } = useGetCategtoryQuery();
   const [addBusiness] = useAddBusinessMutation();
   const editor = useRef(null);
   const [fileList, setFileList] = useState([]);
@@ -136,12 +139,12 @@ const AddNewBusiness = () => {
   };
 
   useEffect(() => {
-      if (categorie) {
-        form.setFieldsValue({
-          category: categorie?.categoryName,
-        });
-      }
-    }, [categorie]);
+    if (categorie) {
+      form.setFieldsValue({
+        category: categorie?.categoryName,
+      });
+    }
+  }, [categorie]);
 
   return (
     <div className="container m-auto pb-20 pt-3">
@@ -161,7 +164,7 @@ const AddNewBusiness = () => {
                 <InboxOutlined />
               </p>
 
-              <p className="">Click or drag file to this area to upload</p>
+              <p className="">Click or drag file Max 1 MB Only PNG and JPG</p>
 
               {fileList.length < 1 && "+ Upload"}
             </Upload>
@@ -185,66 +188,68 @@ const AddNewBusiness = () => {
           </div>
           <div className="">
             <Form.Item
-  label="Business Category"
-  name="category"
-  rules={[{ required: true, message: "Please input Business Category!" }]}
->
-  <Select
-    style={{ height: "48px" }}
-    placeholder="Select Category"
-    className="w-full"
-  >
-    <Option value="">Select</Option>
-    {categorie?.data?.map((cat) => (
-      <Option key={cat._id} value={cat.categoryName}>
-        {cat.categoryName}
-      </Option>
-    ))}
-  </Select>
-</Form.Item>
-
+              label="Business Category"
+              name="category"
+              rules={[
+                { required: true, message: "Please input Business Category!" },
+              ]}
+            >
+              <Select
+                style={{ height: "48px" }}
+                placeholder="Select Category"
+                className="w-full"
+              >
+                <Option value="">Select</Option>
+                {categorie?.data?.map((cat) => (
+                  <Option key={cat._id} value={cat.categoryName}>
+                    {cat.categoryName}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
           </div>
 
           <div className="grid grid-cols-3 gap-4">
             {/* Country */}
             <Form.Item
-  label="Select Your Country"
-  name="country"
-  rules={[{ required: true, message: "Please select your country!" }]}
->
-  <Select
-    placeholder="Select your country"
-    style={{ height: "48px" }}
-    showSearch
-    allowClear
-    onChange={handleCountryChange}
-    optionLabelProp="label"
-  >
-    {countries.map((country) => (
-      <Select.Option
-        key={country.isoCode}
-        value={country.isoCode}
-        label={country.name}
-      >
-        <div className="flex items-center gap-2">
-          <img
-            src={`https://flagcdn.com/w20/${country.isoCode.toLowerCase()}.png`}
-            alt={country.name}
-            className="w-5 h-3 object-cover"
-          />
-          {country.name}
-        </div>
-      </Select.Option>
-    ))}
-  </Select>
-</Form.Item>
-
+              label="Select Your Country"
+              name="country"
+              rules={[
+                { required: true, message: "Please select your country!" },
+              ]}
+            >
+              <Select
+                placeholder="Select your country"
+                style={{ height: "48px" }}
+                showSearch
+                allowClear
+                onChange={handleCountryChange}
+                optionLabelProp="label"
+              >
+                {countries.map((country) => (
+                  <Select.Option
+                    key={country.isoCode}
+                    value={country.isoCode}
+                    label={country.name}
+                  >
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={`https://flagcdn.com/w20/${country.isoCode.toLowerCase()}.png`}
+                        alt={country.name}
+                        className="w-5 h-3 object-cover"
+                      />
+                      {country.name}
+                    </div>
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
 
             {/* State */}
             <Form.Item
               label="Select State"
               name="state"
-              rules={[{ required: true, message: "Please select your state!" }]}
+              
             >
               <Select
                 placeholder="Select your state"
@@ -266,7 +271,7 @@ const AddNewBusiness = () => {
             <Form.Item
               label="Select City"
               name="city"
-              rules={[{ required: true, message: "Please select your city!" }]}
+              
             >
               <Select
                 placeholder="Select your city"

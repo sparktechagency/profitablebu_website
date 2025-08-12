@@ -29,9 +29,9 @@ console.log(data)
            {data?.data?.interestedUser?.businessRole}
           </span>
         </div>
-        <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-sm">
+        <Link to={'/chat'}><button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-sm">
           Send Message
-        </button>
+        </button></Link>
       </div>
 
       {/* Interested Section */}

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const Subscription = () => {
   const { data: profileData, isLoading } = useGetProfileQuery();
-console.log(profileData)
+  console.log(profileData);
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
 
   const subscription = profileData?.data?.subscriptionPlan;
@@ -74,12 +74,17 @@ console.log(profileData)
 
       {/* Action Buttons */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-        <Link to={'/plane'}><button className="bg-blue-500 w-full hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
-          Change Subscription
-        </button></Link>
-       <Link to={`/plane/singlePlane/${subscription?._id}`}> <button className="bg-blue-500 w-full hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
-          Upgrade Subscription
-        </button></Link>
+        <Link to={"/plane"}>
+          <button className="bg-blue-500 w-full hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+            Change Subscription
+          </button>
+        </Link>
+        <Link to={`/plane/singlePlane/${subscription?._id}`}>
+          {" "}
+          <button className="bg-blue-500 w-full hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
+            Upgrade Subscription
+          </button>
+        </Link>
       </div>
     </div>
   );

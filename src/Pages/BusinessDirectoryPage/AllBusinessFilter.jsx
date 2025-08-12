@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Input, Select, Collapse, Card, Checkbox, Radio } from "antd";
 import { div } from "framer-motion/client";
-import { useGetAllBusinesFilterQuery } from "../redux/api/businessApi";
+import { useGetAllBusinesFilterQuery, useGetCategtoryQuery } from "../redux/api/businessApi";
 import { Link, useLocation } from "react-router-dom";
 import { imageUrl } from "../redux/api/baseApi";
 
@@ -132,6 +132,7 @@ const businessListings = [
 ];
 
 export default function AllBusinessFilterAnt() {
+  const {data: categorys} = useGetCategtoryQuery()
   const locations = useLocation();
    console.log(locations?.state);
   const [searchQuery, setSearchQuery] = useState("");
@@ -205,9 +206,9 @@ console.log(businessRole)
                 value={selectedBusinessCategory}
                 onChange={(e) => setSelectedBusinessCategory(e.target.value)}
               >
-                {businessCategories.map((category) => (
-                  <div key={category} className="mb-2">
-                    <Radio value={category}>{category}</Radio>
+                {categorys?.data?.map((category) => (
+                  <div key={category?.categoryName} className="mb-2">
+                    <Radio value={category?.categoryName}>{category?.categoryName}</Radio>
                   </div>
                 ))}
               </Radio.Group>

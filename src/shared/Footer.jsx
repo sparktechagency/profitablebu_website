@@ -104,26 +104,19 @@ const footerConfig = {
         },
       ],
     },
-    {
-      title: "FAQs",
-      links: [
-        { text: "Seller FAQs", to: "/faqs", state: "Business seller" },
-        { text: "Buyer FAQs", to: "/faqs", state: "Business buyer" },
-        { text: "Broker FAQs", to: "/faqs", state: "Broker" },
-        { text: "Investor FAQs", to: "/faqs", state: "Investor" },
-        {
-          text: "Business Idea Lister FAQs",
-          to: "/faqs",
-          state: "Business idea lister",
-        },
-        {
-          text: "Business Asset Lister FAQs",
-          to: "/faqs",
-          state: "Business asset lister",
-        },
-        { text: "Franchisor FAQs", to: "/faqs", state: "Franchisor" },
-      ],
-    },
+  {
+  title: "FAQs",
+  links: [
+    { text: "Seller FAQs", to: "/faqsSeller" },
+    { text: "Buyer FAQs", to: "FaqBuyer" },
+    { text: "Broker FAQs", to: "/FaqBrokers" },
+    { text: "Investor FAQs", to: "/FaqInvestors" },
+    { text: "Business Idea Lister FAQs", to: "/FaqBusiness" },
+    { text: "Business Asset Lister FAQs", to: "/FaqAsset" },
+    { text: "Franchisor FAQs", to: "/FaqFranchise" },
+  ],
+},
+
     {
       title: "Quick Links",
       links: [

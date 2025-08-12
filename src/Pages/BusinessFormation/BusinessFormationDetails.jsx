@@ -3,6 +3,7 @@ import InterestForm from "../BussinessDetailsWithForm/InterestedForm";
 import { useParams } from "react-router-dom";
 import { useGetSingleFormatQuery } from "../redux/api/businessApi";
 import { imageUrl } from "../redux/api/baseApi";
+import InterenstFormation from "./InterenstFormation";
 
 
 export default function BusinessFormationDetails() {
@@ -80,7 +81,7 @@ export default function BusinessFormationDetails() {
       </div>
 
       <div className="w-full mt-11 md:w-1/2">
-        <InterestForm businessId={formationId}/>
+        <InterenstFormation formationId={formationId}></InterenstFormation>
       </div>
     </div>
   );

@@ -8,8 +8,17 @@ import {
 } from 'react-icons/fa';
 import img from '../../assets/Home/cover.png';
 import Header from '../AboutUs/Header';
+import { useGetFaqQuery } from '../redux/api/metaApi';
 const FaqBusiness  = () => {
-  const items = [
+  const { data: faq } = useGetFaqQuery({ userRole:'Business Idea Lister' });
+  console.log(faq)
+   const items =
+    faq?.data?.map((item, index) => ({
+      key: String(index + 1),
+      label: item.question,
+      children: <p>{item.answer}</p>,
+    })) || [];
+  const itemss = [
     {
       key: '1',
       label: 'What is included in your Break/Fix services?',

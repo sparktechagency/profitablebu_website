@@ -53,77 +53,77 @@ const businessApi = baseApi.injectEndpoints({
     // }),
 
     addFaq: builder.mutation({
-        query: (data) => {
-            return {
-                url: "/faq/create-faq",
-                method: "POST",
-                body: data,
-            };
-        },
-        invalidatesTags: ["updateProfile"],
+      query: (data) => {
+        return {
+          url: "/faq/create-faq",
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["updateProfile"],
     }),
 
     updateFaq: builder.mutation({
-        query: ({ formData, id }) => {
-            return {
-                url: `/faq/update-faq?faqId=${id}`,
-                method: "PATCH",
-                body: formData,
-            };
-        },
-        invalidatesTags: ["updateProfile"],
+      query: ({ formData, id }) => {
+        return {
+          url: `/faq/update-faq?faqId=${id}`,
+          method: "PATCH",
+          body: formData,
+        };
+      },
+      invalidatesTags: ["updateProfile"],
     }),
 
     deleteFaq: builder.mutation({
-        query: (id) => {
-            return {
-                url: `/faq/delete-faq?faqId=${id}`,
-                method: 'DELETE'
-            }
-        },
-        invalidatesTags: ['updateProfile']
+      query: (id) => {
+        return {
+          url: `/faq/delete-faq?faqId=${id}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["updateProfile"],
     }),
 
-    // getTermsConditions: builder.query({
-    //     query: () => {
-    //         return {
-    //             url: "/manage/get-terms-conditions",
-    //             method: "GET",
-    //         };
-    //     },
-    //     providesTags: ["terms"],
-    // }),
+    getTermsConditions: builder.query({
+      query: () => {
+        return {
+          url: "/home/get-terms-condition",
+          method: "GET",
+        };
+      },
+      providesTags: ["terms"],
+    }),
     postSubscriber: builder.mutation({
-        query: (email) => {
-            return {
-                url: "/subscriber/create-subscriber",
-                method: "POST",
-                body: email,
-            };
-        },
-        invalidatesTags: ["terms"],
+      query: (email) => {
+        return {
+          url: "/subscriber/create-subscriber",
+          method: "POST",
+          body: email,
+        };
+      },
+      invalidatesTags: ["terms"],
     }),
 
     postSchedule: builder.mutation({
-        query: (data) => {
-            return {
-                url: "/schedule/make-schedule",
-                method: "POST",
-                body: data,
-            };
-        },
-        invalidatesTags: ["terms"],
+      query: (data) => {
+        return {
+          url: "/schedule/make-schedule",
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["terms"],
     }),
 
-    //   getPrivecy: builder.query({
-    //     query: () => {
-    //         return {
-    //             url: "/manage/get-privacy-policy",
-    //             method: "GET",
-    //         };
-    //     },
-    //     providesTags: ["terms"],
-    // }),
+    getPrivecy: builder.query({
+      query: () => {
+        return {
+          url: "home/get-privacy-policy",
+          method: "GET",
+        };
+      },
+      providesTags: ["terms"],
+    }),
     // postPrivecy: builder.mutation({
     //     query: (data) => {
     //         return {
@@ -137,4 +137,13 @@ const businessApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetFaqQuery,usePostScheduleMutation, useAddFaqMutation, usePostSubscriberMutation, useDeleteFaqMutation, useUpdateFaqMutation } = businessApi;
+export const {
+  useGetFaqQuery,
+  usePostScheduleMutation,
+  useGetTermsConditionsQuery,
+  useGetPrivecyQuery,
+  useAddFaqMutation,
+  usePostSubscriberMutation,
+  useDeleteFaqMutation,
+  useUpdateFaqMutation,
+} = businessApi;

@@ -8,8 +8,9 @@ import {
 } from 'react-icons/fa';
 import img from '../../assets/Home/cover.png';
 import Header from '../AboutUs/Header';
+import { useGetFaqQuery } from '../redux/api/metaApi';
 const FaqAsset = () => {
-  const items = [
+  const itemss = [
     {
       key: '1',
       label: 'What is included in your Break/Fix services?',
@@ -89,6 +90,15 @@ const FaqAsset = () => {
       ),
     },
   ];
+
+  const { data: faq } = useGetFaqQuery({ userRole:'Asset Seller' });
+  console.log(faq)
+   const items =
+    faq?.data?.map((item, index) => ({
+      key: String(index + 1),
+      label: item.question,
+      children: <p>{item.answer}</p>,
+    })) || [];
   return (
     <div>
       <div></div>

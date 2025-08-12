@@ -1,11 +1,18 @@
 import { Tag } from "antd";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { useGetSingleBusinessContactQuery } from "../redux/api/businessApi";
+import { Link, useParams } from "react-router-dom";
 
 export default function BuyerContactInfo() {
+  const{id} = useParams()
+  console.log(id)
+    const {data:singleContactUser} = useGetSingleBusinessContactQuery({userId:id})
+    console.log(singleContactUser)
+    const userData = singleContactUser?.data
   return (
     <div className="container mx-auto px-5 pt-20 pb-10">
       <h2 className="text-2xl font-bold text-blue-600 mb-6">
-        Buyer Contact Info
+        Contact Info
       </h2>
 
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-5">
@@ -24,18 +31,18 @@ export default function BuyerContactInfo() {
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <h3 className="text-xl font-semibold text-gray-900">
-                    Sardor
+                    {userData?.name}
                   </h3>
                   <Tag className="bg-blue-100 text-[#0091FF] text-xs px-2 py-1 rounded">
-                    Buyer
+                    {userData?.role}
                   </Tag>
                 </div>
-                <p className="text-gray-600">dric@gmail.com</p>
+                <p className="text-gray-600">{userData?.email}</p>
               </div>
 
-              <button className="bg-[#0091FF] px-5 py-2 text-white font-medium rounded-md">
+             <Link to={`/chat/${userData?._id}`}> <button className="bg-[#0091FF] px-5 py-2 text-white font-medium rounded-md">
                 Send Message
-              </button>
+              </button></Link>
             </div>
           </div>
         </div>
@@ -49,7 +56,7 @@ export default function BuyerContactInfo() {
             </div>
             <div>
               <h4 className="font-semibold text-blue-600 text-lg">Email</h4>
-              <p className="text-gray-700">Dric@Gmail.Com</p>
+              <p className="text-gray-700">{userData?.email}</p>
             </div>
           </div>
 
@@ -60,7 +67,7 @@ export default function BuyerContactInfo() {
             </div>
             <div>
               <h4 className="font-semibold text-blue-600 text-lg">Phone</h4>
-              <p className="text-gray-700">(704) 555-0127</p>
+              <p className="text-gray-700">{userData?.mobile}</p>
             </div>
           </div>
 
@@ -72,7 +79,7 @@ export default function BuyerContactInfo() {
             <div>
               <h4 className="font-semibold text-blue-600 text-lg">Location</h4>
               <p className="text-gray-700">
-                Ul. Mlynarska 142, Bydgoszcz 85-376
+                {userData?.location}
               </p>
             </div>
           </div>

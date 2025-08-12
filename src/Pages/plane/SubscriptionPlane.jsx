@@ -16,9 +16,7 @@ const SubscriptionPlan = () => {
     role: userRole,
   });
 
-  if (profileLoading || planLoading) {
-    return <p className="text-center py-10">Loading...</p>;
-  }
+
 
   const plans = planeData?.data || [];
   console.log(planeData);

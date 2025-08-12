@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ChevronDown, Menu, X, Globe, User, LogOut } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "../assets/Home/logo2.png";
 import { menuItems } from "../dummy-data/DummyData";
@@ -35,7 +35,6 @@ const Navbar = () => {
   const { data: profileData, isLoading } = useGetProfileQuery();
   const accessToken = localStorage.getItem("accessToken");
   const users = profileData?.data;
-  console.log(users);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [countryModalOpen, setCountryModalOpen] = useState(false);
@@ -102,6 +101,7 @@ const Navbar = () => {
       state: menuItems.resources.state,
     },
   ];
+  const navigate = useNavigate()
 
   return (
     <>
@@ -431,6 +431,8 @@ const Navbar = () => {
                       setProfileMenuOpen(false);
                       localStorage.removeItem("accessToken");
                       localStorage.removeItem("user");
+                      navigate('/auth/login')
+                      
                       message.success("You have been logged out");
                     }}
                     className="flex items-center space-x-3 hover:bg-gray-100 p-2 rounded-lg transition-colors cursor-pointer"

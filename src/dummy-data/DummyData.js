@@ -119,7 +119,9 @@ export const menuItems = {
     },
     {
       name: 'Investor on Business Idea',
-      path: '/auth/login?businessRole=Investor',
+      
+      path: '/auth/login',
+      state: 'Investor',
     },
   ],
 

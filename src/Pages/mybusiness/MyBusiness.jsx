@@ -217,11 +217,15 @@ import backCard from "../../assets/Home/ii.png";
 import { Link } from "react-router-dom";
 import { useGetAllBusinessQuery } from "../redux/api/businessApi";
 import { imageUrl } from "../redux/api/baseApi";
+import { useGetProfileQuery } from "../redux/api/userApi";
 
 const MyBusiness = () => {
   const { data: businessData, isLoading } = useGetAllBusinessQuery();
+  console.log(businessData)
   const user = JSON.parse(localStorage.getItem("user"));
-  const role = user?.role;
+  const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
+  console.log(profileData);
+  const role = profileData?.data?.role;
 
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
 
@@ -234,9 +238,10 @@ const MyBusiness = () => {
     mySoldBusiness = [],
   } = businessData?.data || {};
 
+  console.log(mySoldBusiness)
   const renderCard = (item) => {
-    console.log(item)
-    if (role === "Buyer") {
+    console.log(item);
+    if ((role === "Buyer" || role === "Investor") ) {
       // Data for Buyer (e.g., interestedBusiness)
       return (
         <div
@@ -313,67 +318,79 @@ const MyBusiness = () => {
     }
   };
 
-  return (
-    <div className="container m-auto pb-20 mt-20 md:mt-11 px-4 ">
-      <Navigate title={"My Business"} />
+ return (
+  <div className="container m-auto pb-20 mt-20 md:mt-11 px-4 ">
+    <Navigate title={"My Business"} />
 
-    {role === "Buyer" ? (
-  <>
-    {/* Interested Business */}
-    <Section
-      title="Interested Business"
-      data={interestedBusiness}
-      renderCard={renderCard}
-    />
+    {role === "Investor" ? (
+      // Investor er khetre sudhu interestedBusinessIdeas dekhabe
+      <Section
+        title="Interested Business Ideas"
+        data={interestedBusinessIdeas}
+   
 
-    {/* Interested Business Asset */}
-    <Section
-      title="Interested Business Assets"
-      data={interestedBusinessAsset}
-      renderCard={renderCard}
-    />
+        renderCard={renderCard}
+      />
+    ) : role === "Buyer" ? (
+      <>
+        {/* Interested Business */}
+        <Section
+          title="Interested Business"
+          data={interestedBusiness}
+          renderCard={renderCard}
+        />
 
-    {/* Interested Franchise */}
-    <Section
-      title="Interested Franchises"
-      data={interestedFranchise}
-      renderCard={renderCard}
-    />
+        {/* Interested Business Asset */}
+        <Section
+          title="Interested Business Assets"
+          data={interestedBusinessAsset}
+          renderCard={renderCard}
+        />
 
-    {/* Interested Business Ideas */}
-    <Section
-      title="Interested Business Ideas"
-      data={interestedBusinessIdeas}
-      renderCard={renderCard}
-    />
-  </>
-) : (
-  <>
-    <div className="flex justify-end mt-4">
-      <Link to={"/addnewbusiness"}>
-        <button className="bg-blue-400 px-4 py-2 text-white rounded hover:underline">
-          Sale a New One
-        </button>
-      </Link>
-    </div>
+        {/* Interested Franchise */}
+        <Section
+          title="Interested Franchises"
+          data={interestedFranchise}
+          renderCard={renderCard}
+        />
 
-    {/* My Business */}
-    <Section
-      title="Current business for sale"
-      data={myBusiness}
-      renderCard={renderCard}
-    />
+        {/* Interested Business Ideas */}
+        <Section
+          title="Interested Business Ideas"
+          data={interestedBusinessIdeas}
+          renderCard={renderCard}
+        />
+      </>
+    ) : (
+      <>
+        {role !== "Investor" && localStorage.getItem("accessToken") && (
+          <div className="flex justify-end mt-4">
+            <Link to={"/addnewbusiness"}>
+              <button className="bg-blue-400 px-4 py-2 text-white rounded hover:underline">
+                Sale a New One
+              </button>
+            </Link>
+          </div>
+        )}
 
-    {/* Sold Business */}
-    <Section
-      title="Previous business that has been sold"
-      data={mySoldBusiness}
-      renderCard={renderCard}
-    />
-  </>
-)}
-    </div>
-  );
+        {/* My Business */}
+        <Section
+          title={`Current ${role} for sale`}
+          data={myBusiness}
+          renderCard={renderCard}
+        />
+
+        {/* Sold Business */}
+        <Section
+          title={`Previous ${role} that has been sold`}
+          data={mySoldBusiness}
+          renderCard={renderCard}
+        />
+      </>
+    )}
+  </div>
+);
+
 };
 
 const Section = ({ title, data, renderCard }) => (
@@ -398,6 +415,5 @@ const Section = ({ title, data, renderCard }) => (
     </div>
   </div>
 );
-
 
 export default MyBusiness;

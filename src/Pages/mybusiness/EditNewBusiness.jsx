@@ -15,7 +15,11 @@ import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Navigate } from "../Navigate";
 import JoditEditor from "jodit-react";
-import { useGetSingleBusinessQuery, useUpdateSingleMutation } from "../redux/api/businessApi";
+import {
+  useGetCategtoryQuery,
+  useGetSingleBusinessQuery,
+  useUpdateSingleMutation,
+} from "../redux/api/businessApi";
 import { useParams } from "react-router-dom";
 import { countryData } from "../../dummy-data/DummyData";
 dayjs.extend(customParseFormat);
@@ -41,42 +45,50 @@ const props = {
 };
 const EditNewBusiness = () => {
   const { id: businessId } = useParams();
+  console.log(businessId);
   const [fileList, setFileList] = useState([]);
   const [updateSingleData] = useUpdateSingleMutation();
   const { data: businessDetails } = useGetSingleBusinessQuery({ businessId });
 
-    console.log(businessId)
-
+  console.log(businessDetails);
+  const { data: categorie, isLoading, isError } = useGetCategtoryQuery();
+  console.log(categorie);
   const editor = useRef(null);
   const [content, setContent] = useState("");
   const [form] = Form.useForm();
   const handleSubmit = async (values) => {
     console.log(values);
-    const id = businessId
-     try {
-          const formData = new FormData();
-    
-          fileList.forEach((file) => {
-            formData.append("business-image", file.originFileObj);
-          });
-          formData.append("title", values?.title);
-          formData.append("category", values?.category);
-          formData.append("country", values?.country);
-          formData.append("location", values?.location);
-          formData.append("askingPrice", values?.askingPrice);
-          formData.append("ownershipType", values?.ownershipType);
-          formData.append("businessType", values?.businessType);
-          formData.append("industryName", values?.industryName);
-          formData.append("description", content);
-    
-          const res = await updateSingleData({formData,id});
-          console.log(res);
-          message.success(res.data.message);
-        } catch (error) {
-          console.error(error);
-          message.error(message?.data?.error);
-        } finally {
-        }
+    const id = businessId;
+    const user = businessDetails?.data?.business?.user;
+    console.log(user);
+    try {
+      const formData = new FormData();
+
+      fileList.forEach((file) => {
+        formData.append("business-image", file.originFileObj);
+      });
+      formData.append("title", values?.title);
+      formData.append("category", values?.category);
+      formData.append("country", values?.country);
+      formData.append("location", values?.location);
+      formData.append("askingPrice", values?.askingPrice);
+      formData.append("ownershipType", values?.ownershipType);
+      formData.append("businessType", values?.businessType);
+      formData.append("industryName", values?.industryName);
+      formData.append("description", content);
+
+      const res = await updateSingleData({
+        formData,
+        businessId: id,
+        user: user,
+      });
+      console.log(res);
+      message.success(res.data.message);
+    } catch (error) {
+      console.error(error);
+      message.error(message?.data?.error);
+    } finally {
+    }
   };
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
@@ -115,46 +127,41 @@ const EditNewBusiness = () => {
     ],
   };
 
-useEffect(() => {
-  if (businessDetails?.data) {
-    const data = businessDetails.data;
+  useEffect(() => {
+    if (businessDetails?.data) {
+      const data = businessDetails.data?.business;
 
-    // Set form values
-    form.setFieldsValue({
-      title: data.title,
-      category: data.category,
-      country: data.country,
-      location: data.location,
-      askingPrice: data.askingPrice,
-      ownershipType: data.ownershipType,
-      businessType: data.businessType,
-      industryName: data.industryName,
-    });
+      form.setFieldsValue({
+        title: data.title,
+        category: data.category, // ekhane business theke asha categoryName
+        country: data.country,
+        location: data.location,
+        askingPrice: data.askingPrice,
+        ownerShipType: data.ownerShipType,
+        businessType: data.businessType,
+        industryName: data.industryName,
+      });
 
-    // Set description content
-    setContent(data.description);
+      setContent(data.description);
 
-    // Set existing image
-    if (data.cover_image) {
-      setFileList([
-        {
-          uid: '-1',
-          name: 'cover_image.png',
-          status: 'done',
-          url: data.image,
-        },
-      ]);
+      if (data.cover_image) {
+        setFileList([
+          {
+            uid: "-1",
+            name: "cover_image.png",
+            status: "done",
+            url: data.image,
+          },
+        ]);
+      }
     }
-  }
-}, [businessDetails, form]);
-
+  }, [businessDetails, form]);
 
   return (
     <div className="container m-auto pb-20 pt-3">
       <Navigate title={"Edit Business Information"}></Navigate>
       <div className="bg-white p-3">
         <Form form={form} onFinish={handleSubmit} layout="vertical">
-         
           <Form.Item label="Photos">
             <Upload
               style={{ width: "100%" }}
@@ -195,20 +202,20 @@ useEffect(() => {
               label="Business Category"
               name="category"
               rules={[
-                { required: true, message: "Please input Buisiness Category!" },
+                { required: true, message: "Please input Business Category!" },
               ]}
             >
-              <Select placeholder="Select Category" className="w-full">
-                <Option>Select</Option>
-                <Option value="Restaurant">Restaurant</Option>
-                <Option value="Retail">Retail</Option>
-                <Option value="E-commerce">E-commerce</Option>
-                <Option value="Franchise">Franchise</Option>
-                <Option value="Services">Services</Option>
-                <Option value="Manufacturing">Manufacturing</Option>
-                <Option value="Education">Education</Option>
-                <Option value="Automotive">Automotive</Option>
-                <Option value="Other">Other</Option>
+              <Select
+                style={{ height: "48px" }}
+                placeholder="Select Category"
+                className="w-full"
+              >
+                <Option value="">Select</Option>
+                {categorie?.data?.map((cat) => (
+                  <Option key={cat._id} value={cat.categoryName}>
+                    {cat.categoryName}
+                  </Option>
+                ))}
               </Select>
             </Form.Item>
             <Form.Item
@@ -272,17 +279,21 @@ useEffect(() => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Form.Item
               label="Ownership Type"
-              name="ownershipType"
+              name="ownerShipType"
               rules={[
                 { required: true, message: "Please input Ownership type!" },
               ]}
             >
-              <Select placeholder="Select Inquiry" className="w-full">
-                <Option value="General_Inquiry">Select</Option>
-                <Option value="Service_Request">Sole Proprietorship</Option>
-                <Option value="Partnership_Inquiry">Partnership</Option>
-                <Option value="Partnership_Inquiry">Corporation</Option>
-                <Option value="Partnership_Inquiry">LLC</Option>
+              <Select
+                style={{ height: "48px" }}
+                placeholder="Select Ownership Type"
+                className="w-full"
+              >
+                <Option>Select</Option>
+                <Option value="Sole Proprietorship">Sole Proprietorship</Option>
+                <Option value="Partnership">Partnership</Option>
+                <Option value="Corporation">Corporation</Option>
+                <Option value="LLC">LLC</Option>
               </Select>
             </Form.Item>
             <Form.Item

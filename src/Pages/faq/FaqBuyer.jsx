@@ -9,8 +9,8 @@ import {
 import img from '../../assets/Home/cover.png';
 import Header from '../AboutUs/Header';
 import { useGetFaqQuery } from '../redux/api/metaApi';
-const FaqSeller = () => {
-  const { data: faq } = useGetFaqQuery({ userRole:'Seller' });
+const FaqBuyer = () => {
+   const { data: faq } = useGetFaqQuery({ userRole:'Buyer' });
   console.log(faq)
    const items =
     faq?.data?.map((item, index) => ({
@@ -117,10 +117,10 @@ const FaqSeller = () => {
           <p className='flex items-center gap-2'>Home <IoIosArrowForward /> Faq</p>
         </div>
       </div> */}
-      <div className=" container m-auto py-11 ">
+      <div className=" container m-auto py-11 px-4">
         <h1 className="text-3xl mb-4 font-bold ">
           {' '}
-          FAQ for <span className="text-[#22C55E] ">Sellers</span>
+          FAQ for <span className="text-[#22C55E] ">Buyer</span>
         </h1>
         <ConfigProvider
           theme={{
@@ -153,4 +153,4 @@ const FaqSeller = () => {
   );
 };
 
-export default FaqSeller;
+export default FaqBuyer;

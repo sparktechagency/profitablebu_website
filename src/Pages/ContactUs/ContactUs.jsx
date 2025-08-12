@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Form, Input, Button } from 'antd';
+import { useEffect, useState } from 'react';
+import { Form, Input, Button, message } from 'antd';
 import {
   Facebook,
   Twitter,
@@ -9,7 +9,29 @@ import {
 } from 'lucide-react';
 import Header from '../AboutUs/Header';
 import img from '../../../public/contact-us.png';
+import { useAddContactMutation } from '../redux/api/businessApi';
+import { useGetProfileQuery } from '../redux/api/userApi';
 export default function ContactUs() {
+    const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
+    console.log(profileData);
+
+
+      useEffect(() => {
+        if (profileData) {
+              const email = profileData?.data;
+    
+          form.setFieldsValue({
+            email: email.email,
+      
+          });
+    
+    
+        
+        }
+      }, [profileData]);
+  const [form] = Form.useForm();
+  const [addContact] = useAddContactMutation()
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -26,9 +48,29 @@ export default function ContactUs() {
     }));
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit =async (values) => {
     console.log('Form submitted:', values);
-    // Handle form submission here
+        const data = {
+      
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email, 
+      phone: values.phone, 
+      message: values.message,
+      
+    };
+    console.log(data)
+
+    try {
+      const res = await addContact(data).unwrap();
+     
+        message.success(res?.message);
+        form.resetFields();
+    
+    } catch (error) {
+      console.error(error);
+      message.error(error?.data?.message || "Failed to schedule call.");
+    }
   };
   return (
     <>
@@ -98,6 +140,7 @@ export default function ContactUs() {
               </p>
 
               <Form
+                form={form}
                 requiredMark={false}
                 layout="vertical"
                 onFinish={handleSubmit}

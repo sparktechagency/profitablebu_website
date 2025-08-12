@@ -6,13 +6,21 @@ import back from "../../assets/Home/back.png";
 import { Navigate } from "../Navigate";
 import { Link, useParams } from "react-router-dom";
 import {
+  useGetSingleBusinessContactQuery,
   useGetSingleBusinessQuery,
   useGetSingleIterestUserQuery,
+  useUpdateSoldMutation,
 } from "../redux/api/businessApi";
 import { imageUrl } from "../redux/api/baseApi";
+import { useGetProfileQuery } from "../redux/api/userApi";
+import { message } from "antd";
 const MyBusinessDetails = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  const role = user?.role;
+  // const role = user?.role;
+
+  const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
+  console.log(profileData);
+  const role = profileData?.data?.role;
 
   const { id: businessId } = useParams();
 
@@ -20,44 +28,71 @@ const MyBusinessDetails = () => {
     businessId,
   });
   console.log(businessDetails);
+  const [updateSold] = useUpdateSoldMutation();
+  const checkUserId = profileData?.data?._id;
+  const checkBusinessId = businessDetails?.data?.business?.user;
 
-    useEffect(()=>{
-      window.scrollTo(0,0)
-    },[])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleSold = async () => {
+ 
+    try {
+      const res = await updateSold({businessId}).unwrap();
+      message.success(res?.message);
+    } catch (err) {
+      message.error(err?.data?.message);
+    }
+  };
 
   return (
     <div className="container m-auto pb-20 lg:mt-8 mt-11 lg:px-0 px-4">
       <Navigate title={"Trendy Urban Café in Dhaka City"}></Navigate>
-      <div className="lg:grid grid-cols-3 gap-9">
-        <div className="bg-white shadow  p-4 text-center rounded">
-          <div className="flex justify-center">
-            <img src={img1} alt="" />
+      {role &&
+        role !== "Buyer" &&
+        role !== "Investor" &&
+        localStorage.getItem("accessToken") &&
+        checkUserId === checkBusinessId && (
+          <div className="lg:grid grid-cols-3 gap-9">
+            <div className="bg-white shadow p-4 text-center rounded">
+              <div className="flex justify-center">
+                <img src={img1} alt="Total Views" />
+              </div>
+              <h1 className="font-semibold text-3xl py-3">Total Views</h1>
+              <h2 className="text-[#22C55E] font-semibold text-xl">
+                {businessDetails?.data?.business?.views ?? "0"}
+              </h2>
+            </div>
+
+            <div className="bg-white shadow p-4 text-center rounded">
+              <div className="flex justify-center">
+                <img src={img2} alt="Total Interests" />
+              </div>
+              <h1 className="font-semibold text-3xl py-3">Total Interests</h1>
+              <h2 className="text-[#22C55E] font-semibold text-xl">
+                {businessDetails?.data?.interestedUsers?.length ?? "0"}
+              </h2>
+            </div>
+
+            <div className="bg-white shadow p-4 text-center rounded">
+              <div className="flex justify-center">
+                <img src={img3} alt="Inquiries Received" />
+              </div>
+              <h1 className="font-semibold text-3xl py-3">
+                Inquiries Received
+              </h1>
+              <h2 className="text-[#22C55E] font-semibold text-xl">1,205</h2>
+            </div>
           </div>
-          <h1 className="font-semibold text-3xl py-3">Total Views</h1>
-          <h2 className="text-[#22C55E] font-semibold text-xl">
-            {businessDetails?.data?.business?.views || "0"}
-          </h2>
-        </div>
-        <div className="bg-white shadow  p-4 text-center rounded">
-          <div className="flex justify-center">
-            <img src={img2} alt="" />
-          </div>
-          <h1 className="font-semibold text-3xl py-3">Total Interests</h1>
-          <h2 className="text-[#22C55E] font-semibold text-xl">
-            {businessDetails?.data?.interestedUsers?.length || "0"}
-          </h2>
-        </div>
-        <div className="bg-white shadow  p-4 text-center rounded">
-          <div className="flex justify-center">
-            <img src={img3} alt="" />
-          </div>
-          <h1 className="font-semibold text-3xl py-3">Inquiries Received</h1>
-          <h2 className="text-[#22C55E] font-semibold text-xl">1,205</h2>
-        </div>
-      </div>
+        )}
 
       <div className="lg:grid grid-cols-2 gap-4 pt-11">
-        <img className="w-full h-[400px] object-cover" src={`${imageUrl}/uploads/business-image/${businessDetails?.data?.business?.image}` } alt="" />
+        <img
+          className="w-full h-[400px] object-cover"
+          src={`${imageUrl}/uploads/business-image/${businessDetails?.data?.business?.image}`}
+          alt=""
+        />
         <div>
           <button className="bg-[#C1E1FF] border border-[#0091FF] px-2 py-2 rounded">
             #Francise
@@ -91,30 +126,77 @@ const MyBusinessDetails = () => {
             </p>
           </div>
           <div className="flex gap-5">
-            {role !== "Buyer" && (
-              <Link
-                to={`/EditNewBusiness/${businessDetails?.data?.business?._id}`}
-              >
-                <button className="bg-[#0091FF] px-4 py-1 rounded text-white">
-                  Edit {businessDetails?.data?.business?.title}
+            {role &&
+              role !== "Buyer" &&
+              role !== "Investor" &&
+              localStorage.getItem("accessToken") &&
+              checkUserId === checkBusinessId && (
+                <Link
+                  to={`/EditNewBusiness/${businessDetails?.data?.business?._id}`}
+                >
+                  <button className="bg-[#0091FF] px-4 py-1 rounded text-white">
+                    Edit {businessDetails?.data?.business?.title}
+                  </button>
+                </Link>
+              )}
+
+            {role &&
+              role !== "Buyer" &&
+              role !== "Investor" &&
+              localStorage.getItem("accessToken") &&
+              checkUserId === checkBusinessId && (
+                <Link
+                  to={`/interestBuyer/${businessDetails?.data?.business?._id}`}
+                >
+                  <button className="bg-[#0091FF] px-4 py-1 rounded text-white">
+                    interested buyers
+                  </button>
+                </Link>
+              )}
+
+            {role &&
+              localStorage.getItem("accessToken") &&
+              (role === "Buyer" ||
+                (role === "Investor" &&
+                  businessDetails?.data?.business?.businessRole ===
+                    "Business-Idea-lister")) && (
+                <Link
+                  to={`/business-details-with-form/${businessDetails?.data?.business?._id}`}
+                >
+                  <button className="bg-[#0091FF] hover:bg-[#0091FF] text-white px-5 py-1 rounded">
+                    Interested
+                  </button>
+                </Link>
+              )}
+
+            {role &&
+              localStorage.getItem("accessToken") &&
+              (role === "Buyer" ||
+                (role === "Investor" &&
+                  businessDetails?.data?.business?.businessRole ===
+                    "Business-Idea-lister")) && (
+                <Link
+                  to={`/buyer-contact-info/${businessDetails?.data?.business?.user}`}
+                >
+                  {" "}
+                  <button className="bg-[#0091FF] hover:bg-[#0091FF] text-white px-5 py-1 rounded">
+                    Contact
+                  </button>
+                </Link>
+              )}
+
+            {role &&
+              role !== "Buyer" &&
+              role !== "Investor" &&
+              localStorage.getItem("accessToken") &&
+              checkUserId === checkBusinessId && (
+                <button
+                  onClick={() => handleSold()}
+                  className="bg-[#0091FF] hover:bg-[#0091FF] text-white px-5 py-1 rounded"
+                >
+                  Sold
                 </button>
-              </Link>
-            )}
-            <Link to={`/interestBuyer/${businessDetails?.data?.business?._id}`}>
-              <button className="bg-[#0091FF] px-4 py-1 rounded text-white">
-                interested buyers
-              </button>
-            </Link>
-            {role === "Buyer" && (
-              <Link
-                to={`/business-details-with-form/${businessDetails?.data?.business?._id}`}
-              >
-                {" "}
-                <button className="bg-[#0091FF] hover:bg-[#0091FF] text-white px-5 py-1 rounded">
-                  Interested
-                </button>
-              </Link>
-            )}
+              )}
           </div>
         </div>
       </div>

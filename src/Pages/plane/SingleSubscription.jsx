@@ -14,8 +14,7 @@ const SingleSubscription = () => {
     subscriptionId,
   });
 
-  if (isLoading) return <p>Loading subscription plan...</p>;
-  if (isError) return <p>Failed to load subscription plan.</p>;
+
 
   const plan = signleSubscription?.data;
 

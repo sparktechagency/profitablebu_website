@@ -82,23 +82,7 @@ export default function BussinessDetailsWithForm() {
                   Not
                 </p>
               </div>
-              <div className="flex gap-5">
-                <Link
-                  to={`/interestBuyer/${businessDetails?.data?.business?._id}`}
-                >
-                  <button className="bg-[#0091FF] px-4 py-1 rounded text-white">
-                    interested buyers
-                  </button>
-                </Link>
-                <Link
-                  to={`/business-details-with-form/${businessDetails?.data?.business?._id}`}
-                >
-                  {" "}
-                  <button className="bg-[#0091FF] hover:bg-[#0091FF] text-white px-5 py-1 rounded">
-                    Interested
-                  </button>
-                </Link>
-              </div>
+            
             </div>
           </div>
           <div>
