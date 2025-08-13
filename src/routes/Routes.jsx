@@ -62,6 +62,8 @@ import SingleSubscription from "../Pages/plane/SingleSubscription";
 import SubmissionDone from "../Pages/BussinessValuation/SubmissionDone";
 import ProtectedRoute from "../ProtectedRoute";
 import FaqBuyer from "../Pages/faq/FaqBuyer";
+import Test from "../Pages/mybusiness/Test";
+
 
 export const router = createBrowserRouter([
   {
@@ -195,6 +197,11 @@ export const router = createBrowserRouter([
       {
         path: "/submit-a-ticket",
         element: <SubmitTicketPage></SubmitTicketPage>,
+      },
+
+       {
+        path: "/test",
+        element: <Test></Test>
       },
 
       {

@@ -62,8 +62,8 @@ const businessApi = baseApi.injectEndpoints({
       providesTags: ["updateProfile"],
     }),
 
-      getSingleFormat: builder.query({
-      query: ({formationId}) => {
+    getSingleFormat: builder.query({
+      query: ({ formationId }) => {
         return {
           url: `/formation/single-format?formationId=${formationId}`,
           method: "GET",
@@ -73,7 +73,7 @@ const businessApi = baseApi.injectEndpoints({
     }),
 
     getSingleBusinessContact: builder.query({
-      query: ({userId}) => {
+      query: ({ userId }) => {
         return {
           url: `/user/seller-detail?userId=${userId}`,
           method: "GET",
@@ -82,8 +82,8 @@ const businessApi = baseApi.injectEndpoints({
       providesTags: ["updateProfile"],
     }),
 
-      getAllHomeBusiness: builder.query({
-      query: ({businessRole}) => {
+    getAllHomeBusiness: builder.query({
+      query: ({ businessRole }) => {
         return {
           url: `/business/filter-business-by-business-role?businessRole=${businessRole}`,
           method: "GET",
@@ -92,8 +92,8 @@ const businessApi = baseApi.injectEndpoints({
       providesTags: ["updateProfile"],
     }),
 
-     getAllFeturesBusiness: builder.query({
-      query: ({businessRole}) => {
+    getAllFeturesBusiness: builder.query({
+      query: ({ businessRole }) => {
         return {
           url: `/business/featured-business?businessRole=${businessRole}`,
           method: "GET",
@@ -101,7 +101,6 @@ const businessApi = baseApi.injectEndpoints({
       },
       providesTags: ["updateProfile"],
     }),
-
 
     getAllBusinessHome: builder.query({
       query: () => {
@@ -166,7 +165,7 @@ const businessApi = baseApi.injectEndpoints({
       invalidatesTags: ["updateProfile"],
     }),
 
-        addContact: builder.mutation({
+    addContact: builder.mutation({
       query: (data) => {
         return {
           url: "/home/help-and-support",
@@ -177,9 +176,8 @@ const businessApi = baseApi.injectEndpoints({
       invalidatesTags: ["updateProfile"],
     }),
 
-
     updateSingle: builder.mutation({
-      query: ({ formData, businessId , user }) => {
+      query: ({ formData, businessId, user }) => {
         return {
           url: `/business/update-business?businessId=${businessId}&user=${user}`,
           method: "PATCH",
@@ -190,20 +188,31 @@ const businessApi = baseApi.injectEndpoints({
     }),
 
     getAllBusinesFilter: builder.query({
-      query: ({ category, location ,country, ageOfListing, sortBy,businessType, ownerShipType, askingPrice,searchText,businessRole}) => {
+      query: ({
+        category,
+        location,
+        country,
+        ageOfListing,
+        sortBy,
+        businessType,
+        ownerShipType,
+        askingPrice,
+        searchText,
+        businessRole,
+      }) => {
         let url = `business/filter-business`;
 
         const params = [];
         if (category) params.push(`category=${category}`);
         if (location) params.push(`location=${location}`);
-         if (country) params.push(`country=${country}`);
-          if (ageOfListing) params.push(`ageOfListing=${ageOfListing}`);
-           if (sortBy) params.push(`sortBy=${sortBy}`);
-            if (businessType) params.push(`businessType=${businessType}`);
-             if (ownerShipType) params.push(`ownerShipType=${ownerShipType}`);
-              if (askingPrice) params.push(`askingPrice=${askingPrice}`);
-              if (searchText) params.push(`searchText=${searchText}`);
-                 if (businessRole) params.push(`businessRole=${businessRole}`);
+        if (country) params.push(`country=${country}`);
+        if (ageOfListing) params.push(`ageOfListing=${ageOfListing}`);
+        if (sortBy) params.push(`sortBy=${sortBy}`);
+        if (businessType) params.push(`businessType=${businessType}`);
+        if (ownerShipType) params.push(`ownerShipType=${ownerShipType}`);
+        if (askingPrice) params.push(`askingPrice=${askingPrice}`);
+        if (searchText) params.push(`searchText=${searchText}`);
+        if (businessRole) params.push(`businessRole=${businessRole}`);
 
         if (params.length > 0) {
           url += `?${params.join("&")}`;
@@ -218,87 +227,82 @@ const businessApi = baseApi.injectEndpoints({
     }),
 
     updateSold: builder.mutation({
-        query: (businessId) => {
-            return {
-                url: `/business/sold-business?businessId=${businessId}`,
-                method: 'PATCH'
-            }
-        },
-        invalidatesTags: ['updateProfile']
+      query: ({businessId,isSold}) => {
+        return {
+          url: `/business/sold-business?businessId=${businessId}&isSold=${isSold}`,
+          method: "PATCH",
+        };
+      },
+      invalidatesTags: ["updateProfile"],
     }),
 
     getPlane: builder.query({
-        query: ({role}) => {
-            return {
-                url: `/subscription/get-subscription-plan?role=${role}`,
-                method: "GET",
-            };
-        },
-        providesTags: ["updateProfile"],
+      query: ({ role }) => {
+        return {
+          url: `/subscription/get-subscription-plan?role=${role}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["updateProfile"],
     }),
     postCheckout: builder.mutation({
-        query: (data) => {
-            return {
-                url: "/payment/checkout",
-                method: "POST",
-                body: data,
-            };
-        },
-        invalidatesTags: ["updateProfile"],
+      query: (data) => {
+        return {
+          url: "/payment/checkout",
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["updateProfile"],
     }),
 
-    
-singleGetCoupon: builder.query({
-  query: ({ couponCode }) => ({
-    url: `/coupon/get-single-coupon?couponCode=${couponCode}`,
-    method: "GET",
-  }),
-  providesTags: ["updateProfile"],
-}),
-
-
-
-
-      getCategtory: builder.query({
-        query: () => {
-            return {
-                url: "/category/get-all-category",
-                method: "GET",
-            };
-        },
-        providesTags: ["updateProfile"],
+    singleGetCoupon: builder.query({
+      query: ({ couponCode }) => ({
+        url: `/coupon/get-single-coupon?couponCode=${couponCode}`,
+        method: "GET",
+      }),
+      providesTags: ["updateProfile"],
     }),
 
-
-     getTopCategtory: builder.query({
-        query: () => {
-            return {
-                url: "/business/top-category",
-                method: "GET",
-            };
-        },
-        providesTags: ["updateProfile"],
+    getCategtory: builder.query({
+      query: () => {
+        return {
+          url: "/category/get-all-category",
+          method: "GET",
+        };
+      },
+      providesTags: ["updateProfile"],
     }),
 
-     getAllFormate: builder.query({
-        query: () => {
-            return {
-                url: "/formation/get-all-format",
-                method: "GET",
-            };
-        },
-        providesTags: ["updateProfile"],
+    getTopCategtory: builder.query({
+      query: () => {
+        return {
+          url: "/business/top-category",
+          method: "GET",
+        };
+      },
+      providesTags: ["updateProfile"],
+    }),
+
+    getAllFormate: builder.query({
+      query: () => {
+        return {
+          url: "/formation/get-all-format",
+          method: "GET",
+        };
+      },
+      providesTags: ["updateProfile"],
     }),
 
     postInterestFormation: builder.mutation({
-        query: (data) => {
-            return {
-                url: "/formation/make-user-interested",
-                method: "POST",
-                body: data,
-            };
-        },
-        invalidatesTags: ["updateProfile"],
+      query: (data) => {
+        return {
+          url: "/formation/make-user-interested",
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["updateProfile"],
     }),
   }),
 });
@@ -322,11 +326,11 @@ export const {
   useGetTopCategtoryQuery,
   useGetAllFormateQuery,
   useGetSingleFormatQuery,
-    useSingleGetCouponQuery,      
+  useSingleGetCouponQuery,
   useLazySingleGetCouponQuery,
   useUpdateSoldMutation,
   useGetAllFeturesBusinessQuery,
   useGetSingleBusinessContactQuery,
   useAddContactMutation,
-  usePostInterestFormationMutation
+  usePostInterestFormationMutation,
 } = businessApi;
