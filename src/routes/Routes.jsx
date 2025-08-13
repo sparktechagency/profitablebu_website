@@ -241,7 +241,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/business-details-with-form/:id",
-        element: <BussinessDetailsWithForm />,
+        element: <ProtectedRoute><BussinessDetailsWithForm /></ProtectedRoute>,
       },
       {
         path: "/buyer-contact-info/:id",

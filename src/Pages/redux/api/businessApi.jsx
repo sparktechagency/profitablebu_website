@@ -105,7 +105,20 @@ const businessApi = baseApi.injectEndpoints({
     getAllBusinessHome: builder.query({
       query: () => {
         return {
-          url: `business/all-business`,
+          url: `/business/all-business`,
+          method: "GET",
+        };
+      },
+      providesTags: ["updateProfile"],
+    }),
+
+    getAllBusinessMostView: builder.query({
+      query: ({ id,role } = {}) => {
+        const url = id
+          ? `/business/most-viewed?userId=${id}&role=${role}`
+          : `/business/most-viewed`;
+        return {
+          url,
           method: "GET",
         };
       },
@@ -227,7 +240,7 @@ const businessApi = baseApi.injectEndpoints({
     }),
 
     updateSold: builder.mutation({
-      query: ({businessId,isSold}) => {
+      query: ({ businessId, isSold }) => {
         return {
           url: `/business/sold-business?businessId=${businessId}&isSold=${isSold}`,
           method: "PATCH",
@@ -333,4 +346,5 @@ export const {
   useGetSingleBusinessContactQuery,
   useAddContactMutation,
   usePostInterestFormationMutation,
+  useGetAllBusinessMostViewQuery,
 } = businessApi;

@@ -5,9 +5,10 @@ import { useGetProfileQuery } from "./Pages/redux/api/userApi";
 
 const ProtectedRoute = ({ children }) => {
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
-  console.log(profileData);
   const role = profileData?.data?.role;
+  const isSubscribed = profileData?.data?.isSubscribed;
   const location = useLocation();
+
   const privateRoutes = ["/chat"];
   const planeRoutes = ["/plane"];
   const business = ["/myBusiness/details"];
@@ -16,6 +17,8 @@ const ProtectedRoute = ({ children }) => {
   const adds = ["/addnewbusiness"];
   const subscription = ["/subscription"];
   const contacts = ["/buyer-contact-info"];
+  const forms = ["/business-details-with-form/:id"];
+
   const token = localStorage.getItem("accessToken");
 
   const isPrivate = privateRoutes.includes(location.pathname);
@@ -23,9 +26,16 @@ const ProtectedRoute = ({ children }) => {
   const businesss = business.includes(location.pathname);
   const faq = faqs.includes(location.pathname);
   const profile = profiles.includes(location.pathname);
+  const subscriptions = subscription.includes(location.pathname);
   const add = adds.includes(location.pathname);
   const contact = contacts.includes(location.pathname);
-    if (profileLoading) {
+  const form = forms.some((path) => {
+
+    const regex = new RegExp(`^${path.replace(":id", "[^/]+")}$`);
+    return regex.test(location.pathname);
+  });
+
+  if (profileLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Spin size="large" />
@@ -33,18 +43,40 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
+ 
   if (
-    (isPrivate || isPlane || businesss || faq || profile || add || contact) &&
+    (isPrivate || isPlane || businesss || faq || profile || subscriptions || add || contact || form) &&
     !token
   ) {
     message.info("Please login first");
     return <Navigate to="/auth/login" replace />;
   }
 
-   if (add && role === "Investor") {
+  if (add && role === "Investor") {
     message.error("Investors are not allowed to add new business");
     return <Navigate to="/auth/login" replace />;
   }
+
+
+
+const subscriptionRequiredRoutes = [
+  "/addnewbusiness",
+  "/chat",
+  "/subscription",
+  "/business-details-with-form/:id", 
+  
+];
+
+
+const needsSubscription = subscriptionRequiredRoutes.some((path) => {
+  const regex = new RegExp(`^${path.replace(":id", "[^/]+")}$`);
+  return regex.test(location.pathname);
+});
+
+if (needsSubscription && !isSubscribed) {
+  message.info("You need a subscription to access this page");
+  return <Navigate to="/plane" replace />;
+}
 
   return children;
 };
