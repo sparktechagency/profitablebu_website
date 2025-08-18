@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import backCard from "../../assets/Home/ii.png";
 import card from "../../assets/Home/card1.png"; // fallback image
 import {
@@ -16,6 +16,11 @@ import { useGetProfileQuery } from "../../Pages/redux/api/userApi";
 const BusinessCard = () => {
   // const user = JSON.parse(localStorage.getItem("user"));
   // const role = user?.role;
+  //   const location = useLocation();
+  // const selectedCountry = location.state?.country;
+  const [searchParams] = useSearchParams();
+    const selectedCountry = searchParams.get("country"); 
+    console.log(selectedCountry)
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
   console.log(profileData);
   const role = profileData?.data?.role;
@@ -24,17 +29,18 @@ const BusinessCard = () => {
   
 
   const { data: interestData } = useGetAllFeturesBusinessQuery({
-    businessRole: "Sellers-business",
+    businessRole: "Seller",country: selectedCountry 
   });
+  // console.log(interestData);
 
   const { data: interestDataa } = useGetAllFeturesBusinessQuery({
-    businessRole: "Asset-seller",
+    businessRole: "Asset Seller",country: selectedCountry 
   });
   const { data: interestDataaa } = useGetAllFeturesBusinessQuery({
-    businessRole: "Franchise",
+    businessRole: "Francise Seller",country: selectedCountry 
   });
   const { data: interestDataaaa } = useGetAllFeturesBusinessQuery({
-    businessRole: "Business-Idea-lister",
+    businessRole: "Business Idea Lister",country: selectedCountry 
   });
   console.log(interestData);
   const {
@@ -44,8 +50,11 @@ const BusinessCard = () => {
   } = useGetAllBusinessHomeQuery();
   console.log(businessData);
 console.log(id, role)
-  const { data: MostbusinessData } = useGetAllBusinessMostViewQuery({ userId: id , role: role  });
+  const { data: MostbusinessData } = useGetAllBusinessMostViewQuery({ userId: id , role: role, country: selectedCountry  });
+
   const mostBusiness = MostbusinessData?.data || [];
+
+  console.log(MostbusinessData)
 
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
   if (isError)

@@ -37,14 +37,14 @@ const MyBusinessDetails = () => {
   }, []);
 
   const handleSoldToggle = async () => {
-  try {
-    const newStatus = !businessDetails?.data?.business?.isSold; 
-    const res = await updateSold({ businessId, isSold: newStatus }).unwrap();
-    message.success(res?.message);
-  } catch (err) {
-    message.error(err?.data?.message);
-  }
-};
+    try {
+      const newStatus = !businessDetails?.data?.business?.isSold;
+      const res = await updateSold({ businessId, isSold: newStatus }).unwrap();
+      message.success(res?.message);
+    } catch (err) {
+      message.error(err?.data?.message);
+    }
+  };
 
   return (
     <div className="container m-auto pb-20 lg:mt-8 mt-11 lg:px-0 px-4">
@@ -185,18 +185,18 @@ const MyBusinessDetails = () => {
                 </Link>
               )}
 
-         {role &&
-  role !== "Buyer" &&
-  role !== "Investor" &&
-  localStorage.getItem("accessToken") &&
-  checkUserId === checkBusinessId && (
-    <button
-      onClick={handleSoldToggle}
-      className="bg-[#0091FF] hover:bg-[#0091FF] text-white px-5 py-1 rounded"
-    >
-      {businessDetails?.data?.business?.isSold ? "Unsold" : "Sold"}
-    </button>
-)}
+            {role &&
+              role !== "Buyer" &&
+              role !== "Investor" &&
+              localStorage.getItem("accessToken") &&
+              checkUserId === checkBusinessId && (
+                <button
+                  onClick={handleSoldToggle}
+                  className="bg-[#0091FF] hover:bg-[#0091FF] text-white px-5 py-1 rounded"
+                >
+                  {businessDetails?.data?.business?.isSold ? "Unsold" : "Sold"}
+                </button>
+              )}
           </div>
         </div>
       </div>

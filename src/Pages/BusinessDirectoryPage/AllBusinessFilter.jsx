@@ -145,7 +145,7 @@ export default function AllBusinessFilterAnt() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 
-    setSelectedBusinessCategory(params.get("businessCategory") || null);
+    setSelectedCategory(params.get("businessCategory") || null);
     setSelectedCountry(params.get("country") || null);
     setSelectedLocation(params.get("location") || null);
     setSelectedAskingPrice(params.get("askingPrice") || null);
@@ -161,9 +161,9 @@ console.log(businessRole)
   console.log(businessRole);
   const [itemsPerPage, setItemsPerPage] = useState("20");
   const [viewMode, setViewMode] = useState("grid");
-  const [selectedBusinessCategory, setSelectedBusinessCategory] =
+  const [selectedCategory, setSelectedCategory] =
     useState(null);
-  console.log(selectedBusinessCategory);
+  console.log(selectedCategory);
   //   const [selectedRegion, setSelectedRegion] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -172,8 +172,11 @@ console.log(businessRole)
   const [selectedOwnerShipType, setSelectedOwnerShipType] = useState(null);
   const [selectedSortBy, setSelectedSortBy] = useState(null);
   const [selectedAgeListing, setSelectedAgeListing] = useState(null);
+  // const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+  console.log(selectedSubCategory)
   const { data: businessFilter } = useGetAllBusinesFilterQuery({
-    category: selectedBusinessCategory,
+    category: selectedCategory,
     location: selectedLocation,
     country: selectedCountry,
     ageOfListing: selectedAgeListing,
@@ -183,8 +186,9 @@ console.log(businessRole)
     askingPrice: selectedAskingPrice,
     searchText: searchQuery,
     businessRole: businessRole,
-    
+    subCategory:selectedSubCategory
   });
+   
   console.log(businessFilter);
   const business = businessFilter?.data || [];
   useEffect(() => {
@@ -196,24 +200,41 @@ console.log(businessRole)
         {/* Sidebar */}
         <div className="w-80 border-r border-gray-200 p-6">
           <Collapse
-            defaultActiveKey={["1"]}
-            expandIcon={({ isActive }) => (
-              <DownOutlined rotate={isActive ? 180 : 0} />
-            )}
-          >
-            <Panel className="" header="Business Category" key="1">
-              <Radio.Group
-                value={selectedBusinessCategory}
-                onChange={(e) => setSelectedBusinessCategory(e.target.value)}
-              >
-                {categorys?.data?.map((category) => (
-                  <div key={category?.categoryName} className="mb-2">
-                    <Radio value={category?.categoryName}>{category?.categoryName}</Radio>
-                  </div>
-                ))}
-              </Radio.Group>
-            </Panel>
-          </Collapse>
+      defaultActiveKey={["1"]}
+      expandIcon={({ isActive }) => <DownOutlined rotate={isActive ? 180 : 0} />}
+    >
+      <Panel header="Business Category" key="1">
+        <Radio.Group
+          value={selectedCategory}
+          onChange={(e) => {
+            setSelectedCategory(e.target.value);
+            setSelectedSubCategory(null); 
+          }}
+        >
+          {categorys?.data?.map((category) => (
+            <div key={category.categoryName} className="mb-2">
+              <Radio value={category.categoryName}>{category.categoryName}</Radio>
+
+
+              {selectedCategory === category.categoryName && category.subCategories?.length > 0 && (
+                <div className="ml-6 mt-2">
+                  <Radio.Group
+                    value={selectedSubCategory}
+                    onChange={(e) => setSelectedSubCategory(e.target.value)}
+                  >
+                    {category.subCategories.map((sub) => (
+                      <div key={sub.name} className="mb-1">
+                        <Radio value={sub.name}>{sub.name}</Radio>
+                      </div>
+                    ))}
+                  </Radio.Group>
+                </div>
+              )}
+            </div>
+          ))}
+        </Radio.Group>
+      </Panel>
+    </Collapse>
 
           {/* Region */}
           {/* <div className="my-2">

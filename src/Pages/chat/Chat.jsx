@@ -1,7 +1,13 @@
 import React, { useEffect } from "react";
 import { Search, ArrowLeft, Paperclip, Send } from "lucide-react";
 import { Navigate } from "../Navigate";
+import { useParams } from "react-router-dom";
+import { usePostChatMutation } from "../redux/api/metaApi";
 const Chat = () => {
+const {id:receiverId} = useParams()
+  console.log(receiverId)
+const [sentMessage] = usePostChatMutation()
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

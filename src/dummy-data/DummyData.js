@@ -1,3 +1,5 @@
+import { useSearchParams } from "react-router-dom";
+
 export const categories = [
   'Restaurant',
   'Retail',
@@ -23,6 +25,7 @@ export const countries = [
   'United Arab Emirates',
   'India',
 ];
+
 export const countryData = [
   {
     name: 'United States',

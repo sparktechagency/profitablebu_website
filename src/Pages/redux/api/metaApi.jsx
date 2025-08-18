@@ -124,6 +124,18 @@ const businessApi = baseApi.injectEndpoints({
       },
       providesTags: ["terms"],
     }),
+
+   postChat: builder.mutation({
+      query: (data) => {
+        return {
+          url: "/chat/post-chat",
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["terms"],
+    }),
+
     // postPrivecy: builder.mutation({
     //     query: (data) => {
     //         return {
@@ -146,4 +158,5 @@ export const {
   usePostSubscriberMutation,
   useDeleteFaqMutation,
   useUpdateFaqMutation,
+  usePostChatMutation
 } = businessApi;

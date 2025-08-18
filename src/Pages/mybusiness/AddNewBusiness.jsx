@@ -53,12 +53,21 @@ const AddNewBusiness = () => {
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
+
+  
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
-
+  const [subCategories, setSubCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
+  const handleCategoryChange = (value) => {
+    setSelectedCategory(value);
+    const category = categorie.data.find((cat) => cat.categoryName === value);
+    setSubCategories(category?.subCategories || []);
+    form.setFieldsValue({ subCategory: null });
+  };
 
   useEffect(() => {
     setCountries(Country.getAllCountries());
@@ -97,11 +106,14 @@ const AddNewBusiness = () => {
     try {
       const formData = new FormData();
 
-      fileList.forEach((file) => {
-        formData.append("business-image", file.originFileObj);
-      });
+     fileList.forEach((file, index) => {
+      formData.append("business_image", file.originFileObj);
+    });
       formData.append("title", values?.title);
+      formData.append("state", values?.state);
+      formData.append("city", values?.city);
       formData.append("category", values?.category);
+      formData.append("subCategory", values?.subCategory);
       formData.append("country", values?.country);
       formData.append("location", values?.location);
       formData.append("askingPrice", values?.askingPrice);
@@ -139,10 +151,11 @@ const AddNewBusiness = () => {
   };
 
   useEffect(() => {
-    if (categorie) {
-      form.setFieldsValue({
-        category: categorie?.categoryName,
-      });
+    if (categorie?.data?.length) {
+      const defaultCategory = categorie.data[0];
+      setSelectedCategory(defaultCategory.categoryName);
+      setSubCategories(defaultCategory.subCategories || []);
+      form.setFieldsValue({ category: defaultCategory.categoryName });
     }
   }, [categorie]);
 
@@ -191,15 +204,14 @@ const AddNewBusiness = () => {
               label="Business Category"
               name="category"
               rules={[
-                { required: true, message: "Please input Business Category!" },
+                { required: true, message: "Please select Business Category!" },
               ]}
             >
               <Select
-                style={{ height: "48px" }}
                 placeholder="Select Category"
-                className="w-full"
+                onChange={handleCategoryChange}
+                value={selectedCategory}
               >
-                <Option value="">Select</Option>
                 {categorie?.data?.map((cat) => (
                   <Option key={cat._id} value={cat.categoryName}>
                     {cat.categoryName}
@@ -207,6 +219,18 @@ const AddNewBusiness = () => {
                 ))}
               </Select>
             </Form.Item>
+
+            {subCategories.length > 0 && (
+              <Form.Item label="Sub Category" name="subCategory">
+                <Select placeholder="Select Sub Category">
+                  {subCategories.map((sub, i) => (
+                    <Option key={i} value={sub.name}>
+                      {sub.name}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            )}
           </div>
 
           <div className="grid grid-cols-3 gap-4">
@@ -246,11 +270,7 @@ const AddNewBusiness = () => {
             </Form.Item>
 
             {/* State */}
-            <Form.Item
-              label="Select State"
-              name="state"
-              
-            >
+            <Form.Item label="Select State" name="state">
               <Select
                 placeholder="Select your state"
                 style={{ height: "48px" }}
@@ -268,11 +288,7 @@ const AddNewBusiness = () => {
             </Form.Item>
 
             {/* City */}
-            <Form.Item
-              label="Select City"
-              name="city"
-              
-            >
+            <Form.Item label="Select City" name="city">
               <Select
                 placeholder="Select your city"
                 style={{ height: "48px" }}

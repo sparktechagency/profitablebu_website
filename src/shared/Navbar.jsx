@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ChevronDown, Menu, X, Globe, User, LogOut } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "../assets/Home/logo2.png";
 import { menuItems } from "../dummy-data/DummyData";
@@ -23,15 +23,32 @@ const countryFlags = {
   AE: "https://flagcdn.com/w20/ae.png",
 };
 
-const countries = [
-  { name: "United States", code: "US", flag: countryFlags.US },
-  { name: "United Kingdom", code: "GB", flag: countryFlags.GB },
-  { name: "India", code: "IN", flag: countryFlags.IN },
-  { name: "Spain", code: "ES", flag: countryFlags.ES },
-  { name: "UAE", code: "AE", flag: countryFlags.AE },
-];
-
 const Navbar = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedCountry = searchParams.get("country");
+
+
+
+
+
+  const countries = [
+    {
+      name: "United States",
+      code: "US",
+      flag: countryFlags.US,
+      state: "United States",
+    },
+    {
+      name: "United Kingdom",
+      code: "GB",
+      flag: countryFlags.GB,
+      state: "United Kingdom",
+    },
+    { name: "India", code: "IN", flag: countryFlags.IN, state: "India" },
+    { name: "Spain", code: "ES", flag: countryFlags.ES, state: "Spain" },
+    { name: "UAE", code: "AE", flag: countryFlags.AE, state: "UAE" },
+  ];
+  const navigate = useNavigate();
   const { data: profileData, isLoading } = useGetProfileQuery();
   const accessToken = localStorage.getItem("accessToken");
   const users = profileData?.data;
@@ -39,7 +56,7 @@ const Navbar = () => {
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [countryModalOpen, setCountryModalOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
-  const [selectedCountry, setSelectedCountry] = useState(countries[0]);
+  // const [selectedCountry, setSelectedCountry] = useState(countries);
   const [scrolled, setScrolled] = useState(false);
   const token = localStorage.getItem("user");
   const user = token === null;
@@ -78,6 +95,9 @@ const Navbar = () => {
     }, 150);
   };
 
+  const handleSelect = (country) => {
+    setSearchParams({ country: country.state });
+  };
   const navItems = [
     { key: "home", label: "Home", path: "/" },
     {
@@ -101,7 +121,6 @@ const Navbar = () => {
       state: menuItems.resources.state,
     },
   ];
-  const navigate = useNavigate()
 
   return (
     <>
@@ -431,8 +450,8 @@ const Navbar = () => {
                       setProfileMenuOpen(false);
                       localStorage.removeItem("accessToken");
                       localStorage.removeItem("user");
-                      navigate('/auth/login')
-                      
+                      navigate("/auth/login");
+
                       message.success("You have been logged out");
                     }}
                     className="flex items-center space-x-3 hover:bg-gray-100 p-2 rounded-lg transition-colors cursor-pointer"
@@ -481,12 +500,9 @@ const Navbar = () => {
                   {countries.map((country) => (
                     <button
                       key={country.code}
-                      onClick={() => {
-                        setSelectedCountry(country);
-                        setCountryModalOpen(false);
-                      }}
+                      onClick={() => handleSelect(country)}
                       className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-colors ${
-                        selectedCountry.code === country.code
+                        selectedCountry === country.state
                           ? "bg-blue-50 border border-blue-200"
                           : "hover:bg-gray-50"
                       }`}
@@ -497,7 +513,7 @@ const Navbar = () => {
                         className="w-6 h-4"
                       />
                       <span className="font-medium">{country.name}</span>
-                      {selectedCountry.code === country.code && (
+                      {selectedCountry === country.state && (
                         <div className="ml-auto w-2 h-2 bg-blue-600 rounded-full" />
                       )}
                     </button>

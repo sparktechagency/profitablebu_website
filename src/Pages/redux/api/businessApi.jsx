@@ -93,14 +93,19 @@ const businessApi = baseApi.injectEndpoints({
     }),
 
     getAllFeturesBusiness: builder.query({
-      query: ({ businessRole }) => {
-        return {
-          url: `/business/featured-business?businessRole=${businessRole}`,
-          method: "GET",
-        };
-      },
-      providesTags: ["updateProfile"],
-    }),
+  query: ({ businessRole, country }) => {
+    let url = `/business/featured-business?businessRole=${businessRole}`;
+    if (country) {
+      url += `&country=${country}`;
+    }
+    return {
+      url,
+      method: "GET",
+    };
+  },
+  providesTags: ["updateProfile"],
+}),
+
 
     getAllBusinessHome: builder.query({
       query: () => {
@@ -112,18 +117,24 @@ const businessApi = baseApi.injectEndpoints({
       providesTags: ["updateProfile"],
     }),
 
-    getAllBusinessMostView: builder.query({
-      query: ({ id,role } = {}) => {
-        const url = id
-          ? `/business/most-viewed?userId=${id}&role=${role}`
-          : `/business/most-viewed`;
-        return {
-          url,
-          method: "GET",
-        };
-      },
-      providesTags: ["updateProfile"],
-    }),
+ getAllBusinessMostView: builder.query({
+  query: ({ userId, role, country } = {}) => {
+    let queryParams = [];
+
+    if (userId) queryParams.push(`userId=${userId}`);
+    if (role) queryParams.push(`role=${role}`);
+    if (country) queryParams.push(`country=${country}`);
+
+    const queryString = queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
+
+    return {
+      url: `/business/most-viewed${queryString}`,
+      method: "GET",
+    };
+  },
+  providesTags: ["updateProfile"],
+}),
+
 
     // getUserGrowth: builder.query({
     //     query: (year) => {
@@ -200,44 +211,46 @@ const businessApi = baseApi.injectEndpoints({
       invalidatesTags: ["updateProfile"],
     }),
 
-    getAllBusinesFilter: builder.query({
-      query: ({
-        category,
-        location,
-        country,
-        ageOfListing,
-        sortBy,
-        businessType,
-        ownerShipType,
-        askingPrice,
-        searchText,
-        businessRole,
-      }) => {
-        let url = `business/filter-business`;
+  getAllBusinesFilter: builder.query({
+  query: ({
+    category,
+    location,
+    country,
+    ageOfListing,
+    sortBy,
+    businessType,
+    ownerShipType,
+    askingPrice,
+    searchText,
+    businessRole,
+    subCategory
+  }) => {
+    let url = `/business/filter-business`;
 
-        const params = [];
-        if (category) params.push(`category=${category}`);
-        if (location) params.push(`location=${location}`);
-        if (country) params.push(`country=${country}`);
-        if (ageOfListing) params.push(`ageOfListing=${ageOfListing}`);
-        if (sortBy) params.push(`sortBy=${sortBy}`);
-        if (businessType) params.push(`businessType=${businessType}`);
-        if (ownerShipType) params.push(`ownerShipType=${ownerShipType}`);
-        if (askingPrice) params.push(`askingPrice=${askingPrice}`);
-        if (searchText) params.push(`searchText=${searchText}`);
-        if (businessRole) params.push(`businessRole=${businessRole}`);
+    const params = [];
+    if (category) params.push(`category=${encodeURIComponent(category)}`);
+    if (subCategory) params.push(`subCategory=${encodeURIComponent(subCategory)}`);
+    if (location) params.push(`location=${encodeURIComponent(location)}`);
+    if (country) params.push(`country=${encodeURIComponent(country)}`);
+    if (ageOfListing) params.push(`ageOfListing=${encodeURIComponent(ageOfListing)}`);
+    if (sortBy) params.push(`sortBy=${encodeURIComponent(sortBy)}`);
+    if (businessType) params.push(`businessType=${encodeURIComponent(businessType)}`);
+    if (ownerShipType) params.push(`ownerShipType=${encodeURIComponent(ownerShipType)}`);
+    if (askingPrice) params.push(`askingPrice=${encodeURIComponent(askingPrice)}`);
+    if (searchText) params.push(`searchText=${encodeURIComponent(searchText)}`);
+    if (businessRole) params.push(`businessRole=${encodeURIComponent(businessRole)}`);
 
-        if (params.length > 0) {
-          url += `?${params.join("&")}`;
-        }
+    if (params.length > 0) {
+      url += `?${params.join("&")}`;
+    }
 
-        return {
-          url,
-          method: "GET",
-        };
-      },
-      providesTags: ["updateProfile"],
-    }),
+    return {
+      url,
+      method: "GET",
+    };
+  },
+  providesTags: ["updateProfile"],
+}),
 
     updateSold: builder.mutation({
       query: ({ businessId, isSold }) => {
