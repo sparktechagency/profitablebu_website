@@ -204,7 +204,7 @@ export default function Login() {
                 </Row>
 
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" block>
+                  <Button style={{height: "48px"}} type="primary" htmlType="submit" block>
                     Log In
                   </Button>
                 </Form.Item>
@@ -261,7 +261,7 @@ export default function Login() {
                   <Button
                     type="link"
                     className="hover:underline"
-                    style={{ color: "#3b82f6", padding: 0 }}
+                    style={{ color: "#3b82f6", padding: 0,  }}
                   >
                     Sign up
                   </Button>

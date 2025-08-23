@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Form,
   Input,
@@ -18,6 +18,7 @@ import ReactPhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { countryData } from "../dummy-data/DummyData";
 import { useRegisterUserMutation } from "../Pages/redux/api/userApi";
+import { Country } from "country-state-city";
 const { Title, Text } = Typography;
 
 function SignUp() {
@@ -27,6 +28,11 @@ function SignUp() {
   const [contactNo, setContactNo] = useState("");
   console.log(location?.state);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    setCountries(Country.getAllCountries());
+  }, []);
 
   const onFinish = async (values) => {
     try {
@@ -43,7 +49,7 @@ function SignUp() {
       const res = await signUp(data).unwrap();
       console.log(res);
       message.success(res?.message);
-      localStorage.setItem('email',  values?.email);
+      localStorage.setItem("email", values?.email);
       navigate("/auth/verifyCreator");
     } catch (error) {
       message.error(error?.data?.message || "Something went wrong!");
@@ -149,11 +155,11 @@ function SignUp() {
                     country={"us"}
                     value={contactNo}
                     onChange={(value) => setContactNo(value)}
-                    inputStyle={{ width: "100%" }}
+                    inputStyle={{ width: "100%",height: "48px" }}
                   />
                 </Form.Item>
                 <Form.Item
-                  label="Select Your Country "
+                  label="Select Your Country"
                   name="country"
                   rules={[
                     { required: true, message: "Please select your country!" },
@@ -164,11 +170,20 @@ function SignUp() {
                     style={{ height: "48px" }}
                     showSearch
                     allowClear
+                    optionLabelProp="label"
                   >
-                    {countryData.map((country) => (
-                      <Select.Option key={country.code} value={country.code}>
+                    {countries.map((country) => (
+                      <Select.Option
+                        key={country.isoCode}
+                        value={country.name}
+                        label={country.name}
+                      >
                         <div className="flex items-center gap-2">
-                          <img src={country.flag} alt={country.name} />{" "}
+                          <img
+                            src={`https://flagcdn.com/w20/${country.isoCode.toLowerCase()}.png`}
+                            alt={country.name}
+                            className="w-5 h-3 object-cover"
+                          />
                           {country.name}
                         </div>
                       </Select.Option>
@@ -274,7 +289,7 @@ function SignUp() {
                 }}
               >
                 Already have an account?{" "}
-                <Link to="/auth/signUp">
+                <Link to="/auth/login">
                   <Button
                     type="link"
                     className="hover:underline"

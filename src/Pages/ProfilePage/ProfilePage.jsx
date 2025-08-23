@@ -64,7 +64,7 @@ export const ProfilePage = () => {
           <div className="flex items-center gap-2">
             <FaMapMarkerAlt className="text-blue-500" />
             <span>
-              {user.location}, {user.country}
+              {user.country}
             </span>
           </div>
         </div>

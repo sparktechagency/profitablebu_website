@@ -5,31 +5,47 @@ import {
   useLazySingleGetCouponQuery,
 } from "../redux/api/businessApi";
 import { useNavigate } from "react-router-dom";
+import { useGetProfileQuery } from "../redux/api/userApi";
 
 const AddSubPlane = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
+  console.log(subscriptionId);
   const [form] = Form.useForm();
   const [showCoupon, setShowCoupon] = useState(false);
   const [couponCode, setCouponCode] = useState("");
+  const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
+  console.log(profileData);
+  const role = profileData?.data?.role;
   const [discountedPrice, setDiscountedPrice] = useState(null);
+  console.log(discountedPrice);
   const [addCheckout] = usePostCheckoutMutation();
 
   const [triggerCouponCheck, { data: singleCouponData, isFetching }] =
     useLazySingleGetCouponQuery();
   const navigate = useNavigate();
-
+  const [selectedPrice, setSelectedPrice] = useState(null);
+  const [displayPrice, setDisplayPrice] = useState(null);
   useEffect(() => {
-    if (typeof subscriptionId?.price === "number") {
-      setDiscountedPrice(subscriptionId.price);
-      form.setFieldsValue({
-        price: subscriptionId.price,
-      });
-    }
+    const initialPrice = Array.isArray(subscriptionId?.price)
+      ? subscriptionId.price[0]
+      : subscriptionId?.price;
+    setSelectedPrice(initialPrice);
+    setDisplayPrice(initialPrice);
+    form.setFieldsValue({ price: initialPrice });
   }, [subscriptionId, form]);
 
   const handleCancel = () => {
     form.resetFields();
     setCouponCode("");
-    setDiscountedPrice(subscriptionId?.price || null);
+    if (
+      Array.isArray(subscriptionId?.price) &&
+      subscriptionId.price.length > 0
+    ) {
+      setDiscountedPrice(subscriptionId.price[0]);
+    } else if (typeof subscriptionId?.price === "number") {
+      setDiscountedPrice(subscriptionId.price);
+    } else {
+      setDiscountedPrice(null);
+    }
     setShowCoupon(false);
     setOpenAddModal(false);
   };
@@ -43,30 +59,35 @@ const AddSubPlane = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
       const res = await triggerCouponCheck({ couponCode }).unwrap();
       if (res?.data) {
         const discount = res.data.discount;
-        const newPrice =
-          subscriptionId.price - (subscriptionId.price * discount) / 100;
-        setDiscountedPrice(newPrice);
+        const newDisplayPrice =
+          selectedPrice - (selectedPrice * discount) / 100;
+        setDisplayPrice(newDisplayPrice);
         message.success(`Coupon applied! ${discount}% discount`);
       } else {
         message.error("Invalid coupon code");
-        setDiscountedPrice(subscriptionId.price);
+        setDisplayPrice(selectedPrice);
       }
     } catch (error) {
       message.error("Invalid coupon code");
-      setDiscountedPrice(subscriptionId.price);
+      setDisplayPrice(selectedPrice);
     }
   };
 
+  console.log(subscriptionId);
+
   const handleSubmit = async () => {
     try {
-      const payload = { subscriptionId };
+      const payload = {
+        subscriptionId: subscriptionId._id,
+        price: String(selectedPrice)
+      };
+      console.log(payload);
       if (couponCode && singleCouponData?.data) {
         payload.couponCode = couponCode;
       }
       const res = await addCheckout(payload).unwrap();
-      console.log(res)
       if (res?.success) {
-       window.location.href = `${res?.data}`;
+        window.location.href = `${res?.data}`;
       }
       handleCancel();
     } catch (err) {
@@ -88,11 +109,34 @@ const AddSubPlane = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
         </h2>
 
         <Form form={form} onFinish={handleSubmit} layout="vertical">
-          <h1 className="border p-2 my-4">
-            {discountedPrice
-              ? `$${discountedPrice.toFixed(2)}`
-              : `${subscriptionId?.price}$`}
-          </h1>
+          <Form.Item
+            name="price"
+            label="Select Price"
+            rules={[{ required: true, message: "Please select a price" }]}
+          >
+            <select
+              className="w-full border px-3 py-2 rounded-md"
+              value={selectedPrice}
+              onChange={(e) => {
+                const price = e.target.value;
+                setSelectedPrice(price);
+                setDisplayPrice(price);
+              }}
+            >
+              <option value="">-- Select Price --</option>
+              {subscriptionId?.price?.map((p, index) => (
+                <option key={index} value={p}>
+                  ${p}
+                </option>
+              ))}
+            </select>
+          </Form.Item>
+
+          {displayPrice !== selectedPrice && (
+            <p className="mt-2 text-green-600">
+              Discounted Price: ${displayPrice.toFixed(2)}
+            </p>
+          )}
 
           <div className="flex items-center justify-between mb-2">
             <label className="font-medium">Apply a coupon code</label>
@@ -102,8 +146,8 @@ const AddSubPlane = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
             />
           </div>
           {showCoupon &&
-            typeof subscriptionId?.price === "number" &&
-            subscriptionId.price !== 0 && (
+            Array.isArray(subscriptionId?.price) &&
+            subscriptionId.price.length > 0 && (
               <Form.Item name="couponCode" label="Coupon Code">
                 <div className="flex">
                   <Input

@@ -56,6 +56,7 @@ const AddNewBusiness = () => {
 
   
   const [countries, setCountries] = useState([]);
+  console.log(countries)
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
@@ -115,7 +116,7 @@ const AddNewBusiness = () => {
       formData.append("category", values?.category);
       formData.append("subCategory", values?.subCategory);
       formData.append("country", values?.country);
-      formData.append("location", values?.location);
+      // formData.append("location", values?.location);
       formData.append("askingPrice", values?.askingPrice);
       formData.append("businessType", values?.businessType);
       formData.append("ownerShipType", values?.ownerShipType);
@@ -126,8 +127,8 @@ const AddNewBusiness = () => {
       console.log(res);
       message.success(res.data.message);
     } catch (error) {
-      console.error(error);
-      message.error(message?.data?.error);
+      console.log(error?.error);
+      message.error(error?.data?.message);
     } finally {
     }
   };
@@ -166,7 +167,7 @@ const AddNewBusiness = () => {
         <Form form={form} onFinish={handleSubmit} layout="vertical">
           <Form.Item label="Photos">
             <Upload
-              style={{ width: "100%" }}
+              style={{ width: "100%", height: "200px" }}
               listType="picture-card"
               fileList={fileList}
               onChange={onChange}
@@ -208,6 +209,7 @@ const AddNewBusiness = () => {
               ]}
             >
               <Select
+              style={{ height: "48px" }}
                 placeholder="Select Category"
                 onChange={handleCategoryChange}
                 value={selectedCategory}
@@ -222,7 +224,7 @@ const AddNewBusiness = () => {
 
             {subCategories.length > 0 && (
               <Form.Item label="Sub Category" name="subCategory">
-                <Select placeholder="Select Sub Category">
+                <Select style={{ height: "48px" }} placeholder="Select Sub Category">
                   {subCategories.map((sub, i) => (
                     <Option key={i} value={sub.name}>
                       {sub.name}
@@ -305,8 +307,8 @@ const AddNewBusiness = () => {
             </Form.Item>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Form.Item
+          <div className="">
+            {/* <Form.Item
               label="Location"
               name="location"
               rules={[{ required: true, message: "Please input Location!" }]}
@@ -324,7 +326,7 @@ const AddNewBusiness = () => {
                 <Option value="Fujairah">Fujairah</Option>
                 <Option value="Ras Ai Khaimah">Ras Ai Khaimah</Option>
               </Select>
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item
               label="Asking Price"
               name="askingPrice"
@@ -338,11 +340,11 @@ const AddNewBusiness = () => {
                 className="w-full"
               >
                 <Option value="General_Inquiry">Select</Option>
-                <Option value="Under $50k">Under $50k</Option>
-                <Option value="$50k - $100k">$50k - $100k</Option>
-                <Option value="$100k - $250k">$100k - $250k</Option>
-                <Option value="$250k - $500k">$250k - $500k</Option>
-                <Option value="$500k - $1M">$500k - $1M</Option>
+                <Option value="Under $50K">Under $50K</Option>
+                <Option value="$50K - $100K">$50K - $100K</Option>
+                <Option value="$100K - $250K">$100K - $250K</Option>
+                <Option value="$250K - $500K">$250K - $500K</Option>
+                <Option value="$500K - $1M">$500k - $1M</Option>
                 <Option value="Over $1M">Over $1M</Option>
               </Select>
             </Form.Item>
@@ -395,7 +397,7 @@ const AddNewBusiness = () => {
             rules={[{ required: true, message: "Please input Indersty Name!" }]}
           >
             <Input
-              className="w-full bg-transparent py-2"
+              className="w-full bg-transparent py-3"
               placeholder="Engine Model"
             />
           </Form.Item>

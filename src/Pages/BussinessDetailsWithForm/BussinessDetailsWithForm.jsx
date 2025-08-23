@@ -48,7 +48,11 @@ export default function BussinessDetailsWithForm() {
       <div className=" pt-11">
         <div className="lg:grid grid-cols-2">
           <div>
-           <img className="w-full h-[500px] object-cover" src={`${imageUrl}/uploads/business-image/${businessDetails?.data?.business?.image}` } alt="" />
+            <img
+              className="w-full h-[500px] object-cover"
+              src={`${imageUrl}/uploads/business-image/${businessDetails?.data?.business?.image[0]}`}
+              alt=""
+            />
             <div className="pt-11">
               <button className="bg-[#C1E1FF] border border-[#0091FF] px-2 py-2 rounded">
                 #Francise
@@ -75,19 +79,21 @@ export default function BussinessDetailsWithForm() {
                 </p>
                 <p>
                   <span className="font-semibold">Ownership Type:</span>{" "}
-                  {businessDetails?.data?.business?.ownershipType}
+                  {businessDetails?.data?.business?.ownerShipType}
                 </p>
-                <p>
+                {/* <p>
                   <span className="font-semibold">Reason for Selling :</span>{" "}
                   Not
-                </p>
+                </p> */}
               </div>
-            
             </div>
           </div>
           <div>
             <div className="w-full ">
-              <InterestForm businessRole={ businessDetails?.data?.business?.businessRole} businessId={businessId}/>
+              <InterestForm
+                businessRole={businessDetails?.data?.business?.businessRole}
+                businessId={businessId}
+              />
             </div>
           </div>
         </div>

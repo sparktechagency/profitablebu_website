@@ -645,8 +645,8 @@
 //   );
 // }
 
-import React from "react";
-import { Form, Input, Select, Checkbox, Button, Upload, message } from "antd";
+import React, { useState } from "react";
+import { Form, Input, Select, Checkbox, Button, Upload, message, Spin } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { User, DollarSign } from "lucide-react";
 import { useAddBusinessValuationMutation } from "../redux/api/businessApi";
@@ -656,9 +656,10 @@ const { Option } = Select;
 
 export default function BusinessValuationForm() {
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
   const [addBusinessValuation] = useAddBusinessValuationMutation();
-const navigate = useNavigate()
-  const MAX_FILE_SIZE = 9 * 1024 * 1024; // 9MB
+  const navigate = useNavigate();
+  const MAX_FILE_SIZE = 9 * 1024 * 1024;
 
   const beforeUpload = (file) => {
     const isPDF = file.type === "application/pdf";
@@ -674,9 +675,10 @@ const navigate = useNavigate()
 
   const onFinish = async (values) => {
     console.log(values);
-
+setLoading(true);
     try {
       const formData = new FormData();
+
       formData.append("ownerName", values.ownerName);
       formData.append("businessName", values.businessName);
       formData.append("email", values.email);
@@ -694,27 +696,31 @@ const navigate = useNavigate()
       formData.append("valueOfAsset", values.valueOfAsset);
       formData.append("valueOfStock", values.valueOfStock);
       formData.append("message", values.message);
-        Object.entries(values).forEach(([key, value]) => {
-      if (!Array.isArray(value)) {
-        formData.append(key, value);
-      }
-    });
 
-    // Handle file uploads: combine all into 'pdfs[]'
-    const pdfFields = ["plReport", "equipmentList", "businessProfile", "businessImage"];
-    pdfFields.forEach((fieldName) => {
-      const fileList = values[fieldName];
-      if (fileList?.[0]) {
-        formData.append("pdfs", fileList[0].originFileObj);
-      }
-    });
+      const pdfFields = [
+        "plReport",
+        "equipmentList",
+        "businessProfile",
+        "businessImage",
+      ];
+      pdfFields.forEach((fieldName) => {
+        const fileList = values[fieldName];
+        if (fileList?.[0]) {
+          formData.append("pdfs", fileList[0].originFileObj);
+        }
+      });
+
       const res = await addBusinessValuation(formData).unwrap();
       console.log(res);
+
+
       message.success(res.message || "Submitted successfully");
+      setLoading(false);
       form.resetFields();
-      navigate('/business-valuaion-submission')
+      navigate("/business-valuaion-submission");
     } catch (error) {
       console.error(error);
+      setLoading(false);
       message.error(error?.data?.error || "Submission failed");
     }
   };
@@ -753,7 +759,7 @@ const navigate = useNavigate()
             name="ownerName"
             rules={[{ required: true, message: "Please enter owner name" }]}
           >
-            <Input className="py-2" placeholder="Enter Owner Name" />
+            <Input className="py-3" placeholder="Enter Owner Name" />
           </Form.Item>
 
           <Form.Item
@@ -761,7 +767,7 @@ const navigate = useNavigate()
             name="businessName"
             rules={[{ required: true, message: "Please enter business name" }]}
           >
-            <Input className="py-2" placeholder="Enter Business Name" />
+            <Input className="py-3" placeholder="Enter Business Name" />
           </Form.Item>
         </div>
 
@@ -774,7 +780,7 @@ const navigate = useNavigate()
               { type: "email", message: "Invalid email address" },
             ]}
           >
-            <Input className="py-2" placeholder="Enter Your Email" />
+            <Input className="py-3" placeholder="Enter Your Email" />
           </Form.Item>
 
           <div className="grid grid-cols-12 gap-4">
@@ -784,7 +790,7 @@ const navigate = useNavigate()
                 name="countryCode"
                 initialValue="+971"
               >
-                <Select>
+                <Select style={{ height: "48px" }}>
                   <Option value="+971">🇦🇪 +971</Option>
                   <Option value="+1">🇺🇸 +1</Option>
                   <Option value="+44">🇬🇧 +44</Option>
@@ -800,7 +806,10 @@ const navigate = useNavigate()
                   { required: true, message: "Please enter mobile number" },
                 ]}
               >
-                <Input placeholder="Enter mobile number" />
+                <Input
+                  style={{ height: "48px" }}
+                  placeholder="Enter mobile number"
+                />
               </Form.Item>
             </div>
           </div>
@@ -808,7 +817,7 @@ const navigate = useNavigate()
 
         <div className="md:grid grid-cols-2 gap-4">
           <Form.Item label="Regions" name="region">
-            <Select placeholder="Select Region">
+            <Select style={{ height: "48px" }} placeholder="Select Region">
               <Option value="north-america">North America</Option>
               <Option value="europe">Europe</Option>
               <Option value="asia">Asia</Option>
@@ -817,7 +826,7 @@ const navigate = useNavigate()
           </Form.Item>
 
           <Form.Item label="Country" name="country">
-            <Select placeholder="Select Country">
+            <Select style={{ height: "48px" }} placeholder="Select Country">
               <Option value="uae">United Arab Emirates</Option>
               <Option value="usa">United States</Option>
               <Option value="uk">United Kingdom</Option>
@@ -826,12 +835,15 @@ const navigate = useNavigate()
         </div>
 
         <Form.Item label="Location" name="location">
-          <Input placeholder="Enter Location" />
+          <Input style={{ height: "48px" }} placeholder="Enter Location" />
         </Form.Item>
 
         <div className="md:grid grid-cols-2 gap-4">
           <Form.Item label="Business Type" name="businessType">
-            <Select placeholder="Select Business Type">
+            <Select
+              style={{ height: "48px" }}
+              placeholder="Select Business Type"
+            >
               <Option value="north-america">North America</Option>
               <Option value="europe">Europe</Option>
               <Option value="asia">Asia</Option>
@@ -839,7 +851,7 @@ const navigate = useNavigate()
             </Select>
           </Form.Item>
           <Form.Item label="Business Category" name="businessCategory">
-            <Select placeholder="Select Category">
+            <Select style={{ height: "48px" }} placeholder="Select Category">
               <Option value="north-america">North America</Option>
               <Option value="europe">Europe</Option>
               <Option value="asia">Asia</Option>
@@ -861,11 +873,14 @@ const navigate = useNavigate()
               { required: true, message: "Please enter Annual Turnover" },
             ]}
           >
-            <Input placeholder="Enter Annual Turnover" />
+            <Input
+              style={{ height: "48px" }}
+              placeholder="Enter Annual Turnover"
+            />
           </Form.Item>
 
           <Form.Item label="Currency" name="currency">
-            <Select placeholder="Select Currency">
+            <Select style={{ height: "48px" }} placeholder="Select Currency">
               <Option value="north-america">North America</Option>
               <Option value="europe">Europe</Option>
               <Option value="asia">Asia</Option>
@@ -882,7 +897,10 @@ const navigate = useNavigate()
               { required: true, message: "Please enter Year of Establishment" },
             ]}
           >
-            <Input placeholder="Enter Year of Establishment" />
+            <Input
+              style={{ height: "48px" }}
+              placeholder="Enter Year of Establishment"
+            />
           </Form.Item>
 
           <Form.Item
@@ -892,12 +910,15 @@ const navigate = useNavigate()
               { required: true, message: "Please enter Annual Expenses" },
             ]}
           >
-            <Input placeholder="Enter Annual Expenses" />
+            <Input
+              style={{ height: "48px" }}
+              placeholder="Enter Annual Expenses"
+            />
           </Form.Item>
         </div>
 
         <Form.Item label="Select the Purpose" name="purpose">
-          <Select placeholder="Select Purpose">
+          <Select style={{ height: "48px" }} placeholder="Select Purpose">
             <Option value="north-america">North America</Option>
             <Option value="europe">Europe</Option>
             <Option value="asia">Asia</Option>
@@ -918,7 +939,10 @@ const navigate = useNavigate()
             name="annualProfit"
             rules={[{ required: true, message: "Please enter Annual Profit" }]}
           >
-            <Input placeholder="Enter Annual Profit" />
+            <Input
+              style={{ height: "48px" }}
+              placeholder="Enter Annual Profit"
+            />
           </Form.Item>
           <Form.Item
             label="Value of Assets"
@@ -927,7 +951,10 @@ const navigate = useNavigate()
               { required: true, message: "Please enter Value of Assets" },
             ]}
           >
-            <Input placeholder="Enter Value of Assets" />
+            <Input
+              style={{ height: "48px" }}
+              placeholder="Enter Value of Assets"
+            />
           </Form.Item>
         </div>
         <Form.Item
@@ -937,7 +964,10 @@ const navigate = useNavigate()
             { required: true, message: "Please Value of Stack / Inventory" },
           ]}
         >
-          <Input placeholder="Enter Value of Stack / Inventory" />
+          <Input
+            style={{ height: "48px" }}
+            placeholder="Enter Value of Stack / Inventory"
+          />
         </Form.Item>
         <div className="flex items-center gap-2 mb-6 mt-16">
           <DollarSign className="h-5 w-5 text-green-500" />
@@ -954,13 +984,18 @@ const navigate = useNavigate()
             getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
           >
             <Upload
-            style={{ width: "100%" }}
+              style={{ width: "100%" }}
               beforeUpload={beforeUpload}
               maxCount={1}
               accept=".pdf"
               listType="text"
             >
-              <Button style={{ width: "100%" }} icon={<UploadOutlined />}>Upload PDF</Button>
+              <Button
+                style={{ width: "100%", height: "48px" }}
+                icon={<UploadOutlined />}
+              >
+                Upload PDF
+              </Button>
             </Upload>
           </Form.Item>
 
@@ -971,13 +1006,18 @@ const navigate = useNavigate()
             getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
           >
             <Upload
-            style={{ width: "100%" }}
+              style={{ width: "100%" }}
               beforeUpload={beforeUpload}
               maxCount={1}
               accept=".pdf"
               listType="text"
             >
-              <Button style={{ width: "100%" }} icon={<UploadOutlined />}>Upload PDF</Button>
+              <Button
+                style={{ width: "100%", height: "48px" }}
+                icon={<UploadOutlined />}
+              >
+                Upload PDF
+              </Button>
             </Upload>
           </Form.Item>
 
@@ -988,13 +1028,18 @@ const navigate = useNavigate()
             getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
           >
             <Upload
-            style={{ width: "100%" }}
+              style={{ width: "100%" }}
               beforeUpload={beforeUpload}
               maxCount={1}
               accept=".pdf"
               listType="text"
             >
-              <Button style={{ width: "100%" }} icon={<UploadOutlined />}>Upload PDF</Button>
+              <Button
+                style={{ width: "100%", height: "48px" }}
+                icon={<UploadOutlined />}
+              >
+                Upload PDF
+              </Button>
             </Upload>
           </Form.Item>
 
@@ -1005,13 +1050,18 @@ const navigate = useNavigate()
             getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
           >
             <Upload
-            style={{ width: "100%" }}
+              style={{ width: "100%" }}
               beforeUpload={beforeUpload}
               maxCount={1}
               accept=".pdf"
               listType="text"
             >
-              <Button style={{ width: "100%" }} icon={<UploadOutlined />}>Upload PDF</Button>
+              <Button
+                style={{ width: "100%", height: "48px" }}
+                icon={<UploadOutlined />}
+              >
+                Upload PDF
+              </Button>
             </Upload>
           </Form.Item>
         </div>
@@ -1047,13 +1097,17 @@ const navigate = useNavigate()
         </Form.Item>
 
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="bg-blue-600 hover:bg-blue-700"
-          >
-            Get Valuations
-          </Button>
+          <button
+                type="submit"
+                className="w-full mt-8 py-2 bg-[#0091FF] text-white rounded "
+                disabled={loading}
+              >
+                  {loading ? (
+                <Spin size="small" /> 
+              ) : (
+                "Submit"
+              )}
+              </button>
         </Form.Item>
       </Form>
     </div>

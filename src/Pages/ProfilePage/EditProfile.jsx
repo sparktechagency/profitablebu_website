@@ -17,8 +17,10 @@ import {
 } from "../redux/api/userApi";
 import { useNavigate } from "react-router-dom";
 import { imageUrl } from "../redux/api/baseApi";
+import { Country } from "country-state-city";
 const EditProfile = () => {
   const { data: profileData, isLoading } = useGetProfileQuery();
+  console.log(profileData)
   const navigate = useNavigate()
   const [updateProfile] = useUpdateProfileMutation();
     const [image, setImage] = useState();
@@ -26,6 +28,14 @@ const EditProfile = () => {
     const file = e.target.files[0];
     setImage(file);
   };
+
+    const [countries, setCountries] = useState([]);
+    console.log(countries)
+
+  useEffect(() => {
+    setCountries(Country.getAllCountries());
+  }, []);
+
   const [form] = Form.useForm();
   const handleSubmit = async (values) => {
     console.log(values);
@@ -35,7 +45,7 @@ const EditProfile = () => {
    if (image) formData.append("profile-image", image);
       formData.append("name", values?.name);
       formData.append("mobile", values?.mobile);
-      formData.append("location", values?.location);
+      formData.append("country", values?.country);
       formData.append("profession", values?.profession);
       formData.append("description", values?.description);
 
@@ -56,7 +66,7 @@ const EditProfile = () => {
         name: admin.name,
         email: admin.email,
         mobile: admin.mobile || "",
-        location: admin.location || "",
+        country: admin.country || "",
         profession: admin.profession || "",
         description: admin.description || "",
         // address: admin.address || "",
@@ -100,7 +110,7 @@ const EditProfile = () => {
               rules={[{ required: true, message: "Please input your Name!" }]}
             >
               <Input
-                className="w-full bg-transparent  py-2"
+                className="w-full bg-transparent  py-3"
                 placeholder="Name"
               />
             </Form.Item>
@@ -111,7 +121,7 @@ const EditProfile = () => {
             >
               <Input
               disabled
-                className="w-full bg-transparent py-2"
+                className="w-full bg-transparent py-3"
                 placeholder="Email"
               />
             </Form.Item>
@@ -125,7 +135,7 @@ const EditProfile = () => {
               ]}
             >
               <Input
-                className="w-full bg-transparent py-2"
+                className="w-full bg-transparent py-3"
                 placeholder="Contact Number"
               />
             </Form.Item>
@@ -135,22 +145,44 @@ const EditProfile = () => {
               rules={[{ required: true, message: "Please input Profession!" }]}
             >
               <Input
-                className="w-full bg-transparent  py-2"
+                className="w-full bg-transparent  py-3"
                 placeholder="Fuel Type"
               />
             </Form.Item>
           </div>
 
-          <Form.Item
-            label="Location"
-            name="location"
-            rules={[{ required: true, message: "Please input Location!" }]}
-          >
-            <Input
-              className="w-full bg-transparent py-2"
-              placeholder="Location"
-            />
-          </Form.Item>
+           <Form.Item
+                  label="Select Your Country"
+                  name="country"
+                  rules={[
+                    { required: true, message: "Please select your country!" },
+                  ]}
+                >
+                  <Select
+                    placeholder="Select your country"
+                    style={{ height: "48px" }}
+                    showSearch
+                    allowClear
+                    optionLabelProp="label"
+                  >
+                    {countries.map((country) => (
+                      <Select.Option
+                        key={country.isoCode}
+                        value={country.name}
+                        label={country.name}
+                      >
+                        <div className="flex items-center gap-2">
+                          <img
+                            src={`https://flagcdn.com/w20/${country.isoCode.toLowerCase()}.png`}
+                            alt={country.name}
+                            className="w-5 h-3 object-cover"
+                          />
+                          {country.name}
+                        </div>
+                      </Select.Option>
+                    ))}
+                  </Select>
+                </Form.Item>
 
           <Form.Item
             label="Description"

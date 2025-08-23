@@ -136,15 +136,15 @@ const businessApi = baseApi.injectEndpoints({
 }),
 
 
-    // getUserGrowth: builder.query({
-    //     query: (year) => {
-    //         return {
-    //             url: `/meta/user-chart-data?year=${year}`,
-    //             method: "GET",
-    //         };
-    //     },
-    //     providesTags: ["updateProfile"],
-    // }),
+    deleteBusiness: builder.mutation({
+        query: ({businessId,role}) => {
+            return {
+                url: `/business/delete-business?businessId=${businessId}&role=${role}`,
+                method: "DELETE",
+            };
+        },
+         invalidatesTags: ['updateProfile']
+    }),
 
     // getFaq: builder.query({
     //     query: () => {
@@ -200,6 +200,17 @@ const businessApi = baseApi.injectEndpoints({
       invalidatesTags: ["updateProfile"],
     }),
 
+     addNda: builder.mutation({
+      query: (data) => {
+        return {
+          url: "/agreement/create-agreement",
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["updateProfile"],
+    }),
+
     updateSingle: builder.mutation({
       query: ({ formData, businessId, user }) => {
         return {
@@ -217,21 +228,29 @@ const businessApi = baseApi.injectEndpoints({
     location,
     country,
     ageOfListing,
+    state,
+    city,
     sortBy,
     businessType,
     ownerShipType,
     askingPrice,
     searchText,
     businessRole,
-    subCategory
+    subCategory,
+    page,
+    limit
   }) => {
     let url = `/business/filter-business`;
 
     const params = [];
     if (category) params.push(`category=${encodeURIComponent(category)}`);
+      if (page) params.push(`page=${encodeURIComponent(page)}`);
+        if (limit) params.push(`limit=${encodeURIComponent(limit)}`);
     if (subCategory) params.push(`subCategory=${encodeURIComponent(subCategory)}`);
     if (location) params.push(`location=${encodeURIComponent(location)}`);
     if (country) params.push(`country=${encodeURIComponent(country)}`);
+     if (state) params.push(`state=${encodeURIComponent(state)}`);
+      if (city) params.push(`city=${encodeURIComponent(city)}`);
     if (ageOfListing) params.push(`ageOfListing=${encodeURIComponent(ageOfListing)}`);
     if (sortBy) params.push(`sortBy=${encodeURIComponent(sortBy)}`);
     if (businessType) params.push(`businessType=${encodeURIComponent(businessType)}`);
@@ -320,6 +339,17 @@ const businessApi = baseApi.injectEndpoints({
       providesTags: ["updateProfile"],
     }),
 
+
+     getTopCountry: builder.query({
+      query: () => {
+        return {
+          url: "/business/top-country",
+          method: "GET",
+        };
+      },
+      providesTags: ["updateProfile"],
+    }),
+
     postInterestFormation: builder.mutation({
       query: (data) => {
         return {
@@ -360,4 +390,7 @@ export const {
   useAddContactMutation,
   usePostInterestFormationMutation,
   useGetAllBusinessMostViewQuery,
+ useDeleteBusinessMutation,
+ useGetTopCountryQuery,
+ useAddNdaMutation
 } = businessApi;

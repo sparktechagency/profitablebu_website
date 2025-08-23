@@ -25,26 +25,7 @@ import { useParams } from "react-router-dom";
 import { countryData } from "../../dummy-data/DummyData";
 import { imageUrl } from "../redux/api/baseApi";
 dayjs.extend(customParseFormat);
-const dateFormat = "YYYY-MM-DD";
-const props = {
-  name: "file",
-  multiple: true,
-  action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
-  onChange(info) {
-    const { status } = info.file;
-    if (status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
-    if (status === "done") {
-      message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-  onDrop(e) {
-    console.log("Dropped files", e.dataTransfer.files);
-  },
-};
+
 const EditNewBusiness = () => {
   const { id: businessId } = useParams();
   console.log(businessId);
@@ -86,7 +67,7 @@ const EditNewBusiness = () => {
   const handleCountryChange = (value) => {
     setSelectedCountry(value);
     setStates(State.getStatesOfCountry(value));
-    setCities([]); // reset cities
+    setCities([]);
     form.setFieldsValue({ state: undefined, city: undefined });
   };
 
@@ -95,60 +76,72 @@ const EditNewBusiness = () => {
     setCities(City.getCitiesOfState(selectedCountry, value));
     form.setFieldsValue({ city: undefined });
   };
+const handleSubmit = async (values) => {
 
-  const handleSubmit = async (values) => {
-   const existingImages = fileList
-  .filter((file) => file.url)
-  .map((file) => {
-    const parts = file.url.split("/"); 
-    return parts[parts.length - 1];    
-  });
+  const existingImages = fileList
+    .filter((file) => file.url)
+    .map((file) => {
+      const parts = file.url.split("/");
+      return parts[parts.length - 1]; 
+    });
 
-    const newImages = fileList.filter((file) => file.originFileObj);
-    console.log(existingImages);
-    console.log(values);
-    const id = businessId;
-    const user = businessDetails?.data?.business?.user;
-    console.log(user);
 
-    try {
-      const formData = new FormData();
+  const newImages = fileList
+    .filter((file) => file.originFileObj)
+    .map((file) => file.originFileObj);
+    
 
-      formData.append(
-        "business_image",
-        JSON.stringify({
-          business_image: existingImages,
-        })
-      );
-      newImages.forEach((file) => {
-        formData.append("business_image", file.originFileObj);
-      });
-      formData.append("title", values?.title);
-      formData.append("state", values?.state);
-      formData.append("city", values?.city);
-      formData.append("category", values?.category);
-      formData.append("subCategory", values?.subCategory);
-      formData.append("country", values?.country);
-      formData.append("location", values?.location);
-      formData.append("askingPrice", values?.askingPrice);
-      formData.append("businessType", values?.businessType);
-      formData.append("ownerShipType", values?.ownerShipType);
-      formData.append("industryName", values?.industryName);
-      formData.append("description", content);
+  console.log("New Images:", newImages);
+  console.log("Existing Images:", existingImages);
 
-      const res = await updateSingleData({
-        formData,
-        businessId: id,
-        user: user,
-      });
-      console.log(res);
-      message.success(res.data.message);
-    } catch (error) {
-      console.error(error);
-      message.error(message?.data?.error);
-    } finally {
+  const id = businessId;
+  const user = businessDetails?.data?.business?.user;
+
+  try {
+    const formData = new FormData();
+
+    formData.append(
+      "business_image",
+      JSON.stringify({
+        business_image: existingImages,
+      })
+    );
+
+    newImages.forEach((file) => {
+      formData.append("business_image", file);
+    });
+
+    formData.append("title", values?.title || "");
+    formData.append("state", values?.state || "");
+    formData.append("city", values?.city || "");
+    formData.append("category", values?.category || "");
+    formData.append("subCategory", values?.subCategory || "");
+    formData.append("country", values?.country || "");
+    // formData.append("location", values?.location || "");
+    formData.append("askingPrice", values?.askingPrice || "");
+    formData.append("businessType", values?.businessType || "");
+    formData.append("ownerShipType", values?.ownerShipType || "");
+    formData.append("industryName", values?.industryName || "");
+    formData.append("description", content || "");
+
+    const res = await updateSingleData({
+      formData,
+      businessId: id,
+      user: user,
+    });
+
+    if (res?.data?.success) {
+      message.success(res.data.message );
+    } else {
+      message.error(res?.data?.error);
     }
-  };
+  } catch (error) {
+    console.error("Update Error:", error);
+    message.error(error?.response?.data?.error || "Update failed!");
+  }
+};
+
+
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
@@ -189,7 +182,6 @@ const EditNewBusiness = () => {
   useEffect(() => {
     if (businessDetails?.data) {
       const data = businessDetails.data?.business;
-
       form.setFieldsValue({
         city: data.city,
         state: data.state,
@@ -197,10 +189,9 @@ const EditNewBusiness = () => {
         category: data.category,
         subCategory: data.subCategory,
         country: data.country,
-        location: data.location,
+        // location: data.location,
         askingPrice: data.askingPrice,
         ownerShipType: data.ownerShipType,
-
         businessType: data.businessType,
         industryName: data.industryName,
       });
@@ -236,6 +227,7 @@ const EditNewBusiness = () => {
         <Form form={form} onFinish={handleSubmit} layout="vertical">
           <Form.Item label="Photos">
             <Upload
+            style={{ width: "100%", height: "200px" }}
               listType="picture-card"
               fileList={fileList}
               onChange={handleUploadChange}
@@ -246,7 +238,8 @@ const EditNewBusiness = () => {
               {fileList.length >= 4 ? null : (
                 <div className="flex items-center gap-2">
                   <PlusOutlined />
-                  <div>Add Image</div>
+                   <p className="">Click or drag file Max 1 MB Only PNG and JPG</p>
+
                 </div>
               )}
             </Upload>
@@ -268,7 +261,7 @@ const EditNewBusiness = () => {
               />
             </Form.Item>
           </div>
-          <div className="">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Form.Item
               label="Business Category"
               name="category"
@@ -277,6 +270,7 @@ const EditNewBusiness = () => {
               ]}
             >
               <Select
+              style={{ height: "48px" }}
                 placeholder="Select Category"
                 onChange={handleCategoryChange}
                 value={selectedCategory}
@@ -291,7 +285,7 @@ const EditNewBusiness = () => {
 
             {subCategories.length > 0 && (
               <Form.Item label="Sub Category" name="subCategory">
-                <Select placeholder="Select Sub Category">
+                <Select style={{ height: "48px" }} placeholder="Select Sub Category">
                   {subCategories.map((sub, i) => (
                     <Option key={i} value={sub.name}>
                       {sub.name}
@@ -374,8 +368,8 @@ const EditNewBusiness = () => {
             </Form.Item>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Form.Item
+          <div className="">
+            {/* <Form.Item
               label="Location"
               name="location"
               rules={[{ required: true, message: "Please input Location!" }]}
@@ -393,7 +387,7 @@ const EditNewBusiness = () => {
                 <Option value="Fujairah">Fujairah</Option>
                 <Option value="Ras Ai Khaimah">Ras Ai Khaimah</Option>
               </Select>
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item
               label="Asking Price"
               name="askingPrice"
@@ -407,11 +401,11 @@ const EditNewBusiness = () => {
                 className="w-full"
               >
                 <Option value="General_Inquiry">Select</Option>
-                <Option value="Under $50k">Under $50k</Option>
-                <Option value="$50k - $100k">$50k - $100k</Option>
-                <Option value="$100k - $250k">$100k - $250k</Option>
-                <Option value="$250k - $500k">$250k - $500k</Option>
-                <Option value="$500k - $1M">$500k - $1M</Option>
+                <Option value="Under $50K">Under $50K</Option>
+                <Option value="$50K - $100K">$50K - $100K</Option>
+                <Option value="$100k - $250K">$100k - $250K</Option>
+                <Option value="$250K - $500K">$250K - $500K</Option>
+                <Option value="$500K - $1M">$500K - $1M</Option>
                 <Option value="Over $1M">Over $1M</Option>
               </Select>
             </Form.Item>
@@ -464,7 +458,7 @@ const EditNewBusiness = () => {
             rules={[{ required: true, message: "Please input Indersty Name!" }]}
           >
             <Input
-              className="w-full bg-transparent py-2"
+              className="w-full bg-transparent py-3"
               placeholder="Engine Model"
             />
           </Form.Item>

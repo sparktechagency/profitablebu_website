@@ -21,7 +21,7 @@ function BusinessDetails() {
           <div className="mt-6 lg:mt-0 lg:w-1/3">
             <img
              
-              src={`${imageUrl}/uploads/business-image/${business?.image}` }
+              src={`${imageUrl}/uploads/business-image/${business?.image[0]}` }
               alt={business?.title}
               className="w-full h-auto rounded-lg shadow-md"
             />

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function BusinessFormation() {
   const { data: getAllFormat, isLoading, isError } = useGetAllFormateQuery();
+  console.log(getAllFormat)
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -43,7 +44,7 @@ export default function BusinessFormation() {
               {/* Service Image */}
               <div className="relative aspect-[4/3] overflow-hidden">
                 <img
-                  src={`${imageUrl}/uploads/business-image/${service?.image}`}
+                  src={`${imageUrl}/uploads/formation-image/${service?.image}`}
                   alt={service.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />

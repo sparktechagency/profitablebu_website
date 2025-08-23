@@ -8,10 +8,12 @@ import backImg from "../../assets/Home/aaa.png";
 import { Link } from "react-router-dom";
 import { usePostSubscriberMutation } from "../../Pages/redux/api/metaApi";
 import { message } from "antd";
+import { useGetTopCountryQuery } from "../../Pages/redux/api/businessApi";
 const Country = () => {
   const [addSubscriber] = usePostSubscriberMutation();
   const [email, setEmail] = useState("");
-
+const {data:countryData} = useGetTopCountryQuery();
+console.log(countryData)
   const handleSubscribe = async () => {
     if (!email) {
       return message.warning("Please enter an email.");
@@ -29,11 +31,11 @@ const Country = () => {
   };
 
   const countries = [
-    { id: "United States", name: "Afghanistan", image: img1 },
-    { id: "United Kingdom", name: "Pakistan", image: img2 },
-    { id: "India", name: "India", image: img3 },
-    { id: "Spain", name: "Saudi Arabia", image: img4 },
-    { id: "United States", name: "United States", image: img5 },
+    { id: "United States", name: "AF", image: img1 },
+    { id: "United Kingdom", name: "PA", image: img2 },
+    { id: "India", name: "IN", image: img3 },
+    { id: "Spain", name: "SA", image: img4 },
+    { id: "United States", name: "US", image: img5 },
   ];
   return (
     <div>
@@ -55,17 +57,16 @@ const Country = () => {
         </a>
       </div>
       <div className="grid grid-cols-5 gap-4 mt-10">
-        {countries.map((country) => (
-          <Link key={country.id} to={`/search?country=${country.id}`}>
+        {countryData?.data?.slice(0,5).map((country) => (
+          <Link key={country.id} to={`/search?country=${country.country}`}>
             <div className="relative group overflow-hidden rounded-lg shadow-md">
               <img
-                src={country.image}
-                alt={`${country.name} Flag`}
-                className="w-full h-[200px] object-cover"
+                alt="United States"
+                src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${country?.country}.svg`}
               />
               <div className="absolute inset-0 flex items-center justify-center bg-black/30 shadow-4xl opacity-0 translate-y-32 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
                 <div>
-                  <p className="text-white font-semibold text-4xl">120+</p>
+                  <p className="text-white font-semibold text-4xl">{country?.totalBusinesses}</p>
                   <p className="text-white text-2xl">Business Available</p>
                 </div>
               </div>

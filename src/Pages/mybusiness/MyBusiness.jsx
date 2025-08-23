@@ -215,11 +215,14 @@ import { Navigate } from "../Navigate";
 import card from "../../assets/Home/card1.png";
 import backCard from "../../assets/Home/ii.png";
 import { Link } from "react-router-dom";
-import { useGetAllBusinessQuery } from "../redux/api/businessApi";
+import {  useDeleteBusinessMutation, useGetAllBusinessQuery } from "../redux/api/businessApi";
 import { imageUrl } from "../redux/api/baseApi";
 import { useGetProfileQuery } from "../redux/api/userApi";
+import { DeleteIcon } from "lucide-react";
+import { message } from "antd";
 
 const MyBusiness = () => {
+  const [deleteBusinesss] = useDeleteBusinessMutation()
   const { data: businessData, isLoading } = useGetAllBusinessQuery();
   console.log(businessData)
   const user = JSON.parse(localStorage.getItem("user"));
@@ -237,6 +240,18 @@ const MyBusiness = () => {
     myBusiness = [],
     mySoldBusiness = [],
   } = businessData?.data || {};
+console.log(interestedFranchise)
+    const handleDeletebusiness = async (businessId) => {
+      console.log(businessId)
+
+      console.log(businessId)
+        try {
+            const res = await deleteBusinesss({businessId,role}).unwrap();
+            message.success(res?.message);
+        } catch (err) {
+            message.error(err?.data?.message);
+        }
+    };
 
   console.log(mySoldBusiness)
   const renderCard = (item) => {
@@ -251,7 +266,7 @@ const MyBusiness = () => {
         >
           <div className="h-48 relative">
             <img
-              src={`${imageUrl}/uploads/business-image/${item?.businessId?.image}`}
+              src={`${imageUrl}/uploads/business-image/${item?.businessId?.image[0]}`}
               alt={item.businessId?.title}
               className="w-full h-full object-cover"
             />
@@ -276,6 +291,7 @@ const MyBusiness = () => {
                 View Details
               </button>
             </Link>
+           <button className="bg-red-600 ml-5 text-white px-4 py-2 rounded-md transition-colors" onClick={() => handleDeletebusiness(item?._id)}>Delete</button>
           </div>
         </div>
       );
@@ -289,7 +305,7 @@ const MyBusiness = () => {
         >
           <div className="h-48 relative">
             <img
-              src={`${imageUrl}/uploads/business-image/${item.image}` || card}
+              src={`${imageUrl}/uploads/business-image/${item.image[0]}` || card}
               alt={item.title}
               className="w-full h-full object-cover"
             />
@@ -312,6 +328,7 @@ const MyBusiness = () => {
                 View Details
               </button>
             </Link>
+             <button className="bg-red-600 ml-5 text-white px-4 py-2 rounded-md transition-colors" onClick={() => handleDeletebusiness(item?._id)}>Delete</button>
           </div>
         </div>
       );

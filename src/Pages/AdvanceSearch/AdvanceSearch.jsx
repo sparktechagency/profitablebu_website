@@ -1,5 +1,8 @@
 import { Button, Form, Select, Space } from "antd";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useGetCategtoryQuery } from "../redux/api/businessApi";
+import { City, Country, State } from "country-state-city";
 const { Option } = Select;
 
 const businessCategories = [
@@ -15,7 +18,8 @@ const businessCategories = [
   "Other",
 ];
 
-const country = ["United States",
+const country = [
+  "United States",
   "United Kingdom",
   "Canada",
   "Australia",
@@ -24,14 +28,17 @@ const country = ["United States",
   "Italy",
   "Spain",
   "United Arab Emirates",
-  "India",];
+  "India",
+];
 
-  const location = [  "Dubai",
+const location = [
+  "Dubai",
   "Sharjah",
   "Ajman",
   "Umm Al-Quwain",
   "Fujairah",
-  "Ras Al Khaimah",];
+  "Ras Al Khaimah",
+];
 
 const askingPrice = [
   "Under $50K",
@@ -60,15 +67,51 @@ const ownerShipType = [
 const sortBy = ["Newest First", "Price Low to High", "Most Viewed"];
 
 export default function AdvanceSearch() {
+  const { data: categorie, isLoading, isError } = useGetCategtoryQuery();
   const [form] = Form.useForm();
-
+  const [subCategories, setSubCategories] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedState, setSelectedState] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const navigate = useNavigate();
-
+  const handleCategoryChange = (value) => {
+    setSelectedCategory(value);
+    const category = categorie.data.find((cat) => cat.categoryName === value);
+    setSubCategories(category?.subCategories || []);
+    form.setFieldsValue({ subCategory: null });
+  };
   const handleSearch = (values) => {
     console.log(values);
     const params = new URLSearchParams(values).toString();
     navigate(`/search?${params}`);
   };
+  useEffect(() => {
+    setCountries(Country.getAllCountries());
+  }, []);
+
+  const handleCountryChange = (value) => {
+    setSelectedCountry(value);
+    setStates(State.getStatesOfCountry(value));
+    setCities([]); // reset cities
+    form.setFieldsValue({ state: undefined, city: undefined });
+  };
+
+  const handleStateChange = (value) => {
+    setSelectedState(value);
+    setCities(City.getCitiesOfState(selectedCountry, value));
+    form.setFieldsValue({ city: undefined });
+  };
+  useEffect(() => {
+    if (categorie?.data?.length) {
+      const defaultCategory = categorie.data[0];
+      setSelectedCategory(defaultCategory.categoryName);
+      setSubCategories(defaultCategory.subCategories || []);
+      form.setFieldsValue({ category: defaultCategory.categoryName });
+    }
+  }, [categorie]);
 
   return (
     <div className="relative max-w-7xl mx-auto px-5 pt-20 pb-10 rounded-lg shadow-sm">
@@ -90,30 +133,119 @@ export default function AdvanceSearch() {
         form={form}
         onFinish={handleSearch}
         layout="vertical"
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5"
+        className=""
       >
-        <Form.Item label="Business Category" name="businessCategory">
-          <Select placeholder="Select One" allowClear style={{ height: "50px" }}>
-            {businessCategories.map((category) => (
-              <Option key={category} value={category}>
-                {category}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
+        <div className="">
+          <Form.Item
+            label="Business Category"
+            name="category"
+            rules={[
+              { required: true, message: "Please select Business Category!" },
+            ]}
+          >
+            <Select
+            style={{ height: "48px" }}
+              placeholder="Select Category"
+              onChange={handleCategoryChange}
+              value={selectedCategory}
+            >
+              {categorie?.data?.map((cat) => (
+                <Option key={cat._id} value={cat.categoryName}>
+                  {cat.categoryName}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
 
-        <Form.Item label="Country" name="country">
-          <Select placeholder="Select One" allowClear style={{ height: "50px" }}>
-            {country.map((country) => (
-              <Option key={country} value={country}>
-                {country}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
+          {subCategories.length > 0 && (
+            <Form.Item label="Sub Category" name="subCategory">
+              <Select style={{ height: "48px" }} placeholder="Select Sub Category">
+                {subCategories.map((sub, i) => (
+                  <Option key={i} value={sub.name}>
+                    {sub.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+          )}
+        </div>
+
+        <div className="grid grid-cols-3 gap-4">
+          {/* Country */}
+          <Form.Item
+            label="Select Your Country"
+            name="country"
+            rules={[{ required: true, message: "Please select your country!" }]}
+          >
+            <Select
+              placeholder="Select your country"
+              style={{ height: "48px" }}
+              showSearch
+              allowClear
+              onChange={handleCountryChange}
+              optionLabelProp="label"
+            >
+              {countries.map((country) => (
+                <Select.Option
+                  key={country.isoCode}
+                  value={country.isoCode}
+                  label={country.name}
+                >
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={`https://flagcdn.com/w20/${country.isoCode.toLowerCase()}.png`}
+                      alt={country.name}
+                      className="w-5 h-3 object-cover"
+                    />
+                    {country.name}
+                  </div>
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          {/* State */}
+          <Form.Item label="Select State" name="state">
+            <Select
+              placeholder="Select your state"
+              style={{ height: "48px" }}
+              showSearch
+              allowClear
+              onChange={handleStateChange}
+              disabled={!selectedCountry}
+            >
+              {states.map((state) => (
+                <Select.Option key={state.isoCode} value={state.isoCode}>
+                  {state.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          {/* City */}
+          <Form.Item label="Select City" name="city">
+            <Select
+              placeholder="Select your city"
+              style={{ height: "48px" }}
+              showSearch
+              allowClear
+              disabled={!selectedState}
+            >
+              {cities.map((city) => (
+                <Select.Option key={city.name} value={city.name}>
+                  {city.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        </div>
 
         <Form.Item label="Location" name="location">
-          <Select placeholder="Select One" allowClear style={{ height: "50px" }}>
+          <Select
+            placeholder="Select One"
+            allowClear
+            style={{ height: "50px" }}
+          >
             {location.map((country) => (
               <Option key={country} value={country}>
                 {country}
@@ -123,7 +255,11 @@ export default function AdvanceSearch() {
         </Form.Item>
 
         <Form.Item label="Asking Price" name="askingPrice">
-          <Select placeholder="Select One" allowClear style={{ height: "50px" }}>
+          <Select
+            placeholder="Select One"
+            allowClear
+            style={{ height: "50px" }}
+          >
             {askingPrice.map((priceRange) => (
               <Option key={priceRange} value={priceRange}>
                 {priceRange}
@@ -132,8 +268,16 @@ export default function AdvanceSearch() {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Business Type" name="businessType" className="col-span-2">
-          <Select placeholder="Select One" allowClear style={{ height: "50px" }}>
+        <Form.Item
+          label="Business Type"
+          name="businessType"
+          className="col-span-2"
+        >
+          <Select
+            placeholder="Select One"
+            allowClear
+            style={{ height: "50px" }}
+          >
             {businessType.map((type) => (
               <Option key={type} value={type}>
                 {type}
@@ -143,7 +287,11 @@ export default function AdvanceSearch() {
         </Form.Item>
 
         <Form.Item label="Ownership Type" name="ownerShipType">
-          <Select placeholder="Select One" allowClear style={{ height: "50px" }}>
+          <Select
+            placeholder="Select One"
+            allowClear
+            style={{ height: "50px" }}
+          >
             {ownerShipType.map((type) => (
               <Option key={type} value={type}>
                 {type}
@@ -152,15 +300,7 @@ export default function AdvanceSearch() {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Sort By" name="sortBy">
-          <Select placeholder="Select One" allowClear style={{ height: "50px" }}>
-            {sortBy.map((option) => (
-              <Option key={option} value={option}>
-                {option}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
+      
 
         <Form.Item className="col-span-2">
           <Space>

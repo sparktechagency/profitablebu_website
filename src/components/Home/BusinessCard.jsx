@@ -14,33 +14,32 @@ import { div } from "framer-motion/client";
 import { useGetProfileQuery } from "../../Pages/redux/api/userApi";
 
 const BusinessCard = () => {
-  // const user = JSON.parse(localStorage.getItem("user"));
-  // const role = user?.role;
-  //   const location = useLocation();
-  // const selectedCountry = location.state?.country;
   const [searchParams] = useSearchParams();
-    const selectedCountry = searchParams.get("country"); 
-    console.log(selectedCountry)
+  const selectedCountry = searchParams.get("country");
+  console.log(selectedCountry);
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
   console.log(profileData);
   const role = profileData?.data?.role;
 
   const id = profileData?.data?._id;
-  
 
   const { data: interestData } = useGetAllFeturesBusinessQuery({
-    businessRole: "Seller",country: selectedCountry 
+    businessRole: "Seller",
+    country: selectedCountry,
   });
   // console.log(interestData);
 
   const { data: interestDataa } = useGetAllFeturesBusinessQuery({
-    businessRole: "Asset Seller",country: selectedCountry 
+    businessRole: "Asset Seller",
+    country: selectedCountry,
   });
   const { data: interestDataaa } = useGetAllFeturesBusinessQuery({
-    businessRole: "Francise Seller",country: selectedCountry 
+    businessRole: "Francise Seller",
+    country: selectedCountry,
   });
   const { data: interestDataaaa } = useGetAllFeturesBusinessQuery({
-    businessRole: "Business Idea Lister",country: selectedCountry 
+    businessRole: "Business Idea Lister",
+    country: selectedCountry,
   });
   console.log(interestData);
   const {
@@ -49,12 +48,16 @@ const BusinessCard = () => {
     isError,
   } = useGetAllBusinessHomeQuery();
   console.log(businessData);
-console.log(id, role)
-  const { data: MostbusinessData } = useGetAllBusinessMostViewQuery({ userId: id , role: role, country: selectedCountry  });
+  console.log(id, role);
+  const { data: MostbusinessData } = useGetAllBusinessMostViewQuery({
+    userId: id,
+    role: role,
+    country: selectedCountry,
+  });
 
   const mostBusiness = MostbusinessData?.data || [];
 
-  console.log(MostbusinessData)
+  console.log(mostBusiness);
 
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
   if (isError)
@@ -97,7 +100,11 @@ console.log(id, role)
             >
               <div className="h-48 relative">
                 <img
-                  src={`${imageUrl}/uploads/business-image/${business.image}`}
+                  src={
+                    business.image?.length > 0
+                      ? `${imageUrl}/uploads/business-image/${business.image[0]}`
+                      : "/fallback-image.jpg"
+                  }
                   alt={business.title}
                   className="w-full h-full object-cover"
                 />
@@ -124,7 +131,6 @@ console.log(id, role)
             </div>
           ))}
         </div>
-      
       </div>
 
       {/*============================= interest er data ============================*/}
@@ -143,7 +149,7 @@ console.log(id, role)
             </div>
           </div>
           <Link
-            to={`/search?businessRole=Sellers-business`}
+            to={`/search?businessRole=Seller`}
             className="text-blue-500 hover:underline"
           >
             Explore More
@@ -161,7 +167,7 @@ console.log(id, role)
                 >
                   <div className="h-48 relative">
                     <img
-                      src={`${imageUrl}/uploads/business-image/${business.image}`}
+                      src={`${imageUrl}/uploads/business-image/${business.image[0]}`}
                       alt={business.title}
                       className="w-full h-full object-cover"
                     />
@@ -213,7 +219,7 @@ console.log(id, role)
             </div>
           </div>
           <Link
-            to={`/search?businessRole=Franchise`}
+            to={`/search?businessRole=Asset Seller`}
             className="text-blue-500 hover:underline"
           >
             Explore More
@@ -231,7 +237,7 @@ console.log(id, role)
                 >
                   <div className="h-48 relative">
                     <img
-                      src={`${imageUrl}/uploads/business-image/${business.image}`}
+                      src={`${imageUrl}/uploads/business-image/${business.image[0]}`}
                       alt={business.title}
                       className="w-full h-full object-cover"
                     />
@@ -283,7 +289,7 @@ console.log(id, role)
             </div>
           </div>
           <Link
-            to={`/search?businessRole=Asset-seller`}
+            to={`/search?businessRole=Francise Seller`}
             className="text-blue-500 hover:underline"
           >
             Explore More
@@ -301,7 +307,7 @@ console.log(id, role)
                 >
                   <div className="h-48 relative">
                     <img
-                      src={`${imageUrl}/uploads/business-image/${business.image}`}
+                      src={`${imageUrl}/uploads/business-image/${business.image[0]}`}
                       alt={business.title}
                       className="w-full h-full object-cover"
                     />
@@ -354,7 +360,7 @@ console.log(id, role)
                 </div>
               </div>
               <Link
-                to={`/search?businessRole=Business-Idea-lister`}
+                to={`/search?businessRole=Business Idea Lister`}
                 className="text-blue-500 hover:underline"
               >
                 Explore More
@@ -372,7 +378,7 @@ console.log(id, role)
                     >
                       <div className="h-48 relative">
                         <img
-                          src={`${imageUrl}/uploads/business-image/${business.image}`}
+                          src={`${imageUrl}/uploads/business-image/${business.image[0]}`}
                           alt={business.title}
                           className="w-full h-full object-cover"
                         />

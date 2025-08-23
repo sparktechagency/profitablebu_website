@@ -5,11 +5,25 @@ import {
   UnorderedListOutlined,
   DownOutlined,
 } from "@ant-design/icons";
-import { Button, Input, Select, Collapse, Card, Checkbox, Radio } from "antd";
+import {
+  Button,
+  Input,
+  Select,
+  Collapse,
+  Card,
+  Checkbox,
+  Radio,
+  Pagination,
+} from "antd";
 import { div } from "framer-motion/client";
-import { useGetAllBusinesFilterQuery, useGetCategtoryQuery } from "../redux/api/businessApi";
+import {
+  useGetAllBusinesFilterQuery,
+  useGetCategtoryQuery,
+} from "../redux/api/businessApi";
 import { Link, useLocation } from "react-router-dom";
 import { imageUrl } from "../redux/api/baseApi";
+import { City, Country, State } from "country-state-city";
+import { Menu, X } from "lucide-react";
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -78,6 +92,12 @@ const businessType = [
   "Online",
 ];
 
+// <Option value="Franchise">Franchise</Option>
+//                 <Option value="Independent">Independent</Option>
+//                 <Option value="Startup">Startup</Option>
+//                 <Option value="Home-Based">Home-Based</Option>
+//                 <Option value="Online">Online</Option>
+
 const ownerShipType = [
   "Sole Proprietorship",
   "Partnership",
@@ -132,21 +152,58 @@ const businessListings = [
 ];
 
 export default function AllBusinessFilterAnt() {
-  const {data: categorys} = useGetCategtoryQuery()
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [cities, setCities] = useState([]);
+  console.log(states, cities);
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedState, setSelectedState] = useState(null);
+  console.log(selectedState);
+  const [selectedCity, setSelectedCity] = useState(null);
+
+  const { data: categorys } = useGetCategtoryQuery();
   const locations = useLocation();
-   console.log(locations?.state);
+  console.log(locations?.state);
   const [searchQuery, setSearchQuery] = useState("");
   console.log(searchQuery);
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setSearchQuery(params.get("query") || "");
   }, []);
+  useEffect(() => {
+    setCountries(Country.getAllCountries());
+  }, []);
+
+  const handleCountryChange = (value) => {
+    setSelectedCountry(value);
+    setStates(State.getStatesOfCountry(value));
+    setCities([]);
+    setSelectedState(null);
+    setSelectedCity(null);
+    console.log("Selected Country:", value);
+  };
+
+  const handleStateChange = (value) => {
+    setSelectedState(value);
+    setCities(City.getCitiesOfState(selectedCountry, value));
+    setSelectedCity(null);
+    console.log("Selected State:", value);
+  };
+
+  const handleCityChange = (value) => {
+    setSelectedCity(value);
+    console.log("Selected City:", value);
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 
-    setSelectedCategory(params.get("businessCategory") || null);
+    setSelectedCategory(params.get("category") || null);
+    setSelectedSubCategory(params.get("subCategory") || null);
     setSelectedCountry(params.get("country") || null);
+    setSelectedState(params.get("state") || null);
+    setSelectedCity(params.get("city") || null);
     setSelectedLocation(params.get("location") || null);
     setSelectedAskingPrice(params.get("askingPrice") || null);
     setSelectedBusinessType(params.get("businessType") || null);
@@ -157,24 +214,28 @@ export default function AllBusinessFilterAnt() {
   }, [location.search]);
 
   const [businessRole, setFilters] = useState([]);
-console.log(businessRole)
+  console.log(businessRole);
   console.log(businessRole);
   const [itemsPerPage, setItemsPerPage] = useState("20");
   const [viewMode, setViewMode] = useState("grid");
-  const [selectedCategory, setSelectedCategory] =
-    useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   console.log(selectedCategory);
   //   const [selectedRegion, setSelectedRegion] = useState(null);
-  const [selectedCountry, setSelectedCountry] = useState(null);
+
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedAskingPrice, setSelectedAskingPrice] = useState(null);
+  console.log(selectedAskingPrice);
   const [selectedBusinessType, setSelectedBusinessType] = useState(null);
   const [selectedOwnerShipType, setSelectedOwnerShipType] = useState(null);
   const [selectedSortBy, setSelectedSortBy] = useState(null);
   const [selectedAgeListing, setSelectedAgeListing] = useState(null);
   // const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
-  console.log(selectedSubCategory)
+  console.log(selectedSubCategory);
+  const [currentPage, setCurrentPage] = useState(1);
+  console.log(currentPage);
+
+  const pageSize = 10;
   const { data: businessFilter } = useGetAllBusinesFilterQuery({
     category: selectedCategory,
     location: selectedLocation,
@@ -186,58 +247,64 @@ console.log(businessRole)
     askingPrice: selectedAskingPrice,
     searchText: searchQuery,
     businessRole: businessRole,
-    subCategory:selectedSubCategory
+    subCategory: selectedSubCategory,
+    state: selectedState,
+    city: selectedCity,
+    page: currentPage,
+    limit: pageSize,
   });
-   
+
   console.log(businessFilter);
   const business = businessFilter?.data || [];
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  return (
-    <div className="container m-auto">
-      <div className="flex min-h-screen bg-white my-11">
-        {/* Sidebar */}
-        <div className="w-80 border-r border-gray-200 p-6">
-          <Collapse
-      defaultActiveKey={["1"]}
-      expandIcon={({ isActive }) => <DownOutlined rotate={isActive ? 180 : 0} />}
-    >
-      <Panel header="Business Category" key="1">
-        <Radio.Group
-          value={selectedCategory}
-          onChange={(e) => {
-            setSelectedCategory(e.target.value);
-            setSelectedSubCategory(null); 
-          }}
-        >
-          {categorys?.data?.map((category) => (
-            <div key={category.categoryName} className="mb-2">
-              <Radio value={category.categoryName}>{category.categoryName}</Radio>
 
+  const SidebarContent = () => (
+    <div className="w-80 border-r border-gray-200 p-6">
+      <Collapse
+        defaultActiveKey={["1"]}
+        expandIcon={({ isActive }) => (
+          <DownOutlined rotate={isActive ? 180 : 0} />
+        )}
+      >
+        <Panel header="Business Category" key="1">
+          <Radio.Group
+            value={selectedCategory}
+            onChange={(e) => {
+              setSelectedCategory(e.target.value);
+              setSelectedSubCategory(null);
+            }}
+          >
+            {categorys?.data?.map((category) => (
+              <div key={category.categoryName} className="mb-2">
+                <Radio value={category.categoryName}>
+                  {category.categoryName}
+                </Radio>
 
-              {selectedCategory === category.categoryName && category.subCategories?.length > 0 && (
-                <div className="ml-6 mt-2">
-                  <Radio.Group
-                    value={selectedSubCategory}
-                    onChange={(e) => setSelectedSubCategory(e.target.value)}
-                  >
-                    {category.subCategories.map((sub) => (
-                      <div key={sub.name} className="mb-1">
-                        <Radio value={sub.name}>{sub.name}</Radio>
-                      </div>
-                    ))}
-                  </Radio.Group>
-                </div>
-              )}
-            </div>
-          ))}
-        </Radio.Group>
-      </Panel>
-    </Collapse>
+                {selectedCategory === category.categoryName &&
+                  category.subCategories?.length > 0 && (
+                    <div className="ml-6 mt-2">
+                      <Radio.Group
+                        value={selectedSubCategory}
+                        onChange={(e) => setSelectedSubCategory(e.target.value)}
+                      >
+                        {category.subCategories.map((sub) => (
+                          <div key={sub.name} className="mb-1">
+                            <Radio value={sub.name}>{sub.name}</Radio>
+                          </div>
+                        ))}
+                      </Radio.Group>
+                    </div>
+                  )}
+              </div>
+            ))}
+          </Radio.Group>
+        </Panel>
+      </Collapse>
 
-          {/* Region */}
-          {/* <div className="my-2">
+      {/* Region */}
+      {/* <div className="my-2">
             <Collapse
             
               expandIcon={({ isActive }) => (
@@ -259,159 +326,261 @@ console.log(businessRole)
             </Collapse>
           </div> */}
 
-          {/* Country */}
-          <div className="my-2">
-            <Collapse
-              expandIcon={({ isActive }) => (
-                <DownOutlined rotate={isActive ? 180 : 0} />
-              )}
+      {/* Country */}
+      <div className="my-2">
+        <Collapse
+          expandIcon={({ isActive }) => (
+            <DownOutlined rotate={isActive ? 180 : 0} />
+          )}
+        >
+          <Panel header="Country" key="1">
+           <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+             <Radio.Group
+              value={selectedCountry}
+              onChange={(e) => handleCountryChange(e.target.value)}
             >
-              <Panel header="Country" key="1">
-                <Radio.Group
-                  value={selectedCountry}
-                  onChange={(e) => setSelectedCountry(e.target.value)}
-                >
-                  {country.map((category) => (
-                    <div key={category} className="mb-2">
-                      <Radio value={category}>{category}</Radio>
-                    </div>
-                  ))}
-                </Radio.Group>
-              </Panel>
-            </Collapse>
+              {countries.map((country) => (
+                <Radio key={country.isoCode} value={country.isoCode}>
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={`https://flagcdn.com/w20/${country.isoCode.toLowerCase()}.png`}
+                      alt={country.name}
+                      className="w-5 h-3 object-cover"
+                    />
+                    {country.name}
+                  </div>
+                </Radio>
+              ))}
+            </Radio.Group>
+           </div>
+          </Panel>
+        </Collapse>
+      </div>
+
+      {/* State */}
+      <div className="my-2">
+        <Collapse
+          expandIcon={({ isActive }) => (
+            <DownOutlined rotate={isActive ? 180 : 0} />
+          )}
+        >
+          <Panel header="State" key="2">
+           <div style={{ maxHeight: "200px", overflowY: "auto" }}> <Radio.Group
+              value={selectedState}
+              onChange={(e) => handleStateChange(e.target.value)}
+            >
+              {states.map((state) => (
+                <Radio key={state.isoCode} value={state.isoCode}>
+                  {state.name}
+                </Radio>
+              ))}
+            </Radio.Group></div>
+          </Panel>
+        </Collapse>
+      </div>
+
+      {/* City */}
+      <div className="my-2">
+        <Collapse
+          expandIcon={({ isActive }) => (
+            <DownOutlined rotate={isActive ? 180 : 0} />
+          )}
+        >
+          <Panel header="City" key="3">
+            <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+              <Radio.Group
+              value={selectedCity}
+              onChange={(e) => handleCityChange(e.target.value)}
+            >
+              {cities.map((city) => (
+                <Radio key={city.name} value={city.name}>
+                  {city.name}
+                </Radio>
+              ))}
+            </Radio.Group>
+            </div>
+          </Panel>
+        </Collapse>
+      </div>
+
+      {/* Location */}
+      {/* <div className="my-2">
+        <Collapse
+          expandIcon={({ isActive }) => (
+            <DownOutlined rotate={isActive ? 180 : 0} />
+          )}
+        >
+          <Panel header="Location" key="1">
+            <Radio.Group
+              value={selectedLocation}
+              onChange={(e) => setSelectedLocation(e.target.value)}
+            >
+              {location.map((category) => (
+                <div key={category} className="mb-2">
+                  <Radio value={category}>{category}</Radio>
+                </div>
+              ))}
+            </Radio.Group>
+          </Panel>
+        </Collapse>
+      </div> */}
+
+      {/* Asking Price */}
+      <div className="my-2">
+        <Collapse
+          expandIcon={({ isActive }) => (
+            <DownOutlined rotate={isActive ? 180 : 0} />
+          )}
+        >
+          <Panel header="Asking Price" key="1">
+            <Radio.Group
+              value={selectedAskingPrice}
+              onChange={(e) => setSelectedAskingPrice(e.target.value)}
+            >
+              {askingPrice.map((category) => (
+                <div key={category} className="mb-2">
+                  <Radio value={category}>{category}</Radio>
+                </div>
+              ))}
+            </Radio.Group>
+          </Panel>
+        </Collapse>
+      </div>
+
+      {/* Business Type */}
+      <div className="my-2">
+        <Collapse
+          expandIcon={({ isActive }) => (
+            <DownOutlined rotate={isActive ? 180 : 0} />
+          )}
+        >
+          <Panel header="Business Type" key="1">
+            <Radio.Group
+              value={selectedBusinessType}
+              onChange={(e) => setSelectedBusinessType(e.target.value)}
+            >
+              {businessType.map((category) => (
+                <div key={category} className="mb-2">
+                  <Radio value={category}>{category}</Radio>
+                </div>
+              ))}
+            </Radio.Group>
+          </Panel>
+        </Collapse>
+      </div>
+
+      {/* Ownership Type */}
+      <div className="my-2">
+        <Collapse
+          expandIcon={({ isActive }) => (
+            <DownOutlined rotate={isActive ? 180 : 0} />
+          )}
+        >
+          <Panel header="Ownership Type" key="1">
+            <Radio.Group
+              value={selectedOwnerShipType}
+              onChange={(e) => setSelectedOwnerShipType(e.target.value)}
+            >
+              {ownerShipType.map((category) => (
+                <div key={category} className="mb-2">
+                  <Radio value={category}>{category}</Radio>
+                </div>
+              ))}
+            </Radio.Group>
+          </Panel>
+        </Collapse>
+      </div>
+
+      {/* Sort By */}
+      <div className="my-2">
+        <Collapse
+          expandIcon={({ isActive }) => (
+            <DownOutlined rotate={isActive ? 180 : 0} />
+          )}
+        >
+          <Panel header="Sort By" key="1">
+            <Radio.Group
+              value={selectedSortBy}
+              onChange={(e) => setSelectedSortBy(e.target.value)}
+            >
+              {sortBy.map((category) => (
+                <div key={category} className="mb-2">
+                  <Radio value={category}>{category}</Radio>
+                </div>
+              ))}
+            </Radio.Group>
+          </Panel>
+        </Collapse>
+      </div>
+
+      {/* Age Of Listing */}
+      <div className="my-2">
+        <Collapse
+          expandIcon={({ isActive }) => (
+            <DownOutlined rotate={isActive ? 180 : 0} />
+          )}
+        >
+          <Panel header="Age Of Listing" key="1">
+            <Radio.Group
+              value={selectedAgeListing}
+              onChange={(e) => setSelectedAgeListing(e.target.value)}
+            >
+              {ageListing.map((category) => (
+                <div key={category} className="mb-2">
+                  <Radio value={category}>{category}</Radio>
+                </div>
+              ))}
+            </Radio.Group>
+          </Panel>
+        </Collapse>
+      </div>
+    </div>
+  );
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  return (
+    <div className="container m-auto">
+      <div className="flex min-h-screen bg-white my-11">
+        {/* Sidebar */}
+
+        <div className="hidden lg:block">
+          <SidebarContent></SidebarContent>
+        </div>
+
+        <div>
+          <div className="block lg:hidden">
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="p-2 border rounded-md  z-50 -mt-11 fixed ml-4 bg-white"
+            >
+              <Menu className="h-6 w-6" />
+            </button>
           </div>
 
-          {/* Location */}
-          <div className="my-2">
-            <Collapse
-              expandIcon={({ isActive }) => (
-                <DownOutlined rotate={isActive ? 180 : 0} />
-              )}
-            >
-              <Panel header="Location" key="1">
-                <Radio.Group
-                  value={selectedLocation}
-                  onChange={(e) => setSelectedLocation(e.target.value)}
-                >
-                  {location.map((category) => (
-                    <div key={category} className="mb-2">
-                      <Radio value={category}>{category}</Radio>
-                    </div>
-                  ))}
-                </Radio.Group>
-              </Panel>
-            </Collapse>
-          </div>
+          {isSidebarOpen && (
+            <div className="fixed inset-0 z-50 flex">
+              {/* Overlay */}
+              <div
+                className="fixed inset-0 bg-black bg-opacity-40"
+                onClick={() => setIsSidebarOpen(false)}
+              ></div>
 
-          {/* Asking Price */}
-          <div className="my-2">
-            <Collapse
-              expandIcon={({ isActive }) => (
-                <DownOutlined rotate={isActive ? 180 : 0} />
-              )}
-            >
-              <Panel header="Asking Price" key="1">
-                <Radio.Group
-                  value={selectedAskingPrice}
-                  onChange={(e) => setSelectedAskingPrice(e.target.value)}
+              {/* Drawer */}
+              <div className="relative bg-white w-90 h-full shadow-lg z-50 ">
+                <button
+                  onClick={() => setIsSidebarOpen(false)}
+                  className="absolute top-3 right-3 p-1  rounded-full bg-gray-200"
                 >
-                  {askingPrice.map((category) => (
-                    <div key={category} className="mb-2">
-                      <Radio value={category}>{category}</Radio>
-                    </div>
-                  ))}
-                </Radio.Group>
-              </Panel>
-            </Collapse>
-          </div>
-
-          {/* Business Type */}
-          <div className="my-2">
-            <Collapse
-              expandIcon={({ isActive }) => (
-                <DownOutlined rotate={isActive ? 180 : 0} />
-              )}
-            >
-              <Panel header="Business Type" key="1">
-                <Radio.Group
-                  value={selectedBusinessType}
-                  onChange={(e) => setSelectedBusinessType(e.target.value)}
-                >
-                  {businessType.map((category) => (
-                    <div key={category} className="mb-2">
-                      <Radio value={category}>{category}</Radio>
-                    </div>
-                  ))}
-                </Radio.Group>
-              </Panel>
-            </Collapse>
-          </div>
-
-          {/* Ownership Type */}
-          <div className="my-2">
-            <Collapse
-              expandIcon={({ isActive }) => (
-                <DownOutlined rotate={isActive ? 180 : 0} />
-              )}
-            >
-              <Panel header="Ownership Type" key="1">
-                <Radio.Group
-                  value={selectedOwnerShipType}
-                  onChange={(e) => setSelectedOwnerShipType(e.target.value)}
-                >
-                  {ownerShipType.map((category) => (
-                    <div key={category} className="mb-2">
-                      <Radio value={category}>{category}</Radio>
-                    </div>
-                  ))}
-                </Radio.Group>
-              </Panel>
-            </Collapse>
-          </div>
-
-          {/* Sort By */}
-          <div className="my-2">
-            <Collapse
-              expandIcon={({ isActive }) => (
-                <DownOutlined rotate={isActive ? 180 : 0} />
-              )}
-            >
-              <Panel header="Sort By" key="1">
-                <Radio.Group
-                  value={selectedSortBy}
-                  onChange={(e) => setSelectedSortBy(e.target.value)}
-                >
-                  {sortBy.map((category) => (
-                    <div key={category} className="mb-2">
-                      <Radio value={category}>{category}</Radio>
-                    </div>
-                  ))}
-                </Radio.Group>
-              </Panel>
-            </Collapse>
-          </div>
-
-          {/* Age Of Listing */}
-          <div className="my-2">
-            <Collapse
-              expandIcon={({ isActive }) => (
-                <DownOutlined rotate={isActive ? 180 : 0} />
-              )}
-            >
-              <Panel header="Age Of Listing" key="1">
-                <Radio.Group
-                  value={selectedAgeListing}
-                  onChange={(e) => setSelectedAgeListing(e.target.value)}
-                >
-                  {ageListing.map((category) => (
-                    <div key={category} className="mb-2">
-                      <Radio value={category}>{category}</Radio>
-                    </div>
-                  ))}
-                </Radio.Group>
-              </Panel>
-            </Collapse>
-          </div>
+                  <X className="h-5 w-5 " />
+                </button>
+                <div className="mt-11">
+                  <SidebarContent />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Main Content */}
@@ -428,16 +597,13 @@ console.log(businessRole)
 
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <span>Items Per Page:</span>
-                <Select
-                  value={itemsPerPage}
-                  onChange={setItemsPerPage}
-                  style={{ width: 80 }}
-                >
-                  <Option value="10">10</Option>
-                  <Option value="20">20</Option>
-                  <Option value="50">50</Option>
-                </Select>
+                <Pagination
+                  current={currentPage}
+                  pageSize={pageSize}
+                  total={businessFilter?.meta?.total || 0}
+                  onChange={handlePageChange}
+                  showSizeChanger={false}
+                />
               </div>
 
               <div className="flex">
@@ -456,15 +622,15 @@ console.log(businessRole)
           </div>
 
           {/* Business Listings */}
-          {/* Business Listings */}
+
           <div
             className={
               viewMode === "grid"
-                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6"
                 : "flex flex-col gap-6"
             }
           >
-            {business.map((business) => (
+            {business?.map((business) => (
               <Card
                 key={business.id}
                 hoverable
@@ -472,7 +638,7 @@ console.log(businessRole)
                   viewMode === "grid" ? (
                     <img
                       alt={business.title}
-                      src={`${imageUrl}/uploads/business-image/${business.image}`}
+                      src={`${imageUrl}/uploads/business-image/${business.image[0]}`}
                       style={{
                         height: 200,
                         objectFit: "cover",
@@ -488,17 +654,17 @@ console.log(businessRole)
                 <div
                   className={
                     viewMode === "list"
-                      ? "flex items-center gap-4" // list view flex layout
+                      ? "md:flex items-center gap-4" // list view flex layout
                       : "p-4"
                   }
                 >
                   {viewMode === "list" && (
                     <img
                       alt={business.title}
-                      src={`${imageUrl}/uploads/business-image/${business.image}`}
+                      src={`${imageUrl}/uploads/business-image/${business.image[0]}`}
                       style={{
-                        width:'400px',
-                        height:'300px',
+                        width: "400px",
+                        height: "300px",
                         objectFit: "cover",
                         borderRadius: "8px",
                       }}

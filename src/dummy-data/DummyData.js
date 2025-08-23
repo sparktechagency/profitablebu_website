@@ -110,15 +110,15 @@ export const menuItems = {
   buying: [
     {
       name: 'Buy a Business',
-      path: '/search?businessRole=Sellers-business',
+      path: '/search?businessRole=Seller',
     },
     {
       name: 'Buy a Business Asset',
-      path: '/search?businessRole=Asset-seller',
+      path: '/search?businessRole=Asset Seller',
     },
     {
       name: 'Buy a Franchise',
-      path: '/search?businessRole=Franchise',
+      path: '/search?businessRole=Francise Seller',
     },
     {
       name: 'Investor on Business Idea',

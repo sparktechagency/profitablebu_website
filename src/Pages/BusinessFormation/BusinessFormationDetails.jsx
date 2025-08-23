@@ -22,16 +22,16 @@ export default function BusinessFormationDetails() {
   const formation = singleData.data;
 
   return (
-    <div className="container mx-auto flex flex-col md:flex-row gap-5 w-full px-5 pt-20 pb-10">
+    <div className="container mx-auto flex flex-col md:flex-row gap-5 w-full px-5 pb-10">
       <div className="p-5 space-y-8 w-full md:w-1/2">
         <div className="flex flex-col gap-5">
           {/* Image Section */}
           <div className="mt-11">
             <div className="md:flex gap-5 items-center">
               <img
-                src={`${imageUrl}/uploads/business-image/${formation.image}`}
+                src={`${imageUrl}/uploads/formation-image/${formation.image}`}
                 alt={formation.title}
-                className="object-cover md:w-[200px]"
+                className="object-cover md:w-[100px] h-[100px] rounded-full"
               />
               <div className="space-y-3 mt-6 md:mt-0">
                 <Tag className="bg-blue-100 border-[#0091FF] text-[#0091FF] px-5 py-2 font-bold">

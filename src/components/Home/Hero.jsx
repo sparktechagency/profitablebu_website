@@ -24,8 +24,8 @@ export default function Home() {
         <div className="relative z-10 px-4 py-20 md:py-32 lg:py-40 container mx-auto">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Empowering Your <span className="text-[#22C55E]">Business</span>{" "}
-              with Smart{" "}
+             Empowering Your <span className="text-[#22C55E]">Business</span>{" "}
+               with Smart Financial Solutions At PBFS.com,
               <span className="text-[#0091FF]">Financial Solutions</span>
             </h1>
             <p className="text-white text-lg mb-8">

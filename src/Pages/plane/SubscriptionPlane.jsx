@@ -19,7 +19,7 @@ const SubscriptionPlan = () => {
 
 
   const plans = planeData?.data || [];
-  console.log(planeData);
+  console.log(plans);
   return (
     <div className="py-16">
       <Header

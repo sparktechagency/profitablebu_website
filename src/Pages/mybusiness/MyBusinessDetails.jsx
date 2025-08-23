@@ -21,6 +21,7 @@ const MyBusinessDetails = () => {
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
   console.log(profileData);
   const role = profileData?.data?.role;
+  console.log(role)
 
   const { id: businessId } = useParams();
 
@@ -88,14 +89,28 @@ const MyBusinessDetails = () => {
         )}
 
       <div className="lg:grid grid-cols-2 gap-4 pt-11">
-        <img
-          className="w-full h-[400px] object-cover"
-          src={`${imageUrl}/uploads/business-image/${businessDetails?.data?.business?.image}`}
-          alt=""
-        />
+        <div>
+          <img
+            className="w-full h-[400px] object-cover"
+            src={`${imageUrl}/uploads/business-image/${businessDetails?.data?.business?.image?.[0]}`}
+            alt="main business"
+          />
+
+          <div className="grid grid-cols-5 gap-2 mt-2">
+            {businessDetails?.data?.business?.image?.map((img, index) => (
+              <img
+                key={index}
+                className="w-full h-24 object-cover rounded"
+                src={`${imageUrl}/uploads/business-image/${img}`}
+                alt={`business-thumbnail-${index}`}
+              />
+            ))}
+          </div>
+        </div>
+
         <div>
           <button className="bg-[#C1E1FF] border border-[#0091FF] px-2 py-2 rounded">
-            #Francise
+           {businessDetails?.data?.business?.businessRole}
           </button>
           <h1 className="text-2xl text-[#0091FF]">
             {businessDetails?.data?.business?.title}
@@ -114,16 +129,21 @@ const MyBusinessDetails = () => {
               {businessDetails?.data?.business?.location}
             </p>
             <p>
+              <span className="font-semibold">Country:</span>{" "}
+              {businessDetails?.data?.business?.country }
+            </p>
+            
+            <p>
               <span className="font-semibold">Industry:</span>{" "}
               {businessDetails?.data?.business?.industryName}
             </p>
             <p>
               <span className="font-semibold">Ownership Type:</span>{" "}
-              {businessDetails?.data?.business?.ownershipType}
+              {businessDetails?.data?.business?.ownerShipType}
             </p>
-            <p>
+            {/* <p>
               <span className="font-semibold">Reason for Selling :</span> Not
-            </p>
+            </p> */}
           </div>
           <div className="flex gap-5">
             {role &&
@@ -159,7 +179,7 @@ const MyBusinessDetails = () => {
               (role === "Buyer" ||
                 (role === "Investor" &&
                   businessDetails?.data?.business?.businessRole ===
-                    "Business-Idea-lister")) && (
+                    "Business Idea Lister")) && (
                 <Link
                   to={`/business-details-with-form/${businessDetails?.data?.business?._id}`}
                 >
@@ -174,7 +194,7 @@ const MyBusinessDetails = () => {
               (role === "Buyer" ||
                 (role === "Investor" &&
                   businessDetails?.data?.business?.businessRole ===
-                    "Business-Idea-lister")) && (
+                    "Business Idea Lister")) && (
                 <Link
                   to={`/buyer-contact-info/${businessDetails?.data?.business?.user}`}
                 >
@@ -200,12 +220,13 @@ const MyBusinessDetails = () => {
           </div>
         </div>
       </div>
-      <div>
+      <div className="flex mt-3">
+        <span className="font-semibold">Description : </span>
         <div
           dangerouslySetInnerHTML={{
             __html: businessDetails?.data?.business?.description,
           }}
-          className="text-gray-700 mt-3"
+          className="text-gray-700 "
         />
       </div>
 

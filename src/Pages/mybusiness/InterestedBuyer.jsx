@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate } from "../Navigate";
 import { Link, useParams } from "react-router-dom";
 import { useGetSingleIterestUserQuery } from "../redux/api/businessApi";
+import { imageUrl } from "../redux/api/baseApi";
 
 const InterestedBuyer = () => {
   const { id: businessId } = useParams();
@@ -31,7 +32,7 @@ const InterestedBuyer = () => {
             {/* Left Section */}
             <div className="flex items-center space-x-4">
               <img
-                src={`https://i.pravatar.cc/150?img=${index + 1}`} // Placeholder
+                src={`${imageUrl}/uploads/profile-image/${buyer?.userId?.image}`} // Placeholder
                 alt={buyer.name}
                 className="w-14 h-14 rounded-full object-cover"
               />

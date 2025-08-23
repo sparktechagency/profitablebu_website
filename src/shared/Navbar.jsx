@@ -15,38 +15,39 @@ import InfoIcon from "./nav-icons/InfoIcon";
 import { message } from "antd";
 import { useGetProfileQuery } from "../Pages/redux/api/userApi";
 import { imageUrl } from "../Pages/redux/api/baseApi";
+import world from '../assets/Home/world.png'
 const countryFlags = {
   US: "https://flagcdn.com/w20/us.png",
   GB: "https://flagcdn.com/w20/gb.png",
   IN: "https://flagcdn.com/w20/in.png",
-  ES: "https://flagcdn.com/w20/es.png",
+  AF: "https://flagcdn.com/w20/af.png",
   AE: "https://flagcdn.com/w20/ae.png",
+  PK : world,
+  
 };
 
 const Navbar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCountry = searchParams.get("country");
 
-
-
-
-
   const countries = [
+      { name: "INTERNATIONAL", code: "PK", flag: countryFlags.PK, state: "" },
     {
       name: "United States",
       code: "US",
       flag: countryFlags.US,
-      state: "United States",
+      state: "US",
     },
     {
       name: "United Kingdom",
       code: "GB",
       flag: countryFlags.GB,
-      state: "United Kingdom",
+      state: "GB",
     },
-    { name: "India", code: "IN", flag: countryFlags.IN, state: "India" },
-    { name: "Spain", code: "ES", flag: countryFlags.ES, state: "Spain" },
+    { name: "India", code: "IN", flag: countryFlags.IN, state: "IN" },
+    { name: "Afganistan", code: "AF", flag: countryFlags.AF, state: "AF" },
     { name: "UAE", code: "AE", flag: countryFlags.AE, state: "UAE" },
+  
   ];
   const navigate = useNavigate();
   const { data: profileData, isLoading } = useGetProfileQuery();
