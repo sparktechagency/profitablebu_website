@@ -2,6 +2,7 @@ import { Form, Input, Select, Button, message } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useAddInterestMutation, usePostInterestFormationMutation } from "../redux/api/businessApi";
 import { useGetProfileQuery } from "../redux/api/userApi";
+import { useEffect } from "react";
 
 const { TextArea } = Input;
 
@@ -14,6 +15,24 @@ export default function InterenstFormation({ formationId }) {
  console.log(userId)
   console.log(userId)
   const [form] = useForm();
+
+
+
+  console.log(profileData);
+  const email = profileData?.data?.email;
+  console.log(email);
+
+  useEffect(() => {
+    if (profileData?.data) {
+      const admin = profileData.data;
+      form.setFieldsValue({
+        name: admin.name,
+        email: admin.email,
+        mobile: admin.mobile || "",
+      });
+    }
+  }, [profileData, form]);
+
 
   const onFinish = async(values) => {
 const data = {
@@ -81,7 +100,7 @@ console.log(data)
               name="name"
               rules={[{ required: true, message: "Please enter your full name" }]}
             >
-              <Input placeholder="Enter Full Name" />
+              <Input  style={{ height: "48px" }} placeholder="Enter Full Name" />
             </Form.Item>
 
             {/* Country Code & Mobile */}
@@ -91,7 +110,7 @@ console.log(data)
                 name="countryCode"
                 className="md:col-span-1"
               >
-                <Select>
+                <Select  style={{ height: "48px" }}>
                   <Select.Option value="+971">🇦🇪 +971</Select.Option>
                   <Select.Option value="+1">🇺🇸 +1</Select.Option>
                   <Select.Option value="+44">🇬🇧 +44</Select.Option>
@@ -106,7 +125,7 @@ console.log(data)
                 className="md:col-span-2"
                 rules={[{ required: true, message: "Please enter your mobile number" }]}
               >
-                <Input type="tel" placeholder="Enter mobile number" />
+                <Input  style={{ height: "48px" }} type="tel" placeholder="Enter mobile number" />
               </Form.Item>
             </div>
 
@@ -117,7 +136,7 @@ console.log(data)
                 name="sector"
                 rules={[{ required: true, message: "Please select a sector" }]}
               >
-                <Select placeholder="Select One">
+                <Select  style={{ height: "48px" }} placeholder="Select One">
                   <Select.Option value="food-beverage">Food & Beverage</Select.Option>
                   <Select.Option value="retail">Retail</Select.Option>
                   <Select.Option value="technology">Technology</Select.Option>
@@ -134,7 +153,7 @@ console.log(data)
                 name="activity"
                 rules={[{ required: true, message: "Please enter activity" }]}
               >
-                <Input placeholder="Enter Activity" />
+                <Input  style={{ height: "48px" }} placeholder="Enter Activity" />
               </Form.Item>
             </div>
 
@@ -148,7 +167,7 @@ console.log(data)
                   { type: "email", message: "Invalid email address" },
                 ]}
               >
-                <Input placeholder="Enter Email" />
+                <Input  style={{ height: "48px" }} placeholder="Enter Email" />
               </Form.Item>
 
               <Form.Item
@@ -156,7 +175,7 @@ console.log(data)
                 name="serviceZone"
                 rules={[{ required: true, message: "Please enter service zone" }]}
               >
-                <Input placeholder="Enter Service Zone" />
+                <Input  style={{ height: "48px" }} placeholder="Enter Service Zone" />
               </Form.Item>
             </div>
 

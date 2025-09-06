@@ -16,6 +16,7 @@ import { message } from "antd";
 import { useGetProfileQuery } from "../Pages/redux/api/userApi";
 import { imageUrl } from "../Pages/redux/api/baseApi";
 import world from '../assets/Home/world.png'
+import { useGetNotificationQuery, useGetUnreadNotificationQuery } from "../Pages/redux/api/metaApi";
 const countryFlags = {
   US: "https://flagcdn.com/w20/us.png",
   GB: "https://flagcdn.com/w20/gb.png",
@@ -55,6 +56,8 @@ const Navbar = () => {
   const users = profileData?.data;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const {data: notificationCount} = useGetUnreadNotificationQuery()
+  console.log(notificationCount)
   const [countryModalOpen, setCountryModalOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   // const [selectedCountry, setSelectedCountry] = useState(countries);
@@ -165,7 +168,7 @@ const Navbar = () => {
                 <div key={item?.key} className="relative">
                   {item?.submenu ? (
                     <button
-                      className="flex items-center space-x-1 text-gray-700 hover:text-blue-600 font-medium transition-colors group"
+                      className="flex items-center space-x-1 text-gray-700 hover:text-[#0091FF] font-medium transition-colors group"
                       onMouseEnter={() => handleDropdownEnter(item?.key)}
                       onMouseLeave={handleDropdownLeave}
                     >
@@ -179,7 +182,7 @@ const Navbar = () => {
                   ) : (
                     <Link
                       to={item?.path}
-                      className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+                      className="text-gray-700 hover:text-[#0091FF] font-medium transition-colors"
                     >
                       {item?.label}
                     </Link>
@@ -205,7 +208,7 @@ const Navbar = () => {
                               state={subitem?.state}
                               className="block p-3 rounded-lg hover:bg-gray-50 transition-colors group"
                             >
-                              <div className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
+                              <div className="font-medium text-gray-900 group-hover:text-[#0091FF] transition-colors">
                                 {subitem?.name}
                               </div>
                             </Link>
@@ -391,7 +394,7 @@ const Navbar = () => {
                     <div>
                       <div className="flex items-center space-x-2">
                         <span className="font-semibold">{users?.name}</span>
-                        <span className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-0.5 rounded">
+                        <span className="bg-blue-100 text-[#0091FF] text-xs font-medium px-2 py-0.5 rounded">
                           {users?.role}
                         </span>
                       </div>
@@ -402,47 +405,57 @@ const Navbar = () => {
 
                 {/* Navigation Items */}
                 <nav className="space-y-4">
-                  {[
-                    {
-                      icon: BusinessIcon,
-                      label: "Contacted Businesses",
-                      path: "/myBusiness/details",
-                    },
-                    { icon: MessageIcon, label: "Message", path: "/chat" },
-                    {
-                      icon: BelIcon,
-                      label: "Notification",
-                      path: "/notification",
-                    },
-                    {
-                      icon: CrownIcon,
-                      label: "Subscription",
-                      path: "/subscription",
-                    },
-                    {
-                      icon: SettingIcon,
-                      label: "Profile Settings",
-                      path: "/profilePage",
-                    },
-                    { icon: NdaIcon, label: "NDA", path: "/Seller" },
-                    {
-                      icon: HelpIcon,
-                      label: "Help & Support",
-                      path: "/contact-us",
-                    },
-                    { icon: InfoIcon, label: "FAQs", path: "/faqs" },
-                  ].map((item, idx) => (
-                    <Link
-                      key={idx}
-                      to={item.path}
-                      onClick={() => setProfileMenuOpen(false)}
-                      className="flex cursor-pointer items-center space-x-3 hover:bg-gray-100 p-2 rounded-lg transition-colors"
-                    >
-                      <item.icon className="w-5 h-5 text-gray-600" />
-                      <span className="text-sm font-medium">{item.label}</span>
-                    </Link>
-                  ))}
-                </nav>
+  {[
+    {
+      icon: BusinessIcon,
+      label: "Listed Businesses",
+      path: "/myBusiness/details",
+    },
+    { icon: MessageIcon, label: "Message", path: "/all-Chat" },
+    {
+      icon: BelIcon,
+      label: "Notification",
+      path: "/notification",
+      showBadge: true, 
+    },
+    {
+      icon: CrownIcon,
+      label: "Subscription",
+      path: "/subscription",
+    },
+    {
+      icon: SettingIcon,
+      label: "Profile Settings",
+      path: "/profilePage",
+    },
+    { icon: NdaIcon, label: "NDA", path: "/Seller" },
+    {
+      icon: HelpIcon,
+      label: "Help & Support",
+      path: "/contact-us",
+    },
+    { icon: InfoIcon, label: "FAQs", path: "/faqs" },
+  ].map((item, idx) => (
+    <Link
+      key={idx}
+      to={item.path}
+      onClick={() => setProfileMenuOpen(false)}
+      className="flex cursor-pointer items-center space-x-3 hover:bg-gray-100 p-2 rounded-lg transition-colors relative"
+    >
+      <item.icon className="w-5 h-5 text-gray-600" />
+
+      <span className="text-sm font-medium">{item.label}</span>
+
+
+      {item.showBadge && notificationCount?.data > 0 && (
+        <span className="ml-auto bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+          {notificationCount.data}
+        </span>
+      )}
+    </Link>
+  ))}
+</nav>
+
 
                 {/* Sign Out */}
                 <div className="border-t border-gray-200 mt-6 pt-4">
@@ -515,7 +528,7 @@ const Navbar = () => {
                       />
                       <span className="font-medium">{country.name}</span>
                       {selectedCountry === country.state && (
-                        <div className="ml-auto w-2 h-2 bg-blue-600 rounded-full" />
+                        <div className="ml-auto w-2 h-2 bg-[#0091FF] rounded-full" />
                       )}
                     </button>
                   ))}
@@ -561,7 +574,7 @@ const MobileNavItem = ({ item, onClose }) => {
                     key={subitem?.name}
                     to={subitem?.path}
                     onClick={onClose}
-                    className="block p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                    className="block p-2 text-gray-600 hover:text-[#0091FF] hover:bg-blue-50 rounded-lg transition-colors"
                   >
                     {subitem?.name}
                   </Link>

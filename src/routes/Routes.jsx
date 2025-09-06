@@ -63,12 +63,14 @@ import SubmissionDone from "../Pages/BussinessValuation/SubmissionDone";
 import ProtectedRoute from "../ProtectedRoute";
 import FaqBuyer from "../Pages/faq/FaqBuyer";
 import Test from "../Pages/mybusiness/Test";
+import MainChat from "../Pages/chat/MainChat";
+import { SocketProvider } from "../context/ContextProvider";
 
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <SocketProvider><Root /></SocketProvider>,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -168,6 +170,10 @@ export const router = createBrowserRouter([
             <Chat></Chat>
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "/all-Chat",
+        element: <ProtectedRoute><MainChat></MainChat></ProtectedRoute>
       },
       {
         path: "/myBusiness/details",

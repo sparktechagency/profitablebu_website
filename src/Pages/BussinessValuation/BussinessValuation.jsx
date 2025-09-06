@@ -645,20 +645,43 @@
 //   );
 // }
 
-import React, { useState } from "react";
-import { Form, Input, Select, Checkbox, Button, Upload, message, Spin } from "antd";
+import React, { useEffect, useState } from "react";
+import {
+  Form,
+  Input,
+  Select,
+  Checkbox,
+  Button,
+  Upload,
+  message,
+  Spin,
+} from "antd";
+import ReactPhoneInput from "react-phone-input-2";
 import { UploadOutlined } from "@ant-design/icons";
 import { User, DollarSign } from "lucide-react";
 import { useAddBusinessValuationMutation } from "../redux/api/businessApi";
 import { useNavigate } from "react-router-dom";
+import { Country } from "country-state-city";
 
 const { Option } = Select;
 
 export default function BusinessValuationForm() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [countries, setCountries] = useState([]);
+  console.log(countries);
   const [addBusinessValuation] = useAddBusinessValuationMutation();
   const navigate = useNavigate();
+  const [contactNo, setContactNo] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const handleCountryChange = (value) => {
+    setSelectedCountry(value);
+
+    form.setFieldsValue({ state: undefined, city: undefined });
+  };
+  useEffect(() => {
+    setCountries(Country.getAllCountries());
+  }, []);
   const MAX_FILE_SIZE = 9 * 1024 * 1024;
 
   const beforeUpload = (file) => {
@@ -675,14 +698,14 @@ export default function BusinessValuationForm() {
 
   const onFinish = async (values) => {
     console.log(values);
-setLoading(true);
+    setLoading(true);
     try {
       const formData = new FormData();
 
       formData.append("ownerName", values.ownerName);
       formData.append("businessName", values.businessName);
       formData.append("email", values.email);
-      formData.append("countryCode", values.countryCode);
+      // formData.append("countryCode", values.countryCode);
       formData.append("mobile", values.mobile);
       formData.append("region", values.region);
       formData.append("country", values.country);
@@ -695,6 +718,7 @@ setLoading(true);
       formData.append("yearOfEstablishment", values.yearOfEstablishment);
       formData.append("valueOfAsset", values.valueOfAsset);
       formData.append("valueOfStock", values.valueOfStock);
+      formData.append("category", values.category);
       formData.append("message", values.message);
 
       const pdfFields = [
@@ -712,7 +736,6 @@ setLoading(true);
 
       const res = await addBusinessValuation(formData).unwrap();
       console.log(res);
-
 
       message.success(res.message || "Submitted successfully");
       setLoading(false);
@@ -783,80 +806,87 @@ setLoading(true);
             <Input className="py-3" placeholder="Enter Your Email" />
           </Form.Item>
 
-          <div className="grid grid-cols-12 gap-4">
-            <div className="col-span-3">
-              <Form.Item
-                label="Country Code"
-                name="countryCode"
-                initialValue="+971"
-              >
-                <Select style={{ height: "48px" }}>
-                  <Option value="+971">🇦🇪 +971</Option>
-                  <Option value="+1">🇺🇸 +1</Option>
-                  <Option value="+44">🇬🇧 +44</Option>
-                </Select>
-              </Form.Item>
-            </div>
-
-            <div className="col-span-9">
-              <Form.Item
-                label="Mobile"
-                name="mobile"
-                rules={[
-                  { required: true, message: "Please enter mobile number" },
-                ]}
-              >
-                <Input
-                  style={{ height: "48px" }}
-                  placeholder="Enter mobile number"
-                />
-              </Form.Item>
-            </div>
+          <div className=" gap-4">
+            <Form.Item
+              label="Phone Number"
+              name="mobile"
+              required
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter your phone number!",
+                },
+              ]}
+            >
+              <ReactPhoneInput
+                country={"us"}
+                value={contactNo}
+                onChange={(value) => setContactNo(value)}
+                inputStyle={{ width: "100%", height: "48px" }}
+              />
+            </Form.Item>
           </div>
         </div>
 
-        <div className="md:grid grid-cols-2 gap-4">
-          <Form.Item label="Regions" name="region">
-            <Select style={{ height: "48px" }} placeholder="Select Region">
-              <Option value="north-america">North America</Option>
-              <Option value="europe">Europe</Option>
-              <Option value="asia">Asia</Option>
-              <Option value="middle-east">Middle East</Option>
+        <div className="grid grid-cols-2 gap-4">
+          {/* Country */}
+          <Form.Item
+            label="Select Your Country"
+            name="country"
+            rules={[{ required: true, message: "Please select your country!" }]}
+          >
+            <Select
+              placeholder="Select your country"
+              style={{ height: "48px" }}
+              showSearch
+              allowClear
+              onChange={handleCountryChange}
+              optionLabelProp="label"
+            >
+              {countries.map((country) => (
+                <Select.Option
+                  key={country.isoCode}
+                  value={country.name}
+                  label={country.name}
+                >
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={`https://flagcdn.com/w20/${country.isoCode.toLowerCase()}.png`}
+                      alt={country.name}
+                      className="w-5 h-3 object-cover"
+                    />
+                    {country.name}
+                  </div>
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
-
-          <Form.Item label="Country" name="country">
-            <Select style={{ height: "48px" }} placeholder="Select Country">
-              <Option value="uae">United Arab Emirates</Option>
-              <Option value="usa">United States</Option>
-              <Option value="uk">United Kingdom</Option>
-            </Select>
+          <Form.Item label="Regions" name="region">
+            <Input className="py-3" placeholder="Enter Regions" />
           </Form.Item>
         </div>
+
+        <div className="md:grid grid-cols-2 gap-4"></div>
 
         <Form.Item label="Location" name="location">
           <Input style={{ height: "48px" }} placeholder="Enter Location" />
         </Form.Item>
 
         <div className="md:grid grid-cols-2 gap-4">
-          <Form.Item label="Business Type" name="businessType">
-            <Select
-              style={{ height: "48px" }}
-              placeholder="Select Business Type"
-            >
-              <Option value="north-america">North America</Option>
-              <Option value="europe">Europe</Option>
-              <Option value="asia">Asia</Option>
-              <Option value="middle-east">Middle East</Option>
-            </Select>
+          <Form.Item
+            label="Business Type"
+            name="businessType"
+            rules={[{ required: true, message: "Please enter Business Type" }]}
+          >
+            <Input className="py-3" placeholder="Enter Business Type" />
           </Form.Item>
-          <Form.Item label="Business Category" name="businessCategory">
-            <Select style={{ height: "48px" }} placeholder="Select Category">
-              <Option value="north-america">North America</Option>
-              <Option value="europe">Europe</Option>
-              <Option value="asia">Asia</Option>
-              <Option value="middle-east">Middle East</Option>
-            </Select>
+
+          <Form.Item
+            label="Business Category"
+            name="category"
+            rules={[{ required: true, message: "Please enter Business Category" }]}
+          >
+            <Input className="py-3" placeholder="Enter Business Category" />
           </Form.Item>
         </div>
         <div className="flex items-center gap-2 mb-6 mt-16">
@@ -879,13 +909,12 @@ setLoading(true);
             />
           </Form.Item>
 
-          <Form.Item label="Currency" name="currency">
-            <Select style={{ height: "48px" }} placeholder="Select Currency">
-              <Option value="north-america">North America</Option>
-              <Option value="europe">Europe</Option>
-              <Option value="asia">Asia</Option>
-              <Option value="middle-east">Middle East</Option>
-            </Select>
+           <Form.Item
+            label="Currency"
+            name="currency"
+            rules={[{ required: true, message: "Please enter Currency" }]}
+          >
+            <Input className="py-3" placeholder="Enter Currency" />
           </Form.Item>
         </div>
 
@@ -1098,16 +1127,12 @@ setLoading(true);
 
         <Form.Item>
           <button
-                type="submit"
-                className="w-full mt-8 py-2 bg-[#0091FF] text-white rounded "
-                disabled={loading}
-              >
-                  {loading ? (
-                <Spin size="small" /> 
-              ) : (
-                "Submit"
-              )}
-              </button>
+            type="submit"
+            className="w-full mt-8 py-2 bg-[#0091FF] text-white rounded "
+            disabled={loading}
+          >
+            {loading ? <Spin size="small" /> : "Submit"}
+          </button>
         </Form.Item>
       </Form>
     </div>

@@ -1,159 +1,226 @@
-import React, { useEffect } from "react";
-import { Search, ArrowLeft, Paperclip, Send } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { Send, ArrowLeft, Menu } from "lucide-react";
 import { Navigate } from "../Navigate";
 import { useParams } from "react-router-dom";
-import { usePostChatMutation } from "../redux/api/metaApi";
+import SidbarChat from "./SidbarChat";
+import { useSocket } from "../../context/ContextProvider";
+import { useGetProfileQuery } from "../redux/api/userApi";
+import { imageUrl } from "../redux/api/baseApi";
+import img from "../../assets/Home/user.png";
+
 const Chat = () => {
-const {id:receiverId} = useParams()
-  console.log(receiverId)
-const [sentMessage] = usePostChatMutation()
+  const { id: chatId } = useParams();
+  const { socket } = useSocket();
+  const { data: profileData } = useGetProfileQuery();
+  const userId = profileData?.data?._id;
+
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [receiverId, setReceiverId] = useState(null);
+  const [info, setInfo] = useState(null);
+  const scrollRef = useRef();
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    if (!socket || !chatId) return;
+
+    const handleChats = (res) => {
+      if (res?.data) {
+        setMessages(res.data.messages || []);
+        const other = res.data.participants.find((p) => p._id !== userId);
+        setReceiverId(other?._id);
+        setInfo(other);
+      }
+    };
+
+    socket.on("chat_message", handleChats);
+    socket.emit("chat_message", { chatId });
+
+    return () => socket.off("chat_message", handleChats);
+  }, [socket, chatId, userId]);
+
+  // ✅ Handle new message
+  useEffect(() => {
+    if (!socket || !userId || !receiverId) return;
+
+    const handleMessage = (msg) => {
+      const isForCurrentChat =
+        (msg.sender === userId && msg.receiver === receiverId) ||
+        (msg.sender === receiverId && msg.receiver === userId);
+
+      if (!isForCurrentChat) return;
+
+      setMessages((prev) => {
+        const exists = prev.some((m) => m._id === msg._id);
+        if (exists) return prev;
+        return [...prev, { ...msg, fromSelf: msg.sender === userId }];
+      });
+    };
+
+    socket.on("send_message", handleMessage);
+    return () => socket.off("send_message", handleMessage);
+  }, [socket, userId, receiverId]);
+
+  // ✅ Send message
+  const sendMessage = () => {
+    if (!input.trim() || !receiverId) return;
+
+    const messageData = { chatId, userId, receiverId, message: input };
+    socket.emit("send_message", messageData);
+    setInput("");
+  };
+
+  // Press Enter to send
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") sendMessage();
+  };
+
+  // ✅ Scroll to latest message
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
-    <div className="container m-auto">
-      <div className="mt-20 md:mt-11">
-        <Navigate title={"Message"}></Navigate>
-      </div>
-      <div className="flex h-screen bg-white">
-        {/* Sidebar - Conversations */}
-        <div className="w-full md:w-96 border-r bg-white">
-          <div className="p-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <input
-                className="pl-10 bg-gray-100 border-0 w-full py-2 rounded-md"
-                placeholder="Search"
-                defaultValue="Mojahid Islam"
-              />
-            </div>
-          </div>
+   <div className="container m-auto">
+  <div className="mt-20 md:mt-11">
+    <Navigate title={"Message"} />
+    {/* Mobile menu button */}
+  </div>
+  <button
+    onClick={() => setIsDrawerOpen(true)}
+    className="md:hidden p-2 rounded bg-gray-200"
+  >
+    <Menu className="w-6 h-6" />
+  </button>
+  <div className="flex h-screen bg-white">
+    {/* Sidebar (Desktop Only) */}
+    <div className="hidden md:block border-r">
+      <SidbarChat chatId={chatId} />
+    </div>
 
-          <div className="overflow-y-auto h-[calc(100vh-130px)]">
-            {Array(8)
-              .fill(0)
-              .map((_, i) => (
-                <div
-                  key={i}
-                  className="p-4 hover:bg-gray-50 border-b flex items-start gap-3 bg-white"
-                >
-                  <div className="h-10 w-10 rounded-full overflow-hidden">
-                    <img
-                      src="https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg"
-                      alt="User avatar"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex justify-between items-center">
-                      <h3 className="font-medium">Lee Williamson</h3>
-                      <span className="text-xs text-gray-400">18:31 PM</span>
-                    </div>
-                    <p className="text-sm text-gray-500 mt-1">
-                      Yes, that's gonna work, hopefully.
-                    </p>
-                  </div>
-                </div>
-              ))}
-          </div>
-        </div>
-
-        {/* Main Chat Area */}
-        <div className="hidden md:flex flex-col flex-1">
-          {/* Chat Header */}
-          <div className="p-4 border-b flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-full overflow-hidden">
-                <img
-                  src="https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg"
-                  alt="User avatar"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div>
-                <h2 className="font-semibold">Eleanor Pena</h2>
-                <p className="text-sm text-gray-500">
-                  tim.jennings@example.com
-                </p>
-              </div>
-            </div>
-            <button className="p-2 rounded-full hover:bg-gray-100">
-              <span className="sr-only">Options</span>
-              <div className="h-5 w-5 text-gray-400">⋯</div>
-            </button>
-          </div>
-
-          {/* Chat Content */}
-          <div className="flex-1 p-4 overflow-y-auto flex flex-col">
-            {/* User Profile */}
-            <div className="flex flex-col items-center my-6">
-              <div className="h-16 w-16 rounded-full overflow-hidden">
-                <img
-                  src="https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg"
-                  alt="User profile"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <h2 className="text-xl font-semibold mt-2">Eleanor Pena</h2>
-              <p className="text-sm text-gray-500">
-                Los Angeles, United States
-              </p>
-            </div>
-
-            {/* Messages */}
-            <div className="mt-auto">
-              <div className="mb-6">
-                <div className="text-xs text-gray-500 text-center mb-2">
-                  FRI AT 16:44 PM
-                </div>
-                {[...Array(3)].map((_, i) => (
-                  <div key={i} className="flex gap-3 mb-4">
-                    <div className="h-8 w-8 rounded-full overflow-hidden mt-1">
-                      <img
-                        src="https://static.vecteezy.com/system/resources/previews/036/594/092/non_2x/man-empty-avatar-photo-placeholder-for-social-networks-resumes-forums-and-dating-sites-male-and-female-no-photo-images-for-unfilled-user-profile-free-vector.jpg"
-                        alt="User avatar"
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <div className="bg-gray-100 p-3 rounded-lg max-w-[70%]">
-                      <p>Message {i + 1}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div>
-                <div className="text-xs text-gray-500 text-center mb-2">
-                  FRI AT 16:44 PM
-                </div>
-                {[...Array(3)].map((_, i) => (
-                  <div key={i} className="flex justify-end mb-4">
-                    <div className="bg-gray-200 p-3 rounded-lg max-w-[70%]">
-                      <p>Reply {i + 1}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Message Input */}
-          <div className="p-4 border-t flex items-center gap-2">
-            <button className="p-2 rounded-full hover:bg-gray-100">
-              <Paperclip className="h-5 w-5 text-blue-500" />
-            </button>
-            <input
-              className="bg-gray-100 border-0 flex-1 py-2 px-4 rounded-md"
-              placeholder="Aa"
+    {/* Chat Area */}
+    <div className="flex flex-col flex-1">
+      {/* Header */}
+      <div className="p-4 border-b flex justify-between items-center">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-full overflow-hidden">
+            <img
+              src={
+                info?.image
+                  ? `${imageUrl}/uploads/profile-image/${info.image}`
+                  : img
+              }
+              alt="User avatar"
+              className="h-full w-full object-cover"
             />
-            <button className="p-2 rounded-full bg-blue-500 hover:bg-blue-600">
-              <Send className="h-5 w-5 text-white" />
-            </button>
+          </div>
+          <div>
+            <h2 className="font-semibold">{info?.name}</h2>
+            <p className="text-sm text-gray-500">Active now</p>
           </div>
         </div>
+      </div>
+
+      {/* Chat Messages */}
+      <div className="flex-1 p-4 overflow-y-auto flex flex-col">
+        <div className="">
+          <div className=" overflow-hidden">
+            <div className="flex justify-center">
+              {info?.image ? (
+                <img
+                  src={`${imageUrl}/uploads/profile-image/${info.image}`}
+                  alt="User avatar"
+                  className="h-[150px] w-[150px] object-cover rounded-full"
+                />
+              ) : (
+                <img
+                  src={img}
+                  alt="User avatar"
+                  className="h-[150px] w-[150px] object-cover rounded-full"
+                />
+              )}
+            </div>
+          </div>
+          <div className="text-center">
+            <h2 className="font-semibold text-2xl">{info?.name}</h2>
+            <p className="text-sm text-gray-500">Active now</p>
+          </div>
+        </div>
+        {messages.map((msg, i) => {
+          const isMe = msg.sender === userId;
+          return (
+            <div
+              key={msg._id || i}
+              ref={i === messages.length - 1 ? scrollRef : null}
+              className={`mb-4 flex ${isMe ? "justify-end" : "justify-start"}`}
+            >
+              <div
+                className={`p-3 rounded-lg max-w-[70%] whitespace-pre-wrap break-all ${
+                  isMe
+                    ? "bg-blue-500 text-white rounded-br-none"
+                    : "bg-gray-100 rounded-bl-none"
+                }`}
+              >
+                <p>{msg.message}</p>
+                <span className="block text-xs text-gray-400 mt-1">
+                  {new Date(msg.createdAt).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+        <div ref={scrollRef}></div>
+      </div>
+
+      {/* Input */}
+      <div className="p-4 border-t flex items-center gap-2">
+        <input
+          className="bg-gray-100 flex-1 py-2 px-4 rounded-md"
+          placeholder="Type a message..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+        <button
+          className="p-2 rounded-full bg-[#AB684D] hover:bg-blue-600"
+          onClick={sendMessage}
+        >
+          <Send className="h-5 w-5 text-white" />
+        </button>
       </div>
     </div>
+  </div>
+
+  {/* Drawer (Mobile Sidebar) */}
+  {isDrawerOpen && (
+    <div className="fixed inset-0 z-50 flex">
+      {/* Overlay */}
+      <div
+        className="fixed inset-0 bg-black bg-opacity-50"
+        onClick={() => setIsDrawerOpen(false)}
+      ></div>
+
+      {/* Drawer panel */}
+      <div className="relative bg-white w-72 h-full shadow-lg z-50">
+        <div className="flex justify-between items-center p-4 border-b">
+          <h2 className="font-bold">Chats</h2>
+          <button
+            onClick={() => setIsDrawerOpen(false)}
+            className="text-gray-600 hover:text-black"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+        </div>
+        <SidbarChat chatId={chatId} />
+      </div>
+    </div>
+  )}
+</div>
+
   );
 };
 

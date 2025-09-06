@@ -1,37 +1,52 @@
 import { Form, Input, Select, Button, message } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useAddInterestMutation } from "../redux/api/businessApi";
+import { useGetProfileQuery } from "../redux/api/userApi";
+import { useEffect } from "react";
 
 const { TextArea } = Input;
 
 export default function InterestForm({ businessId, businessRole }) {
-  console.log(businessRole)
-  const [addInterest] = useAddInterestMutation()
+  console.log(businessRole);
+  const [addInterest] = useAddInterestMutation();
   const user = JSON.parse(localStorage.getItem("user"));
-  const userId = user?._id
- 
-  console.log(userId)
+  const userId = user?._id;
+  const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
+  console.log(profileData);
+  const email = profileData?.data?.email;
+  console.log(email);
+  console.log(userId);
   const [form] = useForm();
-
-  const onFinish = async(values) => {
-const data = {
+  useEffect(() => {
+    if (profileData?.data) {
+      const admin = profileData.data;
+      form.setFieldsValue({
+        name: admin.name,
+        email: admin.email,
+        mobile: admin.mobile || "",
+      });
+    }
+  }, [profileData, form]);
+  const onFinish = async (values) => {
+    const data = {
       userId: userId,
       name: values.name,
       email: values.email,
-      countryCode: values.countryCode, 
-      activity: values.activity, 
+      countryCode: values.countryCode,
+      activity: values.activity,
+      mobile: values.mobile,
       serviceZone: values.serviceZone,
       message: values.message,
       businessRole: businessRole,
       businessId: businessId,
+      sector: values.sector,
     };
-console.log(data)
+    console.log(data);
     try {
       const res = await addInterest(data).unwrap();
-     
-        message.success(res?.message);
-        form.resetFields();
-    
+
+      message.success(res?.message);
+      form.resetFields();
     } catch (error) {
       console.error(error);
       message.error(error?.data?.message || "Failed to schedule call.");
@@ -77,9 +92,11 @@ console.log(data)
             <Form.Item
               label="Full Name"
               name="name"
-              rules={[{ required: true, message: "Please enter your full name" }]}
+              rules={[
+                { required: true, message: "Please enter your full name" },
+              ]}
             >
-              <Input placeholder="Enter Full Name" />
+              <Input style={{ height: "48px" }} placeholder="Enter Full Name" />
             </Form.Item>
 
             {/* Country Code & Mobile */}
@@ -89,7 +106,7 @@ console.log(data)
                 name="countryCode"
                 className="md:col-span-1"
               >
-                <Select>
+                <Select style={{ height: "48px" }}>
                   <Select.Option value="+971">🇦🇪 +971</Select.Option>
                   <Select.Option value="+1">🇺🇸 +1</Select.Option>
                   <Select.Option value="+44">🇬🇧 +44</Select.Option>
@@ -102,9 +119,18 @@ console.log(data)
                 label="Mobile"
                 name="mobile"
                 className="md:col-span-2"
-                rules={[{ required: true, message: "Please enter your mobile number" }]}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter your mobile number",
+                  },
+                ]}
               >
-                <Input type="tel" placeholder="Enter mobile number" />
+                <Input
+                  style={{ height: "48px" }}
+                  type="tel"
+                  placeholder="Enter mobile number"
+                />
               </Form.Item>
             </div>
 
@@ -115,8 +141,10 @@ console.log(data)
                 name="sector"
                 rules={[{ required: true, message: "Please select a sector" }]}
               >
-                <Select placeholder="Select One">
-                  <Select.Option value="food-beverage">Food & Beverage</Select.Option>
+                <Select style={{ height: "48px" }} placeholder="Select One">
+                  <Select.Option value="food-beverage">
+                    Food & Beverage
+                  </Select.Option>
                   <Select.Option value="retail">Retail</Select.Option>
                   <Select.Option value="technology">Technology</Select.Option>
                   <Select.Option value="healthcare">Healthcare</Select.Option>
@@ -132,7 +160,10 @@ console.log(data)
                 name="activity"
                 rules={[{ required: true, message: "Please enter activity" }]}
               >
-                <Input placeholder="Enter Activity" />
+                <Input
+                  style={{ height: "48px" }}
+                  placeholder="Enter Activity"
+                />
               </Form.Item>
             </div>
 
@@ -146,15 +177,20 @@ console.log(data)
                   { type: "email", message: "Invalid email address" },
                 ]}
               >
-                <Input placeholder="Enter Email" />
+                <Input style={{ height: "48px" }} placeholder="Enter Email" />
               </Form.Item>
 
               <Form.Item
                 label="Service Zone"
                 name="serviceZone"
-                rules={[{ required: true, message: "Please enter service zone" }]}
+                rules={[
+                  { required: true, message: "Please enter service zone" },
+                ]}
               >
-                <Input placeholder="Enter Service Zone" />
+                <Input
+                  style={{ height: "48px" }}
+                  placeholder="Enter Service Zone"
+                />
               </Form.Item>
             </div>
 
@@ -164,10 +200,7 @@ console.log(data)
               name="message"
               rules={[{ required: true, message: "Please enter your message" }]}
             >
-              <TextArea
-                placeholder="Enter Your Message Here"
-                rows={5}
-              />
+              <TextArea placeholder="Enter Your Message Here" rows={5} />
             </Form.Item>
 
             {/* Submit Button */}

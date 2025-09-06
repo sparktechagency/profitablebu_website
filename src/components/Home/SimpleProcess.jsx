@@ -6,39 +6,50 @@ const SimpleProcess = () => {
   const steps = [
     {
       number: 1,
-      title: "Create Your Account",
+      title: "Sign Up Free",
       description:
-        "We dejoy working with dining clients, people for whom quality, service, integrity & aesthetics.",
+        "Create your account on ProfitableBusinessesForSale.com (PBFS) and get access to a global marketplace of business buyers, sellers, brokers, investors, franchisors, and business idea listers. ",
     },
-    {
-      number: 2,
-      title: "Browse Listings or Create Your Listing",
-      description:
-        "We dejoy working with dining clients, people for whom quality, service, integrity & aesthetics.",
-    },
+ {
+  number: 2,
+  title: "Add or Explore Listings",
+  description: (
+    <>
+      Sellers & Brokers – List your business, franchise, or business assets for
+      sale with complete details and reach serious buyers worldwide. <br /> <br />
+      Buyers & Investors – Browse thousands of businesses for sale, franchise
+      opportunities, and business assets across multiple industries and
+      countries. <br /> <br />
+      Business Idea Listers – Share your startup ideas and innovative business
+      concepts for free, and connect with the right investors to bring them to
+      life.
+    </>
+  ),
+},
+
     {
       number: 3,
-      title: "Contact the Seller or Buyer",
+      title: " Connect Directly",
       description:
-        "We dejoy working with dining clients, people for whom quality, service, integrity & aesthetics.",
+        "Get direct buyer and investor inquiries through your PBFS dashboard. ",
     },
     {
       number: 4,
-      title: "Negotiate & Finalize Deal",
+      title: "Negotiate with Confidence",
       description:
-        "We dejoy working with dining clients, people for whom quality, service, integrity & aesthetics.",
+        "Discuss pricing, terms, and details directly with genuine buyers and investors. Perform your due diligence before moving forward.",
     },
     {
       number: 5,
-      title: "Complete the Transaction",
+      title: "Close the Deal ",
       description:
-        "We dejoy working with dining clients, people for whom quality, service, integrity & aesthetics.",
+        "Finalize your business sale, franchise expansion, or investment opportunity without paying commission—just a simple subscription plan.",
     },
     {
       number: 6,
-      title: "Ongoing Support",
+      title: "Ongoing Support & Growth",
       description:
-        "We dejoy working with dining clients, people for whom quality, service, integrity & aesthetics.",
+        "From business valuation tools to investor matchmaking, asset promotion, and franchise marketing, PBFS helps you grow even after the deal is done.",
     },
   ];
   return (
@@ -52,8 +63,9 @@ const SimpleProcess = () => {
               How It Works
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Whether you're buying or selling, our platform makes the process
-              seamless and straightforward. Here's how it works:
+              Whether you want to sell a business, buy a business, find investors, list business assets, promote a
+franchise, or share your business ideas, our process is designed to make everything simple and
+effective. Here's how it works:
             </p>
           </div>
 

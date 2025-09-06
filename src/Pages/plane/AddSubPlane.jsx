@@ -79,7 +79,9 @@ const AddSubPlane = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
     try {
       const payload = {
         subscriptionId: subscriptionId._id,
+        duration: subscriptionId.duration,
         price: String(selectedPrice)
+        
       };
       console.log(payload);
       if (couponCode && singleCouponData?.data) {
@@ -91,7 +93,9 @@ const AddSubPlane = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
       }
       handleCancel();
     } catch (err) {
-      console.error("Checkout Failed:", err);
+      console.log(err)
+      message.error(err?.data?.message)
+      console.error("Checkout Failed:", err?.data?.message);
     }
   };
 

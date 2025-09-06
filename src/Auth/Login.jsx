@@ -16,6 +16,8 @@ import { ArrowLeft } from "lucide-react";
 import loginImg from "./login.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLoginUserMutation } from "../Pages/redux/api/userApi";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "./firebase";
 const { Title, Text } = Typography;
 
 export default function Login() {
@@ -40,13 +42,8 @@ export default function Login() {
 
         localStorage.setItem("accessToken", res.data.accessToken);
         localStorage.setItem("user", JSON.stringify(res.data.user));
-
-        // navigate(location?.state?.from || "/", { replace: true });
-        navigate('/')
+        navigate("/");
         window.location.reload();
-
-        //       const userRole = res.data.user.role;
-        // if (userRole === "Seller") navigate("/dashboard/seller");
       }
     } catch (err) {
       console.error(err);
@@ -58,9 +55,19 @@ export default function Login() {
       form.setFieldsValue({ role: location.state });
     }
   }, [location?.state, form]);
+
   const handleGoogleLogin = () => {
     console.log("Google login clicked");
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider).then(async (result) => {
+      console.log(result);
+      
+    });
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="relative flex items-center justify-center md:p-20 p-4">
@@ -204,7 +211,12 @@ export default function Login() {
                 </Row>
 
                 <Form.Item>
-                  <Button style={{height: "48px"}} type="primary" htmlType="submit" block>
+                  <Button
+                    style={{ height: "48px" }}
+                    type="primary"
+                    htmlType="submit"
+                    block
+                  >
                     Log In
                   </Button>
                 </Form.Item>
@@ -261,7 +273,7 @@ export default function Login() {
                   <Button
                     type="link"
                     className="hover:underline"
-                    style={{ color: "#3b82f6", padding: 0,  }}
+                    style={{ color: "#3b82f6", padding: 0 }}
                   >
                     Sign up
                   </Button>

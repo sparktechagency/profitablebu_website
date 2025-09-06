@@ -100,8 +100,11 @@ export default function AdvanceSearch() {
   };
 
   const handleStateChange = (value) => {
-    setSelectedState(value);
-    setCities(City.getCitiesOfState(selectedCountry, value));
+    const selectedStateObj = states.find((s) => s.name === value);
+    setSelectedState(selectedStateObj?.name);
+    setCities(
+      City.getCitiesOfState(selectedCountry, selectedStateObj?.isoCode)
+    );
     form.setFieldsValue({ city: undefined });
   };
   useEffect(() => {
@@ -129,12 +132,7 @@ export default function AdvanceSearch() {
         </div>
       </div>
 
-      <Form
-        form={form}
-        onFinish={handleSearch}
-        layout="vertical"
-        className=""
-      >
+      <Form form={form} onFinish={handleSearch} layout="vertical" className="">
         <div className="">
           <Form.Item
             label="Business Category"
@@ -144,7 +142,7 @@ export default function AdvanceSearch() {
             ]}
           >
             <Select
-            style={{ height: "48px" }}
+              style={{ height: "48px" }}
               placeholder="Select Category"
               onChange={handleCategoryChange}
               value={selectedCategory}
@@ -159,7 +157,10 @@ export default function AdvanceSearch() {
 
           {subCategories.length > 0 && (
             <Form.Item label="Sub Category" name="subCategory">
-              <Select style={{ height: "48px" }} placeholder="Select Sub Category">
+              <Select
+                style={{ height: "48px" }}
+                placeholder="Select Sub Category"
+              >
                 {subCategories.map((sub, i) => (
                   <Option key={i} value={sub.name}>
                     {sub.name}
@@ -215,7 +216,7 @@ export default function AdvanceSearch() {
               disabled={!selectedCountry}
             >
               {states.map((state) => (
-                <Select.Option key={state.isoCode} value={state.isoCode}>
+                <Select.Option key={state.isoCode} value={state.name}>
                   {state.name}
                 </Select.Option>
               ))}
@@ -240,7 +241,7 @@ export default function AdvanceSearch() {
           </Form.Item>
         </div>
 
-        <Form.Item label="Location" name="location">
+        {/* <Form.Item label="Location" name="location">
           <Select
             placeholder="Select One"
             allowClear
@@ -252,7 +253,7 @@ export default function AdvanceSearch() {
               </Option>
             ))}
           </Select>
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item label="Asking Price" name="askingPrice">
           <Select
@@ -299,8 +300,6 @@ export default function AdvanceSearch() {
             ))}
           </Select>
         </Form.Item>
-
-      
 
         <Form.Item className="col-span-2">
           <Space>

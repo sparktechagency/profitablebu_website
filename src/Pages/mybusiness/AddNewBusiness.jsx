@@ -16,7 +16,6 @@ import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Navigate } from "../Navigate";
 import JoditEditor from "jodit-react";
-import { countryData } from "../../dummy-data/DummyData";
 import { Country, State, City } from "country-state-city";
 import {
   useAddBusinessMutation,
@@ -54,38 +53,54 @@ const AddNewBusiness = () => {
     setFileList(newFileList);
   };
 
-  
   const [countries, setCountries] = useState([]);
-  console.log(countries)
+  console.log(countries);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [selectedState, setSelectedState] = useState(null);
+
+
+const [selectedCountry, setSelectedCountry] = useState(null);
+const [selectedState, setSelectedState] = useState(null);
+const [selectedCity, setSelectedCity] = useState(null);
+
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
     const category = categorie.data.find((cat) => cat.categoryName === value);
     setSubCategories(category?.subCategories || []);
     form.setFieldsValue({ subCategory: null });
   };
-
+console.log(selectedState)
   useEffect(() => {
     setCountries(Country.getAllCountries());
   }, []);
 
-  const handleCountryChange = (value) => {
-    setSelectedCountry(value);
-    setStates(State.getStatesOfCountry(value));
-    setCities([]); // reset cities
-    form.setFieldsValue({ state: undefined, city: undefined });
-  };
 
-  const handleStateChange = (value) => {
-    setSelectedState(value);
-    setCities(City.getCitiesOfState(selectedCountry, value));
-    form.setFieldsValue({ city: undefined });
-  };
+const handleCountryChange = (value) => {
+  const country = countries.find((c) => c.isoCode === value);
+  setSelectedCountry(country); 
+  setStates(State.getStatesOfCountry(value));
+  setCities([]);
+  form.setFieldsValue({ state: undefined, city: undefined });
+};
+
+// State Change
+const handleStateChange = (value) => {
+  const state = states.find((s) => s.isoCode === value);
+  setSelectedState(state); 
+  setCities(City.getCitiesOfState(selectedCountry?.isoCode, value));
+  form.setFieldsValue({ city: undefined });
+};
+
+
+const handleCityChange = (value) => {
+  const city = cities.find((c) => c.name === value);
+  setSelectedCity(city); 
+};
+
+
+
 
   const onPreview = async (file) => {
     let src = file.url;
@@ -107,29 +122,44 @@ const AddNewBusiness = () => {
     try {
       const formData = new FormData();
 
-     fileList.forEach((file, index) => {
-      formData.append("business_image", file.originFileObj);
-    });
+      fileList.forEach((file, index) => {
+        formData.append("business_image", file.originFileObj);
+      });
       formData.append("title", values?.title);
-      formData.append("state", values?.state);
-      formData.append("city", values?.city);
+
+
+
+
+    formData.append("country", selectedCountry?.isoCode );
+    formData.append("countryName", selectedCountry?.name);
+
+    formData.append("state", selectedState?.name );
+
+
+    formData.append("city", selectedCity?.name );
+
+
       formData.append("category", values?.category);
       formData.append("subCategory", values?.subCategory);
-      formData.append("country", values?.country);
+
       // formData.append("location", values?.location);
       formData.append("askingPrice", values?.askingPrice);
       formData.append("businessType", values?.businessType);
+      formData.append("price", values?.price);
       formData.append("ownerShipType", values?.ownerShipType);
-      formData.append("industryName", values?.industryName);
+      formData.append("reason", values?.reason);
       formData.append("description", content);
-
       const res = await addBusiness(formData);
+
       console.log(res);
-      message.success(res.data.message);
-    } catch (error) {
-      console.log(error?.error);
-      message.error(error?.data?.message);
-    } finally {
+      if (res.data?.message) {
+        message.success(res.data?.message);
+      } else {
+        message.error(res?.error?.data?.message);
+      }
+    } catch (errr) {
+      console.log(errr);
+      message.error(errr?.data?.message);
     }
   };
   const config = {
@@ -139,7 +169,6 @@ const AddNewBusiness = () => {
       height: 600,
     },
     buttons: [
-      "image",
       "fontsize",
       "bold",
       "italic",
@@ -172,13 +201,15 @@ const AddNewBusiness = () => {
               fileList={fileList}
               onChange={onChange}
               onPreview={onPreview}
-              multiple={true}
+              multiple={false}
+              maxCount={1}
+              accept=".png,.jpg,.jpeg"
             >
               <p className="text-4xl">
                 <InboxOutlined />
               </p>
 
-              <p className="">Click or drag file Max 1 MB Only PNG and JPG</p>
+              <p>Click or drag file Max 1 MB Only PNG and JPG</p>
 
               {fileList.length < 1 && "+ Upload"}
             </Upload>
@@ -209,7 +240,7 @@ const AddNewBusiness = () => {
               ]}
             >
               <Select
-              style={{ height: "48px" }}
+                style={{ height: "48px" }}
                 placeholder="Select Category"
                 onChange={handleCategoryChange}
                 value={selectedCategory}
@@ -224,7 +255,10 @@ const AddNewBusiness = () => {
 
             {subCategories.length > 0 && (
               <Form.Item label="Sub Category" name="subCategory">
-                <Select style={{ height: "48px" }} placeholder="Select Sub Category">
+                <Select
+                  style={{ height: "48px" }}
+                  placeholder="Select Sub Category"
+                >
                   {subCategories.map((sub, i) => (
                     <Option key={i} value={sub.name}>
                       {sub.name}
@@ -296,6 +330,7 @@ const AddNewBusiness = () => {
                 style={{ height: "48px" }}
                 showSearch
                 allowClear
+                onChange={handleCityChange}
                 disabled={!selectedState}
               >
                 {cities.map((city) => (
@@ -307,7 +342,7 @@ const AddNewBusiness = () => {
             </Form.Item>
           </div>
 
-          <div className="">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* <Form.Item
               label="Location"
               name="location"
@@ -339,7 +374,7 @@ const AddNewBusiness = () => {
                 placeholder="Select Asking Price"
                 className="w-full"
               >
-                <Option value="General_Inquiry">Select</Option>
+                <Option value="Select Asking Price">Select</Option>
                 <Option value="Under $50K">Under $50K</Option>
                 <Option value="$50K - $100K">$50K - $100K</Option>
                 <Option value="$100K - $250K">$100K - $250K</Option>
@@ -347,6 +382,13 @@ const AddNewBusiness = () => {
                 <Option value="$500K - $1M">$500k - $1M</Option>
                 <Option value="Over $1M">Over $1M</Option>
               </Select>
+            </Form.Item>
+            <Form.Item label="Price Range (USD)" name="price">
+              <Input
+                type="number"
+                className="w-full bg-transparent py-3"
+                placeholder="price"
+              />
             </Form.Item>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -367,6 +409,7 @@ const AddNewBusiness = () => {
                 <Option value="Partnership">Partnership</Option>
                 <Option value="Corporation">Corporation</Option>
                 <Option value="LLC">LLC</Option>
+                <Option value="Other">Other</Option>
               </Select>
             </Form.Item>
             <Form.Item
@@ -387,15 +430,12 @@ const AddNewBusiness = () => {
                 <Option value="Startup">Startup</Option>
                 <Option value="Home-Based">Home-Based</Option>
                 <Option value="Online">Online</Option>
+                <Option value="Other">Other</Option>
               </Select>
             </Form.Item>
           </div>
 
-          <Form.Item
-            label="Industry Name"
-            name="industryName"
-            rules={[{ required: true, message: "Please input Indersty Name!" }]}
-          >
+          <Form.Item label="Reason for Selling" name="reason">
             <Input
               className="w-full bg-transparent py-3"
               placeholder="Engine Model"
@@ -409,6 +449,9 @@ const AddNewBusiness = () => {
             tabIndex={1}
             onBlur={(newContent) => setContent(newContent)}
           />
+          <div className="mt-2">
+            Note: Write your description like you’re telling a success story. Focus on what makes your business valuable and exciting for buyers.
+          </div>
 
           <Form.Item className=" pt-3">
             <button

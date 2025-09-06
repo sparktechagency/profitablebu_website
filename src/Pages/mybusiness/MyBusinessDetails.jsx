@@ -20,8 +20,10 @@ const MyBusinessDetails = () => {
 
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
   console.log(profileData);
+  const price = profileData?.data?.subscriptionPlanPrice;
+  console.log(price);
   const role = profileData?.data?.role;
-  console.log(role)
+  console.log(role);
 
   const { id: businessId } = useParams();
 
@@ -92,11 +94,11 @@ const MyBusinessDetails = () => {
         <div>
           <img
             className="w-full h-[400px] object-cover"
-            src={`${imageUrl}/uploads/business-image/${businessDetails?.data?.business?.image?.[0]}`}
+            src={`${imageUrl}/uploads/business-image/${businessDetails?.data?.business?.image}`}
             alt="main business"
           />
 
-          <div className="grid grid-cols-5 gap-2 mt-2">
+          {/* <div className="grid grid-cols-5 gap-2 mt-2">
             {businessDetails?.data?.business?.image?.map((img, index) => (
               <img
                 key={index}
@@ -105,12 +107,12 @@ const MyBusinessDetails = () => {
                 alt={`business-thumbnail-${index}`}
               />
             ))}
-          </div>
+          </div> */}
         </div>
 
         <div>
           <button className="bg-[#C1E1FF] border border-[#0091FF] px-2 py-2 rounded">
-           {businessDetails?.data?.business?.businessRole}
+            {businessDetails?.data?.business?.businessRole}
           </button>
           <h1 className="text-2xl text-[#0091FF]">
             {businessDetails?.data?.business?.title}
@@ -125,17 +127,19 @@ const MyBusinessDetails = () => {
               {businessDetails?.data?.business?.askingPrice}
             </p>
             <p>
-              <span className="font-semibold">Location:</span>{" "}
-              {businessDetails?.data?.business?.location}
+              <span className="font-semibold">Business Type:</span>{" "}
+              {businessDetails?.data?.business?.businessType}
             </p>
             <p>
               <span className="font-semibold">Country:</span>{" "}
-              {businessDetails?.data?.business?.country }
+              {businessDetails?.data?.business?.countryName},{" "}
+              {businessDetails?.data?.business?.city},{" "}
+              {businessDetails?.data?.business?.state}
             </p>
-            
+
             <p>
-              <span className="font-semibold">Industry:</span>{" "}
-              {businessDetails?.data?.business?.industryName}
+              <span className="font-semibold">Reason:</span>{" "}
+              {businessDetails?.data?.business?.reason}
             </p>
             <p>
               <span className="font-semibold">Ownership Type:</span>{" "}
@@ -176,9 +180,13 @@ const MyBusinessDetails = () => {
 
             {role &&
               localStorage.getItem("accessToken") &&
-              (role === "Buyer" ||
-                (role === "Investor" &&
-                  businessDetails?.data?.business?.businessRole ===
+              checkUserId !== checkBusinessId &&
+              ((role === "Buyer" &&
+                businessDetails?.data?.business?.businessRole !==
+                  "Business Idea Lister") ||
+                role === "Investor" ||
+                (role === "Broker" &&
+                  businessDetails?.data?.business?.businessRole !==
                     "Business Idea Lister")) && (
                 <Link
                   to={`/business-details-with-form/${businessDetails?.data?.business?._id}`}
@@ -191,14 +199,18 @@ const MyBusinessDetails = () => {
 
             {role &&
               localStorage.getItem("accessToken") &&
-              (role === "Buyer" ||
-                (role === "Investor" &&
-                  businessDetails?.data?.business?.businessRole ===
+              checkUserId !== checkBusinessId &&
+              price !== 0 &&
+              ((role === "Buyer" &&
+                businessDetails?.data?.business?.businessRole !==
+                  "Business Idea Lister") ||
+                role === "Investor" ||
+                (role === "Broker" &&
+                  businessDetails?.data?.business?.businessRole !==
                     "Business Idea Lister")) && (
                 <Link
                   to={`/buyer-contact-info/${businessDetails?.data?.business?.user}`}
                 >
-                  {" "}
                   <button className="bg-[#0091FF] hover:bg-[#0091FF] text-white px-5 py-1 rounded">
                     Contact
                   </button>
@@ -231,18 +243,21 @@ const MyBusinessDetails = () => {
       </div>
 
       <h1 className="text-[#0091FF] font-bold text-3xl mt-9">Location</h1>
-      <p className="mb-4">{businessDetails?.data?.business?.location}</p>
+      <p className="mb-4">{businessDetails?.data?.business?.countryName}</p>
 
-      <iframe
-        src={`https://www.google.com/maps?q=${encodeURIComponent(
-          businessDetails?.data?.business?.location || ""
-        )}&output=embed`}
-        className="w-full h-[300px]"
-        allowFullScreen=""
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        title="Business Location"
-      />
+     <iframe
+  src={`https://www.google.com/maps?q=${encodeURIComponent(
+    `${businessDetails?.data?.business?.city || ""}, ${
+      businessDetails?.data?.business?.state || ""
+    }, ${businessDetails?.data?.business?.countryName || ""}`
+  )}&output=embed`}
+  className="w-full h-[300px]"
+  allowFullScreen=""
+  loading="lazy"
+  referrerPolicy="no-referrer-when-downgrade"
+  title="Business Location"
+/>
+
     </div>
   );
 };

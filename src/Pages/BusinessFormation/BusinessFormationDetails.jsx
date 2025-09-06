@@ -20,6 +20,7 @@ export default function BusinessFormationDetails() {
   }
 
   const formation = singleData.data;
+  console.log(singleData)
 
   return (
     <div className="container mx-auto flex flex-col md:flex-row gap-5 w-full px-5 pb-10">
@@ -34,9 +35,9 @@ export default function BusinessFormationDetails() {
                 className="object-cover md:w-[100px] h-[100px] rounded-full"
               />
               <div className="space-y-3 mt-6 md:mt-0">
-                <Tag className="bg-blue-100 border-[#0091FF] text-[#0091FF] px-5 py-2 font-bold">
-                  #Franchise
-                </Tag>
+                {/* <Tag className="bg-blue-100 border-[#0091FF] text-[#0091FF] px-5 py-2 font-bold">
+                  {formation.businessRoll}
+                </Tag> */}
                 <h1 className="text-3xl font-bold text-[#0091FF]">
                   {formation.title}
                 </h1>
@@ -51,7 +52,7 @@ export default function BusinessFormationDetails() {
 
           <div className="flex flex-col gap-5">
           
-            <div>
+            {/* <div>
               <h1 className="text-2xl font-bold text-[#000] mb-5">Assets Included</h1>
               <ul className="space-y-2 text-sm text-gray-700">
                 <li>• Licensed franchise brand rights (transferable)</li>
@@ -75,7 +76,7 @@ export default function BusinessFormationDetails() {
                 <li>• Lease Terms: 3 years remaining, renewable</li>
                 <li>• Royalty Fee: 5% of monthly revenue</li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

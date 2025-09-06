@@ -125,7 +125,48 @@ const businessApi = baseApi.injectEndpoints({
       providesTags: ["terms"],
     }),
 
-   postChat: builder.mutation({
+    getUnreadNotification: builder.query({
+      query: () => {
+        return {
+          url: "/notification/get-unread-notification",
+          method: "GET",
+        };
+      },
+      providesTags: ["updateProfile"],
+    }),
+
+    getNotification: builder.query({
+      query: () => {
+        return {
+          url: "/notification/get-all-notification",
+          method: "GET",
+        };
+      },
+      providesTags: ["updateProfile"],
+    }),
+
+     updateNotification: builder.mutation({
+      query: ({ role, notificationId }) => {
+        return {
+          url: `/notification/update-notification?role=${role}&notificationId=${notificationId}`,
+          method: "PATCH",
+          
+        };
+      },
+      invalidatesTags: ["updateProfile"],
+    }),
+
+    deleteNotification: builder.mutation({
+      query: ({ role, notificationId }) => {
+        return {
+          url: `/notification/delete-notification?role=${role}&notificationId=${notificationId}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["updateProfile"],
+    }),
+
+    postChat: builder.mutation({
       query: (data) => {
         return {
           url: "/chat/post-chat",
@@ -158,5 +199,9 @@ export const {
   usePostSubscriberMutation,
   useDeleteFaqMutation,
   useUpdateFaqMutation,
-  usePostChatMutation
+  usePostChatMutation,
+  useGetNotificationQuery,
+  useDeleteNotificationMutation,
+  useGetUnreadNotificationQuery,
+  useUpdateNotificationMutation
 } = businessApi;

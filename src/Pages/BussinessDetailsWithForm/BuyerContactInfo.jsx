@@ -1,29 +1,62 @@
-import { Tag } from "antd";
+import { message, Tag } from "antd";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useGetSingleBusinessContactQuery } from "../redux/api/businessApi";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useGetProfileQuery } from "../redux/api/userApi";
+import { useSocket } from "../../context/ContextProvider";
+import { useState, useCallback } from "react";
+import { imageUrl } from "../redux/api/baseApi";
 
 export default function BuyerContactInfo() {
-  const{id} = useParams()
-  console.log(id)
-    const {data:singleContactUser} = useGetSingleBusinessContactQuery({userId:id})
-    console.log(singleContactUser)
-    const userData = singleContactUser?.data
+  const { id } = useParams();
+  const { data: singleContactUser } = useGetSingleBusinessContactQuery({
+    userId: id,
+  });
+  const userData = singleContactUser?.data;
+  const navigate = useNavigate();
+  const { data: profileData } = useGetProfileQuery();
+  const role = profileData?.data?.role;
+
+  const { socket } = useSocket();
+  const [loading, setLoading] = useState(false);
+
+  const handleChat = useCallback(
+    (receiverId) => {
+      if (!socket || !receiverId) return;
+
+      setLoading(true);
+      socket.emit("chat_initiate", { receiverId }, (response) => {
+   
+        console.log("Emit response:", response);
+      });
+
+      socket.once("chat_initiate", (data) => {
+        console.log("Socket initiate chat response:", data);
+        setLoading(false);
+
+        if (data?.data?._id) {
+          navigate(`/chat/${data.data._id}`);
+        } else {
+          message.error("Failed to start chat. Please try again.");
+        }
+      });
+    },
+    [socket, navigate]
+  );
+
   return (
     <div className="container mx-auto px-5 pt-20 pb-10">
-      <h2 className="text-2xl font-bold text-blue-600 mb-6">
-        Contact Info
-      </h2>
+      <h2 className="text-2xl font-bold text-blue-600 mb-6">Contact Info</h2>
 
       <div className="grid lg:grid-cols-2 gap-10 lg:gap-5">
         {/* Left Side - Profile Section */}
         <div className="p-5">
-          <div className="flex items-start gap-4">
-            <div className="h-16 w-16 bg-gray-200 rounded-full">
+          <div className="flex items-start gap-6">
+            <div className=" bg-gray-200 rounded-full">
               <img
-                src="https://i.ibb.co.com/RvFgZC8/aman.png"
+                src={`${imageUrl}/uploads/profile-image/${userData?.image}`}
                 alt="Profile"
-                className="w-20 h-20 rounded-full mx-auto"
+                className="w-[100px] h-[100px] object-cover rounded-full mx-auto"
               />
             </div>
 
@@ -40,9 +73,13 @@ export default function BuyerContactInfo() {
                 <p className="text-gray-600">{userData?.email}</p>
               </div>
 
-             <Link to={`/chat/${userData?._id}`}> <button className="bg-[#0091FF] px-5 py-2 text-white font-medium rounded-md">
-                Send Message
-              </button></Link>
+              <button
+                onClick={() => handleChat(userData?._id)}
+                disabled={loading}
+                className="bg-[#0091FF] px-5 py-2 text-white font-medium rounded-md"
+              >
+                {loading ? "Starting..." : "Send Message"}
+              </button>
             </div>
           </div>
         </div>
@@ -78,9 +115,7 @@ export default function BuyerContactInfo() {
             </div>
             <div>
               <h4 className="font-semibold text-blue-600 text-lg">Location</h4>
-              <p className="text-gray-700">
-                {userData?.location}
-              </p>
+              <p className="text-gray-700">{userData?.location}</p>
             </div>
           </div>
         </div>

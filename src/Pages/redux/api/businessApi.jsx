@@ -23,9 +23,9 @@ const businessApi = baseApi.injectEndpoints({
     }),
 
     getSingleSubscription: builder.query({
-      query: ({ subscriptionId }) => {
+      query: ({ subscriptionId,role }) => {
         return {
-          url: `/subscription/get-single-subscription-plan?subscriptionId=${subscriptionId}`,
+          url: `/subscription/get-single-subscription-plan?subscriptionId=${subscriptionId}&role=${role}`,
           method: "GET",
         };
       },
@@ -93,19 +93,18 @@ const businessApi = baseApi.injectEndpoints({
     }),
 
     getAllFeturesBusiness: builder.query({
-  query: ({ businessRole, country }) => {
-    let url = `/business/featured-business?businessRole=${businessRole}`;
-    if (country) {
-      url += `&country=${country}`;
-    }
-    return {
-      url,
-      method: "GET",
-    };
-  },
-  providesTags: ["updateProfile"],
-}),
-
+      query: ({ businessRole, country }) => {
+        let url = `/business/featured-business?businessRole=${businessRole}`;
+        if (country) {
+          url += `&country=${country}`;
+        }
+        return {
+          url,
+          method: "GET",
+        };
+      },
+      providesTags: ["updateProfile"],
+    }),
 
     getAllBusinessHome: builder.query({
       query: () => {
@@ -117,33 +116,50 @@ const businessApi = baseApi.injectEndpoints({
       providesTags: ["updateProfile"],
     }),
 
- getAllBusinessMostView: builder.query({
-  query: ({ userId, role, country } = {}) => {
-    let queryParams = [];
+    getMostViewBusinessIdea: builder.query({
+      query: ({ country }) => {
+        console.log(country)
+        let url = `/business/most-viewed-idea`;
+        
+        if (country) {
+          url += `?country=${country}`;
+        }
+        console.log(url)
+        return {
+          url,
+          method: "GET",
+        };
+      },
+      providesTags: ["updateProfile"],
+    }),
 
-    if (userId) queryParams.push(`userId=${userId}`);
-    if (role) queryParams.push(`role=${role}`);
-    if (country) queryParams.push(`country=${country}`);
+    getAllBusinessMostView: builder.query({
+      query: ({ userId, role, country } = {}) => {
+        let queryParams = [];
 
-    const queryString = queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
+        if (userId) queryParams.push(`userId=${userId}`);
+        if (role) queryParams.push(`role=${role}`);
+        if (country) queryParams.push(`country=${country}`);
 
-    return {
-      url: `/business/most-viewed${queryString}`,
-      method: "GET",
-    };
-  },
-  providesTags: ["updateProfile"],
-}),
+        const queryString =
+          queryParams.length > 0 ? `?${queryParams.join("&")}` : "";
 
+        return {
+          url: `/business/most-viewed${queryString}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["updateProfile"],
+    }),
 
     deleteBusiness: builder.mutation({
-        query: ({businessId,role}) => {
-            return {
-                url: `/business/delete-business?businessId=${businessId}&role=${role}`,
-                method: "DELETE",
-            };
-        },
-         invalidatesTags: ['updateProfile']
+      query: ({ businessId, role }) => {
+        return {
+          url: `/business/delete-business?businessId=${businessId}&role=${role}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: ["updateProfile"],
     }),
 
     // getFaq: builder.query({
@@ -200,7 +216,7 @@ const businessApi = baseApi.injectEndpoints({
       invalidatesTags: ["updateProfile"],
     }),
 
-     addNda: builder.mutation({
+    addNda: builder.mutation({
       query: (data) => {
         return {
           url: "/agreement/create-agreement",
@@ -222,54 +238,61 @@ const businessApi = baseApi.injectEndpoints({
       invalidatesTags: ["updateProfile"],
     }),
 
-  getAllBusinesFilter: builder.query({
-  query: ({
-    category,
-    location,
-    country,
-    ageOfListing,
-    state,
-    city,
-    sortBy,
-    businessType,
-    ownerShipType,
-    askingPrice,
-    searchText,
-    businessRole,
-    subCategory,
-    page,
-    limit
-  }) => {
-    let url = `/business/filter-business`;
+    getAllBusinesFilter: builder.query({
+      query: ({
+        category,
+        location,
+        country,
+        ageOfListing,
+        state,
+        city,
+        sortBy,
+        businessType,
+        ownerShipType,
+        askingPrice,
+        searchText,
+        businessRole,
+        subCategory,
+        page,
+        limit,
+      }) => {
+        let url = `/business/filter-business`;
 
-    const params = [];
-    if (category) params.push(`category=${encodeURIComponent(category)}`);
-      if (page) params.push(`page=${encodeURIComponent(page)}`);
+        const params = [];
+        if (category) params.push(`category=${encodeURIComponent(category)}`);
+        if (page) params.push(`page=${encodeURIComponent(page)}`);
         if (limit) params.push(`limit=${encodeURIComponent(limit)}`);
-    if (subCategory) params.push(`subCategory=${encodeURIComponent(subCategory)}`);
-    if (location) params.push(`location=${encodeURIComponent(location)}`);
-    if (country) params.push(`country=${encodeURIComponent(country)}`);
-     if (state) params.push(`state=${encodeURIComponent(state)}`);
-      if (city) params.push(`city=${encodeURIComponent(city)}`);
-    if (ageOfListing) params.push(`ageOfListing=${encodeURIComponent(ageOfListing)}`);
-    if (sortBy) params.push(`sortBy=${encodeURIComponent(sortBy)}`);
-    if (businessType) params.push(`businessType=${encodeURIComponent(businessType)}`);
-    if (ownerShipType) params.push(`ownerShipType=${encodeURIComponent(ownerShipType)}`);
-    if (askingPrice) params.push(`askingPrice=${encodeURIComponent(askingPrice)}`);
-    if (searchText) params.push(`searchText=${encodeURIComponent(searchText)}`);
-    if (businessRole) params.push(`businessRole=${encodeURIComponent(businessRole)}`);
+        if (subCategory)
+          params.push(`subCategory=${encodeURIComponent(subCategory)}`);
+        if (location) params.push(`location=${encodeURIComponent(location)}`);
+        if (country) params.push(`country=${encodeURIComponent(country)}`);
+        if (state) params.push(`state=${encodeURIComponent(state)}`);
+        if (city) params.push(`city=${encodeURIComponent(city)}`);
+        if (ageOfListing)
+          params.push(`ageOfListing=${encodeURIComponent(ageOfListing)}`);
+        if (sortBy) params.push(`sortBy=${encodeURIComponent(sortBy)}`);
+        if (businessType)
+          params.push(`businessType=${encodeURIComponent(businessType)}`);
+        if (ownerShipType)
+          params.push(`ownerShipType=${encodeURIComponent(ownerShipType)}`);
+        if (askingPrice)
+          params.push(`askingPrice=${encodeURIComponent(askingPrice)}`);
+        if (searchText)
+          params.push(`searchText=${encodeURIComponent(searchText)}`);
+        if (businessRole)
+          params.push(`businessRole=${encodeURIComponent(businessRole)}`);
 
-    if (params.length > 0) {
-      url += `?${params.join("&")}`;
-    }
+        if (params.length > 0) {
+          url += `?${params.join("&")}`;
+        }
 
-    return {
-      url,
-      method: "GET",
-    };
-  },
-  providesTags: ["updateProfile"],
-}),
+        return {
+          url,
+          method: "GET",
+        };
+      },
+      providesTags: ["updateProfile"],
+    }),
 
     updateSold: builder.mutation({
       query: ({ businessId, isSold }) => {
@@ -339,8 +362,7 @@ const businessApi = baseApi.injectEndpoints({
       providesTags: ["updateProfile"],
     }),
 
-
-     getTopCountry: builder.query({
+    getTopCountry: builder.query({
       query: () => {
         return {
           url: "/business/top-country",
@@ -390,7 +412,8 @@ export const {
   useAddContactMutation,
   usePostInterestFormationMutation,
   useGetAllBusinessMostViewQuery,
- useDeleteBusinessMutation,
- useGetTopCountryQuery,
- useAddNdaMutation
+  useDeleteBusinessMutation,
+  useGetTopCountryQuery,
+  useAddNdaMutation,
+  useGetMostViewBusinessIdeaQuery
 } = businessApi;

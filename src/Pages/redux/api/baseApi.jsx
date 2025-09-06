@@ -21,3 +21,4 @@ export const baseApi = createApi({
 
 
 export const imageUrl = 'http://10.10.20.57:8001'
+export const SOCKET_BASE = "http://10.10.20.57:8001";

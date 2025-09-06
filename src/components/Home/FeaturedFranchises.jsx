@@ -90,7 +90,7 @@ const FeaturedFranchises = () => {
                   </h3>
                   <p className="text-gray-600 mb-2">{business.location}</p>
                   <div className="mb-2">
-                    <span className="text-blue-500">{business.categories}</span> || <span className="text-[#D97706]">Business Consulting</span>
+                    <span className="text-blue-500">{business.categories}</span> || <span className="text-[#D97706]"> {business.subCategory}</span>
                   </div>
                   <p className="text-gray-800 mb-4">
                     Starting from{" "}

@@ -90,6 +90,7 @@ const businessType = [
   "Startup",
   "Home-Based",
   "Online",
+  "Other"
 ];
 
 // <Option value="Franchise">Franchise</Option>
@@ -103,6 +104,7 @@ const ownerShipType = [
   "Partnership",
   "Corporation",
   "LLC",
+  "Other"
 ];
 
 const sortBy = ["Newest First", "Price Low to High", "Most Viewed"];
@@ -115,41 +117,7 @@ const ageListing = [
   "Last 3 Month",
 ];
 
-const businessListings = [
-  {
-    id: 1,
-    title: "Powering Better Financial Solutions",
-    location: "Los Angeles, CA",
-    categories: ["Financial Services", "Business Consulting"],
-    startingPrice: 100,
-    image: "/modern-city-skyline.png",
-  },
-  {
-    id: 2,
-    title: "Powering Better Financial Solutions",
-    location: "Los Angeles, CA",
-    categories: ["Financial Services", "Business Consulting"],
-    startingPrice: 100,
-    image: "/modern-office-interior.png",
-  },
-  {
-    id: 3,
-    title: "Powering Better Financial Solutions",
-    location: "Los Angeles, CA",
-    categories: ["Financial Services", "Business Consulting"],
-    startingPrice: 100,
-    image: "/placeholder-lhks3.png",
-  },
 
-  {
-    id: 3,
-    title: "Powering Better Financial Solutions",
-    location: "Los Angeles, CA",
-    categories: ["Financial Services", "Business Consulting"],
-    startingPrice: 100,
-    image: "/placeholder-lhks3.png",
-  },
-];
 
 export default function AllBusinessFilterAnt() {
   const [countries, setCountries] = useState([]);
@@ -184,17 +152,20 @@ export default function AllBusinessFilterAnt() {
     console.log("Selected Country:", value);
   };
 
-  const handleStateChange = (value) => {
-    setSelectedState(value);
-    setCities(City.getCitiesOfState(selectedCountry, value));
-    setSelectedCity(null);
-    console.log("Selected State:", value);
-  };
+// State Change
+const handleStateChange = (value) => {
+  setSelectedState(value); 
+  const selectedStateObj = states.find((s) => s.name === value);
+  setCities(City.getCitiesOfState(selectedCountry, selectedStateObj?.isoCode));
+  setSelectedCity(null);
+  console.log("Selected State:", value);
+};
 
-  const handleCityChange = (value) => {
-    setSelectedCity(value);
-    console.log("Selected City:", value);
-  };
+
+const handleCityChange = (value) => {
+  setSelectedCity(value);
+  console.log("Selected City:", value);
+};
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -216,7 +187,7 @@ export default function AllBusinessFilterAnt() {
   const [businessRole, setFilters] = useState([]);
   console.log(businessRole);
   console.log(businessRole);
-  const [itemsPerPage, setItemsPerPage] = useState("20");
+
   const [viewMode, setViewMode] = useState("grid");
   const [selectedCategory, setSelectedCategory] = useState(null);
   console.log(selectedCategory);
@@ -256,6 +227,7 @@ export default function AllBusinessFilterAnt() {
 
   console.log(businessFilter);
   const business = businessFilter?.data || [];
+  console.log(business)
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -366,15 +338,15 @@ export default function AllBusinessFilterAnt() {
         >
           <Panel header="State" key="2">
            <div style={{ maxHeight: "200px", overflowY: "auto" }}> <Radio.Group
-              value={selectedState}
-              onChange={(e) => handleStateChange(e.target.value)}
-            >
-              {states.map((state) => (
-                <Radio key={state.isoCode} value={state.isoCode}>
-                  {state.name}
-                </Radio>
-              ))}
-            </Radio.Group></div>
+  value={selectedState}
+  onChange={(e) => handleStateChange(e.target.value)}
+>
+  {states.map((state) => (
+    <Radio key={state.isoCode} value={state.name}>
+      {state.name}
+    </Radio>
+  ))}
+</Radio.Group></div>
           </Panel>
         </Collapse>
       </div>
@@ -388,16 +360,16 @@ export default function AllBusinessFilterAnt() {
         >
           <Panel header="City" key="3">
             <div style={{ maxHeight: "200px", overflowY: "auto" }}>
-              <Radio.Group
-              value={selectedCity}
-              onChange={(e) => handleCityChange(e.target.value)}
-            >
-              {cities.map((city) => (
-                <Radio key={city.name} value={city.name}>
-                  {city.name}
-                </Radio>
-              ))}
-            </Radio.Group>
+             <Radio.Group
+  value={selectedCity}
+  onChange={(e) => handleCityChange(e.target.value)}
+>
+  {cities.map((city) => (
+    <Radio key={city.name} value={city.name}>
+      {city.name}
+    </Radio>
+  ))}
+</Radio.Group>
             </div>
           </Panel>
         </Collapse>
@@ -638,7 +610,7 @@ export default function AllBusinessFilterAnt() {
                   viewMode === "grid" ? (
                     <img
                       alt={business.title}
-                      src={`${imageUrl}/uploads/business-image/${business.image[0]}`}
+                      src={`${imageUrl}/uploads/business-image/${business.image}`}
                       style={{
                         height: 200,
                         objectFit: "cover",
@@ -661,7 +633,7 @@ export default function AllBusinessFilterAnt() {
                   {viewMode === "list" && (
                     <img
                       alt={business.title}
-                      src={`${imageUrl}/uploads/business-image/${business.image[0]}`}
+                      src={`${imageUrl}/uploads/business-image/${business.image}`}
                       style={{
                         width: "400px",
                         height: "300px",
@@ -680,7 +652,7 @@ export default function AllBusinessFilterAnt() {
                       <span className="text-blue-500">{business.category}</span>{" "}
                       ||{" "}
                       <span className="text-[#D97706]">
-                        Business Consulting
+                        {business.subCategory}
                       </span>
                     </div>
                     <p className="text-gray-800 mb-4">

@@ -17,45 +17,34 @@ function VerifyRegister() {
     setValue(e.target.value);
   };
   const onFinish = async (values) => {
-    const email = localStorage.getItem("email");
-    const code = values.otp;
+  const email = localStorage.getItem("email");
+  const code = values.otp;
 
-    const data = {
-      email: localStorage.getItem("email"),
-      code: code,
-    };
-
-    if (!email || !code) {
-      message.error("Missing email or OTP");
-
-      return;
-    }
-
-    try {
-      await verify({ data: data })
-        .unwrap()
-        .then((res) => {
-          console.log(res);
-          localStorage.setItem("accessToken", res?.data?.accessToken);
-          message.success(res?.message);
-          navigate("/plane");
-        });
-
-      //   const res = await verifyOtp(data).unwrap();
-      //   console.log(res);
-      //   if (res?.success) {
-      //     message.success(res?.message);
-      //     console.log(res?.success);
-      //     localStorage.setItem("otp", code);
-      //     localStorage.setItem("accessToken", res?.data?.accessToken);
-      //     navigate("/plane");
-      //   } else {
-      //     message.error(res?.message || "Verification failed");
-      //   }
-    } catch (error) {
-      message.error(error?.data?.message || "Something went wrong");
-    }
+  const data = {
+    email: localStorage.getItem("email"),
+    code: code,
   };
+
+  if (!email || !code) {
+    message.error("Missing email or OTP");
+    return;
+  }
+
+  try {
+    await verify({ data: data })
+      .unwrap()
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("accessToken", res?.data?.accessToken);
+        message.success(res?.message);
+
+        // navigate + reload
+        window.location.href = "/plane";
+      });
+  } catch (error) {
+    message.error(error?.data?.message || "Something went wrong");
+  }
+};
 
   const resendOtp = () => {
     message.destroy();

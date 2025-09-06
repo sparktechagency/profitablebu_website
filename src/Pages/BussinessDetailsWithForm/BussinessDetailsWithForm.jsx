@@ -9,6 +9,7 @@ import { useGetSingleIterestUserQuery } from "../redux/api/businessApi";
 import { Link, useParams } from "react-router-dom";
 import { Navigate } from "../Navigate";
 import { imageUrl } from "../redux/api/baseApi";
+import { useGetProfileQuery } from "../redux/api/userApi";
 export default function BussinessDetailsWithForm() {
   const { id: businessId } = useParams();
 
@@ -50,12 +51,12 @@ export default function BussinessDetailsWithForm() {
           <div>
             <img
               className="w-full h-[500px] object-cover"
-              src={`${imageUrl}/uploads/business-image/${businessDetails?.data?.business?.image[0]}`}
+              src={`${imageUrl}/uploads/business-image/${businessDetails?.data?.business?.image}`}
               alt=""
             />
             <div className="pt-11">
               <button className="bg-[#C1E1FF] border border-[#0091FF] px-2 py-2 rounded">
-                #Francise
+                {businessDetails?.data?.business?.businessRole}
               </button>
               <h1 className="text-2xl text-[#0091FF]">
                 {businessDetails?.data?.business?.title}

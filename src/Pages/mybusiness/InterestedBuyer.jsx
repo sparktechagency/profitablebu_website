@@ -37,8 +37,8 @@ const InterestedBuyer = () => {
                 className="w-14 h-14 rounded-full object-cover"
               />
               <div>
-                <h3 className="text-lg font-semibold">{buyer.name}</h3>
-                <p className="text-sm text-gray-500">{buyer.email}</p>
+                <h3 className="text-lg font-semibold">{buyer?.userId?.name}</h3>
+                <p className="text-sm text-gray-500">{buyer?.userId?.email}</p>
               </div>
               <span className="text-xs bg-blue-100 text-blue-600 font-medium px-2 py-1 rounded ml-2">
                 {buyer?.userId?.role || "N/A"}

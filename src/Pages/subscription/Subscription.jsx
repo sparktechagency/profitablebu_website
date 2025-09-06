@@ -9,7 +9,7 @@ const Subscription = () => {
   console.log(profileData);
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
 
-  const subscription = profileData?.data?.subscriptionPlan;
+  const subscription = profileData?.data;
   const startDate = new Date(
     profileData?.data?.subscriptionStartDate
   ).toLocaleDateString();
@@ -17,6 +17,7 @@ const Subscription = () => {
     profileData?.data?.subscriptionEndDate
   ).toLocaleDateString();
   const role = profileData?.data?.role;
+  
 
   return (
     <div className="container mx-auto p-4 space-y-4 mt-11">
@@ -34,9 +35,12 @@ const Subscription = () => {
               <p className="text-gray-600 text-sm">
                 Your subscription plan:{" "}
                 <span className="font-semibold">
-                  {subscription?.subscriptionPlanType}
+                  {subscription?.subscriptionPlanType} / ${subscription?.subscriptionPlanPrice}
+                 
                 </span>
+                
               </p>
+              
               <p className="text-gray-600 text-sm">Active until</p>
               <h2 className="text-xl font-bold mt-1">{endDate}</h2>
             </div>
@@ -79,12 +83,26 @@ const Subscription = () => {
             Change Subscription
           </button>
         </Link>
-        <Link to={`/plane/singlePlane/${subscription?._id}`}>
-          {" "}
-          <button className="bg-blue-500 w-full hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
-            Upgrade Subscription
-          </button>
-        </Link>
+       <Link
+  to={
+    subscription?.subscriptionPlanPrice === 0
+      ? ""
+      : `/plane/singlePlane/${subscription?.subscriptionPlan}`
+  }
+>
+  <button
+    disabled={subscription?.subscriptionPlanPrice === 0}
+    className={`w-full font-medium py-3 px-4 rounded-lg transition-colors
+      ${
+        subscription?.subscriptionPlanPrice === 0
+          ? "bg-gray-400 cursor-not-allowed"
+          : "bg-blue-500 hover:bg-blue-600 text-white"
+      }`}
+  >
+    Upgrade Subscription
+  </button>
+</Link>
+
       </div>
     </div>
   );

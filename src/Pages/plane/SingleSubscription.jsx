@@ -1,22 +1,30 @@
-import React, { useState } from 'react'
-import { useParams } from 'react-router-dom';
-import { useGetSingleSubscriptionQuery } from '../redux/api/businessApi';
-import AddSubPlane from './AddSubPlane';
-import Header from '../AboutUs/Header';
-
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useGetSingleSubscriptionQuery } from "../redux/api/businessApi";
+import AddSubPlane from "./AddSubPlane";
+import Header from "../AboutUs/Header";
+import { useGetProfileQuery } from "../redux/api/userApi";
+import BrokerAdd from "./BrokerAdd";
 
 const SingleSubscription = () => {
   const { id: subscriptionId } = useParams();
+
   const [openAddModal, setOpenAddModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
-
-  const { data: signleSubscription, isLoading, isError } = useGetSingleSubscriptionQuery({
-    subscriptionId,
+  const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
+  console.log(profileData);
+  const role = profileData?.data?.role;
+  const {
+    data: signleSubscription,
+    isLoading,
+    isError,
+  } = useGetSingleSubscriptionQuery({
+    subscriptionId: subscriptionId,
+    role: role,
   });
 
-
-
   const plan = signleSubscription?.data;
+  console.log(plan)
 
   return (
     <div className="py-16">
@@ -32,12 +40,21 @@ const SingleSubscription = () => {
         {plan ? (
           <div className="max-w-md mx-auto bg-white rounded-xl shadow-md p-6 flex flex-col justify-between">
             <div>
-              <h3 className="text-xl font-semibold mb-2">{plan.subscriptionPlanType}</h3>
-              <p className="text-sm text-gray-500 mb-4">{plan.subscriptionPlanRole}</p>
-              <h2 className="text-4xl font-bold mb-4">
+              <h3 className="text-xl font-semibold mb-2">
+                {plan.subscriptionPlanType}
+              </h3>
+              <p className="text-sm text-gray-500 mb-4">
+                {plan.subscriptionPlanRole}
+              </p>
+
+
+
+ {role === "Broker" ? '' : `$ ${plan.price}`}
+
+              {/* <h2 className="text-4xl font-bold mb-4">
                 ${plan.price}
                 <span className="text-lg align-top"> / {plan.duration}</span>
-              </h2>
+              </h2> */}
               <ul className="text-left space-y-2 mb-6">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm">
@@ -61,11 +78,19 @@ const SingleSubscription = () => {
         )}
       </div>
 
-      <AddSubPlane
-        openAddModal={openAddModal}
-        setOpenAddModal={setOpenAddModal}
-        subscriptionId={selectedPlan}
-      />
+    {role === "Broker" ? (
+  <BrokerAdd
+    openAddModal={openAddModal}
+    setOpenAddModal={setOpenAddModal}
+    subscriptionId={selectedPlan}
+  />
+) : (
+  <AddSubPlane
+    openAddModal={openAddModal}
+    setOpenAddModal={setOpenAddModal}
+    subscriptionId={selectedPlan}
+  />
+)}
     </div>
   );
 };

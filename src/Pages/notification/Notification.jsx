@@ -1,98 +1,90 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom"; // React Router Link
-import { ArrowLeft, X } from "lucide-react";
+import React from "react";
 import { Navigate } from "../Navigate";
+import {
+  useDeleteNotificationMutation,
+  useGetNotificationQuery,
+  useUpdateNotificationMutation,
+} from "../redux/api/metaApi";
+import { X } from "lucide-react";
+import dayjs from "dayjs";
+import { useGetProfileQuery } from "../redux/api/userApi";
+import { message } from "antd";
 
 const Notification = () => {
-  const [notifications, setNotifications] = useState([
-    {
-      id: "1",
-      type: "inquiry",
-      title: "New Inquiry Alert!",
-      message:
-        "You have a new inquiry from Emily Johnson (Los Angeles, CA) about your listed business. View and respond to keep the deal moving.",
-      avatar: "/placeholder.svg",
-      read: false,
-    },
-    {
-      id: "2",
-      type: "inquiry",
-      title: "New Inquiry Alert!",
-      message:
-        "You have a new inquiry from Emily Johnson (Los Angeles, CA) about your listed business. View and respond to keep the deal moving.",
-      avatar: "/placeholder.svg",
-      read: false,
-    },
-    {
-      id: "3",
-      type: "inquiry",
-      title: "New Inquiry Alert!",
-      message:
-        "You have a new inquiry from Emily Johnson (Los Angeles, CA) about your listed business. View and respond to keep the deal moving.",
-      avatar: "/placeholder.svg",
-      read: false,
-    },
-    {
-      id: "4",
-      type: "inquiry",
-      title: "New Inquiry Alert!",
-      message:
-        "You have a new inquiry from Emily Johnson (Los Angeles, CA) about your listed business. View and respond to keep the deal moving.",
-      avatar: "/placeholder.svg",
-      read: false,
-    },
-    // অন্যান্য notifications...
-  ]);
+  const { data: notificationData, isLoading } = useGetNotificationQuery();
+  const [updateNotificationRead] = useUpdateNotificationMutation();
+  const [deleteNotification] = useDeleteNotificationMutation();
+  const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
+  const role = profileData?.data?.role;
+  if (isLoading) {
+    return <p className="text-center mt-10">Loading...</p>;
+  }
 
-  const dismissNotification = (id) => {
-    setNotifications(
-      notifications.filter((notification) => notification.id !== id)
-    );
+  const handleUpdate = async (id) => {
+    await updateNotificationRead({ notificationId: id, role }).unwrap();
   };
-
+  const handleDelete = async (id) => {
+    try {
+      const res = await deleteNotification({
+        notificationId: id,
+        role,
+      }).unwrap();
+      message.success(res?.message);
+    } catch (err) {
+      message.error(err?.data?.message);
+    }
+  };
   return (
-    <div className=" container m-auto  ">
+    <div className="container mx-auto px-4 mb-11">
       <div className="mt-20 md:mt-8 mb-5">
-        <Navigate title={"Notification"}></Navigate>
+        <Navigate title={"Notification"} />
       </div>
 
-      <div className="divide-y bg-white mb-11">
-        {notifications.map((notification) => (
+      <div className="bg-white shadow rounded-lg divide-y">
+        {notificationData?.data?.map((item) => (
           <div
-            key={notification.id}
-            className="p-4 flex items-start gap-3 hover:bg-gray-100 transition-colors"
+            key={item._id}
+            className="flex items-start gap-3 hover:bg-gray-50 transition relative"
           >
-            <div className="h-10 w-10 rounded-full overflow-hidden flex-shrink-0">
-              <img
-                src={notification.avatar || "/placeholder.svg"}
-                alt="Avatar"
-                className="h-full w-full object-cover rounded-full"
-              />
-            </div>
+            {/* Content */}
+            <div
+              onClick={() => handleUpdate(item._id)}
+              className={`flex-1 p-4 cursor-pointer ${
+                item.isRead ? "" : "bg-gray-100"
+              }`}
+            >
+              <h3
+                className={`text-lg break-all whitespace-normal ${
+                  item.isRead
+                    ? "font-normal text-gray-800"
+                    : "font-bold text-black"
+                }`}
+              >
+                {item.title}
+              </h3>
+              <p className="break-all whitespace-normal">{item.message}</p>
 
-            <div className="flex-1 min-w-0">
-              <h3 className="font-medium text-sm">{notification.title}</h3>
-              <p className="text-sm text-gray-500 mt-1 line-clamp-2">
-                {notification.message}
+              <p className="text-xs text-gray-400 mt-1">
+                {dayjs(item.createdAt).format("YYYY-MM-DD hh:mm A")}
               </p>
             </div>
 
+            {/* Delete Button */}
             <button
-              className="h-8 w-8 text-gray-500 hover:text-red-500"
-              onClick={() => dismissNotification(notification.id)}
-              aria-label="Dismiss notification"
+              className="absolute top-2 right-2 h-6 w-6 text-gray-500 hover:text-red-500"
+              onClick={() => handleDelete(item._id)}
             >
               <X className="h-4 w-4" />
             </button>
           </div>
         ))}
-      </div>
 
-      {notifications.length === 0 && (
-        <div className="p-8 text-center">
-          <p className="text-gray-500">No notifications</p>
-        </div>
-      )}
+        {notificationData?.data?.length === 0 && (
+          <p className="text-center p-5 text-gray-500">
+            No notifications found
+          </p>
+        )}
+      </div>
     </div>
   );
 };

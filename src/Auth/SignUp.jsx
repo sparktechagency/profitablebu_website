@@ -60,6 +60,9 @@ function SignUp() {
     console.log("Google login clicked");
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="relative flex items-center justify-center md:p-20 py-28">
       <div className="absolute w-full h-full flex">
@@ -110,6 +113,9 @@ function SignUp() {
                 Create Your Account
               </Title>
 
+            {/* <p className="pb-5 ">Create your account on ProfitableBusinessesForSale.com (PBFS) and get access to a global
+marketplace of {location?.state }</p> */}
+
               <Form
                 requiredMark={false}
                 name="login"
@@ -155,7 +161,7 @@ function SignUp() {
                     country={"us"}
                     value={contactNo}
                     onChange={(value) => setContactNo(value)}
-                    inputStyle={{ width: "100%",height: "48px" }}
+                    inputStyle={{ width: "100%", height: "48px" }}
                   />
                 </Form.Item>
                 <Form.Item

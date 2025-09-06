@@ -8,6 +8,7 @@ import {
   useGetAllBusinessQuery,
   useGetAllFeturesBusinessQuery,
   useGetAllHomeBusinessQuery,
+  useGetMostViewBusinessIdeaQuery,
 } from "../../Pages/redux/api/businessApi";
 import { imageUrl } from "../../Pages/redux/api/baseApi";
 import { div } from "framer-motion/client";
@@ -37,11 +38,18 @@ const BusinessCard = () => {
     businessRole: "Francise Seller",
     country: selectedCountry,
   });
-  const { data: interestDataaaa } = useGetAllFeturesBusinessQuery({
-    businessRole: "Business Idea Lister",
+  // const { data: interestDataaaa } = useGetAllFeturesBusinessQuery({
+  //   businessRole: "Business Idea Lister",
+  //   country: selectedCountry,
+  // });
+ const { data: interestDataaaa } = useGetMostViewBusinessIdeaQuery({
     country: selectedCountry,
   });
-  console.log(interestData);
+
+  console.log(selectedCountry)
+
+
+  console.log(interestDataaaa);
   const {
     data: businessData,
     isLoading,
@@ -71,7 +79,7 @@ const BusinessCard = () => {
   console.log(business);
 
   return (
-    <div className="-mt-28 lg:-mt-11 md:-mt-28">
+    <div className=" lg:-mt-10 -mt-36">
       {/*================ Business er data ================*/}
 
       <div>
@@ -102,7 +110,7 @@ const BusinessCard = () => {
                 <img
                   src={
                     business.image?.length > 0
-                      ? `${imageUrl}/uploads/business-image/${business.image[0]}`
+                      ? `${imageUrl}/uploads/business-image/${business.image}`
                       : "/fallback-image.jpg"
                   }
                   alt={business.title}
@@ -116,7 +124,7 @@ const BusinessCard = () => {
                 <p className="text-gray-600 mb-2">{business.location}</p>
                 <div className="mb-2">
                   <span className="text-blue-500">{business.category}</span> ||{" "}
-                  <span className="text-[#D97706]">Business Consulting</span>
+                  <span className="text-[#D97706]"> {business.subCategory}</span>
                 </div>
                 <p className="text-gray-800 mb-4">
                   Starting from{" "}
@@ -167,7 +175,7 @@ const BusinessCard = () => {
                 >
                   <div className="h-48 relative">
                     <img
-                      src={`${imageUrl}/uploads/business-image/${business.image[0]}`}
+                      src={`${imageUrl}/uploads/business-image/${business.image}`}
                       alt={business.title}
                       className="w-full h-full object-cover"
                     />
@@ -181,7 +189,7 @@ const BusinessCard = () => {
                       <span className="text-blue-500">{business.category}</span>{" "}
                       ||{" "}
                       <span className="text-[#D97706]">
-                        Business Consulting
+                        {business.subCategory}
                       </span>
                     </div>
                     <p className="text-gray-800 mb-4">
@@ -237,7 +245,7 @@ const BusinessCard = () => {
                 >
                   <div className="h-48 relative">
                     <img
-                      src={`${imageUrl}/uploads/business-image/${business.image[0]}`}
+                      src={`${imageUrl}/uploads/business-image/${business.image}`}
                       alt={business.title}
                       className="w-full h-full object-cover"
                     />
@@ -251,7 +259,7 @@ const BusinessCard = () => {
                       <span className="text-blue-500">{business.category}</span>{" "}
                       ||{" "}
                       <span className="text-[#D97706]">
-                        Business Consulting
+                        {business.subCategory}
                       </span>
                     </div>
                     <p className="text-gray-800 mb-4">
@@ -307,7 +315,7 @@ const BusinessCard = () => {
                 >
                   <div className="h-48 relative">
                     <img
-                      src={`${imageUrl}/uploads/business-image/${business.image[0]}`}
+                      src={`${imageUrl}/uploads/business-image/${business.image}`}
                       alt={business.title}
                       className="w-full h-full object-cover"
                     />
@@ -321,7 +329,7 @@ const BusinessCard = () => {
                       <span className="text-blue-500">{business.category}</span>{" "}
                       ||{" "}
                       <span className="text-[#D97706]">
-                        Business Consulting
+                         {business.subCategory}
                       </span>
                     </div>
                     <p className="text-gray-800 mb-4">
@@ -352,7 +360,7 @@ const BusinessCard = () => {
                 <div className="w-[5px] h-12 rounded-r bg-[#22C55E] mr-4 "></div>
                 <div>
                   <h2 className="text-2xl font-bold text-blue-500">
-                    Interested Business Ideas
+                    Business Ideas
                   </h2>
                   <p className="text-gray-600 text-sm md:block hidden">
                     Discover top opportunities curated for entrepreneurs.
@@ -378,7 +386,7 @@ const BusinessCard = () => {
                     >
                       <div className="h-48 relative">
                         <img
-                          src={`${imageUrl}/uploads/business-image/${business.image[0]}`}
+                          src={`${imageUrl}/uploads/business-image/${business.image}`}
                           alt={business.title}
                           className="w-full h-full object-cover"
                         />
@@ -396,7 +404,7 @@ const BusinessCard = () => {
                           </span>{" "}
                           ||{" "}
                           <span className="text-[#D97706]">
-                            Business Consulting
+                             {business.subCategory}
                           </span>
                         </div>
                         <p className="text-gray-800 mb-4">

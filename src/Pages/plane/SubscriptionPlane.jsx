@@ -3,6 +3,7 @@ import AddSubPlane from "./AddSubPlane";
 import Header from "../AboutUs/Header";
 import { useGetProfileQuery } from "../redux/api/userApi";
 import { useGetPlaneQuery } from "../redux/api/businessApi";
+import BrokerAdd from "./BrokerAdd";
 
 const SubscriptionPlan = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
@@ -16,8 +17,6 @@ const SubscriptionPlan = () => {
     role: userRole,
   });
 
-
-
   const plans = planeData?.data || [];
   console.log(plans);
   return (
@@ -30,7 +29,6 @@ const SubscriptionPlan = () => {
       <div className="max-w-6xl mx-auto text-center pt-11">
         <p className="text-sm text-[#0091FF] font-semibold">Pricing Table</p>
         <h2 className="text-3xl font-bold mb-12">Our Pricing Plan</h2>
-
         {plans.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {plans.map((plan) => (
@@ -46,9 +44,10 @@ const SubscriptionPlan = () => {
                     {plan.subscriptionPlanRole}
                   </p>
                   <h2 className="text-4xl font-bold mb-4">
-                    {plan.price}
-                    <span className="text-lg align-top">$</span>
+                    {userRole === "Broker" ? "" : `$ ${plan.price}`}
+                    {/* <span className="text-lg align-top">$</span> */}
                   </h2>
+
                   <ul className="text-left space-y-2 mb-6">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm">
@@ -59,7 +58,7 @@ const SubscriptionPlan = () => {
                 </div>
                 <button
                   onClick={() => {
-                    setSelectedPlanId(plan); 
+                    setSelectedPlanId(plan);
                     setOpenAddModal(true);
                   }}
                   className="mt-auto bg-[#0091FF] text-white rounded-md py-2 px-4 hover:bg-blue-600 transition"
@@ -74,11 +73,19 @@ const SubscriptionPlan = () => {
         )}
       </div>
 
-      <AddSubPlane
-        openAddModal={openAddModal}
-        setOpenAddModal={setOpenAddModal}
-        subscriptionId={selectedPlanId}
-      />
+      {userRole === "Broker" ? (
+        <BrokerAdd
+          openAddModal={openAddModal}
+          setOpenAddModal={setOpenAddModal}
+          subscriptionId={selectedPlanId}
+        />
+      ) : (
+        <AddSubPlane
+          openAddModal={openAddModal}
+          setOpenAddModal={setOpenAddModal}
+          subscriptionId={selectedPlanId}
+        />
+      )}
     </div>
   );
 };

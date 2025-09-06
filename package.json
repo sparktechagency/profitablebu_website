@@ -19,6 +19,7 @@
     "country-state-city": "^3.2.1",
     "dayjs": "^1.11.13",
     "fabric": "^6.7.1",
+    "firebase": "^12.2.1",
     "framer-motion": "^12.23.0",
     "jodit": "^4.6.2",
     "jodit-react": "^5.2.19",
@@ -33,6 +34,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.1",
     "react-toastify": "^11.0.5",
+    "socket.io-client": "^4.8.1",
     "use-image": "^1.1.4"
   },
   "devDependencies": {
