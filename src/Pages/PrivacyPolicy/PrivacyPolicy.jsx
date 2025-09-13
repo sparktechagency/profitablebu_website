@@ -18,7 +18,16 @@ export default function PrivacyPolicy() {
         <div>
           <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
 
-        {privecy?.data?.description}
+    
+
+
+        <div className="mt-5">
+        {privecy?.data?.description ? (
+          <div dangerouslySetInnerHTML={{ __html: privecy?.data?.description }} />
+        ) : (
+          <p>Not Data</p>
+        )}
+      </div>
         </div>
       </div>
     </div>

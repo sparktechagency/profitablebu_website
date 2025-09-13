@@ -19,10 +19,15 @@ export default function TermsAndConditions() {
         <div>
           <h1 className="text-4xl font-bold mb-6">Terms and Conditions</h1>
 
-          
-          <Text>
-            {terms?.data?.[0]?.description}
-          </Text>
+          <div>
+            {terms?.data?.description ? (
+              <div
+                dangerouslySetInnerHTML={{ __html: terms?.data?.description }}
+              />
+            ) : (
+              <p>Not Data</p>
+            )}
+          </div>
         </div>
       </div>
     </div>

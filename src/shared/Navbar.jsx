@@ -524,7 +524,7 @@ const Navbar = () => {
                       <img
                         src={country.flag}
                         alt={country.name}
-                        className="w-6 h-4"
+                        className="w-6 "
                       />
                       <span className="font-medium">{country.name}</span>
                       {selectedCountry === country.state && (

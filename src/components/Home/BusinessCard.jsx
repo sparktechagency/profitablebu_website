@@ -34,6 +34,7 @@ const BusinessCard = () => {
     businessRole: "Asset Seller",
     country: selectedCountry,
   });
+  console.log(interestDataa)
   const { data: interestDataaa } = useGetAllFeturesBusinessQuery({
     businessRole: "Francise Seller",
     country: selectedCountry,

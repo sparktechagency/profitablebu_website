@@ -89,7 +89,7 @@ const businessApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: ["updateProfile"],
+      providesTags: ["updateProfile"], 
     }),
 
     getAllFeturesBusiness: builder.query({

@@ -46,33 +46,6 @@ const SidbarChat = ({ chatId }) => {
   }, [socket, socketLoading, socketError]);
 
 
-  //   useEffect(() => {
-
-  //     if (!socket || socketLoading || socketError) {
-  //       return;
-  //     }
-
-    
-  //     const handleMessageList = (data) => {
-  //       console.log("Socket>>>>>>>>>>>>>>>>>>>>>>>>>>>:", data);
-  //       // setChats(data);
-  //     };
-      
-  //     // if (socket.connected) {
-  //     //   requestMessageList();
-  //     // }
-
-  //     // socket.on("connect", requestMessageList);
-
-  //     socket.on("send_message", handleMessageList);
-
-  //     return () => {
-  //       // socket.off("connect", requestMessageList);
-  //       socket.off("send_message", handleMessageList);
-  //     };
-
-  // }, [socket, socketLoading, socketError]);
-
   return (
     <div>
       <div className="w-full md:w-96 border-r bg-white">
@@ -91,7 +64,7 @@ const SidbarChat = ({ chatId }) => {
                   >
                     {/* Avatar */}
                     <div className="h-10 w-10 rounded-full overflow-hidden">
-                   {participant.image ? (
+                   {participant?.image ? (
                 <img
                   src={`${imageUrl}/uploads/profile-image/${participant.image}`}
                   alt="User avatar"

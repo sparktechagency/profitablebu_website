@@ -16,8 +16,6 @@ import { useGetProfileQuery } from "../redux/api/userApi";
 import { message } from "antd";
 const MyBusinessDetails = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  // const role = user?.role;
-
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
   console.log(profileData);
   const price = profileData?.data?.subscriptionPlanPrice;
@@ -33,6 +31,7 @@ const MyBusinessDetails = () => {
   console.log(businessDetails);
   const [updateSold] = useUpdateSoldMutation();
   const checkUserId = profileData?.data?._id;
+  console.log(checkUserId);
   const checkBusinessId = businessDetails?.data?.business?.user;
 
   useEffect(() => {
@@ -93,7 +92,7 @@ const MyBusinessDetails = () => {
       <div className="lg:grid grid-cols-2 gap-4 pt-11">
         <div>
           <img
-            className="w-full h-[400px] object-cover"
+            className="w-full  object-cover"
             src={`${imageUrl}/uploads/business-image/${businessDetails?.data?.business?.image}`}
             alt="main business"
           />
@@ -168,7 +167,8 @@ const MyBusinessDetails = () => {
               role !== "Buyer" &&
               role !== "Investor" &&
               localStorage.getItem("accessToken") &&
-              checkUserId === checkBusinessId && (
+              checkUserId === checkBusinessId &&
+              price !== 0 && (
                 <Link
                   to={`/interestBuyer/${businessDetails?.data?.business?._id}`}
                 >
@@ -245,19 +245,18 @@ const MyBusinessDetails = () => {
       <h1 className="text-[#0091FF] font-bold text-3xl mt-9">Location</h1>
       <p className="mb-4">{businessDetails?.data?.business?.countryName}</p>
 
-     <iframe
-  src={`https://www.google.com/maps?q=${encodeURIComponent(
-    `${businessDetails?.data?.business?.city || ""}, ${
-      businessDetails?.data?.business?.state || ""
-    }, ${businessDetails?.data?.business?.countryName || ""}`
-  )}&output=embed`}
-  className="w-full h-[300px]"
-  allowFullScreen=""
-  loading="lazy"
-  referrerPolicy="no-referrer-when-downgrade"
-  title="Business Location"
-/>
-
+      <iframe
+        src={`https://www.google.com/maps?q=${encodeURIComponent(
+          `${businessDetails?.data?.business?.city || ""}, ${
+            businessDetails?.data?.business?.state || ""
+          }, ${businessDetails?.data?.business?.countryName || ""}`
+        )}&output=embed`}
+        className="w-full h-[300px]"
+        allowFullScreen=""
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        title="Business Location"
+      />
     </div>
   );
 };

@@ -524,8 +524,6 @@ const renderCard = (item) => {
               </Link>
             </div>
           )}
-
-          {/* Broker can see everything (same as Investor but not restricted) */}
           <Section
             title={`Current ${role} for sale`}
             data={myBusiness}

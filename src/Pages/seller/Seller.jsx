@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   Input,
@@ -26,7 +26,27 @@ import Buyer from "./Buyer";
 
 const { Title, Paragraph, Text } = Typography;
 
+
+
 const Seller = () => {
+    const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000); // update every second
+    return () => clearInterval(timer);
+  }, []);
+
+  const formattedTime = currentTime.toLocaleString("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+
   const [form] = Form.useForm();
   const MAX_FILE_SIZE = 9 * 1024 * 1024; // 9MB
   const [loading, setLoading] = useState(false);
@@ -87,14 +107,13 @@ const Seller = () => {
     <div className="pt-11 lg:pt-0">
       <div className="min-h-screen  py-10 px-4 ">
         <Card className="container m-auto lg:p-10  shadow-xl">
-      {role === "Investor" && <Investor />}
-      {role === "Business Idea Lister" && <Idealister ></Idealister>}
-      {role === "Francise Seller" && <Franchise></Franchise>}
-      {role === "Asset Seller" && <Assest></Assest>}
-      {role === "Broker" && <Broker></Broker>}
-      {role === "Seller" && <Sell></Sell>}
-      {role === "Buyer" && <Buyer></Buyer>}
-
+          {role === "Investor" && <Investor />}
+          {role === "Business Idea Lister" && <Idealister></Idealister>}
+          {role === "Francise Seller" && <Franchise></Franchise>}
+          {role === "Asset Seller" && <Assest></Assest>}
+          {role === "Broker" && <Broker></Broker>}
+          {role === "Seller" && <Sell></Sell>}
+          {role === "Buyer" && <Buyer></Buyer>}
 
           <Form form={form} layout="vertical" onFinish={onFinish}>
             <div className="md:grid grid-cols-2 gap-8">
@@ -244,7 +263,7 @@ const Seller = () => {
                   <strong>Signature:</strong>
                 </Paragraph>
                 <img src={sign} alt="Signature" className="w-32 mb-2" />
-                <Text type="secondary">Feb 21, 2023 at 03:05 pm</Text>
+                <Text type="secondary">{formattedTime}</Text>
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center gap-3">
                     <img src={Logo} alt="Logo" className="w-[50px]" />

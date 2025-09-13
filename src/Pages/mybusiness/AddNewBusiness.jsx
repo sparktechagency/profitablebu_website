@@ -21,6 +21,7 @@ import {
   useAddBusinessMutation,
   useGetCategtoryQuery,
 } from "../redux/api/businessApi";
+import { useGetProfileQuery } from "../redux/api/userApi";
 dayjs.extend(customParseFormat);
 const dateFormat = "YYYY-MM-DD";
 const props = {
@@ -45,6 +46,9 @@ const props = {
 const AddNewBusiness = () => {
   const { data: categorie, isLoading, isError } = useGetCategtoryQuery();
   const [addBusiness] = useAddBusinessMutation();
+  const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
+  console.log(profileData);
+  const role = profileData?.data?.role;
   const editor = useRef(null);
   const [fileList, setFileList] = useState([]);
   const [content, setContent] = useState("");
@@ -58,12 +62,12 @@ const AddNewBusiness = () => {
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
+  console.log(subCategories)
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-
-const [selectedCountry, setSelectedCountry] = useState(null);
-const [selectedState, setSelectedState] = useState(null);
-const [selectedCity, setSelectedCity] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedState, setSelectedState] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(null);
 
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
@@ -71,36 +75,31 @@ const [selectedCity, setSelectedCity] = useState(null);
     setSubCategories(category?.subCategories || []);
     form.setFieldsValue({ subCategory: null });
   };
-console.log(selectedState)
+  console.log(selectedState);
   useEffect(() => {
     setCountries(Country.getAllCountries());
   }, []);
 
+  const handleCountryChange = (value) => {
+    const country = countries.find((c) => c.isoCode === value);
+    setSelectedCountry(country);
+    setStates(State.getStatesOfCountry(value));
+    setCities([]);
+    form.setFieldsValue({ state: undefined, city: undefined });
+  };
 
-const handleCountryChange = (value) => {
-  const country = countries.find((c) => c.isoCode === value);
-  setSelectedCountry(country); 
-  setStates(State.getStatesOfCountry(value));
-  setCities([]);
-  form.setFieldsValue({ state: undefined, city: undefined });
-};
+  // State Change
+  const handleStateChange = (value) => {
+    const state = states.find((s) => s.isoCode === value);
+    setSelectedState(state);
+    setCities(City.getCitiesOfState(selectedCountry?.isoCode, value));
+    form.setFieldsValue({ city: undefined });
+  };
 
-// State Change
-const handleStateChange = (value) => {
-  const state = states.find((s) => s.isoCode === value);
-  setSelectedState(state); 
-  setCities(City.getCitiesOfState(selectedCountry?.isoCode, value));
-  form.setFieldsValue({ city: undefined });
-};
-
-
-const handleCityChange = (value) => {
-  const city = cities.find((c) => c.name === value);
-  setSelectedCity(city); 
-};
-
-
-
+  const handleCityChange = (value) => {
+    const city = cities.find((c) => c.name === value);
+    setSelectedCity(city);
+  };
 
   const onPreview = async (file) => {
     let src = file.url;
@@ -127,17 +126,12 @@ const handleCityChange = (value) => {
       });
       formData.append("title", values?.title);
 
+      formData.append("country", selectedCountry?.isoCode);
+      formData.append("countryName", selectedCountry?.name);
 
+      formData.append("state", selectedState?.name);
 
-
-    formData.append("country", selectedCountry?.isoCode );
-    formData.append("countryName", selectedCountry?.name);
-
-    formData.append("state", selectedState?.name );
-
-
-    formData.append("city", selectedCity?.name );
-
+      formData.append("city", selectedCity?.name);
 
       formData.append("category", values?.category);
       formData.append("subCategory", values?.subCategory);
@@ -162,23 +156,122 @@ const handleCityChange = (value) => {
       message.error(errr?.data?.message);
     }
   };
-  const config = {
-    readonly: false,
-    placeholder: "Start typings...",
-    style: {
-      height: 600,
-    },
-    buttons: [
-      "fontsize",
-      "bold",
-      "italic",
-      "underline",
-      "|",
-      "font",
-      "brush",
-      "align",
-    ],
-  };
+  let placeholderText = "";
+
+if (role === "Seller") {
+  placeholderText = 
+`📝 Seller Listing Checklist<br><br>
+❌ Don’ts (What NOT to Include)<br><br>
+- Company name in title or description<br>
+- Personal contact details (phone, email, WhatsApp, website, etc.)<br>
+- Sensitive or confidential business details<br><br>
+✅ Do’s (What to Include)<br><br>
+- Clear business type & overview<br>
+- Key strengths & highlights (location, reputation, contracts, etc.)<br>
+- Simple reason for sale (relocation, retirement, new venture)<br>
+- Financial snapshot (revenue trends, profitability range)<br>
+- Growth opportunities (expansion potential, new markets)<br>
+- Business assets included (equipment, licenses, IP, inventory)<br><br>
+💡 Tip: Write your description like you’re telling a success story. Focus on what makes your business valuable and exciting for buyers.`;
+}
+
+else if (role === "Business Idea Lister") {
+  placeholderText = 
+`📝 Business Idea Lister Checklist<br><br>
+❌ Don’ts (What NOT to Include)<br><br>
+- Do not add personal contact details (phone, email, WhatsApp, website, etc.)<br>
+- Do not share sensitive or confidential information<br>
+- Do not submit vague or incomplete ideas<br>
+- Do not copy existing ideas<br><br>
+✅ Do’s (What to Include)<br><br>
+- Provide a clear and catchy business idea title<br>
+- Write a brief overview of your idea<br>
+- Explain the problem it solves or the market gap it addresses<br>
+- Describe how it works (concept, model, or process)<br>
+- Define your target market or audience<br>
+- Share your potential revenue model or monetization plan<br>
+- Specify what kind of investor/support/capital you are looking for<br>
+- Optional: Add market research, pitch deck, or visuals<br><br>
+💡 Tip: Present your idea like a story — highlight the opportunity, show its potential, and explain why investors should get excited about it.`;
+}
+
+else if (role === "Broker") {
+  placeholderText = 
+`📝 Broker Listing Checklist<br><br>
+❌ Don’ts (What NOT to Do)<br><br>
+- Do not list businesses without the owner’s permission<br>
+- Do not add your agency’s personal contact details<br>
+- Do not post incomplete or vague business listings<br>
+- Do not misrepresent financials or business details<br>
+- Do not duplicate the same listing<br><br>
+✅ Do’s (Best Practices)<br><br>
+- Provide a clear and accurate business description<br>
+- Highlight key strengths (location, market position, customer base, etc.)<br>
+- Include the reason for sale where available<br>
+- Share a financial snapshot (turnover, profitability trends)<br>
+- Add details on assets included (licenses, inventory, IP, equipment)<br>
+- Use the right industry/category<br>
+- Keep listings updated<br><br>
+💡 Tip for Brokers: Quality and transparency attract serious buyers.`;
+}
+
+else if (role === "Franchise Seller" || role === "Francise Seller") {
+  placeholderText = 
+`📝 Franchisor Listing Checklist<br><br>
+❌ Don’ts (What NOT to Do)<br><br>
+- Do not include personal contact details<br>
+- Do not provide misleading or exaggerated financial promises<br>
+- Do not list a franchise without proper rights<br>
+- Do not copy-paste generic franchise info<br>
+- Do not leave key fields blank<br><br>
+✅ Do’s (Best Practices)<br><br>
+- Provide a clear franchise name & concept<br>
+- State the industry and business model<br>
+- Highlight franchise strengths<br>
+- Mention initial investment & fees<br>
+- Define territories available<br>
+- Explain training & ongoing support<br>
+- Share franchisee requirements<br>
+- Include growth opportunities<br><br>
+💡 Tip: Showcase your franchise’s strengths and support systems to attract quality franchisees.`;
+}
+
+else if (role === "Asset Seller") {
+  placeholderText = 
+`📝 Business Asset Seller Checklist<br><br>
+❌ Don’ts (What NOT to Do)<br><br>
+- Do not include personal contact details<br>
+- Do not post assets you do not legally own<br>
+- Do not provide vague or incomplete descriptions<br>
+- Do not inflate prices unrealistically<br>
+- Do not list duplicate or sold assets<br><br>
+✅ Do’s (Best Practices)<br><br>
+- Clearly state the asset type<br>
+- Provide a brief but detailed description<br>
+- Mention if it’s new, used, or refurbished<br>
+- Include the location of the asset<br>
+- State the price or pricing structure<br>
+- Highlight any warranties or service history<br>
+- Add high-quality photos<br><br>
+💡 Tip: Detailed descriptions and transparency attract more serious buyers.`;
+}
+const config = {
+  readonly: false,
+  placeholder: placeholderText,
+  style: {
+    height: 600,
+  },
+  buttons: [
+    "fontsize",
+    "bold",
+    "italic",
+    "underline",
+    "|",
+    "font",
+    "brush",
+    "align",
+  ],
+};
 
   useEffect(() => {
     if (categorie?.data?.length) {
@@ -449,10 +542,7 @@ const handleCityChange = (value) => {
             tabIndex={1}
             onBlur={(newContent) => setContent(newContent)}
           />
-          <div className="mt-2">
-            Note: Write your description like you’re telling a success story. Focus on what makes your business valuable and exciting for buyers.
-          </div>
-
+        
           <Form.Item className=" pt-3">
             <button
               type="primary"

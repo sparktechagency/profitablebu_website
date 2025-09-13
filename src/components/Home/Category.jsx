@@ -48,7 +48,7 @@ const Category = () => {
                   <h3 className="text-2xl font-bold mb-1">{category.category}</h3>
                   <p className="text-sm font-medium mb-3">{category.totalBusinesses} Business Available</p>
                   <p className="text-sm opacity-90">Comparison new entertain melancholy son themselves.</p>
-                  <Link to={`/search?businessCategory=${category?.category}`}>
+                  <Link to={`/search?category=${category?.category}`}>
                     <button className="bg-[#2766FF] w-9 flex justify-center h-9 items-center rounded-full mt-2">
                       <FaArrowRight />
                     </button>

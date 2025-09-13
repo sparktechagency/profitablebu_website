@@ -1,43 +1,38 @@
-import { useEffect, useState } from 'react';
-import { Form, Input, Button, message } from 'antd';
+import { useEffect, useState } from "react";
+import { Form, Input, Button, message, Spin } from "antd";
 import {
   Facebook,
   Twitter,
   Linkedin,
   Instagram,
   MessageCircle,
-} from 'lucide-react';
-import Header from '../AboutUs/Header';
-import img from '../../../public/contact-us.png';
-import { useAddContactMutation } from '../redux/api/businessApi';
-import { useGetProfileQuery } from '../redux/api/userApi';
+} from "lucide-react";
+import Header from "../AboutUs/Header";
+import img from "../../../public/contact-us.png";
+import { useAddContactMutation } from "../redux/api/businessApi";
+import { useGetProfileQuery } from "../redux/api/userApi";
 export default function ContactUs() {
-    const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
-    console.log(profileData);
+  const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
+  console.log(profileData);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    if (profileData) {
+      const email = profileData?.data;
 
-
-      useEffect(() => {
-        if (profileData) {
-              const email = profileData?.data;
-    
-          form.setFieldsValue({
-            email: email.email,
-      
-          });
-    
-    
-        
-        }
-      }, [profileData]);
+      form.setFieldsValue({
+        email: email.email,
+      });
+    }
+  }, [profileData]);
   const [form] = Form.useForm();
-  const [addContact] = useAddContactMutation()
+  const [addContact] = useAddContactMutation();
 
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    message: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    message: "",
   });
 
   const handleInputChange = (e) => {
@@ -48,27 +43,27 @@ export default function ContactUs() {
     }));
   };
 
-  const handleSubmit =async (values) => {
-    console.log('Form submitted:', values);
-        const data = {
-      
+  const handleSubmit = async (values) => {
+    console.log("Form submitted:", values);
+       setLoading(true);
+    const data = {
       firstName: values.firstName,
       lastName: values.lastName,
-      email: values.email, 
-      phone: values.phone, 
+      email: values.email,
+      phone: values.phone,
       message: values.message,
-      
     };
-    console.log(data)
+    console.log(data);
 
     try {
       const res = await addContact(data).unwrap();
-     
-        message.success(res?.message);
-        form.resetFields();
-    
+
+      message.success(res?.message);
+         setLoading(false);
+      form.resetFields();
     } catch (error) {
       console.error(error);
+         setLoading(false);
       message.error(error?.data?.message || "Failed to schedule call.");
     }
   };
@@ -84,7 +79,7 @@ export default function ContactUs() {
             <section
               style={{
                 backgroundImage: `url(${img})`,
-                backgroundSize: 'cover',
+                backgroundSize: "cover",
               }}
               className="lg:w-2/6 bg-gradient-to-br from-blue-500 via-blue-400 to-green-400 p-5 lg:p-10 flex flex-col justify-between relative overflow-hidden"
             >
@@ -153,7 +148,7 @@ export default function ContactUs() {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input your first name!',
+                      message: "Please input your first name!",
                     },
                   ]}
                   className="col-span-2 md:col-span-1"
@@ -169,7 +164,7 @@ export default function ContactUs() {
                   label="Last Name"
                   name="lastName"
                   rules={[
-                    { required: true, message: 'Please input your last name!' },
+                    { required: true, message: "Please input your last name!" },
                   ]}
                   className="col-span-2 md:col-span-1"
                 >
@@ -188,7 +183,7 @@ export default function ContactUs() {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input your email address!',
+                      message: "Please input your email address!",
                     },
                   ]}
                   className="col-span-2"
@@ -209,7 +204,7 @@ export default function ContactUs() {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input your phone number!',
+                      message: "Please input your phone number!",
                     },
                   ]}
                   className="col-span-2"
@@ -228,7 +223,7 @@ export default function ContactUs() {
                   label="Message"
                   name="message"
                   rules={[
-                    { required: true, message: 'Please input your message!' },
+                    { required: true, message: "Please input your message!" },
                   ]}
                   className="col-span-2"
                 >
@@ -243,9 +238,13 @@ export default function ContactUs() {
 
                 {/* Submit Button */}
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" className="w-full">
-                    Send Message
-                  </Button>
+                  <button
+            type="submit"
+            className="w-full mt-8 py-2 bg-[#0091FF] text-white rounded "
+            disabled={loading}
+          >
+            {loading ? <Spin size="small" /> : "Send Message"}
+          </button>
                 </Form.Item>
               </Form>
             </section>

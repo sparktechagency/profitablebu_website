@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Search, ArrowLeft, Paperclip, Send, Menu } from "lucide-react";
+import { ArrowLeft, Menu } from "lucide-react";
 import { Navigate } from "../Navigate";
-import { useParams } from "react-router-dom";
-import { usePostChatMutation } from "../redux/api/metaApi";
+import { Link, useParams } from "react-router-dom";
 import SidbarChat from "./SidbarChat";
 import chat from "../../assets/Home/chat.png";
+import { useGetProfileQuery } from "../redux/api/userApi";
 
 const MainChat = () => {
   const { id: receiverId } = useParams();
-  const [sentMessage] = usePostChatMutation();
+  const { data: profileData } = useGetProfileQuery();
+  const price = profileData?.data?.subscriptionPlanPrice;
 
   // drawer toggle state
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -17,20 +18,33 @@ const MainChat = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  // ⚡ Block chat if subscription price is 0
+  if (price === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen text-center p-4">
+        <p className="text-xl font-semibold mb-4">
+          Please buy a subscription to access the chat.
+        </p>
+    <Link to={'/plane'}>    <button className="bg-[#0091FF] px-4 py-2 rounded text-white">
+          Buy Subscription
+        </button></Link>
+      </div>
+    );
+  }
+
   return (
     <div className="container m-auto mb-20">
-      <div className="mt-20 md:mt-11  ">
+      <div className="mt-20 md:mt-11">
         <Navigate title={"Message"} />
-        
-        {/* Mobile menu button */}
-       
       </div>
-       <button
-          onClick={() => setIsDrawerOpen(true)}
-          className="md:hidden p-2 rounded bg-gray-200"
-        >
-          <Menu className="w-6 h-6" />
-        </button>
+
+      {/* Mobile menu button */}
+      <button
+        onClick={() => setIsDrawerOpen(true)}
+        className="md:hidden p-2 rounded bg-gray-200"
+      >
+        <Menu className="w-6 h-6" />
+      </button>
 
       <div className="md:flex h-[90vh] bg-white">
         {/* Sidebar (desktop only) */}
