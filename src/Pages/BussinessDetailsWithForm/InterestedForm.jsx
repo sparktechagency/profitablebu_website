@@ -7,41 +7,40 @@ import { useEffect } from "react";
 const { TextArea } = Input;
 
 export default function InterestForm({ businessId, businessRole }) {
-  console.log(businessRole);
+
   const [addInterest] = useAddInterestMutation();
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?._id;
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
-  console.log(profileData);
+
   const email = profileData?.data?.email;
-  console.log(email);
-  console.log(userId);
+
   const [form] = useForm();
   useEffect(() => {
     if (profileData?.data) {
-      const admin = profileData.data;
+      const admin = profileData?.data;
       form.setFieldsValue({
-        name: admin.name,
-        email: admin.email,
-        mobile: admin.mobile || "",
+        name: admin?.name,
+        email: admin?.email,
+        mobile: admin?.mobile || "",
       });
     }
   }, [profileData, form]);
   const onFinish = async (values) => {
     const data = {
       userId: userId,
-      name: values.name,
-      email: values.email,
-      countryCode: values.countryCode,
-      activity: values.activity,
-      mobile: values.mobile,
-      serviceZone: values.serviceZone,
-      message: values.message,
+      name: values?.name,
+      email: values?.email,
+      countryCode: values?.countryCode,
+      activity: values?.activity,
+      mobile: values?.mobile,
+      serviceZone: values?.serviceZone,
+      message: values?.message,
       businessRole: businessRole,
       businessId: businessId,
       sector: values.sector,
     };
-    console.log(data);
+
     try {
       const res = await addInterest(data).unwrap();
 

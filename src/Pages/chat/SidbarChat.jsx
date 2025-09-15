@@ -7,14 +7,14 @@ import { imageUrl } from "../redux/api/baseApi";
 import { Link } from "react-router-dom";
 import img from "../../assets/Home/user.png";
 const SidbarChat = ({ chatId }) => {
-  console.log(chatId);
+ 
   const { socket, socketLoading, socketError } = useSocket();
 
   const [chats, setChats] = useState([]);
-  console.log("dataffff", chats);
+
   const { data: profileData } = useGetProfileQuery();
   const userId = profileData?.data?._id;
-  console.log(userId)
+
 
   useEffect(() => {
     if (!socket || socketLoading || socketError) {
@@ -26,7 +26,7 @@ const SidbarChat = ({ chatId }) => {
     };
 
     const handleMessageList = (data) => {
-      console.log("Socket sidebar data:", data);
+    
       setChats(data);
     };
 
@@ -66,7 +66,7 @@ const SidbarChat = ({ chatId }) => {
                     <div className="h-10 w-10 rounded-full overflow-hidden">
                    {participant?.image ? (
                 <img
-                  src={`${imageUrl}/uploads/profile-image/${participant.image}`}
+                  src={`${imageUrl}/uploads/profile-image/${participant?.image}`}
                   alt="User avatar"
                   className="h-full w-full object-cover"
                 />
@@ -85,7 +85,7 @@ const SidbarChat = ({ chatId }) => {
                         <h3 className="font-medium">{participant?.name}</h3>
                         <span className="text-xs text-gray-400">
                           {lastMsg?.createdAt &&
-                            new Date(lastMsg.createdAt).toLocaleTimeString([], {
+                            new Date(lastMsg?.createdAt).toLocaleTimeString([], {
                               hour: "2-digit",
                               minute: "2-digit",
                             })}
@@ -107,7 +107,7 @@ const SidbarChat = ({ chatId }) => {
                     {/* Unread Count Badge */}
                     {i?.unreadCount > 0 && (
                       <span className="ml-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
-                        {i.unreadCount}
+                        {i?.unreadCount}
                       </span>
                     )}
                   </div>

@@ -118,13 +118,13 @@ const businessApi = baseApi.injectEndpoints({
 
     getMostViewBusinessIdea: builder.query({
       query: ({ country }) => {
-        console.log(country)
+      
         let url = `/business/most-viewed-idea`;
         
         if (country) {
           url += `?country=${country}`;
         }
-        console.log(url)
+       
         return {
           url,
           method: "GET",

@@ -92,7 +92,7 @@ const FaqAsset = () => {
   ];
 
   const { data: faq } = useGetFaqQuery({ userRole:'Asset Seller' });
-  console.log(faq)
+
    const items =
     faq?.data?.map((item, index) => ({
       key: String(index + 1),

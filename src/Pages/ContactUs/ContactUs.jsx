@@ -13,14 +13,14 @@ import { useAddContactMutation } from "../redux/api/businessApi";
 import { useGetProfileQuery } from "../redux/api/userApi";
 export default function ContactUs() {
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
-  console.log(profileData);
+
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (profileData) {
       const email = profileData?.data;
 
       form.setFieldsValue({
-        email: email.email,
+        email: email?.email,
       });
     }
   }, [profileData]);
@@ -44,7 +44,7 @@ export default function ContactUs() {
   };
 
   const handleSubmit = async (values) => {
-    console.log("Form submitted:", values);
+
        setLoading(true);
     const data = {
       firstName: values.firstName,
@@ -53,7 +53,7 @@ export default function ContactUs() {
       phone: values.phone,
       message: values.message,
     };
-    console.log(data);
+
 
     try {
       const res = await addContact(data).unwrap();
@@ -213,7 +213,7 @@ export default function ContactUs() {
                     type="tel"
                     className="!border-t-0 !border-l-0 !h-10 !rounded-none !border-r-0 !ring-0 !focus:ring-0 !border-b-1 !border-gray-300 !focus:border-b-1 !focus:border-gray-300"
                     placeholder="Phone Number"
-                    value={formData.phone}
+                    value={formData?.phone}
                     onChange={handleInputChange}
                   />
                 </Form.Item>

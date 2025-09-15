@@ -15,16 +15,18 @@ import InfoIcon from "./nav-icons/InfoIcon";
 import { message } from "antd";
 import { useGetProfileQuery } from "../Pages/redux/api/userApi";
 import { imageUrl } from "../Pages/redux/api/baseApi";
-import world from '../assets/Home/world.png'
-import { useGetNotificationQuery, useGetUnreadNotificationQuery } from "../Pages/redux/api/metaApi";
+import world from "../assets/Home/world.png";
+import {
+  useGetNotificationQuery,
+  useGetUnreadNotificationQuery,
+} from "../Pages/redux/api/metaApi";
 const countryFlags = {
   US: "https://flagcdn.com/w20/us.png",
   GB: "https://flagcdn.com/w20/gb.png",
   IN: "https://flagcdn.com/w20/in.png",
   AF: "https://flagcdn.com/w20/af.png",
   AE: "https://flagcdn.com/w20/ae.png",
-  PK : world,
-  
+  PK: world,
 };
 
 const Navbar = () => {
@@ -32,7 +34,7 @@ const Navbar = () => {
   const selectedCountry = searchParams.get("country");
 
   const countries = [
-      { name: "INTERNATIONAL", code: "PK", flag: countryFlags.PK, state: "" },
+    { name: "INTERNATIONAL", code: "PK", flag: countryFlags.PK, state: "" },
     {
       name: "United States",
       code: "US",
@@ -48,7 +50,6 @@ const Navbar = () => {
     { name: "India", code: "IN", flag: countryFlags.IN, state: "IN" },
     { name: "Afganistan", code: "AF", flag: countryFlags.AF, state: "AF" },
     { name: "UAE", code: "AE", flag: countryFlags.AE, state: "UAE" },
-  
   ];
   const navigate = useNavigate();
   const { data: profileData, isLoading } = useGetProfileQuery();
@@ -56,8 +57,8 @@ const Navbar = () => {
   const users = profileData?.data;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-  const {data: notificationCount} = useGetUnreadNotificationQuery()
-  console.log(notificationCount)
+  const { data: notificationCount } = useGetUnreadNotificationQuery();
+
   const [countryModalOpen, setCountryModalOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   // const [selectedCountry, setSelectedCountry] = useState(countries);
@@ -164,7 +165,7 @@ const Navbar = () => {
               className="hidden lg:flex items-center space-x-8"
               ref={dropdownRef}
             >
-              {navItems.map((item) => (
+              {navItems?.map((item) => (
                 <div key={item?.key} className="relative">
                   {item?.submenu ? (
                     <button
@@ -260,7 +261,7 @@ const Navbar = () => {
                   >
                     {users?.image ? (
                       <img
-                        src={`${imageUrl}/uploads/profile-image/${users.image}`}
+                        src={`${imageUrl}/uploads/profile-image/${users?.image}`}
                         alt={users?.name || "User"}
                         className="w-[30px] h-[30px] rounded-full object-cover"
                       />
@@ -405,57 +406,55 @@ const Navbar = () => {
 
                 {/* Navigation Items */}
                 <nav className="space-y-4">
-  {[
-    {
-      icon: BusinessIcon,
-      label: "Listed Businesses",
-      path: "/myBusiness/details",
-    },
-    { icon: MessageIcon, label: "Message", path: "/all-Chat" },
-    {
-      icon: BelIcon,
-      label: "Notification",
-      path: "/notification",
-      showBadge: true, 
-    },
-    {
-      icon: CrownIcon,
-      label: "Subscription",
-      path: "/subscription",
-    },
-    {
-      icon: SettingIcon,
-      label: "Profile Settings",
-      path: "/profilePage",
-    },
-    { icon: NdaIcon, label: "NDA", path: "/Seller" },
-    {
-      icon: HelpIcon,
-      label: "Help & Support",
-      path: "/contact-us",
-    },
-    { icon: InfoIcon, label: "FAQs", path: "/faqs" },
-  ].map((item, idx) => (
-    <Link
-      key={idx}
-      to={item.path}
-      onClick={() => setProfileMenuOpen(false)}
-      className="flex cursor-pointer items-center space-x-3 hover:bg-gray-100 p-2 rounded-lg transition-colors relative"
-    >
-      <item.icon className="w-5 h-5 text-gray-600" />
+                  {[
+                    {
+                      icon: BusinessIcon,
+                      label: "Listed Businesses",
+                      path: "/myBusiness/details",
+                    },
+                    { icon: MessageIcon, label: "Message", path: "/all-Chat" },
+                    {
+                      icon: BelIcon,
+                      label: "Notification",
+                      path: "/notification",
+                      showBadge: true,
+                    },
+                    {
+                      icon: CrownIcon,
+                      label: "Subscription",
+                      path: "/subscription",
+                    },
+                    {
+                      icon: SettingIcon,
+                      label: "Profile Settings",
+                      path: "/profilePage",
+                    },
+                    { icon: NdaIcon, label: "NDA", path: "/Seller" },
+                    {
+                      icon: HelpIcon,
+                      label: "Help & Support",
+                      path: "/contact-us",
+                    },
+                    { icon: InfoIcon, label: "FAQs", path: "/faqs" },
+                  ].map((item, idx) => (
+                    <Link
+                      key={idx}
+                      to={item.path}
+                      onClick={() => setProfileMenuOpen(false)}
+                      className="flex cursor-pointer items-center space-x-3 hover:bg-gray-100 p-2 rounded-lg transition-colors relative"
+                    >
+                      <item.icon className="w-5 h-5 text-gray-600" />
 
-      <span className="text-sm font-medium">{item.label}</span>
+                      <span className="text-sm font-medium">{item.label}</span>
 
-
-      {item.showBadge && notificationCount?.data > 0 && (
-        <span className="ml-auto bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-          {notificationCount.data}
-        </span>
-      )}
-    </Link>
-  ))}
-</nav>
-
+                      {item?.showBadge && notificationCount?.data > 0 && (
+                        <span className="ml-auto bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                          {notificationCount?.data}
+                        </span>
+                      )}
+                    </Link>
+                  ))}
+                </nav>
 
                 {/* Sign Out */}
                 <div className="border-t border-gray-200 mt-6 pt-4">
@@ -511,23 +510,23 @@ const Navbar = () => {
                 </div>
 
                 <div className="space-y-2">
-                  {countries.map((country) => (
+                  {countries?.map((country) => (
                     <button
                       key={country.code}
                       onClick={() => handleSelect(country)}
                       className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-colors ${
-                        selectedCountry === country.state
+                        selectedCountry === country?.state
                           ? "bg-blue-50 border border-blue-200"
                           : "hover:bg-gray-50"
                       }`}
                     >
                       <img
-                        src={country.flag}
-                        alt={country.name}
+                        src={country?.flag}
+                        alt={country?.name}
                         className="w-6 "
                       />
-                      <span className="font-medium">{country.name}</span>
-                      {selectedCountry === country.state && (
+                      <span className="font-medium">{country?.name}</span>
+                      {selectedCountry === country?.state && (
                         <div className="ml-auto w-2 h-2 bg-[#0091FF] rounded-full" />
                       )}
                     </button>

@@ -34,7 +34,7 @@ function VerifyRegister() {
     await verify({ data: data })
       .unwrap()
       .then((res) => {
-        console.log(res);
+       
         localStorage.setItem("accessToken", res?.data?.accessToken);
         message.success(res?.message);
 

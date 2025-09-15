@@ -6,7 +6,7 @@ const { Text } = Typography;
 
 export default function PrivacyPolicy() {
     const {data:privecy} = useGetPrivecyQuery()
-    console.log(privecy)
+
   return (
     <div className="text-[#000000]">
       <Header

@@ -25,15 +25,15 @@ export default function Login() {
   const [loginUser] = useLoginUserMutation();
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location?.state);
+
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const onFinish = async (values) => {
-    console.log(values);
+ 
     const data = {
       ...values,
     };
-    console.log(data);
+  
     try {
       const res = await loginUser(data).unwrap();
 
@@ -57,10 +57,10 @@ export default function Login() {
   }, [location?.state, form]);
 
   const handleGoogleLogin = () => {
-    console.log("Google login clicked");
+
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider).then(async (result) => {
-      console.log(result);
+    
       
     });
   };

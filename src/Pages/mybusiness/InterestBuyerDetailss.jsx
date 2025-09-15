@@ -10,7 +10,7 @@ const InterestBuyerDetailss = () => {
 
 
   const { data, isLoading } = useGetDetailsSingleIterestUserQuery({ businessId, interestedId });
-console.log(data)
+
   return (
     <div className="container mx-auto p-6 space-y-6 bg-[#f6fcff] min-h-screen">
       {/* Header */}

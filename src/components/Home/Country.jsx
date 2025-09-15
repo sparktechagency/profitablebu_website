@@ -13,7 +13,7 @@ const Country = () => {
   const [addSubscriber] = usePostSubscriberMutation();
   const [email, setEmail] = useState("");
 const {data:countryData} = useGetTopCountryQuery();
-console.log(countryData)
+
   const handleSubscribe = async () => {
     if (!email) {
       return message.warning("Please enter an email.");
@@ -58,7 +58,7 @@ console.log(countryData)
       </div>
       <div className="grid grid-cols-5 gap-4 mt-10">
         {countryData?.data?.slice(0,5).map((country) => (
-          <Link key={country.id} to={`/search?country=${country.country}`}>
+          <Link key={country?.id} to={`/search?country=${country?.country}`}>
             <div className="relative group overflow-hidden rounded-lg shadow-md">
               <img
                 alt="United States"

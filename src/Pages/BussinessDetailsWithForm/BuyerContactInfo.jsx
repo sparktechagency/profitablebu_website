@@ -27,15 +27,15 @@ export default function BuyerContactInfo() {
       setLoading(true);
       socket.emit("chat_initiate", { receiverId }, (response) => {
    
-        console.log("Emit response:", response);
+    
       });
 
       socket.once("chat_initiate", (data) => {
-        console.log("Socket initiate chat response:", data);
+   
         setLoading(false);
 
         if (data?.data?._id) {
-          navigate(`/chat/${data.data._id}`);
+          navigate(`/chat/${data?.data?._id}`);
         } else {
           message.error("Failed to start chat. Please try again.");
         }

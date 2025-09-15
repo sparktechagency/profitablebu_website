@@ -12,7 +12,7 @@ export const ProfilePage = () => {
   const { data: profileData, isLoading } = useGetProfileQuery();
 
   const user = profileData?.data;
-  console.log(user);
+
   if (isLoading) return <div>Loading...</div>;
   if (!user) return <div>No user data found.</div>;
 
@@ -25,7 +25,7 @@ export const ProfilePage = () => {
           <div className="flex items-center gap-4">
             {user?.image ? (
               <img
-                src={`${imageUrl}/uploads/profile-image/${user.image}`}
+                src={`${imageUrl}/uploads/profile-image/${user?.image}`}
                 alt={user?.name || "User"}
                 className="w-16 h-16 rounded-full object-cover"
               />
@@ -37,11 +37,11 @@ export const ProfilePage = () => {
             )}
 
             <div>
-              <h2 className="text-lg font-semibold">{user.name}</h2>
+              <h2 className="text-lg font-semibold">{user?.name}</h2>
               <span className="inline-block text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded mt-1">
-                {user.role}
+                {user?.role}
               </span>
-              <p className="text-sm text-gray-600 mt-1">{user.email}</p>
+              <p className="text-sm text-gray-600 mt-1">{user?.email}</p>
             </div>
           </div>
 
@@ -55,16 +55,16 @@ export const ProfilePage = () => {
         <div className="space-y-2 mb-4 text-sm text-gray-700">
           <div className="flex items-center gap-2">
             <FaPhoneAlt className="text-blue-500" />
-            <span>{user.mobile}</span>
+            <span>{user?.mobile}</span>
           </div>
           <div className="flex items-center gap-2">
             <FaEnvelope className="text-blue-500" />
-            <span>{user.email}</span>
+            <span>{user?.email}</span>
           </div>
           <div className="flex items-center gap-2">
             <FaMapMarkerAlt className="text-blue-500" />
             <span>
-              {user.country}
+              {user?.country}
             </span>
           </div>
         </div>
@@ -72,7 +72,7 @@ export const ProfilePage = () => {
         <div>
           <h3 className="text-base font-semibold mb-1">About Me</h3>
           <p className="text-sm text-gray-700 leading-relaxed">
-            {user.description}
+            {user?.description}
           </p>
         </div>
       </div>

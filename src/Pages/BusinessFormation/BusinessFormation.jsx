@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function BusinessFormation() {
   const { data: getAllFormat, isLoading, isError } = useGetAllFormateQuery();
-  console.log(getAllFormat)
+
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -36,16 +36,16 @@ export default function BusinessFormation() {
       {/* Services Grid */}
       <div className="space-y-8 mt-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {getAllFormat.data.map((service) => (
+          {getAllFormat?.data?.map((service) => (
             <div
-              key={service._id}
+              key={service?._id}
               className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white rounded-xl overflow-hidden border border-gray-100 h-full flex flex-col"
             >
               {/* Service Image */}
               <div className="relative aspect-[4/3] overflow-hidden">
                 <img
                   src={`${imageUrl}/uploads/formation-image/${service?.image}`}
-                  alt={service.title}
+                  alt={service?.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
             
@@ -55,14 +55,14 @@ export default function BusinessFormation() {
               <div className="p-6 flex-1 flex flex-col">
                 <div className="flex-1">
                   <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
-                    {service.title}
+                    {service?.title}
                   </h3>
                   <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-                    {service.detail}
+                    {service?.detail}
                   </p>
                 </div>
 
-                <Link to={`/business-formation-details/${service._id}`}>
+                <Link to={`/business-formation-details/${service?._id}`}>
                   <button
                     className="mt-auto w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-all duration-200 group-hover:shadow-lg"
                    

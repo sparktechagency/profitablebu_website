@@ -16,35 +16,11 @@ export default function BussinessDetailsWithForm() {
   const { data: businessDetails } = useGetSingleIterestUserQuery({
     businessId,
   });
-  console.log(businessDetails);
+
   return (
     <div className="container m-auto pb-20 lg:mt-8 mt-11 lg:px-0 px-4">
       <Navigate title={"Trendy Urban Café in Dhaka City"}></Navigate>
-      {/* <div className="lg:grid grid-cols-3 gap-9">
-        <div className="bg-white shadow  p-4 text-center rounded">
-          <div className="flex justify-center">
-            <img src={img1} alt="" />
-          </div>
-          <h1 className="font-semibold text-3xl py-3">Total Views</h1>
-          <h2 className="text-[#22C55E] font-semibold text-xl">1,205</h2>
-        </div>
-        <div className="bg-white shadow  p-4 text-center rounded">
-          <div className="flex justify-center">
-            <img src={img2} alt="" />
-          </div>
-          <h1 className="font-semibold text-3xl py-3">Total Interests</h1>
-          <h2 className="text-[#22C55E] font-semibold text-xl">
-            {businessDetails?.data?.interestedUsers?.length}
-          </h2>
-        </div>
-        <div className="bg-white shadow  p-4 text-center rounded">
-          <div className="flex justify-center">
-            <img src={img3} alt="" />
-          </div>
-          <h1 className="font-semibold text-3xl py-3">Inquiries Received</h1>
-          <h2 className="text-[#22C55E] font-semibold text-xl">1,205</h2>
-        </div>
-      </div> */}
+
 
       <div className=" pt-11">
         <div className="lg:grid grid-cols-2">

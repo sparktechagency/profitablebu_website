@@ -13,14 +13,13 @@ import { useGetFaqQuery } from "../redux/api/metaApi";
 import { useGetProfileQuery } from "../redux/api/userApi";
 const Faqs = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user?.name);
-  console.log(user?.role);
+
   const role = user?.role;
    const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
     const userRole = profileData?.data?.role;
-    console.log(userRole)
+ 
   const { data: faq } = useGetFaqQuery({ userRole });
-  console.log(faq);
+
   const items =
     faq?.data?.map((item, index) => ({
       key: String(index + 1),

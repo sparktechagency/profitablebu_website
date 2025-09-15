@@ -9,6 +9,8 @@ import {
   FaYoutube,
 } from "react-icons/fa6";
 import { div } from "framer-motion/client";
+import { FaInstagram } from "react-icons/fa";
+import { IoMailOpenOutline } from "react-icons/io5";
 
 // Dynamic footer configuration
 const footerConfig = {
@@ -24,27 +26,27 @@ const footerConfig = {
     {
       name: "Facebook",
       icon: FaFacebookF,
-      url: "https://facebook.com/pbfs",
+      url: "https://www.facebook.com/share/1J7PbBaf1G/?mibextid=wwXIfr",
       color: "#1877F2",
     },
     {
-      name: "Twitter",
-      icon: FaTwitter,
-      url: "https://twitter.com/pbfs",
+      name: "Instagram",
+      icon: FaInstagram ,
+      url: "https://www.instagram.com/profitablebusinessesforsale?igsh=MTc5bTVrcWJoZHNtbQ%3D%3D&utm_source=…",
       color: "#1DA1F2",
     },
     {
-      name: "YouTube",
-      icon: FaYoutube,
-      url: "https://youtube.com/pbfs",
+      name: "E-mail",
+      icon: IoMailOpenOutline ,
+      url: "info@profitablebusinessesforsale.com",
       color: "#FF0000",
     },
-    {
-      name: "LinkedIn",
-      icon: FaLinkedinIn,
-      url: "https://linkedin.com/company/pbfs",
-      color: "#0077B5",
-    },
+    // {
+    //   name: "LinkedIn",
+    //   icon: FaLinkedinIn,
+    //   url: "https://linkedin.com/company/pbfs",
+    //   color: "#0077B5",
+    // },
   ],
 
   sections: [
@@ -159,7 +161,7 @@ const FooterSection = ({ section }) => {
   const navigate = useNavigate();
 
   const handleNavigation = (link) => {
-    console.log(link);
+   
     navigate(link.to, { state: link.state });
     // Scroll to top after navigation
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -206,25 +208,25 @@ export const Footer = () => {
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-3 mb-4 sm:mb-6">
               <img
-                src={company.logo}
-                alt={`${company.name} Logo`}
+                src={company?.logo}
+                alt={`${company?.name} Logo`}
                 className="w-10 sm:w-12 md:w-[50px] flex-shrink-0 rounded-lg shadow-lg"
               />
               <div>
                 <h1 className="text-xl sm:text-2xl font-bold text-[#F59E0B]">
-                  {company.name}
+                  {company?.name}
                 </h1>
                 <p className="text-[#F59E0B] text-sm sm:text-base">
-                  {company.tagline}
+                  {company?.tagline}
                 </p>
               </div>
             </div>
             <p className="text-xs sm:text-sm mb-3 sm:mb-4 text-gray-400">
-              {company.copyright}
+              {company?.copyright}
             </p>
 
             <div className="flex flex-wrap gap-2 sm:gap-3">
-              {socialLinks.slice(0, 4).map((social, index) => (
+              {socialLinks?.slice(0, 4).map((social, index) => (
                 <SocialLink key={index} social={social} />
               ))}
             </div>

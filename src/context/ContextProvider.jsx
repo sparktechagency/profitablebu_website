@@ -14,9 +14,9 @@ const SocketContext = createContext(null);
 
 export const SocketProvider = ({ children }) => {
       const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
-      console.log(profileData);
+
       const id = profileData?.data?._id
-      console.log(id)
+
   const [socketLoading, setSocketLoading] = useState(false);
   const token = localStorage.getItem("accessToken");
 //   const token = useSelector((s) => s.logInUser?.token);
@@ -41,14 +41,14 @@ export const SocketProvider = ({ children }) => {
       withCredentials: true,
     });
 
-    console.log(socket);
+ 
     socket.on("connect", () => {
       setSocketLoading(false);
-      console.log("Socket connected:", socket.id);
+   
     });
 
     socket.on("disconnect", () => {
-      console.log("Socket disconnected");
+
     });
 
     socketRef.current = socket;

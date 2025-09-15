@@ -63,7 +63,7 @@ const Seller = () => {
   };
   const [addNda] = useAddNdaMutation();
   const onFinish = async (values) => {
-    console.log(values);
+  
     setLoading(true);
     try {
       const formData = new FormData();
@@ -88,7 +88,7 @@ const Seller = () => {
       });
 
       const res = await addNda(formData).unwrap();
-      console.log(res);
+    
       setLoading(false);
       message.success(res.message);
       form.resetFields();
@@ -100,7 +100,7 @@ const Seller = () => {
   };
 
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
-  console.log(profileData);
+
   const role = profileData?.data?.role;
 
   return (

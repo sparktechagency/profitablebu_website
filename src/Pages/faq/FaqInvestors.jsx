@@ -11,7 +11,7 @@ import Header from '../AboutUs/Header';
 import { useGetFaqQuery } from '../redux/api/metaApi';
 const FaqInvestors = () => {
   const { data: faq } = useGetFaqQuery({ userRole:'Investor' });
-    console.log(faq)
+
      const items =
       faq?.data?.map((item, index) => ({
         key: String(index + 1),

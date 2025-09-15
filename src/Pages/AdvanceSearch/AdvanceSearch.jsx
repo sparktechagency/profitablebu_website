@@ -79,12 +79,12 @@ export default function AdvanceSearch() {
   const navigate = useNavigate();
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
-    const category = categorie.data.find((cat) => cat.categoryName === value);
+    const category = categorie?.data?.find((cat) => cat?.categoryName === value);
     setSubCategories(category?.subCategories || []);
     form.setFieldsValue({ subCategory: null });
   };
   const handleSearch = (values) => {
-    console.log(values);
+
     const params = new URLSearchParams(values).toString();
     navigate(`/search?${params}`);
   };
@@ -109,10 +109,10 @@ export default function AdvanceSearch() {
   };
   useEffect(() => {
     if (categorie?.data?.length) {
-      const defaultCategory = categorie.data[0];
-      setSelectedCategory(defaultCategory.categoryName);
-      setSubCategories(defaultCategory.subCategories || []);
-      form.setFieldsValue({ category: defaultCategory.categoryName });
+      const defaultCategory = categorie?.data[0];
+      setSelectedCategory(defaultCategory?.categoryName);
+      setSubCategories(defaultCategory?.subCategories || []);
+      form.setFieldsValue({ category: defaultCategory?.categoryName });
     }
   }, [categorie]);
 
@@ -148,22 +148,22 @@ export default function AdvanceSearch() {
               value={selectedCategory}
             >
               {categorie?.data?.map((cat) => (
-                <Option key={cat._id} value={cat.categoryName}>
-                  {cat.categoryName}
+                <Option key={cat._id} value={cat?.categoryName}>
+                  {cat?.categoryName}
                 </Option>
               ))}
             </Select>
           </Form.Item>
 
-          {subCategories.length > 0 && (
+          {subCategories?.length > 0 && (
             <Form.Item label="Sub Category" name="subCategory">
               <Select
                 style={{ height: "48px" }}
                 placeholder="Select Sub Category"
               >
-                {subCategories.map((sub, i) => (
-                  <Option key={i} value={sub.name}>
-                    {sub.name}
+                {subCategories?.map((sub, i) => (
+                  <Option key={i} value={sub?.name}>
+                    {sub?.name}
                   </Option>
                 ))}
               </Select>
@@ -186,19 +186,19 @@ export default function AdvanceSearch() {
               onChange={handleCountryChange}
               optionLabelProp="label"
             >
-              {countries.map((country) => (
+              {countries?.map((country) => (
                 <Select.Option
-                  key={country.isoCode}
-                  value={country.isoCode}
-                  label={country.name}
+                  key={country?.isoCode}
+                  value={country?.isoCode}
+                  label={country?.name}
                 >
                   <div className="flex items-center gap-2">
                     <img
-                      src={`https://flagcdn.com/w20/${country.isoCode.toLowerCase()}.png`}
-                      alt={country.name}
+                      src={`https://flagcdn.com/w20/${country?.isoCode.toLowerCase()}.png`}
+                      alt={country?.name}
                       className="w-5 h-3 object-cover"
                     />
-                    {country.name}
+                    {country?.name}
                   </div>
                 </Select.Option>
               ))}
@@ -215,9 +215,9 @@ export default function AdvanceSearch() {
               onChange={handleStateChange}
               disabled={!selectedCountry}
             >
-              {states.map((state) => (
-                <Select.Option key={state.isoCode} value={state.name}>
-                  {state.name}
+              {states?.map((state) => (
+                <Select.Option key={state?.isoCode} value={state?.name}>
+                  {state?.name}
                 </Select.Option>
               ))}
             </Select>
@@ -232,28 +232,14 @@ export default function AdvanceSearch() {
               allowClear
               disabled={!selectedState}
             >
-              {cities.map((city) => (
-                <Select.Option key={city.name} value={city.name}>
-                  {city.name}
+              {cities?.map((city) => (
+                <Select.Option key={city?.name} value={city?.name}>
+                  {city?.name}
                 </Select.Option>
               ))}
             </Select>
           </Form.Item>
         </div>
-
-        {/* <Form.Item label="Location" name="location">
-          <Select
-            placeholder="Select One"
-            allowClear
-            style={{ height: "50px" }}
-          >
-            {location.map((country) => (
-              <Option key={country} value={country}>
-                {country}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item> */}
 
         <Form.Item label="Asking Price" name="askingPrice">
           <Select
@@ -261,7 +247,7 @@ export default function AdvanceSearch() {
             allowClear
             style={{ height: "50px" }}
           >
-            {askingPrice.map((priceRange) => (
+            {askingPrice?.map((priceRange) => (
               <Option key={priceRange} value={priceRange}>
                 {priceRange}
               </Option>
@@ -279,7 +265,7 @@ export default function AdvanceSearch() {
             allowClear
             style={{ height: "50px" }}
           >
-            {businessType.map((type) => (
+            {businessType?.map((type) => (
               <Option key={type} value={type}>
                 {type}
               </Option>
@@ -293,7 +279,7 @@ export default function AdvanceSearch() {
             allowClear
             style={{ height: "50px" }}
           >
-            {ownerShipType.map((type) => (
+            {ownerShipType?.map((type) => (
               <Option key={type} value={type}>
                 {type}
               </Option>

@@ -6,9 +6,9 @@ import { useGetProfileQuery } from "./Pages/redux/api/userApi";
 const ProtectedRoute = ({ children }) => {
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
   const role = profileData?.data?.role;
-  console.log(profileData)
+
   const isSubscribed = profileData?.data?.subscriptionPlan;
-  console.log(isSubscribed)
+
   const location = useLocation();
 
   const privateRoutes = ["/chat"];

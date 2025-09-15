@@ -90,7 +90,7 @@ const businessType = [
   "Startup",
   "Home-Based",
   "Online",
-  "Other"
+  "Other",
 ];
 
 // <Option value="Franchise">Franchise</Option>
@@ -104,7 +104,7 @@ const ownerShipType = [
   "Partnership",
   "Corporation",
   "LLC",
-  "Other"
+  "Other",
 ];
 
 const sortBy = ["Newest First", "Price Low to High", "Most Viewed"];
@@ -117,24 +117,22 @@ const ageListing = [
   "Last 3 Month",
 ];
 
-
-
 export default function AllBusinessFilterAnt() {
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [cities, setCities] = useState([]);
-  console.log(states, cities);
+
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
-  console.log(selectedState);
+
   const [selectedCity, setSelectedCity] = useState(null);
 
   const { data: categorys } = useGetCategtoryQuery();
   const locations = useLocation();
-  console.log(locations?.state);
+
   const [searchQuery, setSearchQuery] = useState("");
-  console.log(searchQuery);
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setSearchQuery(params.get("query") || "");
@@ -149,23 +147,24 @@ export default function AllBusinessFilterAnt() {
     setCities([]);
     setSelectedState(null);
     setSelectedCity(null);
-    console.log("Selected Country:", value);
+
   };
 
-// State Change
-const handleStateChange = (value) => {
-  setSelectedState(value); 
-  const selectedStateObj = states.find((s) => s.name === value);
-  setCities(City.getCitiesOfState(selectedCountry, selectedStateObj?.isoCode));
-  setSelectedCity(null);
-  console.log("Selected State:", value);
-};
+  // State Change
+  const handleStateChange = (value) => {
+    setSelectedState(value);
+    const selectedStateObj = states?.find((s) => s.name === value);
+    setCities(
+      City.getCitiesOfState(selectedCountry, selectedStateObj?.isoCode)
+    );
+    setSelectedCity(null);
 
+  };
 
-const handleCityChange = (value) => {
-  setSelectedCity(value);
-  console.log("Selected City:", value);
-};
+  const handleCityChange = (value) => {
+    setSelectedCity(value);
+
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -185,26 +184,25 @@ const handleCityChange = (value) => {
   }, [location.search]);
 
   const [businessRole, setFilters] = useState([]);
-  console.log(businessRole);
-  console.log(businessRole);
+
 
   const [viewMode, setViewMode] = useState("grid");
   const [selectedCategory, setSelectedCategory] = useState(null);
-  console.log(selectedCategory);
+
   //   const [selectedRegion, setSelectedRegion] = useState(null);
 
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedAskingPrice, setSelectedAskingPrice] = useState(null);
-  console.log(selectedAskingPrice);
+ 
   const [selectedBusinessType, setSelectedBusinessType] = useState(null);
   const [selectedOwnerShipType, setSelectedOwnerShipType] = useState(null);
   const [selectedSortBy, setSelectedSortBy] = useState(null);
   const [selectedAgeListing, setSelectedAgeListing] = useState(null);
   // const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
-  console.log(selectedSubCategory);
+
   const [currentPage, setCurrentPage] = useState(1);
-  console.log(currentPage);
+
 
   const pageSize = 10;
   const { data: businessFilter } = useGetAllBusinesFilterQuery({
@@ -225,9 +223,9 @@ const handleCityChange = (value) => {
     limit: pageSize,
   });
 
-  console.log(businessFilter);
+
   const business = businessFilter?.data || [];
-  console.log(business)
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -249,21 +247,21 @@ const handleCityChange = (value) => {
             }}
           >
             {categorys?.data?.map((category) => (
-              <div key={category.categoryName} className="mb-2">
-                <Radio value={category.categoryName}>
-                  {category.categoryName}
+              <div key={category?.categoryName} className="mb-2">
+                <Radio value={category?.categoryName}>
+                  {category?.categoryName}
                 </Radio>
 
-                {selectedCategory === category.categoryName &&
-                  category.subCategories?.length > 0 && (
+                {selectedCategory === category?.categoryName &&
+                  category?.subCategories?.length > 0 && (
                     <div className="ml-6 mt-2">
                       <Radio.Group
                         value={selectedSubCategory}
                         onChange={(e) => setSelectedSubCategory(e.target.value)}
                       >
-                        {category.subCategories.map((sub) => (
-                          <div key={sub.name} className="mb-1">
-                            <Radio value={sub.name}>{sub.name}</Radio>
+                        {category?.subCategories.map((sub) => (
+                          <div key={sub?.name} className="mb-1">
+                            <Radio value={sub?.name}>{sub?.name}</Radio>
                           </div>
                         ))}
                       </Radio.Group>
@@ -275,30 +273,6 @@ const handleCityChange = (value) => {
         </Panel>
       </Collapse>
 
-      {/* Region */}
-      {/* <div className="my-2">
-            <Collapse
-            
-              expandIcon={({ isActive }) => (
-                <DownOutlined rotate={isActive ? 180 : 0} />
-              )}
-            >
-              <Panel header="Region" key="1">
-                <Radio.Group
-                  value={selectedRegion}
-                  onChange={(e) => setSelectedRegion(e.target.value)}
-                >
-                  {region.map((category) => (
-                    <div key={category} className="mb-2">
-                      <Radio value={category}>{category}</Radio>
-                    </div>
-                  ))}
-                </Radio.Group>
-              </Panel>
-            </Collapse>
-          </div> */}
-
-      {/* Country */}
       <div className="my-2">
         <Collapse
           expandIcon={({ isActive }) => (
@@ -306,25 +280,25 @@ const handleCityChange = (value) => {
           )}
         >
           <Panel header="Country" key="1">
-           <div style={{ maxHeight: "200px", overflowY: "auto" }}>
-             <Radio.Group
-              value={selectedCountry}
-              onChange={(e) => handleCountryChange(e.target.value)}
-            >
-              {countries.map((country) => (
-                <Radio key={country.isoCode} value={country.isoCode}>
-                  <div className="flex items-center gap-2">
-                    <img
-                      src={`https://flagcdn.com/w20/${country.isoCode.toLowerCase()}.png`}
-                      alt={country.name}
-                      className="w-5 h-3 object-cover"
-                    />
-                    {country.name}
-                  </div>
-                </Radio>
-              ))}
-            </Radio.Group>
-           </div>
+            <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+              <Radio.Group
+                value={selectedCountry}
+                onChange={(e) => handleCountryChange(e.target.value)}
+              >
+                {countries?.map((country) => (
+                  <Radio key={country?.isoCode} value={country?.isoCode}>
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={`https://flagcdn.com/w20/${country?.isoCode.toLowerCase()}.png`}
+                        alt={country?.name}
+                        className="w-5 h-3 object-cover"
+                      />
+                      {country?.name}
+                    </div>
+                  </Radio>
+                ))}
+              </Radio.Group>
+            </div>
           </Panel>
         </Collapse>
       </div>
@@ -337,16 +311,19 @@ const handleCityChange = (value) => {
           )}
         >
           <Panel header="State" key="2">
-           <div style={{ maxHeight: "200px", overflowY: "auto" }}> <Radio.Group
-  value={selectedState}
-  onChange={(e) => handleStateChange(e.target.value)}
->
-  {states.map((state) => (
-    <Radio key={state.isoCode} value={state.name}>
-      {state.name}
-    </Radio>
-  ))}
-</Radio.Group></div>
+            <div style={{ maxHeight: "200px", overflowY: "auto" }}>
+              {" "}
+              <Radio.Group
+                value={selectedState}
+                onChange={(e) => handleStateChange(e.target.value)}
+              >
+                {states?.map((state) => (
+                  <Radio key={state?.isoCode} value={state?.name}>
+                    {state?.name}
+                  </Radio>
+                ))}
+              </Radio.Group>
+            </div>
           </Panel>
         </Collapse>
       </div>
@@ -360,16 +337,16 @@ const handleCityChange = (value) => {
         >
           <Panel header="City" key="3">
             <div style={{ maxHeight: "200px", overflowY: "auto" }}>
-             <Radio.Group
-  value={selectedCity}
-  onChange={(e) => handleCityChange(e.target.value)}
->
-  {cities.map((city) => (
-    <Radio key={city.name} value={city.name}>
-      {city.name}
-    </Radio>
-  ))}
-</Radio.Group>
+              <Radio.Group
+                value={selectedCity}
+                onChange={(e) => handleCityChange(e.target.value)}
+              >
+                {cities?.map((city) => (
+                  <Radio key={city?.name} value={city?.name}>
+                    {city?.name}
+                  </Radio>
+                ))}
+              </Radio.Group>
             </div>
           </Panel>
         </Collapse>

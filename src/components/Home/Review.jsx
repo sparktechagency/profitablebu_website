@@ -120,18 +120,18 @@ const Review = () => {
                       <p className="-mt-1 pl-2">(4.5)</p>
                     </div>
                     
-                    <p className="text-sm mt-1">{item.review}</p>
+                    <p className="text-sm mt-1">{item?.review}</p>
                     <div className="flex items-center gap-4 mt-5">
                       <div className="">
                         <img
                           className="rounded-full w-[70px] object-cover"
-                          src={item.img}
-                          alt={item.title}
+                          src={item?.img}
+                          alt={item?.title}
                         />
                       </div>
                       <div>
-                        <h1 className=" ">{item.title}</h1>
-                        <h2 className=" ">{item.location}</h2>
+                        <h1 className=" ">{item?.title}</h1>
+                        <h2 className=" ">{item?.location}</h2>
                       </div>
                     </div>
                   </div>

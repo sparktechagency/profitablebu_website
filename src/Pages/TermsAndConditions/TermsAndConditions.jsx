@@ -6,7 +6,7 @@ const { Text } = Typography;
 
 export default function TermsAndConditions() {
   const { data: terms } = useGetTermsConditionsQuery();
-  console.log(terms);
+
 
   return (
     <div className="text-[#000000]">

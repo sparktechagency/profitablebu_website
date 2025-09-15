@@ -7,28 +7,27 @@ import { useEffect } from "react";
 const { TextArea } = Input;
 
 export default function InterenstFormation({ formationId }) {
-  console.log(formationId)
+ 
   const [addInterest] = usePostInterestFormationMutation()
    const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
-  console.log(profileData);
+
   const userId = profileData?.data?._id;
- console.log(userId)
-  console.log(userId)
+
   const [form] = useForm();
 
 
 
-  console.log(profileData);
+ 
   const email = profileData?.data?.email;
-  console.log(email);
+ 
 
   useEffect(() => {
     if (profileData?.data) {
-      const admin = profileData.data;
+      const admin = profileData?.data;
       form.setFieldsValue({
-        name: admin.name,
-        email: admin.email,
-        mobile: admin.mobile || "",
+        name: admin?.name,
+        email: admin?.email,
+        mobile: admin?.mobile || "",
       });
     }
   }, [profileData, form]);
@@ -37,16 +36,16 @@ export default function InterenstFormation({ formationId }) {
   const onFinish = async(values) => {
 const data = {
       userId: userId,
-      name: values.name,
-      email: values.email,
-      countryCode: values.countryCode, 
-      activity: values.activity, 
-      serviceZone: values.serviceZone,
-      message: values.message,
+      name: values?.name,
+      email: values?.email,
+      countryCode: values?.countryCode, 
+      activity: values?.activity, 
+      serviceZone: values?.serviceZone,
+      message: values?.message,
       
       formationId: formationId,
     };
-console.log(data)
+
     try {
       const res = await addInterest(data).unwrap();
      

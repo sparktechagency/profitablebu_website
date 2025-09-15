@@ -9,7 +9,7 @@ import { imageUrl } from '../redux/api/baseApi';
 function BusinessDetails() {
   const { id } = useParams();
   const business = businessData.find(
-    (business) => business.id === parseInt(id, 10)
+    (business) => business?.id === parseInt(id, 10)
   );
 
   return (

@@ -31,7 +31,7 @@ const props = {
   onChange(info) {
     const { status } = info.file;
     if (status !== "uploading") {
-      console.log(info.file, info.fileList);
+  
     }
     if (status === "done") {
       message.success(`${info.file.name} file uploaded successfully.`);
@@ -40,14 +40,14 @@ const props = {
     }
   },
   onDrop(e) {
-    console.log("Dropped files", e.dataTransfer.files);
+
   },
 };
 const AddNewBusiness = () => {
   const { data: categorie, isLoading, isError } = useGetCategtoryQuery();
   const [addBusiness] = useAddBusinessMutation();
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
-  console.log(profileData);
+
   const role = profileData?.data?.role;
   const editor = useRef(null);
   const [fileList, setFileList] = useState([]);
@@ -58,11 +58,11 @@ const AddNewBusiness = () => {
   };
 
   const [countries, setCountries] = useState([]);
-  console.log(countries);
+
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
-  console.log(subCategories)
+  
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -71,17 +71,17 @@ const AddNewBusiness = () => {
 
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
-    const category = categorie.data.find((cat) => cat.categoryName === value);
+    const category = categorie?.data?.find((cat) => cat?.categoryName === value);
     setSubCategories(category?.subCategories || []);
     form.setFieldsValue({ subCategory: null });
   };
-  console.log(selectedState);
+
   useEffect(() => {
     setCountries(Country.getAllCountries());
   }, []);
 
   const handleCountryChange = (value) => {
-    const country = countries.find((c) => c.isoCode === value);
+    const country = countries.find((c) => c?.isoCode === value);
     setSelectedCountry(country);
     setStates(State.getStatesOfCountry(value));
     setCities([]);
@@ -116,7 +116,7 @@ const AddNewBusiness = () => {
     imgWindow?.document.write(image.outerHTML);
   };
   const handleSubmit = async (values) => {
-    console.log(values);
+
 
     try {
       const formData = new FormData();
@@ -145,14 +145,14 @@ const AddNewBusiness = () => {
       formData.append("description", content);
       const res = await addBusiness(formData);
 
-      console.log(res);
+
       if (res.data?.message) {
         message.success(res.data?.message);
       } else {
         message.error(res?.error?.data?.message);
       }
     } catch (errr) {
-      console.log(errr);
+    
       message.error(errr?.data?.message);
     }
   };
@@ -160,7 +160,7 @@ const AddNewBusiness = () => {
 
 if (role === "Seller") {
   placeholderText = 
-`📝 Seller Listing Checklist<br><br>
+`
 ❌ Don’ts (What NOT to Include)<br><br>
 - Company name in title or description<br>
 - Personal contact details (phone, email, WhatsApp, website, etc.)<br>
@@ -177,7 +177,7 @@ if (role === "Seller") {
 
 else if (role === "Business Idea Lister") {
   placeholderText = 
-`📝 Business Idea Lister Checklist<br><br>
+`
 ❌ Don’ts (What NOT to Include)<br><br>
 - Do not add personal contact details (phone, email, WhatsApp, website, etc.)<br>
 - Do not share sensitive or confidential information<br>
@@ -197,7 +197,7 @@ else if (role === "Business Idea Lister") {
 
 else if (role === "Broker") {
   placeholderText = 
-`📝 Broker Listing Checklist<br><br>
+`
 ❌ Don’ts (What NOT to Do)<br><br>
 - Do not list businesses without the owner’s permission<br>
 - Do not add your agency’s personal contact details<br>
@@ -217,7 +217,7 @@ else if (role === "Broker") {
 
 else if (role === "Franchise Seller" || role === "Francise Seller") {
   placeholderText = 
-`📝 Franchisor Listing Checklist<br><br>
+`
 ❌ Don’ts (What NOT to Do)<br><br>
 - Do not include personal contact details<br>
 - Do not provide misleading or exaggerated financial promises<br>
@@ -238,7 +238,7 @@ else if (role === "Franchise Seller" || role === "Francise Seller") {
 
 else if (role === "Asset Seller") {
   placeholderText = 
-`📝 Business Asset Seller Checklist<br><br>
+`
 ❌ Don’ts (What NOT to Do)<br><br>
 - Do not include personal contact details<br>
 - Do not post assets you do not legally own<br>
@@ -275,10 +275,10 @@ const config = {
 
   useEffect(() => {
     if (categorie?.data?.length) {
-      const defaultCategory = categorie.data[0];
-      setSelectedCategory(defaultCategory.categoryName);
-      setSubCategories(defaultCategory.subCategories || []);
-      form.setFieldsValue({ category: defaultCategory.categoryName });
+      const defaultCategory = categorie?.data[0];
+      setSelectedCategory(defaultCategory?.categoryName);
+      setSubCategories(defaultCategory?.subCategories || []);
+      form.setFieldsValue({ category: defaultCategory?.categoryName });
     }
   }, [categorie]);
 
@@ -320,7 +320,7 @@ const config = {
             >
               <Input
                 className="w-full bg-transparent  py-3"
-                placeholder="Fuel Type"
+                placeholder="Business Title"
               />
             </Form.Item>
           </div>
@@ -339,22 +339,22 @@ const config = {
                 value={selectedCategory}
               >
                 {categorie?.data?.map((cat) => (
-                  <Option key={cat._id} value={cat.categoryName}>
-                    {cat.categoryName}
+                  <Option key={cat?._id} value={cat?.categoryName}>
+                    {cat?.categoryName}
                   </Option>
                 ))}
               </Select>
             </Form.Item>
 
-            {subCategories.length > 0 && (
+            {subCategories?.length > 0 && (
               <Form.Item label="Sub Category" name="subCategory">
                 <Select
                   style={{ height: "48px" }}
                   placeholder="Select Sub Category"
                 >
-                  {subCategories.map((sub, i) => (
-                    <Option key={i} value={sub.name}>
-                      {sub.name}
+                  {subCategories?.map((sub, i) => (
+                    <Option key={i} value={sub?.name}>
+                      {sub?.name}
                     </Option>
                   ))}
                 </Select>
@@ -379,19 +379,19 @@ const config = {
                 onChange={handleCountryChange}
                 optionLabelProp="label"
               >
-                {countries.map((country) => (
+                {countries?.map((country) => (
                   <Select.Option
-                    key={country.isoCode}
-                    value={country.isoCode}
-                    label={country.name}
+                    key={country?.isoCode}
+                    value={country?.isoCode}
+                    label={country?.name}
                   >
                     <div className="flex items-center gap-2">
                       <img
-                        src={`https://flagcdn.com/w20/${country.isoCode.toLowerCase()}.png`}
-                        alt={country.name}
+                        src={`https://flagcdn.com/w20/${country?.isoCode.toLowerCase()}.png`}
+                        alt={country?.name}
                         className="w-5 h-3 object-cover"
                       />
-                      {country.name}
+                      {country?.name}
                     </div>
                   </Select.Option>
                 ))}
@@ -408,9 +408,9 @@ const config = {
                 onChange={handleStateChange}
                 disabled={!selectedCountry}
               >
-                {states.map((state) => (
-                  <Select.Option key={state.isoCode} value={state.isoCode}>
-                    {state.name}
+                {states?.map((state) => (
+                  <Select.Option key={state?.isoCode} value={state?.isoCode}>
+                    {state?.name}
                   </Select.Option>
                 ))}
               </Select>
@@ -426,9 +426,9 @@ const config = {
                 onChange={handleCityChange}
                 disabled={!selectedState}
               >
-                {cities.map((city) => (
-                  <Select.Option key={city.name} value={city.name}>
-                    {city.name}
+                {cities?.map((city) => (
+                  <Select.Option key={city?.name} value={city?.name}>
+                    {city?.name}
                   </Select.Option>
                 ))}
               </Select>
@@ -436,25 +436,7 @@ const config = {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* <Form.Item
-              label="Location"
-              name="location"
-              rules={[{ required: true, message: "Please input Location!" }]}
-            >
-              <Select
-                style={{ height: "48px" }}
-                placeholder="Select Location"
-                className="w-full"
-              >
-                <Option value="">Select</Option>
-                <Option value="Dubai">Dubai</Option>
-                <Option value="Sharjah">Sharjah</Option>
-                <Option value="Ajman">Ajman</Option>
-                <Option value="Umm Ai-Quwain">Umm Ai-Quwain</Option>
-                <Option value="Fujairah">Fujairah</Option>
-                <Option value="Ras Ai Khaimah">Ras Ai Khaimah</Option>
-              </Select>
-            </Form.Item> */}
+
             <Form.Item
               label="Asking Price"
               name="askingPrice"

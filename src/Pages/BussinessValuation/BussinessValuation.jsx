@@ -24,7 +24,7 @@ export default function BusinessValuationForm() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [countries, setCountries] = useState([]);
-  console.log(countries);
+
   const [addBusinessValuation] = useAddBusinessValuationMutation();
   const navigate = useNavigate();
   const [contactNo, setContactNo] = useState("");
@@ -52,7 +52,7 @@ export default function BusinessValuationForm() {
   };
 
   const onFinish = async (values) => {
-    console.log(values);
+
     setLoading(true);
     try {
       const formData = new FormData();
@@ -90,7 +90,7 @@ export default function BusinessValuationForm() {
       });
 
       const res = await addBusinessValuation(formData).unwrap();
-      console.log(res);
+   
 
       message.success(res.message || "Submitted successfully");
       setLoading(false);
@@ -198,19 +198,19 @@ export default function BusinessValuationForm() {
               onChange={handleCountryChange}
               optionLabelProp="label"
             >
-              {countries.map((country) => (
+              {countries?.map((country) => (
                 <Select.Option
-                  key={country.isoCode}
-                  value={country.name}
-                  label={country.name}
+                  key={country?.isoCode}
+                  value={country?.name}
+                  label={country?.name}
                 >
                   <div className="flex items-center gap-2">
                     <img
-                      src={`https://flagcdn.com/w20/${country.isoCode.toLowerCase()}.png`}
-                      alt={country.name}
+                      src={`https://flagcdn.com/w20/${country?.isoCode.toLowerCase()}.png`}
+                      alt={country?.name}
                       className="w-5 h-3 object-cover"
                     />
-                    {country.name}
+                    {country?.name}
                   </div>
                 </Select.Option>
               ))}

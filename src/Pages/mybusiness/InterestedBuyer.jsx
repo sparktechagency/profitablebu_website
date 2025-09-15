@@ -10,10 +10,10 @@ const InterestedBuyer = () => {
   const { data: businessDetails, isLoading } = useGetSingleIterestUserQuery({
     businessId,
   });
-  console.log(businessDetails);
+
   const businessTitle = businessDetails?.data?.business?.title;
   const interestedUsers = businessDetails?.data?.interestedUsers || [];
-  console.log(interestedUsers);
+
 
   return (
     <div className="container mx-auto p-6 space-y-4">
@@ -26,14 +26,14 @@ const InterestedBuyer = () => {
       ) : (
         interestedUsers.map((buyer, index) => (
           <div
-            key={buyer._id}
+            key={buyer?._id}
             className="flex items-center justify-between p-4 bg-white shadow rounded-xl hover:shadow-md transition-all"
           >
             {/* Left Section */}
             <div className="flex items-center space-x-4">
               <img
                 src={`${imageUrl}/uploads/profile-image/${buyer?.userId?.image}`} // Placeholder
-                alt={buyer.name}
+                alt={buyer?.name}
                 className="w-14 h-14 rounded-full object-cover"
               />
               <div>
@@ -53,7 +53,7 @@ const InterestedBuyer = () => {
 
             {/* Right Section */}
             <Link
-              to={`/interestBuyer/details/${buyer._id}/iterestDetails/${buyer.businessId}`}
+              to={`/interestBuyer/details/${buyer?._id}/iterestDetails/${buyer?.businessId}`}
             >
               <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-sm">
                 View Details

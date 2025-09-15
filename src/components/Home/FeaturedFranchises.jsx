@@ -69,9 +69,9 @@ const FeaturedFranchises = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {businesses.map((business) => (
+            {businesses?.map((business) => (
               <div
-                key={business.id}
+                key={business?.id}
                 className=" border border-[#0091FF] bg-cover bg-center rounded"
                 style={{
                   backgroundImage: `url(${backCard})`,
@@ -79,22 +79,22 @@ const FeaturedFranchises = () => {
               >
                 <div className="h-48 relative">
                   <img
-                    src={business.image}
-                    alt={business.imageAlt}
+                    src={business?.image}
+                    alt={business?.imageAlt}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="p-4">
                   <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                    {business.title}
+                    {business?.title}
                   </h3>
-                  <p className="text-gray-600 mb-2">{business.location}</p>
+                  <p className="text-gray-600 mb-2">{business?.location}</p>
                   <div className="mb-2">
-                    <span className="text-blue-500">{business.categories}</span> || <span className="text-[#D97706]"> {business.subCategory}</span>
+                    <span className="text-blue-500">{business?.categories}</span> || <span className="text-[#D97706]"> {business?.subCategory}</span>
                   </div>
                   <p className="text-gray-800 mb-4">
                     Starting from{" "}
-                    <span className="font-semibold">{business.price}</span>
+                    <span className="font-semibold">{business?.price}</span>
                   </p>
                    <Link to={'/business-details'}><button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
                     View Details

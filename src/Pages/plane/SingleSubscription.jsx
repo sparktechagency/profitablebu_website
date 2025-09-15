@@ -12,7 +12,7 @@ const SingleSubscription = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
-  console.log(profileData);
+
   const role = profileData?.data?.role;
   const {
     data: signleSubscription,
@@ -24,7 +24,7 @@ const SingleSubscription = () => {
   });
 
   const plan = signleSubscription?.data;
-  console.log(plan)
+
 
   return (
     <div className="py-16">
@@ -41,10 +41,10 @@ const SingleSubscription = () => {
           <div className="max-w-md mx-auto bg-white rounded-xl shadow-md p-6 flex flex-col justify-between">
             <div>
               <h3 className="text-xl font-semibold mb-2">
-                {plan.subscriptionPlanType}
+                {plan?.subscriptionPlanType}
               </h3>
               <p className="text-sm text-gray-500 mb-4">
-                {plan.subscriptionPlanRole}
+                {plan?.subscriptionPlanRole}
               </p>
 
 

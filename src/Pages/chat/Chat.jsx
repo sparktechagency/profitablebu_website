@@ -29,9 +29,12 @@ const Chat = () => {
         <p className="text-xl font-semibold mb-4">
           Please buy a subscription to access the chat.
         </p>
-    <Link to={'/plane'}>    <button className="bg-[#0091FF] px-4 py-2 rounded text-white">
-          Buy Subscription
-        </button></Link>
+        <Link to={"/plane"}>
+          {" "}
+          <button className="bg-[#0091FF] px-4 py-2 rounded text-white">
+            Buy Subscription
+          </button>
+        </Link>
       </div>
     );
   }
@@ -42,8 +45,8 @@ const Chat = () => {
 
     const handleChats = (res) => {
       if (res?.data) {
-        setMessages(res.data.messages || []);
-        const other = res.data.participants.find((p) => p._id !== userId);
+        setMessages(res?.data?.messages || []);
+        const other = res?.data?.participants.find((p) => p?._id !== userId);
         setReceiverId(other?._id);
         setInfo(other);
       }
@@ -61,15 +64,15 @@ const Chat = () => {
 
     const handleMessage = (msg) => {
       const isForCurrentChat =
-        (msg.sender === userId && msg.receiver === receiverId) ||
-        (msg.sender === receiverId && msg.receiver === userId);
+        (msg?.sender === userId && msg?.receiver === receiverId) ||
+        (msg?.sender === receiverId && msg?.receiver === userId);
 
       if (!isForCurrentChat) return;
 
       setMessages((prev) => {
-        const exists = prev.some((m) => m._id === msg._id);
+        const exists = prev.some((m) => m._id === msg?._id);
         if (exists) return prev;
-        return [...prev, { ...msg, fromSelf: msg.sender === userId }];
+        return [...prev, { ...msg, fromSelf: msg?.sender === userId }];
       });
     };
 
@@ -121,7 +124,11 @@ const Chat = () => {
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-full overflow-hidden">
                 <img
-                  src={info?.image ? `${imageUrl}/uploads/profile-image/${info.image}` : img}
+                  src={
+                    info?.image
+                      ? `${imageUrl}/uploads/profile-image/${info?.image}`
+                      : img
+                  }
                   alt="User avatar"
                   className="h-full w-full object-cover"
                 />
@@ -138,7 +145,11 @@ const Chat = () => {
             <div className="text-center mb-6">
               <div className="flex justify-center mb-2">
                 <img
-                  src={info?.image ? `${imageUrl}/uploads/profile-image/${info.image}` : img}
+                  src={
+                    info?.image
+                      ? `${imageUrl}/uploads/profile-image/${info?.image}`
+                      : img
+                  }
                   alt="User avatar"
                   className="h-[150px] w-[150px] object-cover rounded-full"
                 />
@@ -147,22 +158,26 @@ const Chat = () => {
               <p className="text-sm text-gray-500">Active now</p>
             </div>
 
-            {messages.map((msg, i) => {
-              const isMe = msg.sender === userId;
+            {messages?.map((msg, i) => {
+              const isMe = msg?.sender === userId;
               return (
                 <div
-                  key={msg._id || i}
-                  ref={i === messages.length - 1 ? scrollRef : null}
-                  className={`mb-4 flex ${isMe ? "justify-end" : "justify-start"}`}
+                  key={msg?._id || i}
+                  ref={i === messages?.length - 1 ? scrollRef : null}
+                  className={`mb-4 flex ${
+                    isMe ? "justify-end" : "justify-start"
+                  }`}
                 >
                   <div
                     className={`p-3 rounded-lg max-w-[70%] whitespace-pre-wrap break-all ${
-                      isMe ? "bg-blue-500 text-white rounded-br-none" : "bg-gray-100 rounded-bl-none"
+                      isMe
+                        ? "bg-blue-500 text-white rounded-br-none"
+                        : "bg-gray-100 rounded-bl-none"
                     }`}
                   >
-                    <p>{msg.message}</p>
+                    <p>{msg?.message}</p>
                     <span className="block text-xs text-gray-400 mt-1">
-                      {new Date(msg.createdAt).toLocaleTimeString([], {
+                      {new Date(msg?.createdAt).toLocaleTimeString([], {
                         hour: "2-digit",
                         minute: "2-digit",
                       })}

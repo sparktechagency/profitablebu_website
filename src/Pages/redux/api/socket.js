@@ -7,10 +7,10 @@ import { SOCKET_BASE } from './baseApi';
  
 export const useSocket = () => {
       const token = localStorage.getItem("accessToken");
-      console.log(token)
+  
   const [socket, setSocket] = useState(null);
 
-  console.log('Socket token:', token);
+
  
   useEffect(() => {
     const newSocket = io(SOCKET_BASE, {

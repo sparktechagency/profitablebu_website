@@ -50,13 +50,13 @@ const SchedualeCall = () => {
 const handleSearch = async (values) => {
     const data = {
       userId,
-      name: values.fullName,
-      email: values.email,
-      date: values.preferredDate, 
-      time: values.preferredTime, 
-      timeZone: values.timeZone,
-      topic: values.meetingTopic,
-      note: values.notes || "",
+      name: values?.fullName,
+      email: values?.email,
+      date: values?.preferredDate, 
+      time: values?.preferredTime, 
+      timeZone: values?.timeZone,
+      topic: values?.meetingTopic,
+      note: values?.notes || "",
     };
 
     try {

@@ -28,12 +28,12 @@ dayjs.extend(customParseFormat);
 
 const EditNewBusiness = () => {
   const { id: businessId } = useParams();
-  console.log(businessId);
+
 
   const [fileList, setFileList] = useState([]);
   const [updateSingleData] = useUpdateSingleMutation();
   const { data: businessDetails } = useGetSingleBusinessQuery({ businessId });
-  console.log(businessDetails);
+
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
@@ -45,16 +45,16 @@ const [selectedCity, setSelectedCity] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
-  console.log(businessDetails?.data?.business.image);
+
   const { data: categorie, isLoading, isError } = useGetCategtoryQuery();
-  console.log(categorie);
+
   const editor = useRef(null);
   const [content, setContent] = useState("");
   const [form] = Form.useForm();
 
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
-    const category = categorie.data.find((cat) => cat.categoryName === value);
+    const category = categorie?.data?.find((cat) => cat?.categoryName === value);
     setSubCategories(category?.subCategories || []);
     form.setFieldsValue({ subCategory: null });
   };
@@ -170,30 +170,30 @@ const handleCityChange = (value) => {
 
   useEffect(() => {
     if (businessDetails?.data) {
-      const data = businessDetails.data?.business;
+      const data = businessDetails?.data?.business;
       form.setFieldsValue({
-        city: data.city,
-        state: data.state,
-        title: data.title,
-        category: data.category,
-        subCategory: data.subCategory,
-        country: data.country,
-        askingPrice: data.askingPrice,
-        ownerShipType: data.ownerShipType,
-        businessType: data.businessType,
-        reason: data.reason,
-        price: data.price,
+        city: data?.city,
+        state: data?.state,
+        title: data?.title,
+        category: data?.category,
+        subCategory: data?.subCategory,
+        country: data?.country,
+        askingPrice: data?.askingPrice,
+        ownerShipType: data?.ownerShipType,
+        businessType: data?.businessType,
+        reason: data?.reason,
+        price: data?.price,
       });
 
-      setContent(data.description);
+      setContent(data?.description);
 
-      if (data.image && data.image.length > 0) {
+      if (data?.image && data?.image.length > 0) {
         setFileList([
           {
             uid: "-1",
-            name: data.image[0],
+            name: data?.image[0],
             status: "done",
-            url: `${imageUrl}/uploads/business-image/${data.image}`,
+            url: `${imageUrl}/uploads/business-image/${data?.image}`,
           },
         ]);
       }
@@ -202,10 +202,10 @@ const handleCityChange = (value) => {
 
   useEffect(() => {
     if (categorie?.data?.length) {
-      const defaultCategory = categorie.data[0];
-      setSelectedCategory(defaultCategory.categoryName);
-      setSubCategories(defaultCategory.subCategories || []);
-      form.setFieldsValue({ category: defaultCategory.categoryName });
+      const defaultCategory = categorie?.data[0];
+      setSelectedCategory(defaultCategory?.categoryName);
+      setSubCategories(defaultCategory?.subCategories || []);
+      form.setFieldsValue({ category: defaultCategory?.categoryName });
     }
   }, [categorie]);
 
@@ -264,22 +264,22 @@ const handleCityChange = (value) => {
                 value={selectedCategory}
               >
                 {categorie?.data?.map((cat) => (
-                  <Option key={cat._id} value={cat.categoryName}>
-                    {cat.categoryName}
+                  <Option key={cat?._id} value={cat?.categoryName}>
+                    {cat?.categoryName}
                   </Option>
                 ))}
               </Select>
             </Form.Item>
 
-            {subCategories.length > 0 && (
+            {subCategories?.length > 0 && (
               <Form.Item label="Sub Category" name="subCategory">
                 <Select
                   style={{ height: "48px" }}
                   placeholder="Select Sub Category"
                 >
-                  {subCategories.map((sub, i) => (
-                    <Option key={i} value={sub.name}>
-                      {sub.name}
+                  {subCategories?.map((sub, i) => (
+                    <Option key={i} value={sub?.name}>
+                      {sub?.name}
                     </Option>
                   ))}
                 </Select>

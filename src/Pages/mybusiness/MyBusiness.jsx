@@ -1,214 +1,4 @@
-// import React from "react";
-// import { Navigate } from "../Navigate";
-// import card from "../../assets/Home/card1.png";
-// import backCard from "../../assets/Home/ii.png";
-// import { Link } from "react-router-dom";
-// import { useGetAllBusinessQuery } from "../redux/api/businessApi";
-// const MyBusiness = () => {
-//   const { data: businessData } = useGetAllBusinessQuery();
-//   console.log(businessData);
-//   const businesses = [
-//     {
-//       id: 1,
-//       title: "Powering Better Financial Solutions",
-//       location: "Los Angeles, CA",
-//       categories: "Financial Services",
-//       price: "$100",
-//       image: card,
-//       imageAlt: "Futuristic office space with purple lighting",
-//     },
-//   ];
 
-//   return (
-//     <div className="container m-auto pb-20 mt-20 md:mt-11 px-4">
-//       <Navigate title={"My Business"}></Navigate>
-
-//       {/*==================== this is role is Buyer ================*/}
-
-//       <h1>Role : Buyer</h1>
-
-//       <div className="pt-6">
-//         <div className="">
-//           <div className="">
-//             <div className="flex justify-end">
-//               <Link to={"/addnewbusiness"}>
-//                 {" "}
-//                 <button className="bg-blue-400 px-4 py-2 text-white rounded hover:underline">
-//                   Sale a New One
-//                 </button>
-//               </Link>
-//             </div>
-//             <div className="mb-6 mt-11">
-//               <div className="flex justify-between items-center">
-//                 <div className="flex items-center">
-//                   <div className="w-[5px] h-12 rounded-r bg-green-500 mr-4 "></div>
-//                   <div>
-//                     <h2 className="text-2xl font-bold text-blue-500">
-//                       Interested Business
-//                     </h2>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-
-//             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-//               {businessData?.data?.map((business) => (
-//                 <div
-//                   key={business.id}
-//                   className=" border border-[#0091FF] bg-cover bg-center rounded"
-//                   style={{
-//                     backgroundImage: `url(${backCard})`,
-//                   }}
-//                 >
-//                   <div className="h-48 relative">
-//                     <img
-//                       src={business.image}
-//                       alt={business.imageAlt}
-//                       className="w-full h-full object-cover"
-//                     />
-//                   </div>
-//                   <div className="p-4">
-//                     <h3 className="text-xl font-semibold text-gray-800 mb-2">
-//                       {business.title}
-//                     </h3>
-//                     <p className="text-gray-600 mb-2">{business.location}</p>
-//                     <div className="mb-2">
-//                       <span className="text-blue-500">{business.category}</span>{" "}
-//                       ||{" "}
-//                       <span className="text-[#D97706]">
-//                         Business Consulting
-//                       </span>
-//                     </div>
-//                     <p className="text-gray-800 mb-4">
-//                       Starting from{" "}
-//                       <span className="font-semibold">
-//                         {business.askingPrice}
-//                       </span>
-//                     </p>
-//                     <Link to={`/details/${business?._id}`}>
-//                       <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
-//                         View Details
-//                       </button>
-//                     </Link>
-//                   </div>
-//                 </div>
-//               ))}
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       <div className="pt-16">
-//         <div className="">
-//           <div className="">
-//             <div className="flex justify-between mb-6">
-//               <div className="flex items-center">
-//                 <div className="w-[5px] h-12 rounded-r bg-green-500 mr-4 "></div>
-//                 <div>
-//                   <h2 className="text-2xl font-bold text-blue-500">
-//                     Interested Business Assets
-//                   </h2>
-//                 </div>
-//               </div>
-//             </div>
-
-//             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-//               interestedBusinessAsset data get koro
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       <div className="pt-16">
-//         <div className="">
-//           <div className="">
-//             <div className="flex justify-between items-center mb-6">
-//               <div className="flex items-center">
-//                 <div className="w-[5px] h-12 rounded-r bg-green-500 mr-4 "></div>
-//                 <div>
-//                   <h2 className="text-2xl font-bold text-blue-500">
-//                     Interested Franchises
-//                   </h2>
-//                 </div>
-//               </div>
-//             </div>
-
-//             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-//               interestedFranchise data get koro
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       <div className="pt-16">
-//         <div className="">
-//           <div className="">
-//             <div className="flex justify-between items-center mb-6">
-//               <div className="flex items-center">
-//                 <div className="w-[5px] h-12 rounded-r bg-green-500 mr-4 "></div>
-//                 <div>
-//                   <h2 className="text-2xl font-bold text-blue-500">
-//                     Interested Business Ideas
-//                   </h2>
-//                 </div>
-//               </div>
-//             </div>
-
-//             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-//               interestedBusinessIdeas data get koro
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* ==================== this is all role data =====================*/}
-//       <h1>Role : Other</h1>
-//       <div className="pt-16">
-//         <div className="">
-//           <div className="">
-//             <div className="flex justify-between items-center mb-6">
-//               <div className="flex items-center">
-//                 <div className="w-[5px] h-12 rounded-r bg-green-500 mr-4 "></div>
-//                 <div>
-//                   <h2 className="text-2xl font-bold text-blue-500">
-//                     Current business for sale
-//                   </h2>
-//                 </div>
-//               </div>
-//             </div>
-
-//             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-//               myBusiness data get koro
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       <div className="pt-16">
-//         <div className="">
-//           <div className="">
-//             <div className="flex justify-between items-center mb-6">
-//               <div className="flex items-center">
-//                 <div className="w-[5px] h-12 rounded-r bg-green-500 mr-4 "></div>
-//                 <div>
-//                   <h2 className="text-2xl font-bold text-blue-500">
-//                     Previous business that has been sold
-//                   </h2>
-//                 </div>
-//               </div>
-//             </div>
-
-//             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-//               mySoldBusiness data get koro
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default MyBusiness;
 
 import React, { useEffect } from "react";
 import { Navigate } from "../Navigate";
@@ -227,10 +17,10 @@ import { message } from "antd";
 const MyBusiness = () => {
   const [deleteBusinesss] = useDeleteBusinessMutation();
   const { data: businessData, isLoading } = useGetAllBusinessQuery();
-  console.log(businessData);
+
   const user = JSON.parse(localStorage.getItem("user"));
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
-  console.log(profileData);
+
   const role = profileData?.data?.role;
 
   useEffect(() => {
@@ -247,12 +37,10 @@ const MyBusiness = () => {
     mySoldBusiness = [],
   } = businessData?.data || {};
 
-  console.log(interestedFranchise);
+
 
   const handleDeletebusiness = async (businessId) => {
-    console.log(businessId);
 
-    console.log(businessId);
     try {
       const res = await deleteBusinesss({ businessId, role }).unwrap();
       message.success(res?.message);
@@ -261,13 +49,13 @@ const MyBusiness = () => {
     }
   };
 
-  console.log(mySoldBusiness);
+
 
 const renderCard = (item) => {
-  console.log(item);
+
 
   // Check if the item is a business card (has businessId) or a sold card
-  const isBusinessCard = item.businessId;
+  const isBusinessCard = item?.businessId;
 
   // For Broker: Render both business and sold cards based on item structure
   if (role === "Broker") {
@@ -275,30 +63,30 @@ const renderCard = (item) => {
       // Business card for Broker
       return (
         <div
-          key={item._id}
+          key={item?._id}
           className="border border-[#0091FF] bg-cover bg-center rounded"
           style={{ backgroundImage: `url(${backCard})` }}
         >
           <div className="h-48 relative">
             <img
               src={`${imageUrl}/Uploads/business-image/${item?.businessId?.image}`}
-              alt={item.businessId?.title}
+              alt={item?.businessId?.title}
               className="w-full h-full object-cover"
             />
           </div>
           <div className="p-4">
             <h3 className="text-xl font-semibold text-gray-800 mb-2">
-              {item.businessId?.title}
+              {item?.businessId?.title}
             </h3>
-            <p className="text-gray-600 mb-2">{item.businessId?.location}</p>
+            <p className="text-gray-600 mb-2">{item?.businessId?.location}</p>
             <div className="mb-2">
-              <span className="text-blue-500">{item.businessId?.category}</span>{" "}
-              || <span className="text-[#D97706]"> {item.businessId?.subCategory}</span>
+              <span className="text-blue-500">{item?.businessId?.category}</span>{" "}
+              || <span className="text-[#D97706]"> {item?.businessId?.subCategory}</span>
             </div>
             <p className="text-gray-800 mb-4">
               Starting from{" "}
               <span className="font-semibold">
-                {item.businessId?.askingPrice}
+                {item?.businessId?.askingPrice}
               </span>
             </p>
             <Link to={`/details/${item?.businessId?._id}`}>
@@ -319,29 +107,29 @@ const renderCard = (item) => {
       // Sold card for Broker
       return (
         <div
-          key={item._id}
+          key={item?._id}
           className="border border-[#0091FF] bg-cover bg-center rounded"
           style={{ backgroundImage: `url(${backCard})` }}
         >
           <div className="h-48 relative">
             <img
-              src={`${imageUrl}/Uploads/business-image/${item.image || card}`}
-              alt={item.title}
+              src={`${imageUrl}/Uploads/business-image/${item?.image || card}`}
+              alt={item?.title}
               className="w-full h-full object-cover"
             />
           </div>
           <div className="p-4">
             <h3 className="text-xl font-semibold text-gray-800 mb-2">
-              {item.title}
+              {item?.title}
             </h3>
-            <p className="text-gray-600 mb-2">{item.location}</p>
+            <p className="text-gray-600 mb-2">{item?.location}</p>
             <div className="mb-2">
               <span className="text-blue-500">{item?.category}</span> ||{" "}
               <span className="text-[#D97706]"> {item?.subCategory}</span>
             </div>
             <p className="text-gray-800 mb-4">
               Starting from{" "}
-              <span className="font-semibold">{item.askingPrice}</span>
+              <span className="font-semibold">{item?.askingPrice}</span>
             </p>
             <Link to={`/details/${item?._id}`}>
               <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
@@ -366,30 +154,30 @@ const renderCard = (item) => {
       // Business card
       return (
         <div
-          key={item._id}
+          key={item?._id}
           className="border border-[#0091FF] bg-cover bg-center rounded"
           style={{ backgroundImage: `url(${backCard})` }}
         >
           <div className="h-48 relative">
             <img
               src={`${imageUrl}/Uploads/business-image/${item?.businessId?.image}`}
-              alt={item.businessId?.title}
+              alt={item?.businessId?.title}
               className="w-full h-full object-cover"
             />
           </div>
           <div className="p-4">
             <h3 className="text-xl font-semibold text-gray-800 mb-2">
-              {item.businessId?.title}
+              {item?.businessId?.title}
             </h3>
-            <p className="text-gray-600 mb-2">{item.businessId?.location}</p>
+            <p className="text-gray-600 mb-2">{item?.businessId?.location}</p>
             <div className="mb-2">
-              <span className="text-blue-500">{item.businessId?.category}</span>{" "}
-              || <span className="text-[#D97706]"> {item.businessId?.subCategory}</span>
+              <span className="text-blue-500">{item?.businessId?.category}</span>{" "}
+              || <span className="text-[#D97706]"> {item?.businessId?.subCategory}</span>
             </div>
             <p className="text-gray-800 mb-4">
               Starting from{" "}
               <span className="font-semibold">
-                {item.businessId?.askingPrice}
+                {item?.businessId?.askingPrice}
               </span>
             </p>
             <Link to={`/details/${item?.businessId?._id}`}>
@@ -420,23 +208,23 @@ const renderCard = (item) => {
       >
         <div className="h-48 relative">
           <img
-            src={`${imageUrl}/Uploads/business-image/${item.image || card}`}
-            alt={item.title}
+            src={`${imageUrl}/Uploads/business-image/${item?.image || card}`}
+            alt={item?.title}
             className="w-full h-full object-cover"
           />
         </div>
         <div className="p-4">
           <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            {item.title}
+            {item?.title}
           </h3>
-          <p className="text-gray-600 mb-2">{item.location}</p>
+          <p className="text-gray-600 mb-2">{item?.location}</p>
           <div className="mb-2">
-            <span className="text-blue-500">{item.category}</span> ||{" "}
-            <span className="text-[#D97706]"> {item.subCategory}</span>
+            <span className="text-blue-500">{item?.category}</span> ||{" "}
+            <span className="text-[#D97706]"> {item?.subCategory}</span>
           </div>
           <p className="text-gray-800 mb-4">
             Starting from{" "}
-            <span className="font-semibold">{item.askingPrice}</span>
+            <span className="font-semibold">{item?.askingPrice}</span>
           </p>
           <Link to={`/details/${item?._id}`}>
             <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">

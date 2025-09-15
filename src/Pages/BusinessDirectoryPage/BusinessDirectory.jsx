@@ -609,7 +609,7 @@ const BusinessDirectory = () => {
                       Search: {searchTerm}
                     </Tag>
                   )}
-                  {selectedCategories.map((cat) => (
+                  {selectedCategories?.map((cat) => (
                     <Tag
                       key={cat}
                       closable
@@ -622,7 +622,7 @@ const BusinessDirectory = () => {
                       Category: {cat}
                     </Tag>
                   ))}
-                  {selectedCountries.map((country) => (
+                  {selectedCountries?.map((country) => (
                     <Tag
                       key={country}
                       closable
@@ -635,7 +635,7 @@ const BusinessDirectory = () => {
                       Country: {country}
                     </Tag>
                   ))}
-                  {selectedLocations.map((loc) => (
+                  {selectedLocations?.map((loc) => (
                     <Tag
                       key={loc}
                       closable
@@ -648,7 +648,7 @@ const BusinessDirectory = () => {
                       Location: {loc}
                     </Tag>
                   ))}
-                  {selectedPriceRanges.map((range) => (
+                  {selectedPriceRanges?.map((range) => (
                     <Tag
                       key={range}
                       closable
@@ -661,7 +661,7 @@ const BusinessDirectory = () => {
                       Price: {range}
                     </Tag>
                   ))}
-                  {selectedBusinessTypes.map((type) => (
+                  {selectedBusinessTypes?.map((type) => (
                     <Tag
                       key={type}
                       closable
@@ -674,7 +674,7 @@ const BusinessDirectory = () => {
                       Type: {type}
                     </Tag>
                   ))}
-                  {selectedOwnership.map((ownership) => (
+                  {selectedOwnership?.map((ownership) => (
                     <Tag
                       key={ownership}
                       closable
@@ -687,7 +687,7 @@ const BusinessDirectory = () => {
                       Ownership: {ownership}
                     </Tag>
                   ))}
-                  {selectedAgeOfListing.map((age) => (
+                  {selectedAgeOfListing?.map((age) => (
                     <Tag
                       key={age}
                       closable
@@ -698,7 +698,7 @@ const BusinessDirectory = () => {
                       }
                     >
                       Age:{' '}
-                      {ageOfListingOptions.find((a) => a.value === age)?.label}
+                      {ageOfListingOptions?.find((a) => a.value === age)?.label}
                     </Tag>
                   ))}
                   <Button
@@ -716,20 +716,20 @@ const BusinessDirectory = () => {
             {/* Results Count */}
             <div className="mb-4">
               <p className="text-gray-600">
-                Showing {filteredBusinesses.length} results
-                {paginatedBusinesses.length < filteredBusinesses.length && (
+                Showing {filteredBusinesses?.length} results
+                {paginatedBusinesses?.length < filteredBusinesses?.length && (
                   <span>
                     {' '}
-                    (displaying {paginatedBusinesses.length} on this page)
+                    (displaying {paginatedBusinesses?.length} on this page)
                   </span>
                 )}
               </p>
             </div>
 
             {/* Business Cards */}
-            {paginatedBusinesses.length > 0 ? (
+            {paginatedBusinesses?.length > 0 ? (
               <Row gutter={[16, 16]}>
-                {paginatedBusinesses.map((business) => (
+                {paginatedBusinesses?.map((business) => (
                   <Col
                     key={business.id}
                     xs={24}
@@ -752,11 +752,11 @@ const BusinessDirectory = () => {
             )}
 
             {/* Pagination */}
-            {filteredBusinesses.length > 0 && (
+            {filteredBusinesses?.length > 0 && (
               <div className="mt-8 flex justify-center">
                 <Pagination
                   current={currentPage}
-                  total={filteredBusinesses.length}
+                  total={filteredBusinesses?.length}
                   pageSize={itemsPerPage}
                   onChange={(page) => setCurrentPage(page)}
                   showSizeChanger={false}

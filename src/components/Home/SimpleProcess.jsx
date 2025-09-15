@@ -73,22 +73,22 @@ effective. Here's how it works:
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {steps.map((step) => (
               <div
-                key={step.number}
+                key={step?.number}
                 className="bg-[#FFFFFF] rounded-2xl p-8 py-11 border-2 border-cyan-200 hover:border-cyan-300 transition-colors"
               >
                 {/* Number Icon */}
                 <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center mb-6">
                   <span className="text-white font-bold text-xl">
-                    {step.number}
+                    {step?.number}
                   </span>
                 </div>
 
                 {/* Content */}
                 <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  {step.title}
+                  {step?.title}
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
-                  {step.description}
+                  {step?.description}
                 </p>
               </div>
             ))}

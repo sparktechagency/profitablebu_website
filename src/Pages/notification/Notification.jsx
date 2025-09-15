@@ -50,29 +50,29 @@ const Notification = () => {
             <div
               onClick={() => handleUpdate(item._id)}
               className={`flex-1 p-4 cursor-pointer ${
-                item.isRead ? "" : "bg-gray-100"
+                item?.isRead ? "" : "bg-gray-100"
               }`}
             >
               <h3
                 className={`text-lg break-all whitespace-normal ${
-                  item.isRead
+                  item?.isRead
                     ? "font-normal text-gray-800"
                     : "font-bold text-black"
                 }`}
               >
-                {item.title}
+                {item?.title}
               </h3>
-              <p className="break-all whitespace-normal">{item.message}</p>
+              <p className="break-all whitespace-normal">{item?.message}</p>
 
               <p className="text-xs text-gray-400 mt-1">
-                {dayjs(item.createdAt).format("YYYY-MM-DD hh:mm A")}
+                {dayjs(item?.createdAt).format("YYYY-MM-DD hh:mm A")}
               </p>
             </div>
 
             {/* Delete Button */}
             <button
               className="absolute top-2 right-2 h-6 w-6 text-gray-500 hover:text-red-500"
-              onClick={() => handleDelete(item._id)}
+              onClick={() => handleDelete(item?._id)}
             >
               <X className="h-4 w-4" />
             </button>

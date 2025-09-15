@@ -25,10 +25,16 @@ const BrokerAdd = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
     if (!subscriptionId?.price) return;
 
     let initialPriceObj;
-    if (Array.isArray(subscriptionId.price) && subscriptionId.price.length > 0) {
-      initialPriceObj = subscriptionId.price[0]; // Default to first price object
-    } else if (typeof subscriptionId.price === "number") {
-      initialPriceObj = { price: subscriptionId.price, duration: subscriptionId.duration }; // Fallback for non-array price
+    if (
+      Array.isArray(subscriptionId.price) &&
+      subscriptionId?.price?.length > 0
+    ) {
+      initialPriceObj = subscriptionId?.price[0]; // Default to first price object
+    } else if (typeof subscriptionId?.price === "number") {
+      initialPriceObj = {
+        price: subscriptionId?.price,
+        duration: subscriptionId?.duration,
+      }; // Fallback for non-array price
     } else {
       initialPriceObj = null;
     }
@@ -56,7 +62,8 @@ const BrokerAdd = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
       const res = await triggerCouponCheck({ couponCode }).unwrap();
       if (res?.data) {
         const discount = res.data.discount;
-        const newDisplayPrice = selectedPriceObj.price - (selectedPriceObj.price * discount) / 100;
+        const newDisplayPrice =
+          selectedPriceObj.price - (selectedPriceObj.price * discount) / 100;
         setDisplayPrice(newDisplayPrice);
         message.success(`Coupon applied! ${discount}% discount`);
       } else {
@@ -73,8 +80,8 @@ const BrokerAdd = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
     try {
       // Construct payload with selected price and corresponding duration
       const payload = {
-        subscriptionId: subscriptionId._id,
-        duration: selectedPriceObj?.duration || subscriptionId.duration, // Use duration from selected price object
+        subscriptionId: subscriptionId?._id,
+        duration: selectedPriceObj?.duration || subscriptionId?.duration, // Use duration from selected price object
         price: String(selectedPriceObj?.price), // Use selected price
       };
 
@@ -116,12 +123,12 @@ const BrokerAdd = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
               value={selectedPriceObj?.price?.toString() || ""}
               onChange={(e) => {
                 const selectedPrice = e.target.value;
-             
+
                 const priceObj = Array.isArray(subscriptionId?.price)
-                  ? subscriptionId.price.find(
+                  ? subscriptionId?.price.find(
                       (p) => p.price.toString() === selectedPrice
                     )
-                  : { price: selectedPrice, duration: subscriptionId.duration };
+                  : { price: selectedPrice, duration: subscriptionId?.duration };
                 setSelectedPriceObj(priceObj);
                 setDisplayPrice(priceObj?.price || null);
                 form.setFieldsValue({ price: selectedPrice });
@@ -129,7 +136,7 @@ const BrokerAdd = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
             >
               <option value="">-- Select Price --</option>
               {Array.isArray(subscriptionId?.price) &&
-                subscriptionId.price.map((p) => (
+                subscriptionId?.price.map((p) => (
                   <option key={p?._id || p?.price} value={p?.price}>
                     ${p?.price} ({p?.duration})
                   </option>

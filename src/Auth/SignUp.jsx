@@ -26,7 +26,7 @@ function SignUp() {
   const location = useLocation();
   const navigate = useNavigate();
   const [contactNo, setContactNo] = useState("");
-  console.log(location?.state);
+
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [countries, setCountries] = useState([]);
 
@@ -47,7 +47,7 @@ function SignUp() {
       };
 
       const res = await signUp(data).unwrap();
-      console.log(res);
+  
       message.success(res?.message);
       localStorage.setItem("email", values?.email);
       navigate("/auth/verifyCreator");
@@ -57,7 +57,7 @@ function SignUp() {
   };
 
   const handleGoogleLogin = () => {
-    console.log("Google login clicked");
+
   };
 
   useEffect(() => {

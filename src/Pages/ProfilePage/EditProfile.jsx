@@ -20,7 +20,7 @@ import { imageUrl } from "../redux/api/baseApi";
 import { Country } from "country-state-city";
 const EditProfile = () => {
   const { data: profileData, isLoading } = useGetProfileQuery();
-  console.log(profileData)
+
   const navigate = useNavigate()
   const [updateProfile] = useUpdateProfileMutation();
     const [image, setImage] = useState();
@@ -30,7 +30,7 @@ const EditProfile = () => {
   };
 
     const [countries, setCountries] = useState([]);
-    console.log(countries)
+  
 
   useEffect(() => {
     setCountries(Country.getAllCountries());
@@ -38,7 +38,7 @@ const EditProfile = () => {
 
   const [form] = Form.useForm();
   const handleSubmit = async (values) => {
-    console.log(values);
+
     try {
       const formData = new FormData();
 
@@ -50,7 +50,7 @@ const EditProfile = () => {
       formData.append("description", values?.description);
 
       const res = await updateProfile(formData);
-      console.log(res);
+  
       message.success(res.data.message);
       navigate('/profilePage')
     } catch (error) {
@@ -61,14 +61,14 @@ const EditProfile = () => {
   };
  useEffect(() => {
     if (profileData?.data) {
-      const admin = profileData.data;
+      const admin = profileData?.data;
       form.setFieldsValue({
-        name: admin.name,
-        email: admin.email,
-        mobile: admin.mobile || "",
-        country: admin.country || "",
-        profession: admin.profession || "",
-        description: admin.description || "",
+        name: admin?.name,
+        email: admin?.email,
+        mobile: admin?.mobile || "",
+        country: admin?.country || "",
+        profession: admin?.profession || "",
+        description: admin?.description || "",
         // address: admin.address || "",
       });
     }
@@ -165,19 +165,19 @@ const EditProfile = () => {
                     allowClear
                     optionLabelProp="label"
                   >
-                    {countries.map((country) => (
+                    {countries?.map((country) => (
                       <Select.Option
-                        key={country.isoCode}
-                        value={country.name}
-                        label={country.name}
+                        key={country?.isoCode}
+                        value={country?.name}
+                        label={country?.name}
                       >
                         <div className="flex items-center gap-2">
                           <img
-                            src={`https://flagcdn.com/w20/${country.isoCode.toLowerCase()}.png`}
-                            alt={country.name}
+                            src={`https://flagcdn.com/w20/${country?.isoCode.toLowerCase()}.png`}
+                            alt={country?.name}
                             className="w-5 h-3 object-cover"
                           />
-                          {country.name}
+                          {country?.name}
                         </div>
                       </Select.Option>
                     ))}

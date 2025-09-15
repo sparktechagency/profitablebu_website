@@ -17,21 +17,21 @@ import { message } from "antd";
 const MyBusinessDetails = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
-  console.log(profileData);
+
   const price = profileData?.data?.subscriptionPlanPrice;
-  console.log(price);
+
   const role = profileData?.data?.role;
-  console.log(role);
+
 
   const { id: businessId } = useParams();
 
   const { data: businessDetails } = useGetSingleIterestUserQuery({
     businessId,
   });
-  console.log(businessDetails);
+
   const [updateSold] = useUpdateSoldMutation();
   const checkUserId = profileData?.data?._id;
-  console.log(checkUserId);
+
   const checkBusinessId = businessDetails?.data?.business?.user;
 
   useEffect(() => {
