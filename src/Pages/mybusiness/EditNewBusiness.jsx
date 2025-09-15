@@ -29,7 +29,6 @@ dayjs.extend(customParseFormat);
 const EditNewBusiness = () => {
   const { id: businessId } = useParams();
 
-
   const [fileList, setFileList] = useState([]);
   const [updateSingleData] = useUpdateSingleMutation();
   const { data: businessDetails } = useGetSingleBusinessQuery({ businessId });
@@ -38,8 +37,7 @@ const EditNewBusiness = () => {
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
 
-
-const [selectedCity, setSelectedCity] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(null);
 
   const [subCategories, setSubCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -54,7 +52,9 @@ const [selectedCity, setSelectedCity] = useState(null);
 
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
-    const category = categorie?.data?.find((cat) => cat?.categoryName === value);
+    const category = categorie?.data?.find(
+      (cat) => cat?.categoryName === value
+    );
     setSubCategories(category?.subCategories || []);
     form.setFieldsValue({ subCategory: null });
   };
@@ -63,30 +63,28 @@ const [selectedCity, setSelectedCity] = useState(null);
     setCountries(Country.getAllCountries());
   }, []);
 
-
-const handleCountryChange = (value) => {
-  const country = countries.find((c) => c.isoCode === value);
-  setSelectedCountry(country); 
-  setStates(State.getStatesOfCountry(value));
-  setCities([]);
-  form.setFieldsValue({ state: undefined, city: undefined });
-};
+  const handleCountryChange = (value) => {
+    const country = countries.find((c) => c.isoCode === value);
+    setSelectedCountry(country);
+    setStates(State.getStatesOfCountry(value));
+    setCities([]);
+    form.setFieldsValue({ state: undefined, city: undefined });
+  };
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
 
-const handleStateChange = (value) => {
-  const state = states.find((s) => s.isoCode === value);
-  setSelectedState(state); 
-  setCities(City.getCitiesOfState(selectedCountry?.isoCode, value));
-  form.setFieldsValue({ city: undefined });
-}; 
+  const handleStateChange = (value) => {
+    const state = states.find((s) => s.isoCode === value);
+    setSelectedState(state);
+    setCities(City.getCitiesOfState(selectedCountry?.isoCode, value));
+    form.setFieldsValue({ city: undefined });
+  };
 
-
-const handleCityChange = (value) => {
-  const city = cities.find((c) => c.name === value);
-  setSelectedCity(city); 
-};
+  const handleCityChange = (value) => {
+    const city = cities.find((c) => c.name === value);
+    setSelectedCity(city);
+  };
 
   const handleSubmit = async (values) => {
     const id = businessId;
@@ -100,13 +98,12 @@ const handleCityChange = (value) => {
       });
 
       formData.append("title", values?.title || "");
-    formData.append("country", selectedCountry?.isoCode );
-    formData.append("countryName", selectedCountry?.name);
+      formData.append("country", selectedCountry?.isoCode);
+      formData.append("countryName", selectedCountry?.name);
 
-    formData.append("state", selectedState?.name );
+      formData.append("state", selectedState?.name);
 
-
-    formData.append("city", selectedCity?.name );
+      formData.append("city", selectedCity?.name);
       formData.append("category", values?.category || "");
       formData.append("subCategory", values?.subCategory || "");
 
@@ -465,8 +462,9 @@ const handleCityChange = (value) => {
             tabIndex={1}
             onBlur={(newContent) => setContent(newContent)}
           />
-  <div className="mt-2">
-            Note: Write your description like you’re telling a success story. Focus on what makes your business valuable and exciting for buyers.
+          <div className="mt-2">
+            Note: Write your description like you’re telling a success story.
+            Focus on what makes your business valuable and exciting for buyers.
           </div>
           <Form.Item className=" pt-3">
             <button
