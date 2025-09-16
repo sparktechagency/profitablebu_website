@@ -13,11 +13,13 @@
     "node": "18.x"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.20.7",
     "@reduxjs/toolkit": "^2.8.2",
     "@splidejs/react-splide": "^0.7.12",
     "antd": "^5.25.3",
     "country-state-city": "^3.2.1",
     "dayjs": "^1.11.13",
+    "dotenv": "^17.2.2",
     "fabric": "^6.7.1",
     "firebase": "^12.2.1",
     "framer-motion": "^12.23.0",

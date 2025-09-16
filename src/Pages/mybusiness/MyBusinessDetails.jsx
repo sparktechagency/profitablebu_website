@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import img1 from "../../assets/Home/mm.png";
 import img2 from "../../assets/Home/nn.png";
 import img3 from "../../assets/Home/oo.png";
@@ -14,14 +14,28 @@ import {
 import { imageUrl } from "../redux/api/baseApi";
 import { useGetProfileQuery } from "../redux/api/userApi";
 import { message } from "antd";
+
+const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+
+const libraries = ["places"];
+const mapContainerStyle = { width: "100%", height: "300px" };
+
+
 const MyBusinessDetails = () => {
+const { isLoaded } = useLoadScript({
+  googleMapsApiKey: apiKey,
+  libraries: ["places"],
+});
+
+
+  
   const user = JSON.parse(localStorage.getItem("user"));
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
 
   const price = profileData?.data?.subscriptionPlanPrice;
 
   const role = profileData?.data?.role;
-
 
   const { id: businessId } = useParams();
 
@@ -47,6 +61,28 @@ const MyBusinessDetails = () => {
       message.error(err?.data?.message);
     }
   };
+ const [center, setCenter] = useState(null);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    const city = businessDetails?.data?.business?.city || "";
+    const state = businessDetails?.data?.business?.state || "";
+    const country = businessDetails?.data?.business?.countryName || "";
+
+    const address = `${city}, ${state}, ${country}`.trim();
+    if (!address) return;
+
+    const geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode({ address }, (results, status) => {
+      if (status === "OK" && results[0]) {
+        const loc = results[0].geometry.location;
+        setCenter({ lat: loc.lat(), lng: loc.lng() });
+      }
+    });
+  }, [businessDetails, isLoaded]);
+
+  if (!isLoaded) return <div>Loading map...</div>;
 
   return (
     <div className="container m-auto pb-20 lg:mt-8 mt-11 lg:px-0 px-4">
@@ -245,18 +281,13 @@ const MyBusinessDetails = () => {
       <h1 className="text-[#0091FF] font-bold text-3xl mt-9">Location</h1>
       <p className="mb-4">{businessDetails?.data?.business?.countryName}</p>
 
-      <iframe
-        src={`https://www.google.com/maps?q=${encodeURIComponent(
-          `${businessDetails?.data?.business?.city || ""}, ${
-            businessDetails?.data?.business?.state || ""
-          }, ${businessDetails?.data?.business?.countryName || ""}`
-        )}&output=embed`}
-        className="w-full h-[300px]"
-        allowFullScreen=""
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        title="Business Location"
-      />
+      <GoogleMap
+      mapContainerStyle={mapContainerStyle}
+      zoom={6}
+      center={center || { lat: 23.8103, lng: 90.4125 }}
+    >
+      {center && <Marker position={center} />}
+    </GoogleMap>
     </div>
   );
 };
