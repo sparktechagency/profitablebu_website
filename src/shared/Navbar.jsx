@@ -23,9 +23,10 @@ import {
 const countryFlags = {
   US: "https://flagcdn.com/w20/us.png",
   GB: "https://flagcdn.com/w20/gb.png",
-  IN: "https://flagcdn.com/w20/in.png",
-  AF: "https://flagcdn.com/w20/af.png",
+  CA: "https://flagcdn.com/w20/ca.png",
+  AU: "https://flagcdn.com/w20/au.png",
   AE: "https://flagcdn.com/w20/ae.png",
+  ZA: "https://flagcdn.com/w20/za.png",
   PK: world,
 };
 
@@ -47,9 +48,10 @@ const Navbar = () => {
       flag: countryFlags.GB,
       state: "GB",
     },
-    { name: "India", code: "IN", flag: countryFlags.IN, state: "IN" },
-    { name: "Afganistan", code: "AF", flag: countryFlags.AF, state: "AF" },
+    { name: "Canada", code: "CA", flag: countryFlags.CA, state: "CA" },
+    { name: "Australia", code: "AU", flag: countryFlags.AU, state: "AU" },
     { name: "UAE", code: "AE", flag: countryFlags.AE, state: "UAE" },
+    { name: "South Africa", code: "ZA", flag: countryFlags.ZA, state: "ZA" },
   ];
   const navigate = useNavigate();
   const { data: profileData, isLoading } = useGetProfileQuery();

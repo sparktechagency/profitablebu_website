@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Navigate } from "../Navigate";
 import { Link, useParams } from "react-router-dom";
 import { useGetSingleIterestUserQuery } from "../redux/api/businessApi";
@@ -14,7 +14,9 @@ const InterestedBuyer = () => {
   const businessTitle = businessDetails?.data?.business?.title;
   const interestedUsers = businessDetails?.data?.interestedUsers || [];
 
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="container mx-auto p-6 space-y-4">
       <Navigate title={`${businessTitle} / Interested Buyers`} />

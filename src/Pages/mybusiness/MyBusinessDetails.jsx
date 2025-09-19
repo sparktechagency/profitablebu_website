@@ -120,7 +120,7 @@ const { isLoaded } = useLoadScript({
               <h1 className="font-semibold text-3xl py-3">
                 Inquiries Received
               </h1>
-              <h2 className="text-[#22C55E] font-semibold text-xl">1,205</h2>
+              <h2 className="text-[#22C55E] font-semibold text-xl"> {businessDetails?.data?.interestedUsers?.length ?? "0"}</h2>
             </div>
           </div>
         )}
@@ -128,7 +128,7 @@ const { isLoaded } = useLoadScript({
       <div className="lg:grid grid-cols-2 gap-4 pt-11">
         <div>
           <img
-            className="w-full  object-cover"
+            className="w-full h-[500px] object-cover"
             src={`${imageUrl}/uploads/business-image/${businessDetails?.data?.business?.image}`}
             alt="main business"
           />

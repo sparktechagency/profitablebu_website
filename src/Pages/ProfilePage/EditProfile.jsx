@@ -53,10 +53,11 @@ const EditProfile = () => {
   
       message.success(res.data.message);
       navigate('/profilePage')
-    } catch (error) {
-      console.error(error);
-      message.error(error?.data?.message);
+    } catch (e) {
+      
+      message.error('Image max 1 mb');
     } finally {
+   
     }
   };
  useEffect(() => {
