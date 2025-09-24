@@ -92,7 +92,7 @@ const MyBusiness = () => {
                 </button>
               </Link>
               <Popconfirm
-                title="Are you sure you want to delete this Product?"
+                title="Are you sure you want to delete this Business?"
                 onConfirm={() => handleDeletebusiness(item?._id)}
                 okText="Yes"
                 cancelText="No"
@@ -142,7 +142,7 @@ const MyBusiness = () => {
               </Link>
 
                   <Popconfirm
-                title="Are you sure you want to delete this Product?"
+                title="Are you sure you want to delete this Business?"
                 onConfirm={() => handleDeletebusiness(item?._id)}
                 okText="Yes"
                 cancelText="No"
@@ -204,7 +204,7 @@ const MyBusiness = () => {
                 </button>
               </Link>
                   <Popconfirm
-                title="Are you sure you want to delete this Product?"
+                title="Are you sure you want to delete this Business?"
                 onConfirm={() => handleDeletebusiness(item?._id)}
                 okText="Yes"
                 cancelText="No"
@@ -257,7 +257,7 @@ const MyBusiness = () => {
               </button>
             </Link>
                 <Popconfirm
-                title="Are you sure you want to delete this Product?"
+                title="Are you sure you want to delete this Business?"
                 onConfirm={() => handleDeletebusiness(item?._id)}
                 okText="Yes"
                 cancelText="No"

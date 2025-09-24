@@ -10,12 +10,17 @@ const Subscription = () => {
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
 
   const subscription = profileData?.data;
-  const startDate = new Date(
-    profileData?.data?.subscriptionStartDate
-  ).toLocaleDateString();
-  const endDate = new Date(
-    profileData?.data?.subscriptionEndDate
-  ).toLocaleDateString();
+const startDate = profileData?.data?.subscriptionStartDate
+  ? new Date(profileData.data.subscriptionStartDate).toLocaleDateString()
+  : 0;
+
+const endDate = profileData?.data?.subscriptionEndDate
+  ? new Date(profileData.data.subscriptionEndDate).toLocaleDateString()
+  : 0;
+
+console.log("Start Date:", startDate);
+console.log("End Date:", endDate);
+
   const role = profileData?.data?.role;
 
   return (
@@ -48,7 +53,7 @@ const Subscription = () => {
           </div>
           {/* Decorative gradient */}
           <div className="absolute right-0 top-0 h-full w-1/3 pointer-events-none">
-            <div className="absolute right-0 top-0 h-full w-full bg-gradient-to-br   rounded-r-lg"></div>
+            <div className="absolute right-0 top-0 h-full w-full bg-gradient-to-brrounded-r-lg"></div>
             <div className="absolute right-8 top-4 h-2 w-2 bg-blue-200 rounded-full"></div>
             <div className="absolute right-12 top-12 h-3 w-3 bg-blue-200 rounded-full"></div>
             <div className="absolute right-4 top-24 h-2 w-2 bg-blue-200 rounded-full"></div>
