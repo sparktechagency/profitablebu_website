@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://13.61.16.102:8001/api/v1',
+    baseUrl: 'https://api.profitablebusinessesforsale.com/api/v1',
     // http://159.65.217.35:8001
     prepareHeaders: (headers) => {
         const token = (localStorage.getItem('accessToken'));
@@ -20,5 +20,5 @@ export const baseApi = createApi({
 });
 
 
-export const imageUrl = 'https://13.61.16.102:8001'
-export const SOCKET_BASE = "https://13.61.16.102:8001";
+export const imageUrl = 'https://api.profitablebusinessesforsale.com'
+export const SOCKET_BASE = "https://api.profitablebusinessesforsale.com";
