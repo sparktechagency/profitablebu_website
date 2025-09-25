@@ -93,31 +93,21 @@ export default function ContactUs() {
                 </h3>
                 <div className="flex space-x-4">
                   <a
-                    href="#"
+                    href="https://www.facebook.com/share/1J7PbBaf1G/?mibextid=wwXIfr"
                     className="w-10 h-10 bg-black bg-opacity-20 rounded-lg flex items-center justify-center hover:bg-opacity-30 transition-all"
                   >
                     <Facebook className="w-5 h-5 text-white" />
                   </a>
+               
+             
                   <a
-                    href="#"
-                    className="w-10 h-10 bg-black bg-opacity-20 rounded-lg flex items-center justify-center hover:bg-opacity-30 transition-all"
-                  >
-                    <Twitter className="w-5 h-5 text-white" />
-                  </a>
-                  <a
-                    href="#"
-                    className="w-10 h-10 bg-black bg-opacity-20 rounded-lg flex items-center justify-center hover:bg-opacity-30 transition-all"
-                  >
-                    <Linkedin className="w-5 h-5 text-white" />
-                  </a>
-                  <a
-                    href="#"
+                    href="https://www.instagram.com/profitablebusinessesforsale?igsh=MTc5bTVrcWJoZHNtbQ%3D%3D&utm_source=…"
                     className="w-10 h-10 bg-black bg-opacity-20 rounded-lg flex items-center justify-center hover:bg-opacity-30 transition-all"
                   >
                     <Instagram className="w-5 h-5 text-white" />
                   </a>
                   <a
-                    href="#"
+                    href="info@profitablebusinessesforsale.com"
                     className="w-10 h-10 bg-black bg-opacity-20 rounded-lg flex items-center justify-center hover:bg-opacity-30 transition-all"
                   >
                     <MessageCircle className="w-5 h-5 text-white" />
