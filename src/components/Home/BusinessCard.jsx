@@ -56,13 +56,14 @@ const BusinessCard = () => {
     isLoading,
     isError,
   } = useGetAllBusinessHomeQuery();
+  
 
   const { data: MostbusinessData } = useGetAllBusinessMostViewQuery({
     userId: id,
     role: role,
     country: selectedCountry,
   });
-
+console.log('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',MostbusinessData)
   const mostBusiness = MostbusinessData?.data || [];
 
 

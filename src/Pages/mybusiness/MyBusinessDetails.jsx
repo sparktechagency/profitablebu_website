@@ -43,6 +43,7 @@ const { isLoaded } = useLoadScript({
     businessId,
   });
 
+  console.log('first',businessDetails)
   const [updateSold] = useUpdateSoldMutation();
   const checkUserId = profileData?.data?._id;
 
