@@ -35,24 +35,50 @@ const Navbar = () => {
   const selectedCountry = searchParams.get("country");
 
   const countries = [
-    { name: "INTERNATIONAL", code: "PK", flag: countryFlags.PK, state: "" },
+    {
+      name: "INTERNATIONAL",
+      code: "INT",
+      domain: "https://profitablebusinessesforsale.com",
+      flag: world,
+    },
     {
       name: "United States",
       code: "US",
+      domain: "https://us.profitablebusinessesforsale.com",
       flag: countryFlags.US,
-      state: "US",
     },
     {
       name: "United Kingdom",
       code: "GB",
+      domain: "https://uk.profitablebusinessesforsale.com",
       flag: countryFlags.GB,
-      state: "GB",
     },
-    { name: "Canada", code: "CA", flag: countryFlags.CA, state: "CA" },
-    { name: "Australia", code: "AU", flag: countryFlags.AU, state: "AU" },
-    { name: "UAE", code: "AE", flag: countryFlags.AE, state: "UAE" },
-    { name: "South Africa", code: "ZA", flag: countryFlags.ZA, state: "ZA" },
+    {
+      name: "Canada",
+      code: "CA",
+      domain: "https://ca.profitablebusinessesforsale.com",
+      flag: countryFlags.CA,
+    },
+    {
+      name: "Australia",
+      code: "AU",
+      domain: "https://au.profitablebusinessesforsale.com",
+      flag: countryFlags.AU,
+    },
+    {
+      name: "UAE",
+      code: "AE",
+      domain: "https://uae.profitablebusinessesforsale.com",
+      flag: countryFlags.AE,
+    },
+    {
+      name: "South Africa",
+      code: "ZA",
+      domain: "https://za.profitablebusinessesforsale.com",
+      flag: countryFlags.ZA,
+    },
   ];
+
   const navigate = useNavigate();
   const { data: profileData, isLoading } = useGetProfileQuery();
   const accessToken = localStorage.getItem("accessToken");
@@ -103,8 +129,9 @@ const Navbar = () => {
   };
 
   const handleSelect = (country) => {
-    setSearchParams({ country: country.state });
+    window.location.href = country.domain;
   };
+
   const navItems = [
     { key: "home", label: "Home", path: "/" },
     {
@@ -512,25 +539,18 @@ const Navbar = () => {
                 </div>
 
                 <div className="space-y-2">
-                  {countries?.map((country) => (
+                  {countries.map((country) => (
                     <button
                       key={country.code}
                       onClick={() => handleSelect(country)}
-                      className={`w-full flex items-center space-x-3 p-3 rounded-lg transition-colors ${
-                        selectedCountry === country?.state
-                          ? "bg-blue-50 border border-blue-200"
-                          : "hover:bg-gray-50"
-                      }`}
+                      className="w-full flex items-center space-x-3 p-3 rounded-lg transition-colors hover:bg-gray-50"
                     >
                       <img
-                        src={country?.flag}
-                        alt={country?.name}
-                        className="w-6 "
+                        src={country.flag}
+                        alt={country.name}
+                        className="w-6"
                       />
-                      <span className="font-medium">{country?.name}</span>
-                      {selectedCountry === country?.state && (
-                        <div className="ml-auto w-2 h-2 bg-[#0091FF] rounded-full" />
-                      )}
+                      <span className="font-medium">{country.name}</span>
                     </button>
                   ))}
                 </div>
