@@ -321,7 +321,14 @@ const Navbar = () => {
                   </button>
                 </div>
 
-                <nav className="space-y-2">
+                <Link
+                  to="/auth/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block w-full md:hidden bg-[#22C55E] text-white text-center py-3 rounded-lg font-medium"
+                >
+                  List Your Business
+                </Link>
+                <nav className="space-y-2 mt-4">
                   {navItems.map((item) => (
                     <MobileNavItem
                       key={item?.key}
@@ -339,13 +346,6 @@ const Navbar = () => {
                   >
                     <User className="w-5 h-5 text-gray-600" />
                     <span className="font-medium">Login</span>
-                  </Link>
-                  <Link
-                    to="/auth/login"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="block w-full md:hidden bg-[#22C55E] text-white text-center py-3 rounded-lg font-medium"
-                  >
-                    List Your Business
                   </Link>
                 </div>
               </div>

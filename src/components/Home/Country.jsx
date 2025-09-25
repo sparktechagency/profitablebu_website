@@ -75,21 +75,21 @@ const {data:countryData} = useGetTopCountryQuery();
         ))}
       </div>
       <div
-        className="bg-[#0A0D53] lg:text-white mt-20 bg-cover bg-center h-[50vh] flex items-center"
+        className="bg-[#0A0D53]   lg:text-white mt-20 bg-cover bg-center h-[50vh] flex items-center"
         style={{
           backgroundImage: `url(${backImg})`,
         }}
       >
+
         <div className="">
           <div className="md:grid grid-cols-2 ">
             <div className="md:pl-20 pl-4">
               <div className="">
-                <h1 className="text-5xl pb-4 font-bold">
-                  Start Building br for Free
+                <h1 className="md:text-5xl text-3xl pb-4 font-bold">
+                  Profitable Businesses for <br className="hidden md:block"/> Sale – Buy or Sell with Confidence
                 </h1>
                 <p>
-                  And because your company is unique, you will need an
-                  extensible identity solution.
+               Discover profitable businesses for sale in worldwide. Our platform connects serious buyers and motivated sellers, offering transparent listings and high-return investment opportunities. Start building your future with the most trusted business marketplace.
                 </p>
               </div>
             </div>

@@ -49,8 +49,8 @@ export default function Home() {
         <div className="absolute left-1/2 transform -translate-x-1/2 w-full max-w-4xl -bottom-20 px-4">
           <div className="bg-gradient-to-r from-sky-200/90 to-sky-300/30 backdrop-blur-sm rounded-lg p-8 shadow-lg">
             <h2 className="text-2xl md:text-3xl font-semibold text-white text-center mb-6">
-              You Find A <span className="text-[#22C55E]">Business</span> For{" "}
-              <span className="text-[#0091FF]">Yourself</span>.
+              Find Your Profitable <span className="text-[#22C55E]">Business</span>
+             Today.
             </h2>
 
             <form

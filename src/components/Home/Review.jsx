@@ -25,7 +25,7 @@ const Review = () => {
       title: "Theresa Webb",
       location: "Chief Executive Officer.",
       review:
-        "“Highly recommend BFS! It made the complex process of selling my business feel effortless.”",
+        "“Highly recommend PBFS! It made the complex process of selling my business feel effortless.”",
       img: profile,
     },
     {
