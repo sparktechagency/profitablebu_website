@@ -16,10 +16,7 @@ import { message } from "antd";
 import { useGetProfileQuery } from "../Pages/redux/api/userApi";
 import { imageUrl } from "../Pages/redux/api/baseApi";
 import world from "../assets/Home/world.png";
-import {
-  useGetNotificationQuery,
-  useGetUnreadNotificationQuery,
-} from "../Pages/redux/api/metaApi";
+import { useGetUnreadNotificationQuery } from "../Pages/redux/api/metaApi";
 const countryFlags = {
   US: "https://flagcdn.com/w20/us.png",
   GB: "https://flagcdn.com/w20/gb.png",
@@ -32,49 +29,42 @@ const countryFlags = {
 
 const Navbar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const selectedCountry = searchParams.get("country");
 
   const countries = [
     {
-      name: "INTERNATIONAL",
-      code: "INT",
-      domain: "https://profitablebusinessesforsale.com",
-      flag: world,
-    },
-    {
       name: "United States",
       code: "US",
-      domain: "https://us.profitablebusinessesforsale.com",
+      slug: "usa",
       flag: countryFlags.US,
     },
     {
       name: "United Kingdom",
       code: "GB",
-      domain: "https://uk.profitablebusinessesforsale.com",
+      slug: "uk",
       flag: countryFlags.GB,
     },
     {
       name: "Canada",
       code: "CA",
-      domain: "https://ca.profitablebusinessesforsale.com",
+      slug: "canada",
       flag: countryFlags.CA,
     },
     {
       name: "Australia",
       code: "AU",
-      domain: "https://au.profitablebusinessesforsale.com",
+      slug: "australia",
       flag: countryFlags.AU,
     },
     {
       name: "UAE",
       code: "AE",
-      domain: "https://uae.profitablebusinessesforsale.com",
+      slug: "uae",
       flag: countryFlags.AE,
     },
     {
       name: "South Africa",
       code: "ZA",
-      domain: "https://za.profitablebusinessesforsale.com",
+      slug: "south-africa",
       flag: countryFlags.ZA,
     },
   ];
@@ -129,9 +119,8 @@ const Navbar = () => {
   };
 
   const handleSelect = (country) => {
-    window.location.href = country.domain;
+    navigate(`/businesses-for-sale/${country.slug}`);
   };
-
   const navItems = [
     { key: "home", label: "Home", path: "/" },
     {

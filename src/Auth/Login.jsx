@@ -73,7 +73,7 @@ export default function Login() {
     <div className="relative flex items-center justify-center md:p-20 p-4">
       <div className="absolute w-full h-full flex">
         <div className="bg-[#1d4ed8] w-[30%] h-full"></div>
-        <div className="bg-[#fff] w-[70%] h-full"></div>
+        <div className="bg-[#fff] w-[70%]  h-full"></div>
       </div>
       <Row
         gutter={[16, 16]}

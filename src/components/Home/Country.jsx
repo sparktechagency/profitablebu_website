@@ -75,7 +75,7 @@ const {data:countryData} = useGetTopCountryQuery();
         ))}
       </div>
       <div
-        className="bg-[#0A0D53]   lg:text-white mt-20 bg-cover bg-center h-[50vh] flex items-center"
+        className="bg-[#0A0D53]   lg:text-white mt-20 bg-cover bg-center h-[60vh] flex items-center"
         style={{
           backgroundImage: `url(${backImg})`,
         }}
@@ -95,7 +95,7 @@ const {data:countryData} = useGetTopCountryQuery();
             </div>
             <div className="md:flex  pl-4 md:pl-0 md:pt-0 pt-4 justify-end">
               <div className="">
-                <h1 className="text-4xl font-bold pb-4 text-black">
+                <h1 className="md:text-4xl text-xl font-bold pb-4 text-black">
                   Subscribe Now
                 </h1>
                 <div className="flex gap-3">

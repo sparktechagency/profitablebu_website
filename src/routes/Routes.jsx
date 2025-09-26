@@ -65,6 +65,7 @@ import FaqBuyer from "../Pages/faq/FaqBuyer";
 import Test from "../Pages/mybusiness/Test";
 import MainChat from "../Pages/chat/MainChat";
 import { SocketProvider } from "../context/ContextProvider";
+import CountryLandingPage from "../layout/CountryLandingPage";
 
 
 export const router = createBrowserRouter([
@@ -81,6 +82,10 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+       {
+  path: "/businesses-for-sale/:country",
+  element: <CountryLandingPage />,
+},
       {
         path: "/company/about-us",
         element: <AboutPage></AboutPage>,
