@@ -34,7 +34,7 @@ export const SocketProvider = ({ children }) => {
 
     setSocketLoading(true);
 
-    const socket = io(`http://10.10.20.57:8001`, {
+    const socket = io(`https://api.profitablebusinessesforsale.com`, {
       auth: { token },
       autoConnect: true,
       transports: ["websocket"],
