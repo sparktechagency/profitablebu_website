@@ -17,6 +17,7 @@ import { useGetProfileQuery } from "../Pages/redux/api/userApi";
 import { imageUrl } from "../Pages/redux/api/baseApi";
 import world from "../assets/Home/world.png";
 import { useGetUnreadNotificationQuery } from "../Pages/redux/api/metaApi";
+import { Country } from "country-state-city";
 const countryFlags = {
   US: "https://flagcdn.com/w20/us.png",
   GB: "https://flagcdn.com/w20/gb.png",
@@ -28,46 +29,47 @@ const countryFlags = {
 };
 
 const Navbar = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const countries = [
-    {
-      name: "United States",
-      code: "US",
-      slug: "usa",
-      flag: countryFlags.US,
-    },
-    {
-      name: "United Kingdom",
-      code: "GB",
-      slug: "uk",
-      flag: countryFlags.GB,
-    },
-    {
-      name: "Canada",
-      code: "CA",
-      slug: "canada",
-      flag: countryFlags.CA,
-    },
-    {
-      name: "Australia",
-      code: "AU",
-      slug: "australia",
-      flag: countryFlags.AU,
-    },
-    {
-      name: "UAE",
-      code: "AE",
-      slug: "uae",
-      flag: countryFlags.AE,
-    },
-    {
-      name: "South Africa",
-      code: "ZA",
-      slug: "south-africa",
-      flag: countryFlags.ZA,
-    },
-  ];
+  // const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const country = searchParams.get("country");
+  // const countries = [
+  //   {
+  //     name: "United States",
+  //     code: "US",
+  //     slug: "usa",
+  //     flag: countryFlags.US,
+  //   },
+  //   {
+  //     name: "United Kingdom",
+  //     code: "GB",
+  //     slug: "uk",
+  //     flag: countryFlags.GB,
+  //   },
+  //   {
+  //     name: "Canada",
+  //     code: "CA",
+  //     slug: "canada",
+  //     flag: countryFlags.CA,
+  //   },
+  //   {
+  //     name: "Australia",
+  //     code: "AU",
+  //     slug: "australia",
+  //     flag: countryFlags.AU,
+  //   },
+  //   {
+  //     name: "UAE",
+  //     code: "AE",
+  //     slug: "uae",
+  //     flag: countryFlags.AE,
+  //   },
+  //   {
+  //     name: "South Africa",
+  //     code: "ZA",
+  //     slug: "south-africa",
+  //     flag: countryFlags.ZA,
+  //   },
+  // ];
 
   const navigate = useNavigate();
   const { data: profileData, isLoading } = useGetProfileQuery();
@@ -118,9 +120,18 @@ const Navbar = () => {
     }, 150);
   };
 
+ const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    const allCountries = Country.getAllCountries();
+    setCountries(allCountries);
+  }, []);
+
   const handleSelect = (country) => {
-    navigate(`/businesses-for-sale/${country.slug}`);
+    // full reload সহ country query param পাঠানো
+    window.location.href = `/businesses-for-sale?country=${country.isoCode}`;
   };
+
   const navItems = [
     { key: "home", label: "Home", path: "/" },
     {
@@ -527,21 +538,22 @@ const Navbar = () => {
                   </button>
                 </div>
 
-                <div className="space-y-2">
-                  {countries.map((country) => (
-                    <button
-                      key={country.code}
-                      onClick={() => handleSelect(country)}
-                      className="w-full flex items-center space-x-3 p-3 rounded-lg transition-colors hover:bg-gray-50"
-                    >
-                      <img
-                        src={country.flag}
-                        alt={country.name}
-                        className="w-6"
-                      />
-                      <span className="font-medium">{country.name}</span>
-                    </button>
-                  ))}
+                <div className="space-y-2  max-h-96 overflow-y-auto">
+                   {countries.map((country) => (
+        <button
+          key={country.isoCode}
+          type="button"
+          onClick={() => handleSelect(country)}
+          className="w-full flex items-center space-x-3 p-3 rounded-lg transition-colors hover:bg-gray-50"
+        >
+          <img
+            src={`https://flagcdn.com/w20/${country.isoCode.toLowerCase()}.png`}
+            alt={country.name}
+            className="w-6"
+          />
+          <span className="font-medium">{country.name}</span>
+        </button>
+      ))}
                 </div>
               </div>
             </motion.div>

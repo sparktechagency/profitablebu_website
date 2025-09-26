@@ -79,7 +79,7 @@ export default function BusinessValuationSubmission() {
             href="mailto:valuation@pbsf.com"
             className="text-[#0091FF] underline font-medium"
           >
-            valuation@pbsf.com
+            Info@profitablebusinessesforsale.com
           </a>
         </div>
 

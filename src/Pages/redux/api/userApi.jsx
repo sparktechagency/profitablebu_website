@@ -42,6 +42,17 @@ const useApi = baseApi.injectEndpoints({
       },
     }),
 
+
+     resendOtp: builder.mutation({
+      query: (data) => {
+        return {
+          url: "/auth/verify-email",
+          method: "POST",
+          body: data,
+        };
+      },
+    }),
+
     getProfile: builder.query({
       query: () => {
         return {
@@ -135,4 +146,5 @@ export const {
   useChangePasswordMutation,
   useGetHostUserQuery,
   useVerifyEmailMutation,
+  useResendOtpMutation
 } = useApi;

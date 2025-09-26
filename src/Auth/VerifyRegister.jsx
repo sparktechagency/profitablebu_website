@@ -4,12 +4,14 @@ import loginImg from "./login.png";
 import { Typography, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
+  useResendOtpMutation,
   useVerifyEmailMutation,
   useVerifyOtpMutation,
 } from "../Pages/redux/api/userApi";
 const { Title, Text } = Typography;
 function VerifyRegister() {
   const [verifyOtp] = useVerifyOtpMutation();
+  const [resentOtp] = useResendOtpMutation();
   const [verify, { isLoading }] = useVerifyEmailMutation();
   const navigate = useNavigate();
   const [value, setValue] = useState("");
@@ -17,38 +19,47 @@ function VerifyRegister() {
     setValue(e.target.value);
   };
   const onFinish = async (values) => {
-  const email = localStorage.getItem("email");
-  const code = values.otp;
+    const email = localStorage.getItem("email");
+    const code = values.otp;
 
-  const data = {
-    email: localStorage.getItem("email"),
-    code: code,
+    const data = {
+      email: localStorage.getItem("email"),
+      code: code,
+    };
+
+    if (!email || !code) {
+      message.error("Missing email or OTP");
+      return;
+    }
+
+    try {
+      await verify({ data: data })
+        .unwrap()
+        .then((res) => {
+          localStorage.setItem("accessToken", res?.data?.accessToken);
+          message.success(res?.message);
+
+          // navigate + reload
+          window.location.href = "/plane";
+        });
+    } catch (error) {
+      message.error(error?.data?.message || "Something went wrong");
+    }
   };
 
-  if (!email || !code) {
-    message.error("Missing email or OTP");
-    return;
-  }
-
-  try {
-    await verify({ data: data })
-      .unwrap()
-      .then((res) => {
-       
-        localStorage.setItem("accessToken", res?.data?.accessToken);
-        message.success(res?.message);
-
-        // navigate + reload
-        window.location.href = "/plane";
-      });
-  } catch (error) {
-    message.error(error?.data?.message || "Something went wrong");
-  }
-};
-
-  const resendOtp = () => {
-    message.destroy();
-    message.success("Otp sent successfully");
+  const resendOtp = async () => {
+    const data = {
+      email: localStorage.getItem("email"),
+    };
+    try {
+      await resentOtp(data)
+        .unwrap()
+        .then((res) => {
+          message.success(res?.message);
+        });
+    } catch (error) {
+      message.error(error?.data?.message || "Something went wrong");
+    }
   };
   return (
     <div className="relative flex items-center justify-center md:p-20 p-4">

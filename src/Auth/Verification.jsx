@@ -3,11 +3,12 @@ import { Button, Card, Col, Form, Input, Row } from 'antd';
 import loginImg from './login.png';
 import { Typography, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { useVerifyOtpMutation } from '../Pages/redux/api/userApi';
+import { useResendOtpMutation, useVerifyOtpMutation } from '../Pages/redux/api/userApi';
 const { Title, Text } = Typography;
 function Verification() {
   const[verifyOtp] = useVerifyOtpMutation();
   const navigate = useNavigate();
+    const [resentOtp] = useResendOtpMutation();
   const [value, setValue] = useState('');
   const onChange = (e) => {
     setValue(e.target.value);
@@ -41,9 +42,19 @@ function Verification() {
   }
 };
 
-  const resendOtp = () => {
-    message.destroy();
-    message.success('Otp sent successfully');
+    const resendOtp = async () => {
+    const data = {
+      email: localStorage.getItem("email"),
+    };
+    try {
+      await resentOtp(data)
+        .unwrap()
+        .then((res) => {
+          message.success(res?.message);
+        });
+    } catch (error) {
+      message.error(error?.data?.message || "Something went wrong");
+    }
   };
   return (
     <div className="relative flex items-center justify-center md:p-20 p-4">

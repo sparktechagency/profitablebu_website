@@ -40,20 +40,20 @@ const sortOptions = [
 ];
 
 const SchedualeCall = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-  const userId = user?._id
-  const [addSchedule] = usePostScheduleMutation()
+  const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?._id;
+  const [addSchedule] = usePostScheduleMutation();
   const [form] = Form.useForm();
 
   // const navigate = useNavigate();
 
-const handleSearch = async (values) => {
+  const handleSearch = async (values) => {
     const data = {
       userId,
       name: values?.fullName,
       email: values?.email,
-      date: values?.preferredDate, 
-      time: values?.preferredTime, 
+      date: values?.preferredDate,
+      time: values?.preferredTime,
       timeZone: values?.timeZone,
       topic: values?.meetingTopic,
       note: values?.notes || "",
@@ -61,10 +61,9 @@ const handleSearch = async (values) => {
 
     try {
       const res = await addSchedule(data).unwrap();
-     
-        message.success(res?.message);
-        form.resetFields();
-    
+
+      message.success(res?.message);
+      form.resetFields();
     } catch (error) {
       console.error(error);
       message.error(error?.data?.message || "Failed to schedule call.");
@@ -146,13 +145,47 @@ const handleSearch = async (values) => {
             style={{ height: "50px" }}
             placeholder="Select your time zone"
           >
-            <Option value="GMT + 6 - Bangladesh time zone">
-              GMT + 6 - Bangladesh time zone
+            <Option value="UTC-12:00">GMT -12:00</Option>
+            <Option value="UTC-11:00">GMT -11:00</Option>
+            <Option value="UTC-10:00">GMT -10:00</Option>
+            <Option value="UTC-09:30">GMT -09:30</Option>
+            <Option value="UTC-09:00">GMT -09:00</Option>
+            <Option value="UTC-08:00">GMT -08:00</Option>
+            <Option value="UTC-07:00">GMT -07:00</Option>
+            <Option value="UTC-06:00">GMT -06:00</Option>
+            <Option value="UTC-05:00">GMT -05:00</Option>
+            <Option value="UTC-04:30">GMT -04:30</Option>
+            <Option value="UTC-04:00">GMT -04:00</Option>
+            <Option value="UTC-03:30">GMT -03:30</Option>
+            <Option value="UTC-03:00">GMT -03:00</Option>
+            <Option value="UTC-02:00">GMT -02:00</Option>
+            <Option value="UTC-01:00">GMT -01:00</Option>
+            <Option value="UTC+00:00">GMT +00:00 (UTC)</Option>
+            <Option value="UTC+01:00">GMT +01:00</Option>
+            <Option value="UTC+02:00">GMT +02:00</Option>
+            <Option value="UTC+03:00">GMT +03:00</Option>
+            <Option value="UTC+03:30">GMT +03:30</Option>
+            <Option value="UTC+04:00">GMT +04:00</Option>
+            <Option value="UTC+04:30">GMT +04:30</Option>
+            <Option value="UTC+05:00">GMT +05:00</Option>
+            <Option value="UTC+05:30">GMT +05:30</Option>
+            <Option value="UTC+05:45">GMT +05:45</Option>
+            <Option value="UTC+06:00">
+              GMT +06:00 (Bangladesh / Sri Lanka)
             </Option>
-            <Option value="GMT + 5.5 - India Standard Time">
-              GMT + 5.5 - India Standard Time
-            </Option>
-            <Option value="GMT + 0 - UTC">GMT + 0 - UTC</Option>
+            <Option value="UTC+06:30">GMT +06:30</Option>
+            <Option value="UTC+07:00">GMT +07:00</Option>
+            <Option value="UTC+08:00">GMT +08:00</Option>
+            <Option value="UTC+08:30">GMT +08:30</Option>
+            <Option value="UTC+09:00">GMT +09:00</Option>
+            <Option value="UTC+09:30">GMT +09:30</Option>
+            <Option value="UTC+10:00">GMT +10:00</Option>
+            <Option value="UTC+10:30">GMT +10:30</Option>
+            <Option value="UTC+11:00">GMT +11:00</Option>
+            <Option value="UTC+12:00">GMT +12:00</Option>
+            <Option value="UTC+12:45">GMT +12:45</Option>
+            <Option value="UTC+13:00">GMT +13:00</Option>
+            <Option value="UTC+14:00">GMT +14:00</Option>
           </Select>
         </Form.Item>
 
@@ -190,7 +223,7 @@ const handleSearch = async (values) => {
           </Button>
         </Form.Item>
       </Form>
-    </div> 
+    </div>
   );
 };
 

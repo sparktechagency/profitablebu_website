@@ -11,6 +11,7 @@ import Header from "../AboutUs/Header";
 import img from "../../../public/contact-us.png";
 import { useAddContactMutation } from "../redux/api/businessApi";
 import { useGetProfileQuery } from "../redux/api/userApi";
+import { IoMailOpenOutline } from "react-icons/io5";
 export default function ContactUs() {
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
 
@@ -107,10 +108,10 @@ export default function ContactUs() {
                     <Instagram className="w-5 h-5 text-white" />
                   </a>
                   <a
-                    href="info@profitablebusinessesforsale.com"
+                    href="mailto:info@profitablebusinessesforsale.com?subject=Subject%20Here&body=Body%20Text%20Here"
                     className="w-10 h-10 bg-black bg-opacity-20 rounded-lg flex items-center justify-center hover:bg-opacity-30 transition-all"
                   >
-                    <MessageCircle className="w-5 h-5 text-white" />
+                    <IoMailOpenOutline className="w-5 h-5 text-white" />
                   </a>
                 </div>
               </div>

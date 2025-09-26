@@ -83,7 +83,7 @@ export const router = createBrowserRouter([
         ),
       },
        {
-  path: "/businesses-for-sale/:country",
+  path: "/businesses-for-sale",
   element: <CountryLandingPage />,
 },
       {

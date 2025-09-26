@@ -38,7 +38,7 @@ const footerConfig = {
     {
       name: "E-mail",
       icon: IoMailOpenOutline ,
-      url: "info@profitablebusinessesforsale.com",
+      url: "mailto:info@profitablebusinessesforsale.com?subject=Subject%20Here&body=Body%20Text%20Here",
       color: "#FF0000",
     },
     // {

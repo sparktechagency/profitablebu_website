@@ -1,64 +1,89 @@
 import React, { useRef } from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
-import profile from "../../assets/Home/pr.png";
-import { SlArrowRight, SlArrowLeft } from "react-icons/sl";
+import profile from "../../assets/Home/pr.png"; // এক্ষেত্রে আপনি চাইলে আলাদা user image ব্যবহার করতে পারেন
 import { MdStar } from "react-icons/md";
 import { HiArrowNarrowLeft, HiArrowNarrowRight } from "react-icons/hi";
 
-// import img1 from "../../assets/home/user1.png";
-// import img2 from "../../assets/home/user2.png";
-// import img3 from "../../assets/home/user3.png";
-
 const Review = () => {
-  const category = [
+  const testimonials = [
     {
-      // img: img1,
-      title: "Guy Hawkins",
-      location: "Financial Advisor",
+      name: "Ahmed K.",
+      role: "Café Owner",
       review:
-        "“Super smooth experience listing my business — found a serious buyer in just two weeks!”",
-      img: profile,
+        "ProfitableBusinessesForSale.com made selling my café so much easier. Within weeks of listing, I started getting genuine inquiries. Highly recommended!",
     },
     {
-      // img: img2,
-      title: "Theresa Webb",
-      location: "Chief Executive Officer.",
+      name: "Sophie L.",
+      role: "Small Business Owner",
       review:
-        "“Highly recommend PBFS! It made the complex process of selling my business feel effortless.”",
-      img: profile,
+        "I was worried about finding buyers, but PBFS gave my business the right exposure. Their Premium Seller package was worth every penny.",
     },
     {
-      // img: img3,
-      title: "Arlene McCoy",
-      location: "Certified Financial Planner",
+      name: "Raj P.",
+      role: "Entrepreneur",
       review:
-        "“The platform is easy to use, professional, and helped me close a great deal fast.”",
-      img: profile,
+        "The valuation service helped me price my business correctly. I closed a deal in 4 months—faster than expected!",
     },
     {
-      // img: img1,
-      title: "Earings",
-      location: "New York, USA",
+      name: "Maria G.",
+      role: "Franchise Owner",
       review:
-        "I was looking for the perfect engagement ring, and this website exceeded all my expectations! The craftsmanship is stunning, and the diamond sparkles beautifully. My fiancée absolutely loves it, and I couldn’t be happier with my purchase!",
-      img: profile,
+        "Listing our franchise on PBFS gave us international visibility. We received inquiries from investors in three different countries!",
     },
     {
-      // img: img2,
-      title: "Necklaces",
-      location: "New York, USA",
+      name: "John S.",
+      role: "Franchise Seller",
       review:
-        "I was looking for the perfect engagement ring, and this website exceeded all my expectations! The craftsmanship is stunning, and the diamond sparkles beautifully. My fiancée absolutely loves it, and I couldn’t be happier with my purchase!",
-      img: profile,
+        "The franchise package was simple to use and provided real exposure. The dashboard makes tracking leads so easy.",
     },
     {
-      // img: img3,
-      title: "Rings",
-      location: "New York, USA",
+      name: "Fatima A.",
+      role: "Franchisor",
       review:
-        "I was looking for the perfect engagement ring, and this website exceeded all my expectations! The craftsmanship is stunning, and the diamond sparkles beautifully. My fiancée absolutely loves it, and I couldn’t be happier with my purchase!",
-      img: profile,
+        "Great platform for franchisors! The social media spotlight and priority placement really boosted our brand visibility.",
+    },
+    {
+      name: "Omar R.",
+      role: "Salon Owner",
+      review:
+        "I listed my salon equipment here and got it sold in less than two weeks. The inquiry alerts kept me updated instantly.",
+    },
+    {
+      name: "Elena M.",
+      role: "Asset Seller",
+      review:
+        "Excellent platform for selling business assets. Easy to list, professional visibility, and I could manage everything from one dashboard.",
+    },
+    {
+      name: "Carlos D.",
+      role: "Business Broker",
+      review:
+        "As a broker, I needed a place to list multiple businesses. PBFS is the perfect platform with strong lead tracking and premium visibility options.",
+    },
+    {
+      name: "Noor S.",
+      role: "Broker",
+      review:
+        "The broker package gives me everything I need—multiple listings, team access, and high-quality buyer inquiries.",
+    },
+    {
+      name: "David B.",
+      role: "Startup Founder",
+      review:
+        "I uploaded my startup idea for free and quickly connected with investors. This platform is perfect for early-stage entrepreneurs.",
+    },
+    {
+      name: "Aisha M.",
+      role: "Innovator",
+      review:
+        "The Business Idea Lister gave me credibility and visibility with serious investors. Great way to showcase innovation for free.",
+    },
+    {
+      name: "Michael T.",
+      role: "Investor",
+      review:
+        "The investor subscription is worth it. I discovered fresh ideas and had early access to listings before anyone else.",
     },
   ];
 
@@ -77,88 +102,87 @@ const Review = () => {
   };
 
   return (
-    <div className=" mt-20">
+    <div className="mt-20">
       <div className="mb-11">
-       <div className="text-center mb-12">
-            <p className="text-blue-500 font-medium mb-2">Our Testimonials </p>
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              What our customers say
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-             "Whether you're buying or selling, our platform makes the process seamless and straightforward."Here’s how it works according to our satisfied users:
-            </p>
-          </div>
+        <div className="text-center mb-12">
+          <p className="text-blue-500 font-medium mb-2">Our Testimonials</p>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            What our customers say
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Whether you're buying or selling, our platform makes the process
+            seamless and straightforward. Here’s how it works according to our
+            satisfied users:
+          </p>
+        </div>
 
-        <div className="">
-          <div className=" w-full">
-            <Splide
-              ref={splideRef}
-              options={{
-                type: "loop",
-                perPage: 3,
-                gap: "1rem",
-                arrows: false,
-                pagination: false,
-                breakpoints: {
-                  1724: { perPage: 3 },
-                  968: { perPage: 2 },
-                  640: { perPage: 1 },
-                },
-              }}
-              aria-label="Category Slide"
-              className="w-full"
-            >
-              {category.map((item, index) => (
-                <SplideSlide key={index}>
-                  <div className="shadow-lg bg-[#FFFFFF] rounded-2xl p-4 py-8">
-                    <div className=" flex pb-3 text-yellow-500">
+        <div className="w-full">
+          <Splide
+            ref={splideRef}
+            options={{
+              type: "loop",
+              perPage: 3,
+              gap: "1rem",
+              arrows: false,
+              pagination: false,
+              breakpoints: {
+                1724: { perPage: 3 },
+                968: { perPage: 2 },
+                640: { perPage: 1 },
+              },
+            }}
+            aria-label="Testimonials"
+            className="w-full"
+          >
+            {testimonials.map((item, index) => (
+              <SplideSlide key={index}>
+                <div className="shadow-lg bg-[#FFFFFF] rounded-2xl p-4 py-8 h-full flex flex-col justify-between">
+                  <div>
+                    <div className="flex pb-3 text-yellow-500">
                       <MdStar />
                       <MdStar />
                       <MdStar />
                       <MdStar />
                       <MdStar />
-                      <p className="-mt-1 pl-2">(4.5)</p>
+                      <p className="-mt-1 pl-2 text-gray-600">(5.0)</p>
                     </div>
-                    
-                    <p className="text-sm mt-1">{item?.review}</p>
-                    <div className="flex items-center gap-4 mt-5">
-                      <div className="">
-                        <img
-                          className="rounded-full w-[70px] object-cover"
-                          src={item?.img}
-                          alt={item?.title}
-                        />
-                      </div>
-                      <div>
-                        <h1 className=" ">{item?.title}</h1>
-                        <h2 className=" ">{item?.location}</h2>
-                      </div>
+                    <p className="text-sm mt-1 text-gray-700 italic">
+                      {item?.review}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-4 mt-5">
+                    <img
+                      className="rounded-full w-[60px] h-[60px] object-cover"
+                      src={profile}
+                      alt={item?.name}
+                    />
+                    <div>
+                      <h1 className="font-semibold text-gray-900">
+                        {item?.name}
+                      </h1>
+                      <h2 className="text-sm text-gray-500">{item?.role}</h2>
                     </div>
                   </div>
-                </SplideSlide>
-              ))}
-            </Splide>
-          </div>
+                </div>
+              </SplideSlide>
+            ))}
+          </Splide>
+        </div>
 
-          <div className="flex gap-3 justify-center mt-5">
-            <div
-              className=" bg-[#0091FF] p-2 rounded text-white"
-              onClick={handlePrevClick}
-            >
-              <div className="rounded-full text-2xl  cursor-pointer">
-                <HiArrowNarrowLeft />
-              </div>
-            </div>
-
-            <div
-              className=" bg-[#0091FF] p-2 rounded text-white "
-              onClick={handleNextClick}
-            >
-              <div className="rounded-full text-2xl  cursor-pointer">
-                <HiArrowNarrowRight />
-              </div>
-            </div>
-          </div>
+        {/* Custom Arrows */}
+        <div className="flex gap-3 justify-center mt-5">
+          <button
+            className="bg-[#0091FF] p-2 rounded text-white"
+            onClick={handlePrevClick}
+          >
+            <HiArrowNarrowLeft className="text-2xl" />
+          </button>
+          <button
+            className="bg-[#0091FF] p-2 rounded text-white"
+            onClick={handleNextClick}
+          >
+            <HiArrowNarrowRight className="text-2xl" />
+          </button>
         </div>
       </div>
     </div>

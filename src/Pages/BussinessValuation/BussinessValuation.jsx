@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import {
   Form,
@@ -52,7 +50,6 @@ export default function BusinessValuationForm() {
   };
 
   const onFinish = async (values) => {
-
     setLoading(true);
     try {
       const formData = new FormData();
@@ -90,7 +87,6 @@ export default function BusinessValuationForm() {
       });
 
       const res = await addBusinessValuation(formData).unwrap();
-   
 
       message.success(res.message || "Submitted successfully");
       setLoading(false);
@@ -105,19 +101,26 @@ export default function BusinessValuationForm() {
 
   return (
     <div className="container mx-auto px-5 pt-20 pb-10">
-      <div className="relative flex flex-col items-start gap-5 pl-5 mb-10">
+      <div className="relative flex flex-col items-start gap-5 pl-5 mb-6">
         <div className="absolute top-0 left-0 w-2 h-full bg-[#22C55E] z-[1] rounded-r-full"></div>
 
         <div className="ml-5">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0091FF] mb-6 leading-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0091FF] mb-4 leading-tight">
             Get Your Business Valuations
           </h1>
-          <p className="text-lg md:text-xl text-[#000000] leading-relaxed max-w-2xl">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
-            ultrices lectus sem.
-          </p>
         </div>
       </div>
+      <p className="text-gray-700 mb-10 max-w-4xl">
+        Are you wondering what your business is really worth? Our professional
+        business valuation service provides an accurate and reliable assessment
+        of your company's true market value. This helps you set the right asking
+        price, attract qualified buyers, and maximize your returns. Don't risk
+        undervaluing your company. A certified business valuation ensures your
+        business is positioned correctly in the market-saving time and improving
+        your chances of a successful sale. Simply submit the form below, and our
+        team will review your details and contact you with a custom quotation
+        for your business valuation report.
+      </p>
       <div className="flex items-center gap-2 mb-6">
         <User className="h-5 w-5 text-green-500" />
         <h3 className="text-lg font-semibold text-blue-600">
@@ -239,7 +242,9 @@ export default function BusinessValuationForm() {
           <Form.Item
             label="Business Category"
             name="category"
-            rules={[{ required: true, message: "Please enter Business Category" }]}
+            rules={[
+              { required: true, message: "Please enter Business Category" },
+            ]}
           >
             <Input className="py-3" placeholder="Enter Business Category" />
           </Form.Item>
@@ -264,7 +269,7 @@ export default function BusinessValuationForm() {
             />
           </Form.Item>
 
-           <Form.Item
+          <Form.Item
             label="Currency"
             name="currency"
             rules={[{ required: true, message: "Please enter Currency" }]}
@@ -303,10 +308,16 @@ export default function BusinessValuationForm() {
 
         <Form.Item label="Select the Purpose" name="purpose">
           <Select style={{ height: "48px" }} placeholder="Select Purpose">
-            <Option value="north-america">North America</Option>
-            <Option value="europe">Europe</Option>
-            <Option value="asia">Asia</Option>
-            <Option value="middle-east">Middle East</Option>
+            <Option value="Selling My Business">Selling My Business</Option>
+            <Option value="europBuying a Businesse">Buying a Business</Option>
+            <Option value="Attracting Investors / Raising Capital">Attracting Investors / Raising Capital</Option>
+            <Option value="Business Loan or Financing Requirement">Business Loan or Financing Requirement</Option>
+            <Option value="Mergers & Acquisitions (M&A)">Mergers & Acquisitions (M&A)</Option>
+            <Option value="Partnership Buy-In / Buy-Out">Partnership Buy-In / Buy-Out</Option>
+            <Option value="Legal or Compliance Requirement">Legal or Compliance Requirement</Option>
+            <Option value="Tax or Accounting Purposes">Tax or Accounting Purposes</Option>
+            <Option value="Succession or Exit Planning">Succession or Exit Planning</Option>
+            <Option value="General Business Valuation / Market Worth">General Business Valuation / Market Worth</Option>
           </Select>
         </Form.Item>
 
@@ -342,7 +353,7 @@ export default function BusinessValuationForm() {
           </Form.Item>
         </div>
         <Form.Item
-          label="Value of Stack / Inventory"
+          label="Value of stock / Inventory"
           name="valueOfStock"
           rules={[
             { required: true, message: "Please Value of Stack / Inventory" },
@@ -360,7 +371,7 @@ export default function BusinessValuationForm() {
           </h3>
         </div>
         {/* File Upload Example */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid md:grid-cols-4 grid-cols-2 gap-4">
           <Form.Item
             label="P&L Report"
             name="plReport"
