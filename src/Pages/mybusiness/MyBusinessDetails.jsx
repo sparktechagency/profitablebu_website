@@ -234,25 +234,25 @@ const { isLoaded } = useLoadScript({
                 </Link>
               )}
 
-            {role &&
-              localStorage.getItem("accessToken") &&
-              checkUserId !== checkBusinessId &&
-              price !== 0 &&
-              ((role === "Buyer" &&
-                businessDetails?.data?.business?.businessRole !==
-                  "Business Idea Lister") ||
-                role === "Investor" ||
-                (role === "Broker" &&
-                  businessDetails?.data?.business?.businessRole !==
-                    "Business Idea Lister")) && (
-                <Link
-                  to={`/buyer-contact-info/${businessDetails?.data?.business?.user}`}
-                >
-                  <button className="bg-[#0091FF] hover:bg-[#0091FF] text-white px-5 py-1 rounded">
-                    Contact
-                  </button>
-                </Link>
-              )}
+          {role &&
+  localStorage.getItem("accessToken") &&
+  checkUserId !== checkBusinessId &&
+  price !== 0 &&
+  price !== null && 
+  ((role === "Buyer" &&
+    businessDetails?.data?.business?.businessRole !== "Business Idea Lister") ||
+    role === "Investor" ||
+    (role === "Broker" &&
+      businessDetails?.data?.business?.businessRole !== "Business Idea Lister")) && (
+    <Link
+      to={`/buyer-contact-info/${businessDetails?.data?.business?.user}`}
+    >
+      <button className="bg-[#0091FF] hover:bg-[#0091FF] text-white px-5 py-1 rounded">
+        Contact
+      </button>
+    </Link>
+  )}
+
 
             {role &&
               role !== "Buyer" &&
