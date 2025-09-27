@@ -180,11 +180,12 @@ const Navbar = () => {
                 </div>
               </div>
             </Link>
+             <Link to="/myBusiness/details" onClick={() => setMobileMenuOpen(false)}>
             <button className="w-fit hidden md:block px-4 py-2 bg-[#22C55E] text-white text-center rounded-lg font-medium">
-              <Link to="/auth/login" onClick={() => setMobileMenuOpen(false)}>
+             
                 List Your Business
-              </Link>
-            </button>
+              
+            </button></Link>
           </div>
 
           {/* Main Navigation */}
@@ -349,11 +350,11 @@ const Navbar = () => {
                 </div>
 
                 <Link
-                  to="/auth/login"
+                  to="/myBusiness/details"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block w-full md:hidden bg-[#22C55E] text-white text-center py-3 rounded-lg font-medium"
+                  
                 >
-                  List Your Business
+                  <button className="block w-full md:hidden bg-[#22C55E] text-white text-center py-3 rounded-lg font-medium">List Your Business</button>
                 </Link>
                 <nav className="space-y-2 mt-4">
                   {navItems.map((item) => (
@@ -441,7 +442,7 @@ const Navbar = () => {
                       label: "Listed Businesses",
                       path: "/myBusiness/details",
                     },
-                    { icon: MessageIcon, label: "Message", path: "/all-Chat" },
+                    { icon: MessageIcon, label: "Message", path: "/chat" },
                     {
                       icon: BelIcon,
                       label: "Notification",

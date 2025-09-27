@@ -49,7 +49,7 @@ const SidbarChat = ({ chatId }) => {
   return (
     <div>
       <div className="w-full md:w-96 border-r bg-white">
-        <div className="overflow-y-auto h-[calc(100vh-130px)]">
+        <div className="overflow-y-auto h-[76vh]">
           {chats?.data?.map((i) => {
             const lastMsg = i?.lastMessage;
             const participant = i?.participants[0];

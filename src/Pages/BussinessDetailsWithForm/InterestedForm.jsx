@@ -140,7 +140,7 @@ export default function InterestForm({ businessId, businessRole }) {
               <Form.Item
                 label="Sector"
                 name="sector"
-                rules={[{ required: true, message: "Please select a sector" }]}
+           
               >
                 <Select style={{ height: "48px" }} placeholder="Select One">
                   <Select.Option value="food-beverage">
@@ -159,7 +159,7 @@ export default function InterestForm({ businessId, businessRole }) {
               <Form.Item
                 label="Activity"
                 name="activity"
-                rules={[{ required: true, message: "Please enter activity" }]}
+            
               >
                 <Input
                   style={{ height: "48px" }}
@@ -184,9 +184,7 @@ export default function InterestForm({ businessId, businessRole }) {
               <Form.Item
                 label="Service Zone"
                 name="serviceZone"
-                rules={[
-                  { required: true, message: "Please enter service zone" },
-                ]}
+     
               >
                 <Input
                   style={{ height: "48px" }}
@@ -199,7 +197,7 @@ export default function InterestForm({ businessId, businessRole }) {
             <Form.Item
               label="Message"
               name="message"
-              rules={[{ required: true, message: "Please enter your message" }]}
+
             >
               <TextArea placeholder="Enter Your Message Here" rows={5} />
             </Form.Item>

@@ -34,15 +34,15 @@ const MainChat = () => {
   }
 
   return (
-    <div className="container m-auto mb-20">
-      <div className="mt-20 md:mt-11">
+    <div className="container m-auto">
+      <div className="mt-16 md:mt-11">
         <Navigate title={"Message"} />
       </div>
 
       {/* Mobile menu button */}
       <button
         onClick={() => setIsDrawerOpen(true)}
-        className="md:hidden p-2 rounded bg-gray-200"
+        className="md:hidden p-2 fixed -mt-32 z-50 rounded bg-gray-200"
       >
         <Menu className="w-6 h-6" />
       </button>

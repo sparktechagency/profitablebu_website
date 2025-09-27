@@ -99,19 +99,19 @@ const Chat = () => {
 
   return (
     <div className="container m-auto">
-      <div className="mt-20 md:mt-11">
+      <div className="mt-16 md:mt-7">
         <Navigate title={"Message"} />
       </div>
 
       {/* Mobile menu button */}
       <button
         onClick={() => setIsDrawerOpen(true)}
-        className="md:hidden p-2 rounded bg-gray-200"
+        className="md:hidden p-2 fixed -mt-32 z-50 rounded bg-gray-200"
       >
         <Menu className="w-6 h-6" />
       </button>
 
-      <div className="flex h-screen bg-white">
+      <div className="flex h-[76vh] bg-white">
         {/* Sidebar (Desktop Only) */}
         <div className="hidden md:block border-r">
           <SidbarChat chatId={chatId} />
@@ -141,7 +141,7 @@ const Chat = () => {
           </div>
 
           {/* Chat Messages */}
-          <div className="flex-1 p-4 overflow-y-auto flex flex-col">
+          <div className="flex-1 p-4 overflow-y-auto no-scrollbar flex flex-col">
             <div className="text-center mb-6">
               <div className="flex justify-center mb-2">
                 <img
@@ -190,16 +190,16 @@ const Chat = () => {
           </div>
 
           {/* Input */}
-          <div className="p-4 border-t flex items-center gap-2">
+          <div className="  p-4 border-t flex items-center gap-2">
             <input
-              className="bg-gray-100 flex-1 py-2 px-4 rounded-md"
+              className="bg-gray-100 border border-blue-400 flex-1 py-2 px-4 rounded-md"
               placeholder="Type a message..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
             />
             <button
-              className="p-2 rounded-full bg-[#AB684D] hover:bg-blue-600"
+              className="p-2 rounded-full bg-[#0091FF] hover:bg-blue-600"
               onClick={sendMessage}
             >
               <Send className="h-5 w-5 text-white" />

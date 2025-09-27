@@ -177,7 +177,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/all-Chat",
+        path: "/chat",
         element: <ProtectedRoute><MainChat></MainChat></ProtectedRoute>
       },
       {

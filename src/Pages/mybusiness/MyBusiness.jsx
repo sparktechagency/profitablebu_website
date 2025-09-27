@@ -13,7 +13,7 @@ import { DeleteIcon } from "lucide-react";
 import { message, Popconfirm } from "antd";
 
 const MyBusiness = () => {
-    useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const [deleteBusinesss] = useDeleteBusinessMutation();
@@ -23,7 +23,6 @@ const MyBusiness = () => {
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
 
   const role = profileData?.data?.role;
-
 
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
 
@@ -142,19 +141,17 @@ const MyBusiness = () => {
                 </button>
               </Link>
 
-                  <Popconfirm
+              <Popconfirm
                 title="Are you sure you want to delete this Business?"
                 onConfirm={() => handleDeletebusiness(item?._id)}
                 okText="Yes"
                 cancelText="No"
                 okType="danger"
               >
-              <button
-                className="bg-red-600 ml-5 text-white px-4 py-2 rounded-md transition-colors"
-              
-              >
-                Delete
-              </button> </Popconfirm>
+                <button className="bg-red-600 ml-5 text-white px-4 py-2 rounded-md transition-colors">
+                  Delete
+                </button>{" "}
+              </Popconfirm>
             </div>
           </div>
         );
@@ -204,19 +201,17 @@ const MyBusiness = () => {
                   View Details
                 </button>
               </Link>
-                  <Popconfirm
+              <Popconfirm
                 title="Are you sure you want to delete this Business?"
                 onConfirm={() => handleDeletebusiness(item?._id)}
                 okText="Yes"
                 cancelText="No"
                 okType="danger"
               >
-              <button
-                className="bg-red-600 ml-5 text-white px-4 py-2 rounded-md transition-colors"
-               
-              >
-                Delete
-              </button> </Popconfirm>
+                <button className="bg-red-600 ml-5 text-white px-4 py-2 rounded-md transition-colors">
+                  Delete
+                </button>{" "}
+              </Popconfirm>
             </div>
           </div>
         );
@@ -257,19 +252,17 @@ const MyBusiness = () => {
                 View Details
               </button>
             </Link>
-                <Popconfirm
-                title="Are you sure you want to delete this Business?"
-                onConfirm={() => handleDeletebusiness(item?._id)}
-                okText="Yes"
-                cancelText="No"
-                okType="danger"
-              >
-            <button
-              className="bg-red-600 ml-5 text-white px-4 py-2 rounded-md transition-colors"
-              
+            <Popconfirm
+              title="Are you sure you want to delete this Business?"
+              onConfirm={() => handleDeletebusiness(item?._id)}
+              okText="Yes"
+              cancelText="No"
+              okType="danger"
             >
-              Delete
-            </button> </Popconfirm>
+              <button className="bg-red-600 ml-5 text-white px-4 py-2 rounded-md transition-colors">
+                Delete
+              </button>{" "}
+            </Popconfirm>
           </div>
         </div>
       );

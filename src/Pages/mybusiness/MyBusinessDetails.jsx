@@ -86,7 +86,7 @@ const MyBusinessDetails = () => {
 
   return (
     <div className="container m-auto pb-20 lg:mt-8 mt-16 lg:px-0 px-4">
-      <Navigate title={"Trendy Urban Café in Dhaka City"}></Navigate>
+      <Navigate title={businessDetails?.data?.business?.title}></Navigate>
       {role &&
         role !== "Buyer" &&
         role !== "Investor" &&
@@ -131,7 +131,7 @@ const MyBusinessDetails = () => {
       <div className="lg:grid grid-cols-2 gap-4 pt-11">
         <div>
           <img
-            className="w-full h-[500px] object-cover"
+            className="w-full object-cover"
             src={`${imageUrl}/uploads/business-image/${businessDetails?.data?.business?.image}`}
             alt="main business"
           />
