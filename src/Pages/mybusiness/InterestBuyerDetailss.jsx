@@ -12,7 +12,7 @@ const InterestBuyerDetailss = () => {
   const { data, isLoading } = useGetDetailsSingleIterestUserQuery({ businessId, interestedId });
 
   return (
-    <div className="container mx-auto p-6 space-y-6 bg-[#f6fcff] min-h-screen">
+    <div className="container mx-auto  lg:mt-8 mt-16 lg:px-0 px-4 pb-20 ">
       {/* Header */}
       <div className="flex items-center justify-between bg-white p-4 rounded-xl shadow">
         <div className="flex items-center gap-4">
@@ -35,7 +35,7 @@ const InterestBuyerDetailss = () => {
       </div>
 
       {/* Interested Section */}
-      <div className="bg-white border rounded-xl shadow-sm flex flex-col md:flex-row overflow-hidden">
+      <div className="bg-white border rounded-xl shadow-sm flex flex-col md:flex-row overflow-hidden mt-4">
         <img src={`${imageUrl}/uploads/business-image/${data?.data?.business?.image}` } alt="interested" className="w-full md:w-1/3 object-cover h-[330px] " />
         <div className="p-6 flex flex-col justify-between">
           <div>

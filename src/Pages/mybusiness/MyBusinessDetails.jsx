@@ -17,19 +17,20 @@ import { message } from "antd";
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import { Lock } from "lucide-react";
 
 const libraries = ["places"];
 const mapContainerStyle = { width: "100%", height: "300px" };
 
-
 const MyBusinessDetails = () => {
-const { isLoaded } = useLoadScript({
-  googleMapsApiKey: apiKey,
-  libraries: ["places"],
-});
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: apiKey,
+    libraries: ["places"],
+  });
 
-
-  
   const user = JSON.parse(localStorage.getItem("user"));
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
 
@@ -43,15 +44,13 @@ const { isLoaded } = useLoadScript({
     businessId,
   });
 
-  console.log('first',businessDetails)
+  console.log("first", businessDetails);
   const [updateSold] = useUpdateSoldMutation();
   const checkUserId = profileData?.data?._id;
 
   const checkBusinessId = businessDetails?.data?.business?.user;
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  
 
   const handleSoldToggle = async () => {
     try {
@@ -62,7 +61,7 @@ const { isLoaded } = useLoadScript({
       message.error(err?.data?.message);
     }
   };
- const [center, setCenter] = useState(null);
+  const [center, setCenter] = useState(null);
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -86,7 +85,7 @@ const { isLoaded } = useLoadScript({
   if (!isLoaded) return <div>Loading map...</div>;
 
   return (
-    <div className="container m-auto pb-20 lg:mt-8 mt-11 lg:px-0 px-4">
+    <div className="container m-auto pb-20 lg:mt-8 mt-16 lg:px-0 px-4">
       <Navigate title={"Trendy Urban Café in Dhaka City"}></Navigate>
       {role &&
         role !== "Buyer" &&
@@ -121,7 +120,10 @@ const { isLoaded } = useLoadScript({
               <h1 className="font-semibold text-3xl py-3">
                 Inquiries Received
               </h1>
-              <h2 className="text-[#22C55E] font-semibold text-xl"> {businessDetails?.data?.interestedUsers?.length ?? "0"}</h2>
+              <h2 className="text-[#22C55E] font-semibold text-xl">
+                {" "}
+                {businessDetails?.data?.interestedUsers?.length ?? "0"}
+              </h2>
             </div>
           </div>
         )}
@@ -146,7 +148,7 @@ const { isLoaded } = useLoadScript({
           </div> */}
         </div>
 
-        <div>
+        <div className="mt-5 lg:mt-0 ">
           <button className="bg-[#C1E1FF] border border-[#0091FF] px-2 py-2 rounded">
             {businessDetails?.data?.business?.businessRole}
           </button>
@@ -201,18 +203,32 @@ const { isLoaded } = useLoadScript({
               )}
 
             {role &&
-              role !== "Buyer" &&
-              role !== "Investor" &&
               localStorage.getItem("accessToken") &&
               checkUserId === checkBusinessId &&
-              price !== 0 && (
-                <Link
-                  to={`/interestBuyer/${businessDetails?.data?.business?._id}`}
-                >
-                  <button className="bg-[#0091FF] px-4 py-1 rounded text-white">
-                    interested buyers
-                  </button>
-                </Link>
+              role !== "Buyer" &&
+              role !== "Investor" && (
+                <div className="relative inline-block">
+                  {(price === 0 || price === null) && (
+                    <div className="absolute -top-3 -right-3 bg-white rounded-full shadow p-1">
+                      <Lock className="w-4 h-4 text-gray-400" />
+                    </div>
+                  )}
+
+                  <Link
+                    to={`/interestBuyer/${businessDetails?.data?.business?._id}`}
+                  >
+                    <button
+                      disabled={price === 0 || price === null}
+                      className={`px-4 py-1 rounded text-white transition-all ${
+                        price === 0 || price === null
+                          ? "bg-gray-400 cursor-not-allowed"
+                          : "bg-[#0091FF] hover:bg-[#0091FF]"
+                      }`}
+                    >
+                      interested buyers
+                    </button>
+                  </Link>
+                </div>
               )}
 
             {role &&
@@ -234,25 +250,40 @@ const { isLoaded } = useLoadScript({
                 </Link>
               )}
 
-          {role &&
-  localStorage.getItem("accessToken") &&
-  checkUserId !== checkBusinessId &&
-  price !== 0 &&
-  price !== null && 
-  ((role === "Buyer" &&
-    businessDetails?.data?.business?.businessRole !== "Business Idea Lister") ||
-    role === "Investor" ||
-    (role === "Broker" &&
-      businessDetails?.data?.business?.businessRole !== "Business Idea Lister")) && (
-    <Link
-      to={`/buyer-contact-info/${businessDetails?.data?.business?.user}`}
-    >
-      <button className="bg-[#0091FF] hover:bg-[#0091FF] text-white px-5 py-1 rounded">
-        Contact
-      </button>
-    </Link>
-  )}
+            {role &&
+              localStorage.getItem("accessToken") &&
+              checkUserId !== checkBusinessId &&
+              ((role === "Buyer" &&
+                businessDetails?.data?.business?.businessRole !==
+                  "Business Idea Lister") ||
+                role === "Investor" ||
+                (role === "Broker" &&
+                  businessDetails?.data?.business?.businessRole !==
+                    "Business Idea Lister")) && (
+                <div className="relative inline-block">
+                  {/* Lock icon condition */}
+                  {(price === 0 || price === null) && (
+                    <div className="absolute -top-3 -right-3 bg-white rounded-full shadow p-1">
+                      <Lock className="w-4 h-4 text-gray-400" />
+                    </div>
+                  )}
 
+                  <Link
+                    to={`/buyer-contact-info/${businessDetails?.data?.business?.user}`}
+                  >
+                    <button
+                      disabled={price === 0 || price === null}
+                      className={`px-5 py-1 rounded text-white transition-all ${
+                        price === 0 || price === null
+                          ? "bg-gray-400 cursor-not-allowed"
+                          : "bg-[#0091FF] hover:bg-[#0091FF]"
+                      }`}
+                    >
+                      Contact
+                    </button>
+                  </Link>
+                </div>
+              )}
 
             {role &&
               role !== "Buyer" &&
@@ -283,12 +314,12 @@ const { isLoaded } = useLoadScript({
       <p className="mb-4">{businessDetails?.data?.business?.countryName}</p>
 
       <GoogleMap
-      mapContainerStyle={mapContainerStyle}
-      zoom={6}
-      center={center || { lat: 23.8103, lng: 90.4125 }}
-    >
-      {center && <Marker position={center} />}
-    </GoogleMap>
+        mapContainerStyle={mapContainerStyle}
+        zoom={6}
+        center={center || { lat: 23.8103, lng: 90.4125 }}
+      >
+        {center && <Marker position={center} />}
+      </GoogleMap>
     </div>
   );
 };

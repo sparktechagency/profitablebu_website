@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from 'antd';
 import { motion } from 'framer-motion';
 import img from '../../public/role-choose.png';
 import { useNavigate } from 'react-router-dom';
 
 function ChooseRole() {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const data = [
     {
       title: 'Buyer',

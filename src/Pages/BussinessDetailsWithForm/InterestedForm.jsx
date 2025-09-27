@@ -7,7 +7,9 @@ import { useEffect } from "react";
 const { TextArea } = Input;
 
 export default function InterestForm({ businessId, businessRole }) {
-
+ useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [addInterest] = useAddInterestMutation();
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?._id;

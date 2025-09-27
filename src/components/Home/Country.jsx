@@ -88,7 +88,7 @@ const {data:countryData} = useGetTopCountryQuery();
                 <h1 className="md:text-5xl text-3xl pb-4 font-bold">
                   Profitable Businesses for <br className="hidden md:block"/> Sale – Buy or Sell with Confidence
                 </h1>
-                <p>
+                <p className="text-black">
                Discover profitable businesses for sale in worldwide. Our platform connects serious buyers and motivated sellers, offering transparent listings and high-return investment opportunities. Start building your future with the most trusted business marketplace.
                 </p>
               </div>

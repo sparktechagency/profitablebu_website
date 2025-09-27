@@ -29,6 +29,9 @@ const { Title, Paragraph, Text } = Typography;
 
 
 const Seller = () => {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
     const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -163,7 +166,7 @@ const Seller = () => {
                   <Input size="large" placeholder="Enter ID number" />
                 </Form.Item>
 
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid md:grid-cols-3 gap-4">
                   <Form.Item
                     label="Passport/National ID Number"
                     name="passportNationalIDNumber"

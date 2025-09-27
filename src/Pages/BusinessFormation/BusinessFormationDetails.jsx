@@ -4,9 +4,13 @@ import { useParams } from "react-router-dom";
 import { useGetSingleFormatQuery } from "../redux/api/businessApi";
 import { imageUrl } from "../redux/api/baseApi";
 import InterenstFormation from "./InterenstFormation";
+import { useEffect } from "react";
 
 
 export default function BusinessFormationDetails() {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { id: formationId } = useParams();
 
   const { data: singleData, isLoading, isError } = useGetSingleFormatQuery({ formationId });

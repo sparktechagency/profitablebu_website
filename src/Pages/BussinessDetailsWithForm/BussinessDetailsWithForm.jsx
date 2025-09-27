@@ -10,7 +10,11 @@ import { Link, useParams } from "react-router-dom";
 import { Navigate } from "../Navigate";
 import { imageUrl } from "../redux/api/baseApi";
 import { useGetProfileQuery } from "../redux/api/userApi";
+import { useEffect } from "react";
 export default function BussinessDetailsWithForm() {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { id: businessId } = useParams();
 
   const { data: businessDetails } = useGetSingleIterestUserQuery({
@@ -18,7 +22,7 @@ export default function BussinessDetailsWithForm() {
   });
 
   return (
-    <div className="container m-auto pb-20 lg:mt-8 mt-11 lg:px-0 px-4">
+    <div className="container m-auto pb-20 lg:mt-8 mt-16 lg:px-0 px-4">
       <Navigate title={"Trendy Urban Café in Dhaka City"}></Navigate>
 
 

@@ -5,6 +5,9 @@ import { useGetSingleIterestUserQuery } from "../redux/api/businessApi";
 import { imageUrl } from "../redux/api/baseApi";
 
 const InterestedBuyer = () => {
+    useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { id: businessId } = useParams();
 
   const { data: businessDetails, isLoading } = useGetSingleIterestUserQuery({
@@ -14,11 +17,9 @@ const InterestedBuyer = () => {
   const businessTitle = businessDetails?.data?.business?.title;
   const interestedUsers = businessDetails?.data?.interestedUsers || [];
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+
   return (
-    <div className="container mx-auto p-6 space-y-4">
+    <div className="container mx-auto lg:mt-8 mt-16 lg:px-0 px-4 pb-20 ">
       <Navigate title={`${businessTitle} / Interested Buyers`} />
 
       {isLoading ? (

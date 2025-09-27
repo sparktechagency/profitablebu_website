@@ -7,7 +7,10 @@ import { useEffect } from "react";
 const { TextArea } = Input;
 
 export default function InterenstFormation({ formationId }) {
- 
+    useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [addInterest] = usePostInterestFormationMutation()
    const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
 
@@ -57,6 +60,7 @@ const data = {
       message.error(error?.data?.message || "Failed to schedule call.");
     }
   };
+
 
   return (
     <div className="max-w-2xl mx-auto">

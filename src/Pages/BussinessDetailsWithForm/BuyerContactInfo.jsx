@@ -4,10 +4,13 @@ import { useGetSingleBusinessContactQuery } from "../redux/api/businessApi";
 import { useParams, useNavigate } from "react-router-dom";
 import { useGetProfileQuery } from "../redux/api/userApi";
 import { useSocket } from "../../context/ContextProvider";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { imageUrl } from "../redux/api/baseApi";
 
 export default function BuyerContactInfo() {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { id } = useParams();
   const { data: singleContactUser } = useGetSingleBusinessContactQuery({
     userId: id,

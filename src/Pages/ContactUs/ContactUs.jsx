@@ -13,6 +13,9 @@ import { useAddContactMutation } from "../redux/api/businessApi";
 import { useGetProfileQuery } from "../redux/api/userApi";
 import { IoMailOpenOutline } from "react-icons/io5";
 export default function ContactUs() {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
 
   const [loading, setLoading] = useState(false);
@@ -74,7 +77,7 @@ export default function ContactUs() {
         title="Contact Us"
         description="Get in touch with us for any inquiries or questions."
       />
-      <div className="flex items-center justify-center px-5 py-10">
+      <div className="flex items-center justify-center px-5 md:py-10">
         <div className="container mx-auto w-full bg-white rounded-2xl shadow-2xl overflow-hidden my-20">
           <div className="flex flex-col lg:flex-row">
             <section

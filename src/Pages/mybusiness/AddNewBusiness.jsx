@@ -44,6 +44,9 @@ const props = {
   },
 };
 const AddNewBusiness = () => {
+     useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { data: categorie, isLoading, isError } = useGetCategtoryQuery();
   const [addBusiness] = useAddBusinessMutation();
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
@@ -282,8 +285,10 @@ const config = {
     }
   }, [categorie]);
 
+
+
   return (
-    <div className="container m-auto pb-20 pt-3">
+    <div className="container m-auto lg:mt-8 mt-16 lg:px-0 px-4 pb-20 ">
       <Navigate title={"Add New Business Information"}></Navigate>
       <div className="bg-white p-3">
         <Form form={form} onFinish={handleSubmit} layout="vertical">
@@ -362,7 +367,7 @@ const config = {
             )}
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-3 gap-4">
             {/* Country */}
             <Form.Item
               label="Select Your Country"

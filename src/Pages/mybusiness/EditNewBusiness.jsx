@@ -27,6 +27,9 @@ import { imageUrl } from "../redux/api/baseApi";
 dayjs.extend(customParseFormat);
 
 const EditNewBusiness = () => {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { id: businessId } = useParams();
 
   const [fileList, setFileList] = useState([]);
@@ -207,7 +210,7 @@ const EditNewBusiness = () => {
   }, [categorie]);
 
   return (
-    <div className="container m-auto pb-20 pt-3">
+    <div className="container m-auto lg:mt-8 mt-16 lg:px-0 px-4 pb-20 ">
       <Navigate title={"Edit Business Information"}></Navigate>
       <div className="bg-white p-3">
         <Form form={form} onFinish={handleSubmit} layout="vertical">
@@ -284,7 +287,7 @@ const EditNewBusiness = () => {
             )}
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-3 gap-4">
             {/* Country */}
             <Form.Item
               label="Select Your Country"

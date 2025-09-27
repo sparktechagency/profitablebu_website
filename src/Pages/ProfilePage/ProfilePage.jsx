@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { Navigate } from "../Navigate";
 import { Link } from "react-router-dom";
@@ -15,7 +15,9 @@ export const ProfilePage = () => {
 
   if (isLoading) return <div>Loading...</div>;
   if (!user) return <div>No user data found.</div>;
-
+ useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="container mx-auto md:mt-10 mt-20 mb-20">
       <Navigate title={"Profile Settings"} />

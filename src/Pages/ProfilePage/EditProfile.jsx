@@ -19,6 +19,9 @@ import { useNavigate } from "react-router-dom";
 import { imageUrl } from "../redux/api/baseApi";
 import { Country } from "country-state-city";
 const EditProfile = () => {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { data: profileData, isLoading } = useGetProfileQuery();
 
   const navigate = useNavigate()

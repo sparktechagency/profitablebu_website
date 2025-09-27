@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Form, Input, Row } from "antd";
 import loginImg from "./login.png";
 import { Typography, message } from "antd";
@@ -10,6 +10,9 @@ import {
 } from "../Pages/redux/api/userApi";
 const { Title, Text } = Typography;
 function VerifyRegister() {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [verifyOtp] = useVerifyOtpMutation();
   const [resentOtp] = useResendOtpMutation();
   const [verify, { isLoading }] = useVerifyEmailMutation();
@@ -69,7 +72,7 @@ function VerifyRegister() {
       </div>
       <Row
         gutter={[16, 16]}
-        className="w-full max-w-screen-2xl shadow-2xl mx-auto min-h-[600px]"
+        className="w-full max-w-screen-2xl shadow-2xl mt-16 md:mt-0 mx-auto min-h-[600px]"
       >
         <Col className="hidden md:block relative" xs={0} md={12}>
           <div

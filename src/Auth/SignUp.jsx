@@ -22,6 +22,9 @@ import { Country } from "country-state-city";
 const { Title, Text } = Typography;
 
 function SignUp() {
+    useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [signUp] = useRegisterUserMutation();
   const location = useLocation();
   const navigate = useNavigate();
@@ -60,9 +63,7 @@ function SignUp() {
 
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+
   return (
     <div className="relative flex items-center justify-center md:p-20 py-28">
       <div className="absolute w-full h-full flex">

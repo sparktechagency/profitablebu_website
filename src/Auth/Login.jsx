@@ -21,6 +21,9 @@ import { auth } from "./firebase";
 const { Title, Text } = Typography;
 
 export default function Login() {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [form] = Form.useForm();
   const [loginUser] = useLoginUserMutation();
   const location = useLocation();
@@ -65,9 +68,7 @@ export default function Login() {
     });
   };
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+ 
 
   return (
     <div className="relative flex items-center justify-center md:p-20 p-4">
@@ -77,7 +78,7 @@ export default function Login() {
       </div>
       <Row
         gutter={[16, 16]}
-        className="w-full max-w-screen-2xl shadow-2xl mx-auto min-h-[600px]"
+        className="w-full max-w-screen-2xl shadow-2xl mt-16 md:mt-0 mx-auto min-h-[600px]"
       >
         <Col className="hidden md:block relative" xs={0} md={12}>
           <div

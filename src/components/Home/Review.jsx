@@ -1,7 +1,11 @@
 import React, { useRef } from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
-import profile from "../../assets/Home/pr.png"; // এক্ষেত্রে আপনি চাইলে আলাদা user image ব্যবহার করতে পারেন
+import profile from "../../assets/Home/pr.png"; 
+import img1 from '../../assets/Home/mm.jpg'
+import img2 from '../../assets/Home/ss.jpg'
+import img3 from '../../assets/Home/vv.jpg'
+import img4 from '../../assets/Home/user.png'
 import { MdStar } from "react-icons/md";
 import { HiArrowNarrowLeft, HiArrowNarrowRight } from "react-icons/hi";
 
@@ -10,78 +14,91 @@ const Review = () => {
     {
       name: "Ahmed K.",
       role: "Café Owner",
+      img: img1,
       review:
         "ProfitableBusinessesForSale.com made selling my café so much easier. Within weeks of listing, I started getting genuine inquiries. Highly recommended!",
     },
     {
       name: "Sophie L.",
       role: "Small Business Owner",
+      img: img2,
       review:
         "I was worried about finding buyers, but PBFS gave my business the right exposure. Their Premium Seller package was worth every penny.",
     },
     {
       name: "Raj P.",
       role: "Entrepreneur",
+      img: img3,
       review:
         "The valuation service helped me price my business correctly. I closed a deal in 4 months—faster than expected!",
     },
     {
       name: "Maria G.",
       role: "Franchise Owner",
+      img: img4,
       review:
         "Listing our franchise on PBFS gave us international visibility. We received inquiries from investors in three different countries!",
     },
     {
       name: "John S.",
       role: "Franchise Seller",
+      img: profile,
       review:
         "The franchise package was simple to use and provided real exposure. The dashboard makes tracking leads so easy.",
     },
     {
       name: "Fatima A.",
       role: "Franchisor",
+     img: img4,
       review:
         "Great platform for franchisors! The social media spotlight and priority placement really boosted our brand visibility.",
     },
     {
       name: "Omar R.",
       role: "Salon Owner",
+    img: img4,
       review:
         "I listed my salon equipment here and got it sold in less than two weeks. The inquiry alerts kept me updated instantly.",
     },
     {
       name: "Elena M.",
       role: "Asset Seller",
+      img: img3,
       review:
         "Excellent platform for selling business assets. Easy to list, professional visibility, and I could manage everything from one dashboard.",
     },
     {
       name: "Carlos D.",
       role: "Business Broker",
+      img: img4,
       review:
         "As a broker, I needed a place to list multiple businesses. PBFS is the perfect platform with strong lead tracking and premium visibility options.",
     },
     {
       name: "Noor S.",
       role: "Broker",
+      img: profile,
       review:
         "The broker package gives me everything I need—multiple listings, team access, and high-quality buyer inquiries.",
     },
     {
       name: "David B.",
       role: "Startup Founder",
+      img: img1,
       review:
         "I uploaded my startup idea for free and quickly connected with investors. This platform is perfect for early-stage entrepreneurs.",
     },
     {
       name: "Aisha M.",
       role: "Innovator",
+      img: img2,
       review:
         "The Business Idea Lister gave me credibility and visibility with serious investors. Great way to showcase innovation for free.",
     },
     {
       name: "Michael T.",
       role: "Investor",
+      img: img4,
       review:
         "The investor subscription is worth it. I discovered fresh ideas and had early access to listings before anyone else.",
     },
@@ -153,7 +170,7 @@ const Review = () => {
                   <div className="flex items-center gap-4 mt-5">
                     <img
                       className="rounded-full w-[60px] h-[60px] object-cover"
-                      src={profile}
+                      src={item?.img}
                       alt={item?.name}
                     />
                     <div>

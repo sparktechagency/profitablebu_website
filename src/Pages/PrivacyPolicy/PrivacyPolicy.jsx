@@ -1,10 +1,14 @@
 import Header from "../AboutUs/Header";
 import { Typography } from "antd";
 import { useGetPrivecyQuery } from "../redux/api/metaApi";
+import { useEffect } from "react";
 
 const { Text } = Typography;
 
 export default function PrivacyPolicy() {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
     const {data:privecy} = useGetPrivecyQuery()
 
   return (

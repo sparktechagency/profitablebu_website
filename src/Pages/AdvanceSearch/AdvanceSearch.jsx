@@ -67,6 +67,9 @@ const ownerShipType = [
 const sortBy = ["Newest First", "Price Low to High", "Most Viewed"];
 
 export default function AdvanceSearch() {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { data: categorie, isLoading, isError } = useGetCategtoryQuery();
   const [form] = Form.useForm();
   const [subCategories, setSubCategories] = useState([]);
@@ -171,7 +174,7 @@ export default function AdvanceSearch() {
           )}
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-3 gap-4">
           {/* Country */}
           <Form.Item
             label="Select Your Country"

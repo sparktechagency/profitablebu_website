@@ -1,48 +1,54 @@
-import React, { useState } from 'react';
-import { Button, Card, Col, Form, Input, Row } from 'antd';
-import loginImg from './login.png';
-import { Typography, message } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import { useResendOtpMutation, useVerifyOtpMutation } from '../Pages/redux/api/userApi';
+import React, { useEffect, useState } from "react";
+import { Button, Card, Col, Form, Input, Row } from "antd";
+import loginImg from "./login.png";
+import { Typography, message } from "antd";
+import { useNavigate } from "react-router-dom";
+import {
+  useResendOtpMutation,
+  useVerifyOtpMutation,
+} from "../Pages/redux/api/userApi";
 const { Title, Text } = Typography;
 function Verification() {
-  const[verifyOtp] = useVerifyOtpMutation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  const [verifyOtp] = useVerifyOtpMutation();
   const navigate = useNavigate();
-    const [resentOtp] = useResendOtpMutation();
-  const [value, setValue] = useState('');
+  const [resentOtp] = useResendOtpMutation();
+  const [value, setValue] = useState("");
   const onChange = (e) => {
     setValue(e.target.value);
   };
   const onFinish = async (values) => {
-  const email = localStorage.getItem("email");
-  const code = values.otp;
+    const email = localStorage.getItem("email");
+    const code = values.otp;
 
-     const data = {
+    const data = {
       email: localStorage.getItem("email"),
       code: code,
     };
 
-  if (!email || !code) {
-    message.error("Missing email or OTP");
-    return;
-  }
-
-  try {
-    const res = await verifyOtp(data).unwrap();
-
-    if (res?.success) {
-      message.success(res?.message);
-      localStorage.setItem("otp", code);
-      navigate("/auth/update-password");
-    } else {
-      message.error(res?.message || "Verification failed");
+    if (!email || !code) {
+      message.error("Missing email or OTP");
+      return;
     }
-  } catch (error) {
-    message.error(error?.data?.message || "Something went wrong");
-  }
-};
 
-    const resendOtp = async () => {
+    try {
+      const res = await verifyOtp(data).unwrap();
+
+      if (res?.success) {
+        message.success(res?.message);
+        localStorage.setItem("otp", code);
+        navigate("/auth/update-password");
+      } else {
+        message.error(res?.message || "Verification failed");
+      }
+    } catch (error) {
+      message.error(error?.data?.message || "Something went wrong");
+    }
+  };
+
+  const resendOtp = async () => {
     const data = {
       email: localStorage.getItem("email"),
     };
@@ -64,7 +70,7 @@ function Verification() {
       </div>
       <Row
         gutter={[16, 16]}
-        className="w-full max-w-screen-2xl shadow-2xl mx-auto min-h-[600px]"
+        className="w-full max-w-screen-2xl shadow-2xl mt-16 md:mt-0 mx-auto min-h-[600px]"
       >
         <Col className="hidden md:block relative" xs={0} md={12}>
           <div
@@ -76,24 +82,24 @@ function Verification() {
         <Col xs={24} md={12}>
           <Card
             style={{
-              height: '100%',
-              border: 'none',
+              height: "100%",
+              border: "none",
             }}
             bodyStyle={{
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
             }}
           >
-            <div style={{ width: '100%', margin: '0 auto' }}>
+            <div style={{ width: "100%", margin: "0 auto" }}>
               <Title
                 level={1}
-                style={{ marginBottom: '8px', color: '#1f2937' }}
+                style={{ marginBottom: "8px", color: "#1f2937" }}
               >
                 Forget Password?
               </Title>
-              <Text style={{ marginBottom: '8px', color: '#1f2937' }}>
+              <Text style={{ marginBottom: "8px", color: "#1f2937" }}>
                 Please enter your email to get verification code
               </Text>
 
@@ -108,7 +114,7 @@ function Verification() {
                   label="Verification Code"
                   name="otp"
                   rules={[
-                    { required: true, message: 'Please input your OTP!' },
+                    { required: true, message: "Please input your OTP!" },
                   ]}
                 >
                   <Input.OTP
@@ -117,7 +123,7 @@ function Verification() {
                     rules={[
                       {
                         required: true,
-                        message: 'Please input your OTP!',
+                        message: "Please input your OTP!",
                       },
                     ]}
                     onChange={onChange}
@@ -132,11 +138,11 @@ function Verification() {
                     htmlType="submit"
                     block
                     style={{
-                      height: '48px',
-                      background: '#3b82f6',
-                      borderColor: '#3b82f6',
+                      height: "48px",
+                      background: "#3b82f6",
+                      borderColor: "#3b82f6",
                       // borderRadius: '8px',
-                      fontSize: '16px',
+                      fontSize: "16px",
                       fontWeight: 500,
                     }}
                   >
@@ -144,11 +150,11 @@ function Verification() {
                   </Button>
                 </Form.Item>
               </Form>
-              <Text style={{ marginBottom: '8px', color: '#1f2937' }}>
+              <Text style={{ marginBottom: "8px", color: "#1f2937" }}>
                 You have not received the email?
                 <span
                   onClick={resendOtp}
-                  style={{ color: '#3b82f6', cursor: 'pointer' }}
+                  style={{ color: "#3b82f6", cursor: "pointer" }}
                 >
                   Resend
                 </span>

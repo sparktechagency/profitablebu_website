@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { businessData } from '../../dummy-data/DummyData';
 import { Divider, Tag } from 'antd';
@@ -7,6 +7,9 @@ import dayjs from 'dayjs';
 import { imageUrl } from '../redux/api/baseApi';
 
 function BusinessDetails() {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { id } = useParams();
   const business = businessData.find(
     (business) => business?.id === parseInt(id, 10)

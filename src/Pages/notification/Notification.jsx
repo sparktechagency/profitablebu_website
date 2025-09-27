@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Navigate } from "../Navigate";
 import {
   useDeleteNotificationMutation,
@@ -11,6 +11,9 @@ import { useGetProfileQuery } from "../redux/api/userApi";
 import { message } from "antd";
 
 const Notification = () => {
+     useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { data: notificationData, isLoading } = useGetNotificationQuery();
   const [updateNotificationRead] = useUpdateNotificationMutation();
   const [deleteNotification] = useDeleteNotificationMutation();
@@ -19,7 +22,7 @@ const Notification = () => {
   if (isLoading) {
     return <p className="text-center mt-10">Loading...</p>;
   }
-
+  
   const handleUpdate = async (id) => {
     await updateNotificationRead({ notificationId: id, role }).unwrap();
   };
@@ -34,8 +37,10 @@ const Notification = () => {
       message.error(err?.data?.message);
     }
   };
+
+
   return (
-    <div className="container mx-auto px-4 mb-11">
+    <div className="container mx-auto lg:mt-8 mt-16 lg:px-0 px-4 pb-20 ">
       <div className="mt-20 md:mt-8 mb-5">
         <Navigate title={"Notification"} />
       </div>

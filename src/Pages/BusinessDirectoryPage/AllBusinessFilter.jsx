@@ -118,6 +118,10 @@ const ageListing = [
 ];
 
 export default function AllBusinessFilterAnt() {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -226,10 +230,7 @@ export default function AllBusinessFilterAnt() {
 
   const business = businessFilter?.data || [];
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
+ 
   const SidebarContent = () => (
     <div className="w-80 border-r border-gray-200 p-6">
       <Collapse
@@ -517,7 +518,7 @@ export default function AllBusinessFilterAnt() {
               ></div>
 
               {/* Drawer */}
-              <div className="relative bg-white w-90 h-full shadow-lg z-50 ">
+              <div className="relative bg-white w-90 h-full overflow-auto shadow-lg z-50 ">
                 <button
                   onClick={() => setIsSidebarOpen(false)}
                   className="absolute top-3 right-3 p-1  rounded-full bg-gray-200"

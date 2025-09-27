@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Crown } from "lucide-react";
 import { Navigate } from "../Navigate";
 import { useGetProfileQuery } from "../redux/api/userApi";
 import { Link } from "react-router-dom";
 
 const Subscription = () => {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { data: profileData, isLoading } = useGetProfileQuery();
 
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;

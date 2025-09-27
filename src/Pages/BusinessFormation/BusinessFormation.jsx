@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { imageUrl } from "../redux/api/baseApi";
 import { useGetAllFormateQuery } from "../redux/api/businessApi";
 import { ArrowRight, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function BusinessFormation() {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { data: getAllFormat, isLoading, isError } = useGetAllFormateQuery();
 
 

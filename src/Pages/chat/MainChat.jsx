@@ -7,6 +7,9 @@ import chat from "../../assets/Home/chat.png";
 import { useGetProfileQuery } from "../redux/api/userApi";
 
 const MainChat = () => {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { id: receiverId } = useParams();
   const { data: profileData } = useGetProfileQuery();
   const price = profileData?.data?.subscriptionPlanPrice;
@@ -14,9 +17,7 @@ const MainChat = () => {
   // drawer toggle state
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+ 
 
   // ⚡ Block chat if subscription price is 0
   if (price === 0) {

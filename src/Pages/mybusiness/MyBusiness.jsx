@@ -13,6 +13,9 @@ import { DeleteIcon } from "lucide-react";
 import { message, Popconfirm } from "antd";
 
 const MyBusiness = () => {
+    useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [deleteBusinesss] = useDeleteBusinessMutation();
   const { data: businessData, isLoading } = useGetAllBusinessQuery();
 
@@ -21,9 +24,7 @@ const MyBusiness = () => {
 
   const role = profileData?.data?.role;
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
 
   const {

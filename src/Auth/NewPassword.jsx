@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Card, Col, Form, Input, Row } from 'antd';
 import loginImg from './login.png';
 import { Typography, message } from 'antd';
@@ -7,6 +7,9 @@ import { useResetPasswordMutation } from '../Pages/redux/api/userApi';
 const { Title, Text } = Typography;
 
 function NewPassword() {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const[newPasseord] = useResetPasswordMutation()
   const navigate = useNavigate();
   const [newPassword, setNewPassword] = useState('');
@@ -59,7 +62,7 @@ function NewPassword() {
       </div>
       <Row
         gutter={[16, 16]}
-        className="w-full max-w-screen-2xl shadow-2xl mx-auto min-h-[600px]"
+        className="w-full max-w-screen-2xl shadow-2xl mt-16 md:mt-0 mx-auto min-h-[600px]"
       >
         <Col className="hidden md:block relative" xs={0} md={12}>
           <div

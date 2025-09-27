@@ -1,6 +1,7 @@
 import { Button, Form, message, Select, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import { usePostScheduleMutation } from "../redux/api/metaApi";
+import { useGetProfileQuery } from "../redux/api/userApi";
 const { Option } = Select;
 
 const businessCategories = [
@@ -40,8 +41,10 @@ const sortOptions = [
 ];
 
 const SchedualeCall = () => {
+    const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
+     const userId = profileData?.data?._id;
   const user = JSON.parse(localStorage.getItem("user"));
-  const userId = user?._id;
+ 
   const [addSchedule] = usePostScheduleMutation();
   const [form] = Form.useForm();
 

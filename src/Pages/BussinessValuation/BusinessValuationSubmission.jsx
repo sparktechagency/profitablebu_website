@@ -1,7 +1,11 @@
 import { CheckCircle, Mail } from "lucide-react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function BusinessValuationSubmission() {
+   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="container mx-auto px-5 pt-20 pb-10">
       {/* Header Section */}
@@ -76,7 +80,7 @@ export default function BusinessValuationSubmission() {
         <div className="flex items-center justify-center gap-2 mb-8">
           <Mail className="h-5 w-5 text-[#0091FF]" />
           <a
-            href="mailto:valuation@pbsf.com"
+            href="mailto:info@profitablebusinessesforsale.com?subject=Subject%20Here&body=Body%20Text%20Here"
             className="text-[#0091FF] underline font-medium"
           >
             Info@profitablebusinessesforsale.com
