@@ -58,7 +58,7 @@ const MyBusiness = () => {
             className="border border-[#0091FF] bg-cover bg-center rounded"
             style={{ backgroundImage: `url(${backCard})` }}
           >
-            <div className="h-48 relative">
+            <div className="">
               <img
                 src={`${imageUrl}/Uploads/business-image/${item?.businessId?.image}`}
                 alt={item?.businessId?.title}
@@ -113,7 +113,7 @@ const MyBusiness = () => {
             className="border border-[#0091FF] bg-cover bg-center rounded"
             style={{ backgroundImage: `url(${backCard})` }}
           >
-            <div className="h-48 relative">
+            <div className="">
               <img
                 src={`${imageUrl}/Uploads/business-image/${
                   item?.image || card
