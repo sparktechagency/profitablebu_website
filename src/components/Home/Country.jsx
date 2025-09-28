@@ -85,7 +85,7 @@ const {data:countryData} = useGetTopCountryQuery();
           <div className="md:grid grid-cols-2 ">
             <div className="md:pl-20 pl-4">
               <div className="">
-                <h1 className="md:text-5xl text-3xl pb-4 font-bold">
+                <h1 className="md:text-5xl text-3xl pb-4 font-bold text-black">
                   Profitable Businesses for <br className="hidden md:block"/> Sale – Buy or Sell with Confidence
                 </h1>
                 <p className="text-black">
@@ -114,7 +114,7 @@ const {data:countryData} = useGetTopCountryQuery();
                   </button>
                 </div>
                 <p className="text-xl pt-3 text-black">
-                  you will receive every news and pro tips
+                  You will receive every news and pro tips
                 </p>
               </div>
             </div>

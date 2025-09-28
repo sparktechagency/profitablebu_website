@@ -73,6 +73,8 @@ const Navbar = () => {
 
   const navigate = useNavigate();
   const { data: profileData, isLoading } = useGetProfileQuery();
+    const role = profileData?.data?.role;
+
   const accessToken = localStorage.getItem("accessToken");
   const users = profileData?.data;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -180,12 +182,13 @@ const Navbar = () => {
                 </div>
               </div>
             </Link>
-             <Link to="/myBusiness/details" onClick={() => setMobileMenuOpen(false)}>
-            <button className="w-fit hidden md:block px-4 py-2 bg-[#22C55E] text-white text-center rounded-lg font-medium">
-             
-                List Your Business
-              
-            </button></Link>
+            <Link to="/myBusiness/details" onClick={() => setMobileMenuOpen(false)}>
+    {role !== "Buyer" && role !== "Investor" && (
+      <button className="w-fit hidden md:block px-4 py-2 bg-[#22C55E] text-white text-center rounded-lg font-medium">
+        List Your Business
+      </button>
+    )}
+  </Link>
           </div>
 
           {/* Main Navigation */}
@@ -349,13 +352,13 @@ const Navbar = () => {
                   </button>
                 </div>
 
-                <Link
-                  to="/myBusiness/details"
-                  onClick={() => setMobileMenuOpen(false)}
-                  
-                >
-                  <button className="block w-full md:hidden bg-[#22C55E] text-white text-center py-3 rounded-lg font-medium">List Your Business</button>
-                </Link>
+             <Link to="/myBusiness/details" onClick={() => setMobileMenuOpen(false)}>
+    {role !== "Buyer" && role !== "Investor" && (
+      <button className="block w-full md:hidden bg-[#22C55E] text-white text-center py-3 rounded-lg font-medium">
+        List Your Business
+      </button>
+    )}
+  </Link>
                 <nav className="space-y-2 mt-4">
                   {navItems.map((item) => (
                     <MobileNavItem
