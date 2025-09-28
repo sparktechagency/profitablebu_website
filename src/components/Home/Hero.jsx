@@ -8,49 +8,52 @@ export default function Home() {
   const navigate = useNavigate();
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen ">
       {/* Hero Section */}
-      <div className="relative">
+      <section className="relative pb-16"> {/* Added bottom padding */}
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
           <img
             src={hero}
             alt="Business meeting background"
-            className="w-full h-full object-cover brightness-75 absolute inset-0"
+            className="w-full h-full object-cover brightness-75"
           />
         </div>
 
         {/* Hero Content */}
         <div className="relative z-10 px-4 py-20 md:py-32 lg:py-40 container mx-auto">
           <div className="max-w-4xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
               Buy, Sell & Invest in{" "}
               <span className="text-[#22C55E]">Business</span>, Franchises,
               Assets & Business Ideas
               <span className="text-[#0091FF]"> Worldwide</span>
             </h1>
+
             <p className="text-white text-lg mb-8">
               Connect with serious buyers, sellers, brokers, investors,
               franchisors, and business idea listers on
-              ProfitableBusinessesForSale.com —the trusted marketplace that
-              helps
+              <span className="font-semibold"> ProfitableBusinessesForSale.com</span> — 
+              the trusted marketplace that helps you grow.
             </p>
-            <Link to={"/auth/login"}>
-              <button className="bg-[#0091FF] hover:bg-blue-600 text-white px-8 py-3 rounded text-lg h-auto">
+
+            <Link to="/auth/login">
+              <button className="bg-[#0091FF] hover:bg-blue-600 text-white px-8 py-3 rounded text-lg">
                 Get Started
               </button>
             </Link>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Search Section */}
-      <div className="relative z-20">
-        <div className="absolute left-1/2 transform -translate-x-1/2 w-full max-w-4xl -bottom-20 px-4">
-          <div className="bg-gradient-to-r from-sky-200/90 to-sky-300/30 backdrop-blur-sm rounded-lg p-8 shadow-lg">
+      <section className="relative z-20 -mt-28 px-4">
+        {/* -mt-20 will lift the search box slightly over the hero bottom */}
+        <div className="mx-auto w-full max-w-4xl">
+          <div className="bg-gradient-to-r from-sky-200/90 to-sky-300/30 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-white/20">
             <h2 className="text-2xl md:text-3xl font-semibold text-white text-center mb-6">
-              Find Your Profitable <span className="text-[#22C55E]">Business</span>
-             Today.
+              Find Your Profitable{" "}
+              <span className="text-[#22C55E]">Business</span> Today.
             </h2>
 
             <form
@@ -63,7 +66,8 @@ export default function Home() {
                 }
               }}
             >
-              <div className="flex flex-col md:flex-row gap-2">
+              <div className="flex flex-col md:flex-row gap-3">
+                {/* Input Field */}
                 <div className="relative flex-grow">
                   <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
                     <SearchIcon />
@@ -75,28 +79,29 @@ export default function Home() {
                     className="pl-10 pr-4 py-3 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
+
+                {/* Search Button */}
                 <button
                   type="submit"
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-6"
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-md"
                 >
                   Search
                 </button>
               </div>
             </form>
 
-            <div>
-              <div className="mt-3 text-right">
-                <Link
-                  to="/advanced-search"
-                  className="text-blue-600 hover:underline flex items-center justify-end gap-1"
-                >
-                  <span className="text-blue-500">🔍</span> Advanced search
-                </Link>
-              </div>
+            {/* Advanced Search Link */}
+            <div className="mt-4 text-right">
+              <Link
+                to="/advanced-search"
+                className="text-blue-200 hover:text-white flex items-center justify-end gap-1"
+              >
+                <span>🔍</span> Advanced Search
+              </Link>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </main>
   );
 }

@@ -43,7 +43,7 @@ const {data:countryData} = useGetTopCountryQuery();
         <div className="flex items-center">
           <div className="w-[5px] h-12 rounded-r bg-[#22C55E] mr-4 "></div>
           <div>
-            <h2 className="text-2xl font-bold text-blue-500">
+            <h2 className="md:text-2xl text-lg font-bold text-blue-500">
               Trending Countries
             </h2>
             <p className="text-gray-600 text-sm md:block hidden">
@@ -52,7 +52,7 @@ const {data:countryData} = useGetTopCountryQuery();
             </p>
           </div>
         </div>
-        <a href="#" className="text-blue-500 hover:underline">
+        <a href="#" className="text-blue-500 hover:underline text-sm md:text-lg">
           Explore More
         </a>
       </div>

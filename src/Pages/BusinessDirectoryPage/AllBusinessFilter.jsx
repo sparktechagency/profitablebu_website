@@ -118,7 +118,7 @@ const ageListing = [
 ];
 
 export default function AllBusinessFilterAnt() {
-   useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
@@ -151,7 +151,6 @@ export default function AllBusinessFilterAnt() {
     setCities([]);
     setSelectedState(null);
     setSelectedCity(null);
-
   };
 
   // State Change
@@ -162,12 +161,10 @@ export default function AllBusinessFilterAnt() {
       City.getCitiesOfState(selectedCountry, selectedStateObj?.isoCode)
     );
     setSelectedCity(null);
-
   };
 
   const handleCityChange = (value) => {
     setSelectedCity(value);
-
   };
 
   useEffect(() => {
@@ -189,7 +186,6 @@ export default function AllBusinessFilterAnt() {
 
   const [businessRole, setFilters] = useState([]);
 
-
   const [viewMode, setViewMode] = useState("grid");
   const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -197,7 +193,7 @@ export default function AllBusinessFilterAnt() {
 
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedAskingPrice, setSelectedAskingPrice] = useState(null);
- 
+
   const [selectedBusinessType, setSelectedBusinessType] = useState(null);
   const [selectedOwnerShipType, setSelectedOwnerShipType] = useState(null);
   const [selectedSortBy, setSelectedSortBy] = useState(null);
@@ -206,7 +202,6 @@ export default function AllBusinessFilterAnt() {
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-
 
   const pageSize = 10;
   const { data: businessFilter } = useGetAllBusinesFilterQuery({
@@ -227,12 +222,10 @@ export default function AllBusinessFilterAnt() {
     limit: pageSize,
   });
 
-
   const business = businessFilter?.data || [];
 
- 
   const SidebarContent = () => (
-    <div className="w-80 border-r border-gray-200 p-6">
+    <div className="w-80 border-r border-gray-200 md:p-6 p-2">
       <Collapse
         defaultActiveKey={["1"]}
         expandIcon={({ isActive }) => (
@@ -546,14 +539,16 @@ export default function AllBusinessFilterAnt() {
             />
 
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <Pagination
-                  current={currentPage}
-                  pageSize={pageSize}
-                  total={businessFilter?.meta?.total || 0}
-                  onChange={handlePageChange}
-                  showSizeChanger={false}
-                />
+              <div className="hidden md:flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <Pagination
+                    current={currentPage}
+                    pageSize={pageSize}
+                    total={businessFilter?.meta?.total || 0}
+                    onChange={handlePageChange}
+                    showSizeChanger={false}
+                  />
+                </div>
               </div>
 
               <div className="flex">
@@ -648,7 +643,20 @@ export default function AllBusinessFilterAnt() {
                 </div>
               </Card>
             ))}
+
+         
           </div>
+             <div className="block md:hidden">
+               <div className="flex justify-center mt-11 items-center gap-2">
+                  <Pagination
+                    current={currentPage}
+                    pageSize={pageSize}
+                    total={businessFilter?.meta?.total || 0}
+                    onChange={handlePageChange}
+                    showSizeChanger={false}
+                  />
+                </div>
+             </div>
         </div>
       </div>
     </div>

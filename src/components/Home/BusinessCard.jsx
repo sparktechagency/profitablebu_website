@@ -80,7 +80,7 @@ console.log('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',MostbusinessData)
 
 
   return (
-    <div className=" lg:-mt-10 -mt-36">
+    <div className=" lg:mt-16 mt-11">
       {/*================ Business er data ================*/}
 
       <div>
@@ -88,7 +88,7 @@ console.log('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',MostbusinessData)
           <div className="flex items-center">
             <div className="w-[5px] h-12 rounded-r bg-[#22C55E] mr-4 "></div>
             <div>
-              <h2 className="text-2xl font-bold text-blue-500">
+              <h2 className="md:text-2xl text-lg font-bold text-blue-500">
                 Popular Business
               </h2>
               <p className="text-gray-600 text-sm md:block hidden">
@@ -96,7 +96,7 @@ console.log('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',MostbusinessData)
               </p>
             </div>
           </div>
-          <Link to="/search" className="text-blue-500 hover:underline">
+          <Link to="/search" className="text-blue-500 hover:underline text-sm md:text-lg">
             Explore More
           </Link>
         </div>
@@ -149,7 +149,7 @@ console.log('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',MostbusinessData)
           <div className="flex items-center">
             <div className="w-[5px] h-12 rounded-r bg-[#22C55E] mr-4 "></div>
             <div>
-              <h2 className="text-2xl font-bold text-blue-500">
+              <h2 className="md:text-2xl text-lg font-bold text-blue-500">
                 Featured Businesses
               </h2>
               <p className="text-gray-600 text-sm md:block hidden">
@@ -159,7 +159,7 @@ console.log('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',MostbusinessData)
           </div>
           <Link
             to={`/search?businessRole=Seller`}
-            className="text-blue-500 hover:underline"
+            className="text-blue-500 hover:underline text-sm md:text-lg"
           >
             Explore More
           </Link>
@@ -219,7 +219,7 @@ console.log('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',MostbusinessData)
           <div className="flex items-center">
             <div className="w-[5px] h-12 rounded-r bg-[#22C55E] mr-4 "></div>
             <div>
-              <h2 className="text-2xl font-bold text-blue-500">
+              <h2 className="md:text-2xl text-lg font-bold text-blue-500">
                 Featured Business Assets
               </h2>
               <p className="text-gray-600 text-sm md:block hidden">
@@ -229,7 +229,7 @@ console.log('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',MostbusinessData)
           </div>
           <Link
             to={`/search?businessRole=Asset Seller`}
-            className="text-blue-500 hover:underline"
+            className="text-blue-500 hover:underline text-sm md:text-lg"
           >
             Explore More
           </Link>
@@ -289,7 +289,7 @@ console.log('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',MostbusinessData)
           <div className="flex items-center">
             <div className="w-[5px] h-12 rounded-r bg-[#22C55E] mr-4 "></div>
             <div>
-              <h2 className="text-2xl font-bold text-blue-500">
+              <h2 className="md:text-2xl text-lg font-bold text-blue-500">
                 Featured Franchises
               </h2>
               <p className="text-gray-600 text-sm md:block hidden">
@@ -299,7 +299,7 @@ console.log('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy',MostbusinessData)
           </div>
           <Link
             to={`/search?businessRole=Francise Seller`}
-            className="text-blue-500 hover:underline"
+            className="text-blue-500 hover:underline text-sm md:text-lg"
           >
             Explore More
           </Link>
