@@ -22,7 +22,7 @@ import { Country } from "country-state-city";
 const { Title, Text } = Typography;
 
 function SignUp() {
-    useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const [signUp] = useRegisterUserMutation();
@@ -46,23 +46,21 @@ function SignUp() {
         confirmPassword: values.confirmPassword,
         mobile: contactNo,
         country: values.country,
-        role: location?.state || "Buyer",
+        role: location?.state,
       };
 
       const res = await signUp(data).unwrap();
-  
+
       message.success(res?.message);
       localStorage.setItem("email", values?.email);
+      localStorage.setItem("role", location?.state);
       navigate("/auth/verifyCreator");
     } catch (error) {
       message.error(error?.data?.message || "Something went wrong!");
     }
   };
 
-  const handleGoogleLogin = () => {
-
-  };
-
+  const handleGoogleLogin = () => {};
 
   return (
     <div className="relative flex items-center justify-center md:p-20 py-28">
@@ -114,7 +112,7 @@ function SignUp() {
                 Create Your Account
               </Title>
 
-            {/* <p className="pb-5 ">Create your account on ProfitableBusinessesForSale.com (PBFS) and get access to a global
+              {/* <p className="pb-5 ">Create your account on ProfitableBusinessesForSale.com (PBFS) and get access to a global
 marketplace of {location?.state }</p> */}
 
               <Form

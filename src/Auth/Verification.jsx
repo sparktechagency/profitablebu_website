@@ -25,6 +25,7 @@ function Verification() {
 
     const data = {
       email: localStorage.getItem("email"),
+      role: localStorage.getItem("role"),
       code: code,
     };
 
@@ -51,6 +52,7 @@ function Verification() {
   const resendOtp = async () => {
     const data = {
       email: localStorage.getItem("email"),
+         role: localStorage.getItem("role"),
     };
     try {
       await resentOtp(data)

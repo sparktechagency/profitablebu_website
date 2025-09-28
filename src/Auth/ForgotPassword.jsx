@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { Button, Card, Col, Form, Input, Row } from "antd";
+import { Button, Card, Col, Form, Input, Row, Select } from "antd";
 import loginImg from "./login.png";
 import { Typography, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useForgotPasswordMutation } from "../Pages/redux/api/userApi";
 const { Title, Text } = Typography;
 function ForgotPassword() {
-   useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const [fogetPass] = useForgotPasswordMutation();
@@ -20,7 +20,10 @@ function ForgotPassword() {
     const { email } = values;
     const data = {
       email: email,
+      role: values.role,
     };
+
+    console.log(data)
 
     try {
       const res = await fogetPass(data).unwrap();
@@ -28,6 +31,7 @@ function ForgotPassword() {
       if (res?.success) {
         message.success(res?.message);
         localStorage.setItem("email", values?.email);
+          localStorage.setItem("role", values?.role);
         navigate("/auth/verification");
       }
     } catch (error) {
@@ -96,6 +100,30 @@ function ForgotPassword() {
                     placeholder="esfutui_sch@gmail.com"
                     style={{ height: "48px" }}
                   />
+                </Form.Item>
+
+                <Form.Item
+                  label="Select Role"
+                  name="role"
+                  rules={[{ required: true, message: "Please select Role!" }]}
+                >
+                  <Select
+                    style={{ height: "48px" }}
+                    placeholder="Select Role"
+                    className="w-full"
+                  >
+                    <Option value="Buyer">Become a Buyer</Option>
+                    <Option value="Seller">Become a Seller</Option>
+                    <Option value="Broker">Become a Broker</Option>
+                    <Option value="Francise Seller">
+                      Become a Franchise Seller
+                    </Option>
+                    <Option value="Investor">Become Investor</Option>
+                    <Option value="Business Idea Lister">
+                      Become Business Idea Lister
+                    </Option>
+                    <Option value="Asset Seller">Business Asset Seller</Option>
+                  </Select>
                 </Form.Item>
 
                 <Form.Item>

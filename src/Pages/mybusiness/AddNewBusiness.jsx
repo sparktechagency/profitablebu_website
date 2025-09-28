@@ -22,6 +22,7 @@ import {
   useGetCategtoryQuery,
 } from "../redux/api/businessApi";
 import { useGetProfileQuery } from "../redux/api/userApi";
+import { useNavigate } from "react-router-dom";
 dayjs.extend(customParseFormat);
 const dateFormat = "YYYY-MM-DD";
 const props = {
@@ -50,7 +51,7 @@ const AddNewBusiness = () => {
   const { data: categorie, isLoading, isError } = useGetCategtoryQuery();
   const [addBusiness] = useAddBusinessMutation();
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
-
+const navigate= useNavigate()
   const role = profileData?.data?.role;
   const editor = useRef(null);
   const [fileList, setFileList] = useState([]);
@@ -151,6 +152,7 @@ const AddNewBusiness = () => {
 
       if (res.data?.message) {
         message.success(res.data?.message);
+        navigate("/myBusiness/details");
       } else {
         message.error(res?.error?.data?.message);
       }

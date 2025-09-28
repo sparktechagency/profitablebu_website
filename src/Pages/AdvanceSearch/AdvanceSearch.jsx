@@ -55,6 +55,7 @@ const businessType = [
   "Startup",
   "Home-Based",
   "Online",
+  'Other'
 ];
 
 const ownerShipType = [
@@ -62,6 +63,7 @@ const ownerShipType = [
   "Partnership",
   "Corporation",
   "LLC",
+  'Other'
 ];
 
 const sortBy = ["Newest First", "Price Low to High", "Most Viewed"];

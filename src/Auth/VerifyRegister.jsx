@@ -28,6 +28,7 @@ function VerifyRegister() {
     const data = {
       email: localStorage.getItem("email"),
       code: code,
+      role: localStorage.getItem("role")
     };
 
     if (!email || !code) {
@@ -53,6 +54,7 @@ function VerifyRegister() {
   const resendOtp = async () => {
     const data = {
       email: localStorage.getItem("email"),
+         role: localStorage.getItem("role"),
     };
     try {
       await resentOtp(data)
