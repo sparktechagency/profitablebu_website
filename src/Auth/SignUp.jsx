@@ -247,11 +247,11 @@ marketplace of {location?.state }</p> */}
                 </Form.Item>
               </Form>
 
-              <Divider style={{ margin: "24px 0" }}>
+              {/* <Divider style={{ margin: "24px 0" }}>
                 <Text style={{ color: "#6b7280" }}>Or continue with</Text>
-              </Divider>
+              </Divider> */}
 
-              <Button
+              {/* <Button
                 block
                 onClick={handleGoogleLogin}
                 style={{
@@ -284,7 +284,7 @@ marketplace of {location?.state }</p> */}
                   />
                 </svg>
                 Continue with Google
-              </Button>
+              </Button> */}
 
               <Text
                 style={{

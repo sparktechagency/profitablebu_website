@@ -94,7 +94,7 @@ export default function Home() {
             <div className="mt-4 text-right">
               <Link
                 to="/advanced-search"
-                className="text-blue-500 hover:text-white flex items-center justify-end gap-1"
+                className="text-blue-500 hover:text-blue-400 flex items-center justify-end gap-1"
               >
                 <span>🔍</span> Advanced Search
               </Link>
