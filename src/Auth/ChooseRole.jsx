@@ -9,45 +9,50 @@ function ChooseRole() {
     window.scrollTo(0, 0);
   }, []);
   const data = [
-    {
-      title: 'Buyer',
-      description:
-        '“List your business for sale, manage offers, and close deals securely.”',
-      state: 'Buyer',
-    },
-    {
-      title: 'Seller',
-      description:
-        '“Browse businesses for sale, compare options, and connect with sellers.”',
-      state: 'Seller',
-    },
-    {
-      title: 'Broker',
-      description:
-        '“Browse businesses for sale, compare options, and connect with sellers.”',
-      state: 'Broker',
-    },
-    {
-      title: 'Franchise Seller',
-      description: '“Browse businesses for sale, compare options',
-      state: 'Francise Seller',
-    },
-    {
-      title: 'Investor',
-      description: '“Browse businesses for sale, compare options',
-      state: 'Investor',
-    },
-    {
-      title: 'Business Idea Lister',
-      description: '“Browse businesses for sale, compare options',
-      state: 'Business Idea Lister',
-    },
-    {
-      title: 'Asset Seller',
-      description: '“Browse businesses for sale, compare options',
-      state: 'Asset Seller',
-    },
-  ];
+  {
+    title: 'Buyer',
+    description:
+      'Find the perfect business to buy and connect directly with sellers.',
+    state: 'Buyer',
+  },
+  {
+    title: 'Seller',
+    description:
+      'List your business today and reach thousands of serious buyers worldwide.',
+    state: 'Seller',
+  },
+  {
+    title: 'Broker',
+    description:
+      'List multiple businesses, manage inquiries, and close deals faster with PBFS.',
+    state: 'Broker',
+  },
+  {
+    title: 'Franchise Seller',
+    description:
+      'List your franchise, gain visibility, and connect with serious buyers in just a few clicks.',
+    state: 'Franchise Seller',
+  },
+  {
+    title: 'Investor',
+    description:
+      'Discover exclusive investment opportunities and connect with verified business sellers and idea listers worldwide.',
+    state: 'Investor',
+  },
+  {
+    title: 'Business Idea Lister',
+    description:
+      'Turn your business concept into reality by showcasing it to global buyers and investors.',
+    state: 'Business Idea Lister',
+  },
+  {
+    title: 'Asset Seller',
+    description:
+      'List and sell your business assets—equipment, inventory, or licenses—directly to serious buyers.',
+    state: 'Asset Seller',
+  },
+];
+
   return (
     <div className="container my-28 px-2 mx-auto">
       <div className="text-center">
