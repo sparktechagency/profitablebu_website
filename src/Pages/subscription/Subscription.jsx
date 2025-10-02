@@ -105,7 +105,7 @@ console.log("End Date:", endDate);
           : "bg-blue-500 hover:bg-blue-600 text-white"
       }`}
           >
-            Upgrade Subscription
+            See Paid Subscription
           </button>
         </Link>
       </div>

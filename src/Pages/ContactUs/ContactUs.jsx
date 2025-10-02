@@ -124,8 +124,9 @@ export default function ContactUs() {
                 Get In Touch With Us
               </h2>
               <p className="text-gray-600 mb-8 leading-relaxed">
-                There are many variations of passages of Lorem Ipsum available
-                but the majority have suffered alteration in some form.
+              At ProfitableBusinessesForSale.com, our team is here to guide you every step of the way. Whether
+you need help creating your listing, choosing the right subscription, or understanding how to attract
+serious buyers and investors, we're only a message away.
               </p>
 
               <Form
