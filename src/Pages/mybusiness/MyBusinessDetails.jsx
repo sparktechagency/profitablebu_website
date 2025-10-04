@@ -202,34 +202,42 @@ const MyBusinessDetails = () => {
                 </Link>
               )}
 
-            {role &&
-              localStorage.getItem("accessToken") &&
-              checkUserId === checkBusinessId &&
-              role !== "Buyer" &&
-              role !== "Investor" && (
-                <div className="relative inline-block">
-                  {(price === 0 || price === null) && (
-                    <div className="absolute -top-3 -right-3 bg-white rounded-full shadow p-1">
-                      <Lock className="w-4 h-4 text-gray-400" />
-                    </div>
-                  )}
+          {role &&
+  localStorage.getItem("accessToken") &&
+  checkUserId === checkBusinessId &&
+  role !== "Buyer" &&
+  role !== "Investor" && (
+    <div className="relative inline-block">
 
-                  <Link
-                    to={`/interestBuyer/${businessDetails?.data?.business?._id}`}
-                  >
-                    <button
-                      disabled={price === 0 || price === null}
-                      className={`px-4 py-1 rounded text-white transition-all ${
-                        price === 0 || price === null
-                          ? "bg-gray-400 cursor-not-allowed"
-                          : "bg-[#0091FF] hover:bg-[#0091FF]"
-                      }`}
-                    >
-                      interested buyers
-                    </button>
-                  </Link>
-                </div>
-              )}
+    
+      {(price === 0 || price === null) &&
+        !(role === "Business Idea Lister" && price === 0) && (
+          <div className="absolute -top-3 -right-3 bg-white rounded-full shadow p-1">
+            <Lock className="w-4 h-4 text-gray-400" />
+          </div>
+        )}
+
+      <Link to={`/interestBuyer/${businessDetails?.data?.business?._id}`}>
+        <button
+         
+          disabled={
+            (price === 0 || price === null) &&
+            !(role === "Business Idea Lister" && price === 0)
+          }
+          className={`px-4 py-1 rounded text-white transition-all ${
+            (price === 0 || price === null) &&
+            !(role === "Business Idea Lister" && price === 0)
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-[#0091FF] hover:bg-[#0091FF]"
+          }`}
+        >
+          interested buyers
+        </button>
+      </Link>
+    </div>
+  )}
+
+
 
             {role &&
               localStorage.getItem("accessToken") &&
@@ -300,7 +308,7 @@ const MyBusinessDetails = () => {
           </div>
         </div>
       </div>
-      <div className="flex mt-3">
+      <div className=" mt-3">
         <span className="font-semibold">Description : </span>
         <div
           dangerouslySetInnerHTML={{

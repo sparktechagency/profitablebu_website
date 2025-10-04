@@ -73,7 +73,7 @@ const Navbar = () => {
 
   const navigate = useNavigate();
   const { data: profileData, isLoading } = useGetProfileQuery();
-    const role = profileData?.data?.role;
+  const role = profileData?.data?.role;
 
   const accessToken = localStorage.getItem("accessToken");
   const users = profileData?.data;
@@ -122,7 +122,7 @@ const Navbar = () => {
     }, 150);
   };
 
- const [countries, setCountries] = useState([]);
+  const [countries, setCountries] = useState([]);
 
   useEffect(() => {
     const allCountries = Country.getAllCountries();
@@ -182,13 +182,16 @@ const Navbar = () => {
                 </div>
               </div>
             </Link>
-            <Link to="/myBusiness/details" onClick={() => setMobileMenuOpen(false)}>
-    {role !== "Buyer" && role !== "Investor" && (
-      <button className="w-fit hidden md:block px-4 py-2 bg-[#22C55E] text-white text-center rounded-lg font-medium">
-        List Your Business
-      </button>
-    )}
-  </Link>
+            <Link
+              to="/myBusiness/details"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {role !== "Buyer" && role !== "Investor" && (
+                <button className="w-fit hidden md:block px-4 py-2 bg-[#22C55E] text-white text-center rounded-lg font-medium">
+                  List Your Business
+                </button>
+              )}
+            </Link>
           </div>
 
           {/* Main Navigation */}
@@ -352,13 +355,16 @@ const Navbar = () => {
                   </button>
                 </div>
 
-             <Link to="/myBusiness/details" onClick={() => setMobileMenuOpen(false)}>
-    {role !== "Buyer" && role !== "Investor" && (
-      <button className="block w-full md:hidden bg-[#22C55E] text-white text-center py-3 rounded-lg font-medium">
-        List Your Business
-      </button>
-    )}
-  </Link>
+                <Link
+                  to="/myBusiness/details"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {role !== "Buyer" && role !== "Investor" && (
+                    <button className="block w-full md:hidden bg-[#22C55E] text-white text-center py-3 rounded-lg font-medium">
+                      List Your Business
+                    </button>
+                  )}
+                </Link>
                 <nav className="space-y-2 mt-4">
                   {navItems.map((item) => (
                     <MobileNavItem
@@ -437,14 +443,37 @@ const Navbar = () => {
                   </div>
                 </div>
 
-                {/* Navigation Items */}
                 <nav className="space-y-4">
                   {[
-                    {
-                      icon: BusinessIcon,
-                      label: "Listed Businesses",
-                      path: "/myBusiness/details",
-                    },
+                    ...(role === "Buyer" || role === "Investor"
+                      ? [
+                          {
+                            icon: BusinessIcon,
+                            label: "Interested Businesses",
+                            path: "/myBusiness/details",
+                          },
+                        ]
+                      : role === "Broker"
+                      ? [
+                          {
+                            icon: BusinessIcon,
+                            label: "Interested Businesses",
+                            path: "/myBusiness/details",
+                          },
+                          {
+                            icon: BusinessIcon,
+                            label: "Listed Businesses",
+                            path: "/myBusiness/details",
+                          },
+                        ]
+                      : [
+                          {
+                            icon: BusinessIcon,
+                            label: "Listed Businesses",
+                            path: "/myBusiness/details",
+                          },
+                        ]),
+
                     { icon: MessageIcon, label: "Message", path: "/chat" },
                     {
                       icon: BelIcon,
@@ -543,21 +572,21 @@ const Navbar = () => {
                 </div>
 
                 <div className="space-y-2  max-h-96 overflow-y-auto">
-                   {countries.map((country) => (
-        <button
-          key={country.isoCode}
-          type="button"
-          onClick={() => handleSelect(country)}
-          className="w-full flex items-center space-x-3 p-3 rounded-lg transition-colors hover:bg-gray-50"
-        >
-          <img
-            src={`https://flagcdn.com/w20/${country.isoCode.toLowerCase()}.png`}
-            alt={country.name}
-            className="w-6"
-          />
-          <span className="font-medium">{country.name}</span>
-        </button>
-      ))}
+                  {countries.map((country) => (
+                    <button
+                      key={country.isoCode}
+                      type="button"
+                      onClick={() => handleSelect(country)}
+                      className="w-full flex items-center space-x-3 p-3 rounded-lg transition-colors hover:bg-gray-50"
+                    >
+                      <img
+                        src={`https://flagcdn.com/w20/${country.isoCode.toLowerCase()}.png`}
+                        alt={country.name}
+                        className="w-6"
+                      />
+                      <span className="font-medium">{country.name}</span>
+                    </button>
+                  ))}
                 </div>
               </div>
             </motion.div>

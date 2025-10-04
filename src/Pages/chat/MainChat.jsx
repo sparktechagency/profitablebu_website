@@ -13,25 +13,27 @@ const MainChat = () => {
   const { id: receiverId } = useParams();
   const { data: profileData } = useGetProfileQuery();
   const price = profileData?.data?.subscriptionPlanPrice;
-
+  const role = profileData?.data?.role;
   // drawer toggle state
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
  
 
   // ⚡ Block chat if subscription price is 0
-  if (price === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen text-center p-4">
-        <p className="text-xl font-semibold mb-4">
-          Please buy a subscription to access the chat.
-        </p>
-    <Link to={'/plane'}>    <button className="bg-[#0091FF] px-4 py-2 rounded text-white">
+if (price === 0 && role !== "Business Idea Lister") {
+  return (
+    <div className="flex flex-col items-center justify-center h-screen text-center p-4">
+      <p className="text-xl font-semibold mb-4">
+        Please buy a subscription to access the chat.
+      </p>
+      <Link to={"/plane"}>
+        <button className="bg-[#0091FF] px-4 py-2 rounded text-white">
           Buy Subscription
-        </button></Link>
-      </div>
-    );
-  }
+        </button>
+      </Link>
+    </div>
+  );
+}
 
   return (
     <div className="container m-auto">

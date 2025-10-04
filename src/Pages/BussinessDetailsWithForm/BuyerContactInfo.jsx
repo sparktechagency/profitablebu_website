@@ -16,6 +16,7 @@ export default function BuyerContactInfo() {
     userId: id,
   });
   const userData = singleContactUser?.data;
+  console.log(userData)
   const navigate = useNavigate();
   const { data: profileData } = useGetProfileQuery();
   const role = profileData?.data?.role;
