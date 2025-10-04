@@ -32,7 +32,7 @@ const props = {
   onChange(info) {
     const { status } = info.file;
     if (status !== "uploading") {
-  
+
     }
     if (status === "done") {
       message.success(`${info.file.name} file uploaded successfully.`);
@@ -45,13 +45,13 @@ const props = {
   },
 };
 const AddNewBusiness = () => {
-     useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const { data: categorie, isLoading, isError } = useGetCategtoryQuery();
   const [addBusiness] = useAddBusinessMutation();
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
-const navigate= useNavigate()
+  const navigate = useNavigate()
   const role = profileData?.data?.role;
   const editor = useRef(null);
   const [fileList, setFileList] = useState([]);
@@ -66,7 +66,7 @@ const navigate= useNavigate()
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
-  
+
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -157,15 +157,15 @@ const navigate= useNavigate()
         message.error(res?.error?.data?.message);
       }
     } catch (errr) {
-    
+
       message.error(errr?.data?.message);
     }
   };
   let placeholderText = "";
 
-if (role === "Seller") {
-  placeholderText = 
-`
+  if (role === "Seller") {
+    placeholderText =
+      `
 ❌ Don’ts (What NOT to Include)<br><br>
 - Company name in title or description<br>
 - Personal contact details (phone, email, WhatsApp, website, etc.)<br>
@@ -178,11 +178,11 @@ if (role === "Seller") {
 - Growth opportunities (expansion potential, new markets)<br>
 - Business assets included (equipment, licenses, IP, inventory)<br><br>
 💡 Tip: Write your description like you’re telling a success story. Focus on what makes your business valuable and exciting for buyers.`;
-}
+  }
 
-else if (role === "Business Idea Lister") {
-  placeholderText = 
-`
+  else if (role === "Business Idea Lister") {
+    placeholderText =
+      `
 ❌ Don’ts (What NOT to Include)<br><br>
 - Do not add personal contact details (phone, email, WhatsApp, website, etc.)<br>
 - Do not share sensitive or confidential information<br>
@@ -198,11 +198,11 @@ else if (role === "Business Idea Lister") {
 - Specify what kind of investor/support/capital you are looking for<br>
 - Optional: Add market research, pitch deck, or visuals<br><br>
 💡 Tip: Present your idea like a story — highlight the opportunity, show its potential, and explain why investors should get excited about it.`;
-}
+  }
 
-else if (role === "Broker") {
-  placeholderText = 
-`
+  else if (role === "Broker") {
+    placeholderText =
+      `
 ❌ Don’ts (What NOT to Do)<br><br>
 - Do not list businesses without the owner’s permission<br>
 - Do not add your agency’s personal contact details<br>
@@ -218,11 +218,11 @@ else if (role === "Broker") {
 - Use the right industry/category<br>
 - Keep listings updated<br><br>
 💡 Tip for Brokers: Quality and transparency attract serious buyers.`;
-}
+  }
 
-else if (role === "Franchise Seller" || role === "Francise Seller") {
-  placeholderText = 
-`
+  else if (role === "Franchise Seller" || role === "Francise Seller") {
+    placeholderText =
+      `
 ❌ Don’ts (What NOT to Do)<br><br>
 - Do not include personal contact details<br>
 - Do not provide misleading or exaggerated financial promises<br>
@@ -239,11 +239,11 @@ else if (role === "Franchise Seller" || role === "Francise Seller") {
 - Share franchisee requirements<br>
 - Include growth opportunities<br><br>
 💡 Tip: Showcase your franchise’s strengths and support systems to attract quality franchisees.`;
-}
+  }
 
-else if (role === "Asset Seller") {
-  placeholderText = 
-`
+  else if (role === "Asset Seller") {
+    placeholderText =
+      `
 ❌ Don’ts (What NOT to Do)<br><br>
 - Do not include personal contact details<br>
 - Do not post assets you do not legally own<br>
@@ -259,24 +259,24 @@ else if (role === "Asset Seller") {
 - Highlight any warranties or service history<br>
 - Add high-quality photos<br><br>
 💡 Tip: Detailed descriptions and transparency attract more serious buyers.`;
-}
-const config = {
-  readonly: false,
-  placeholder: placeholderText,
-  style: {
-    height: 600,
-  },
-  buttons: [
-    "fontsize",
-    "bold",
-    "italic",
-    "underline",
-    "|",
-    "font",
-    "brush",
-    "align",
-  ],
-};
+  }
+  const config = {
+    readonly: false,
+    placeholder: placeholderText,
+    style: {
+      height: 600,
+    },
+    buttons: [
+      "fontsize",
+      "bold",
+      "italic",
+      "underline",
+      "|",
+      "font",
+      "brush",
+      "align",
+    ],
+  };
 
   useEffect(() => {
     if (categorie?.data?.length) {
@@ -531,7 +531,7 @@ const config = {
             tabIndex={1}
             onBlur={(newContent) => setContent(newContent)}
           />
-        
+
           <Form.Item className=" pt-3">
             <button
               type="primary"

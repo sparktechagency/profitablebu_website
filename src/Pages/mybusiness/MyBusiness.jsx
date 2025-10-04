@@ -339,14 +339,14 @@ const MyBusiness = () => {
             </div>
           )}
           <Section
-            title={`Current ${role} for sale`}
+            title={`Current Business(es) Listed for Sale`}
             data={myBusiness}
             renderCard={renderCard}
           />
 
           {/* Sold Business */}
           <Section
-            title={`Previous ${role} that has been sold`}
+            title={`Previous Business(es) that have been Sold`}
             data={mySoldBusiness}
             renderCard={renderCard}
           />
@@ -389,7 +389,7 @@ const MyBusiness = () => {
 
           {/* Sold Business */}
           <Section
-            title={`Previous ${role} that has been sold`}
+            title={`Previous ${role} that have been sold`}
             data={mySoldBusiness}
             renderCard={renderCard}
           />

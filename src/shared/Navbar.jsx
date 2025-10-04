@@ -457,14 +457,10 @@ const Navbar = () => {
                       ? [
                           {
                             icon: BusinessIcon,
-                            label: "Interested Businesses",
-                            path: "/myBusiness/details",
-                          },
-                          {
-                            icon: BusinessIcon,
                             label: "Listed Businesses",
                             path: "/myBusiness/details",
                           },
+                         
                         ]
                       : [
                           {

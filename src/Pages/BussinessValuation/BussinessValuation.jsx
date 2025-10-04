@@ -12,17 +12,23 @@ import {
 import ReactPhoneInput from "react-phone-input-2";
 import { UploadOutlined } from "@ant-design/icons";
 import { User, DollarSign } from "lucide-react";
-import { useAddBusinessValuationMutation } from "../redux/api/businessApi";
+import { useAddBusinessValuationMutation, useGetCategtoryQuery } from "../redux/api/businessApi";
 import { useNavigate } from "react-router-dom";
 import { Country } from "country-state-city";
 
 const { Option } = Select;
 
 export default function BusinessValuationForm() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [countries, setCountries] = useState([]);
+  const { data: categorie, isLoading, isError } = useGetCategtoryQuery();
+  const [subCategories, setSubCategories] = useState([]);
 
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [addBusinessValuation] = useAddBusinessValuationMutation();
   const navigate = useNavigate();
   const [contactNo, setContactNo] = useState("");
@@ -49,6 +55,14 @@ export default function BusinessValuationForm() {
     return isPDF && isLt9M;
   };
 
+  const handleCategoryChange = (value) => {
+    setSelectedCategory(value);
+    const category = categorie?.data?.find((cat) => cat?.categoryName === value);
+    setSubCategories(category?.subCategories || []);
+    form.setFieldsValue({ subCategory: null });
+  };
+
+
   const onFinish = async (values) => {
     setLoading(true);
     try {
@@ -56,6 +70,7 @@ export default function BusinessValuationForm() {
 
       formData.append("ownerName", values.ownerName);
       formData.append("businessName", values.businessName);
+      formData.append("businessType", values.businessType);
       formData.append("email", values.email);
       // formData.append("countryCode", values.countryCode);
       formData.append("mobile", values.mobile);
@@ -70,7 +85,8 @@ export default function BusinessValuationForm() {
       formData.append("yearOfEstablishment", values.yearOfEstablishment);
       formData.append("valueOfAsset", values.valueOfAsset);
       formData.append("valueOfStock", values.valueOfStock);
-      formData.append("category", values.category);
+      formData.append("category", values?.category);
+      formData.append("subCategory", values?.subCategory);
       formData.append("message", values.message);
 
       const pdfFields = [
@@ -98,6 +114,15 @@ export default function BusinessValuationForm() {
       message.error(error?.data?.error || "Submission failed");
     }
   };
+
+  useEffect(() => {
+    if (categorie?.data?.length) {
+      const defaultCategory = categorie?.data[0];
+      setSelectedCategory(defaultCategory?.categoryName);
+      setSubCategories(defaultCategory?.subCategories || []);
+      form.setFieldsValue({ category: defaultCategory?.categoryName });
+    }
+  }, [categorie]);
 
   return (
     <div className="container mx-auto px-5 pt-20 pb-10">
@@ -230,25 +255,69 @@ export default function BusinessValuationForm() {
           <Input style={{ height: "48px" }} placeholder="Enter Location" />
         </Form.Item>
 
-        <div className="md:grid grid-cols-2 gap-4">
+        <div className="">
           <Form.Item
-            label="Business Type"
+            label="Buisiness Type"
             name="businessType"
-            rules={[{ required: true, message: "Please enter Business Type" }]}
+            rules={[
+              { required: true, message: "Please input business Type!" },
+            ]}
           >
-            <Input className="py-3" placeholder="Enter Business Type" />
+            <Select
+              style={{ height: "48px" }}
+              placeholder="Select Inquiry"
+              className="w-full"
+            >
+              <Option>Select</Option>
+              <Option value="Franchise">Franchise</Option>
+              <Option value="Independent">Independent</Option>
+              <Option value="Startup">Startup</Option>
+              <Option value="Home-Based">Home-Based</Option>
+              <Option value="Online">Online</Option>
+              <Option value="Other">Other</Option>
+            </Select>
           </Form.Item>
 
+        </div>
+
+        <div className="md:grid grid-cols-2 gap-4">
           <Form.Item
             label="Business Category"
             name="category"
             rules={[
-              { required: true, message: "Please enter Business Category" },
+              { required: true, message: "Please select Business Category!" },
             ]}
           >
-            <Input className="py-3" placeholder="Enter Business Category" />
+            <Select
+              style={{ height: "48px" }}
+              placeholder="Select Category"
+              onChange={handleCategoryChange}
+              value={selectedCategory}
+            >
+              {categorie?.data?.map((cat) => (
+                <Option key={cat?._id} value={cat?.categoryName}>
+                  {cat?.categoryName}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
+
+          {subCategories?.length > 0 && (
+            <Form.Item label="Sub Category" name="subCategory">
+              <Select
+                style={{ height: "48px" }}
+                placeholder="Select Sub Category"
+              >
+                {subCategories?.map((sub, i) => (
+                  <Option key={i} value={sub?.name}>
+                    {sub?.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+          )}
         </div>
+
         <div className="flex items-center gap-2 mb-6 mt-16">
           <DollarSign className="h-5 w-5 text-green-500" />
           <h3 className="text-lg font-semibold text-blue-600">

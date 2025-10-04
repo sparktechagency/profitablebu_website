@@ -10,7 +10,7 @@ import {
   message,
   Spin,
 } from "antd";
-import sign from "../../assets/Home/sign.png";
+import sign from "../../assets/country-icons/sign.png";
 import { UploadOutlined } from "@ant-design/icons";
 import { div } from "framer-motion/client";
 import Logo from "../../assets/Home/logo2.png";

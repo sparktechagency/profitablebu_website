@@ -31,7 +31,7 @@ function ChooseRole() {
     title: 'Franchise Seller',
     description:
       'List your franchise, gain visibility, and connect with serious buyers in just a few clicks.',
-    state: 'Franchise Seller',
+    state: 'Francise Seller',
   },
   {
     title: 'Investor',
