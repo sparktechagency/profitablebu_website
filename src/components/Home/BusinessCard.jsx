@@ -29,7 +29,6 @@ const BusinessCard = () => {
     country: selectedCountry,
   });
 
-
   const { data: interestDataa } = useGetAllFeturesBusinessQuery({
     businessRole: "Asset Seller",
     country: selectedCountry,
@@ -47,26 +46,19 @@ const BusinessCard = () => {
     country: selectedCountry,
   });
 
-
-
-
-
   const {
     data: businessData,
     isLoading,
     isError,
   } = useGetAllBusinessHomeQuery();
 
-
   const { data: MostbusinessData } = useGetAllBusinessMostViewQuery({
     userId: id,
     role: role,
     country: selectedCountry,
   });
-  console.log('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy', MostbusinessData)
+  console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy", MostbusinessData);
   const mostBusiness = MostbusinessData?.data || [];
-
-
 
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
   if (isError)
@@ -77,7 +69,6 @@ const BusinessCard = () => {
     );
 
   const business = businessData?.data || [];
-
 
   return (
     <div className=" lg:mt-16 mt-11">
@@ -91,12 +82,18 @@ const BusinessCard = () => {
               <h2 className="md:text-2xl text-lg font-bold text-blue-500">
                 Popular Business
               </h2>
-              <p className="text-gray-600 text-sm md:block hidden">
-                Discover top opportunities curated for entrepreneurs.
+              <p className="text-gray-600 text-sm   md:max-w-3xl">
+                Buy a business that’s built for success. Explore the most
+                profitable and popular businesses for sale in the UAE, USA, UK,
+                Australia, India, and beyond, curated for entrepreneurs and
+                investors looking for ready-to-run opportunities.
               </p>
             </div>
           </div>
-          <Link to="/search" className="text-blue-500 hover:underline text-sm md:text-lg">
+          <Link
+            to="/search"
+            className="text-blue-500 hover:underline text-sm md:text-lg"
+          >
             Explore More
           </Link>
         </div>
@@ -125,7 +122,10 @@ const BusinessCard = () => {
                 <p className="text-gray-600 mb-2">{business?.location}</p>
                 <div className="mb-2">
                   <span className="text-blue-500">{business?.category}</span> ||{" "}
-                  <span className="text-[#D97706]"> {business?.subCategory}</span>
+                  <span className="text-[#D97706]">
+                    {" "}
+                    {business?.subCategory}
+                  </span>
                 </div>
                 <p className="text-gray-800 mb-4">
                   Starting from{" "}
@@ -152,8 +152,8 @@ const BusinessCard = () => {
               <h2 className="md:text-2xl text-lg font-bold text-blue-500">
                 Featured Businesses
               </h2>
-              <p className="text-gray-600 text-sm md:block hidden">
-                Discover top opportunities curated for entrepreneurs.
+               <p className="text-gray-600 text-sm  max-w-3xl">
+               Discover verified and high-performing businesses for sale across multiple industries. Each listing is screened for profitability and growth potential, ideal for serious buyers ready to invest and expand.
               </p>
             </div>
           </div>
@@ -187,7 +187,9 @@ const BusinessCard = () => {
                     </h3>
                     <p className="text-gray-600 mb-2">{business?.location}</p>
                     <div className="mb-2">
-                      <span className="text-blue-500">{business?.category}</span>{" "}
+                      <span className="text-blue-500">
+                        {business?.category}
+                      </span>{" "}
                       ||{" "}
                       <span className="text-[#D97706]">
                         {business?.subCategory}
@@ -222,8 +224,9 @@ const BusinessCard = () => {
               <h2 className="md:text-2xl text-lg font-bold text-blue-500">
                 Featured Business Assets
               </h2>
-              <p className="text-gray-600 text-sm md:block hidden">
-                Discover top opportunities curated for entrepreneurs.
+                <p className="text-gray-600 text-sm  max-w-3xl">
+               Find business assets for sale including equipment, licenses, brands, and intellectual property. Perfect for startups, expanding companies, or entrepreneurs seeking cost-effective investment opportunities.
+
               </p>
             </div>
           </div>
@@ -257,7 +260,9 @@ const BusinessCard = () => {
                     </h3>
                     <p className="text-gray-600 mb-2">{business?.location}</p>
                     <div className="mb-2">
-                      <span className="text-blue-500">{business?.category}</span>{" "}
+                      <span className="text-blue-500">
+                        {business?.category}
+                      </span>{" "}
                       ||{" "}
                       <span className="text-[#D97706]">
                         {business?.subCategory}
@@ -292,8 +297,9 @@ const BusinessCard = () => {
               <h2 className="md:text-2xl text-lg font-bold text-blue-500">
                 Featured Franchises
               </h2>
-              <p className="text-gray-600 text-sm md:block hidden">
-                Discover top opportunities curated for entrepreneurs.
+                <p className="text-gray-600 text-sm  max-w-3xl">
+                Explore franchise opportunities from trusted global brands. Whether you want to start a franchise in the UAE, USA, or other international markets, PBFS connects you with proven, scalable business models for long-term success.
+
               </p>
             </div>
           </div>
@@ -327,7 +333,9 @@ const BusinessCard = () => {
                     </h3>
                     <p className="text-gray-600 mb-2">{business?.location}</p>
                     <div className="mb-2">
-                      <span className="text-blue-500">{business?.category}</span>{" "}
+                      <span className="text-blue-500">
+                        {business?.category}
+                      </span>{" "}
                       ||{" "}
                       <span className="text-[#D97706]">
                         {business?.subCategory}
@@ -354,78 +362,81 @@ const BusinessCard = () => {
             </p>
           )}
         </div>
-        {(
-          !localStorage.getItem("accessToken") ||
-          (localStorage.getItem("accessToken") && role === "Investor")
-        ) && (
-            <div>
-              <div className="flex justify-between items-center mb-6 mt-16">
-                <div className="flex items-center">
-                  <div className="w-[5px] h-12 rounded-r bg-[#22C55E] mr-4 "></div>
-                  <div>
-                    <h2 className="text-2xl font-bold text-blue-500">
-                     Business Ideas (Investor - Only Listing)
-                    </h2>
-                    <p className="text-gray-600 text-sm md:block hidden">
-                      Discover top opportunities curated for entrepreneurs.
-                    </p>
-                  </div>
+        {(!localStorage.getItem("accessToken") ||
+          (localStorage.getItem("accessToken") && role === "Investor")) && (
+          <div>
+            <div className="flex justify-between items-center mb-6 mt-16">
+              <div className="flex items-center">
+                <div className="w-[5px] h-12 rounded-r bg-[#22C55E] mr-4 "></div>
+                <div>
+                  <h2 className="text-2xl font-bold text-blue-500">
+                    Business Ideas (Investor - Only Listing)
+                  </h2>
+                   <p className="text-gray-600 text-sm  max-w-3xl">
+            Browse innovative business ideas and startup concepts submitted by aspiring entrepreneurs. Connect with investors and partners who can turn visionary ideas into profitable ventures.
+
+              </p>
                 </div>
-                <Link
-                  to={`/search?businessRole=Business Idea Lister`}
-                  className="text-blue-500 hover:underline"
-                >
-                  Explore More
-                </Link>
               </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {interestDataaaa?.data?.length > 0 ? (
-                  interestDataaaa?.data?.slice(0, 4)?.map((business) => (
-                    <div
-                      key={business._id}
-                      className="border border-[#0091FF] bg-cover bg-center rounded"
-                      style={{ backgroundImage: `url(${backCard})` }}
-                    >
-                      <div className="h-48 relative">
-                        <img
-                          src={`${imageUrl}/uploads/business-image/${business?.image}`}
-                          alt={business?.title}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="p-4">
-                        <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                          {business?.title}
-                        </h3>
-                        <p className="text-gray-600 mb-2">{business?.location}</p>
-                        <div className="mb-2">
-                          <span className="text-blue-500">{business?.category}</span> ||{" "}
-                          <span className="text-[#D97706]">
-                            {business?.subCategory}
-                          </span>
-                        </div>
-                        <p className="text-gray-800 mb-4">
-                          Starting from{" "}
-                          <span className="font-semibold">{business?.askingPrice}</span>
-                        </p>
-                        <Link to={`/details/${business?._id}`}>
-                          <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
-                            View Details
-                          </button>
-                        </Link>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-center text-gray-500 col-span-4">
-                    No data found
-                  </p>
-                )}
-              </div>
+              <Link
+                to={`/search?businessRole=Business Idea Lister`}
+                className="text-blue-500 hover:underline"
+              >
+                Explore More
+              </Link>
             </div>
-          )}
 
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {interestDataaaa?.data?.length > 0 ? (
+                interestDataaaa?.data?.slice(0, 4)?.map((business) => (
+                  <div
+                    key={business._id}
+                    className="border border-[#0091FF] bg-cover bg-center rounded"
+                    style={{ backgroundImage: `url(${backCard})` }}
+                  >
+                    <div className="h-48 relative">
+                      <img
+                        src={`${imageUrl}/uploads/business-image/${business?.image}`}
+                        alt={business?.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                        {business?.title}
+                      </h3>
+                      <p className="text-gray-600 mb-2">{business?.location}</p>
+                      <div className="mb-2">
+                        <span className="text-blue-500">
+                          {business?.category}
+                        </span>{" "}
+                        ||{" "}
+                        <span className="text-[#D97706]">
+                          {business?.subCategory}
+                        </span>
+                      </div>
+                      <p className="text-gray-800 mb-4">
+                        Starting from{" "}
+                        <span className="font-semibold">
+                          {business?.askingPrice}
+                        </span>
+                      </p>
+                      <Link to={`/details/${business?._id}`}>
+                        <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-colors">
+                          View Details
+                        </button>
+                      </Link>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-center text-gray-500 col-span-4">
+                  No data found
+                </p>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

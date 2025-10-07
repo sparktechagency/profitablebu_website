@@ -20,9 +20,12 @@ const Category = () => {
           <div className="w-[5px] h-12 rounded-r bg-[#22C55E] mr-4 "></div>
           <div>
             <h2 className="md:text-2xl text-lg font-bold text-blue-500">Top Rated Category</h2>
-            <p className="text-gray-600 text-sm md:block hidden">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultrices lectus sem.
-            </p>
+            <p className="text-gray-600 text-sm  max-w-3xl">
+                Buy a business that’s built for success. Explore the most
+                profitable and popular businesses for sale in the UAE, USA, UK,
+                Australia, India, and beyond, curated for entrepreneurs and
+                investors looking for ready-to-run opportunities.
+              </p>
           </div>
         </div>
         <Link to="/search" className="text-blue-500 hover:underline text-sm md:text-lg">Explore More</Link>

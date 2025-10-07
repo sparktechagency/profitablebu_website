@@ -12,7 +12,7 @@ import { useGetTopCountryQuery } from "../../Pages/redux/api/businessApi";
 const Country = () => {
   const [addSubscriber] = usePostSubscriberMutation();
   const [email, setEmail] = useState("");
-const {data:countryData} = useGetTopCountryQuery();
+  const { data: countryData } = useGetTopCountryQuery();
 
   const handleSubscribe = async () => {
     if (!email) {
@@ -46,18 +46,23 @@ const {data:countryData} = useGetTopCountryQuery();
             <h2 className="md:text-2xl text-lg font-bold text-blue-500">
               Trending Countries
             </h2>
-            <p className="text-gray-600 text-sm md:block hidden">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
-              ultrices lectus sem.
+            <p className="text-gray-600 text-sm  max-w-3xl">
+              Discover businesses for sale in top global markets including the
+              UAE, USA, UK, India, and Australia. Find franchises, startups, and
+              investment-ready opportunities in fast-growing economies around
+              the world.
             </p>
           </div>
         </div>
-        <a href="#" className="text-blue-500 hover:underline text-sm md:text-lg">
+        <a
+          href="#"
+          className="text-blue-500 hover:underline text-sm md:text-lg"
+        >
           Explore More
         </a>
       </div>
       <div className="grid grid-cols-5 gap-4 mt-10">
-        {countryData?.data?.slice(0,5).map((country) => (
+        {countryData?.data?.slice(0, 5).map((country) => (
           <Link key={country?.id} to={`/search?country=${country?.country}`}>
             <div className="relative group overflow-hidden rounded-lg shadow-md">
               <img
@@ -66,7 +71,9 @@ const {data:countryData} = useGetTopCountryQuery();
               />
               <div className="absolute inset-0 flex items-center justify-center bg-black/30 shadow-4xl opacity-0 translate-y-32 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
                 <div>
-                  <p className="text-white font-semibold text-4xl">{country?.totalBusinesses}</p>
+                  <p className="text-white font-semibold text-4xl">
+                    {country?.totalBusinesses}
+                  </p>
                   <p className="text-white text-2xl">Business Available</p>
                 </div>
               </div>
@@ -80,16 +87,20 @@ const {data:countryData} = useGetTopCountryQuery();
           backgroundImage: `url(${backImg})`,
         }}
       >
-
         <div className="">
           <div className="md:grid grid-cols-2 ">
             <div className="md:pl-20 pl-4">
               <div className="">
                 <h1 className="md:text-5xl text-3xl pb-4 font-bold text-black">
-                  Profitable Businesses for <br className="hidden md:block"/> Sale – Buy or Sell with Confidence
+                  Profitable Businesses for <br className="hidden md:block" />{" "}
+                  Sale – Buy or Sell with Confidence
                 </h1>
                 <p className="text-black">
-               Discover profitable businesses for sale in worldwide. Our platform connects serious buyers and motivated sellers, offering transparent listings and high-return investment opportunities. Start building your future with the most trusted business marketplace.
+                  Discover profitable businesses for sale in worldwide. Our
+                  platform connects serious buyers and motivated sellers,
+                  offering transparent listings and high-return investment
+                  opportunities. Start building your future with the most
+                  trusted business marketplace.
                 </p>
               </div>
             </div>
