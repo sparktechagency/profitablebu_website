@@ -24,7 +24,7 @@ const country = [
   "Canada",
   "Australia",
   "Germany",
-  "Franch",
+  "France", // Corrected typo: "Franch" to "France"
   "Italy",
   "Spain",
   "United Arab Emirates",
@@ -55,7 +55,7 @@ const businessType = [
   "Startup",
   "Home-Based",
   "Online",
-  'Other'
+  "Other",
 ];
 
 const ownerShipType = [
@@ -63,13 +63,13 @@ const ownerShipType = [
   "Partnership",
   "Corporation",
   "LLC",
-  'Other'
+  "Other",
 ];
 
 const sortBy = ["Newest First", "Price Low to High", "Most Viewed"];
 
 export default function AdvanceSearch() {
-   useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const { data: categorie, isLoading, isError } = useGetCategtoryQuery();
@@ -82,17 +82,27 @@ export default function AdvanceSearch() {
   const [selectedState, setSelectedState] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const navigate = useNavigate();
+
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
     const category = categorie?.data?.find((cat) => cat?.categoryName === value);
     setSubCategories(category?.subCategories || []);
     form.setFieldsValue({ subCategory: null });
   };
-  const handleSearch = (values) => {
 
-    const params = new URLSearchParams(values).toString();
+  const handleSearch = (values) => {
+    // Filter out undefined, null, or empty values
+    const filteredValues = Object.fromEntries(
+      Object.entries(values).filter(
+        ([_, value]) => value !== undefined && value !== null && value !== ""
+      )
+    );
+
+    // Convert filtered values to query string
+    const params = new URLSearchParams(filteredValues).toString();
     navigate(`/search?${params}`);
   };
+
   useEffect(() => {
     setCountries(Country.getAllCountries());
   }, []);
@@ -112,6 +122,7 @@ export default function AdvanceSearch() {
     );
     form.setFieldsValue({ city: undefined });
   };
+
   useEffect(() => {
     if (categorie?.data?.length) {
       const defaultCategory = categorie?.data[0];
@@ -139,13 +150,7 @@ export default function AdvanceSearch() {
 
       <Form form={form} onFinish={handleSearch} layout="vertical" className="">
         <div className="">
-          <Form.Item
-            label="Business Category"
-            name="category"
-            rules={[
-              { required: true, message: "Please select Business Category!" },
-            ]}
-          >
+          <Form.Item label="Business Category" name="category">
             <Select
               style={{ height: "48px" }}
               placeholder="Select Category"
@@ -165,6 +170,7 @@ export default function AdvanceSearch() {
               <Select
                 style={{ height: "48px" }}
                 placeholder="Select Sub Category"
+                allowClear
               >
                 {subCategories?.map((sub, i) => (
                   <Option key={i} value={sub?.name}>
@@ -177,12 +183,7 @@ export default function AdvanceSearch() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-4">
-          {/* Country */}
-          <Form.Item
-            label="Select Your Country"
-            name="country"
-            rules={[{ required: true, message: "Please select your country!" }]}
-          >
+          <Form.Item label="Select Your Country" name="country">
             <Select
               placeholder="Select your country"
               style={{ height: "48px" }}
@@ -210,7 +211,6 @@ export default function AdvanceSearch() {
             </Select>
           </Form.Item>
 
-          {/* State */}
           <Form.Item label="Select State" name="state">
             <Select
               placeholder="Select your state"
@@ -228,7 +228,6 @@ export default function AdvanceSearch() {
             </Select>
           </Form.Item>
 
-          {/* City */}
           <Form.Item label="Select City" name="city">
             <Select
               placeholder="Select your city"
@@ -260,11 +259,7 @@ export default function AdvanceSearch() {
           </Select>
         </Form.Item>
 
-        <Form.Item
-          label="Business Type"
-          name="businessType"
-          className="col-span-2"
-        >
+        <Form.Item label="Business Type" name="businessType" className="col-span-2">
           <Select
             placeholder="Select One"
             allowClear
@@ -295,7 +290,7 @@ export default function AdvanceSearch() {
         <Form.Item className="col-span-2">
           <Space>
             <Button
-              className="bg-[#0091FF] text-white font-bold py-4 px-6 "
+              className="bg-[#0091FF] text-white font-bold py-4 px-6"
               htmlType="submit"
             >
               Apply This Filter

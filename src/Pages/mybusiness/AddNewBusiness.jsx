@@ -517,7 +517,7 @@ const AddNewBusiness = () => {
             </Form.Item>
           </div>
 
-          <Form.Item label="Reason for Selling" name="reason">
+          <Form.Item  label={role === "Business Idea Lister" ? "Reason" : "Reason for Selling"} name="reason">
             <Input
               className="w-full bg-transparent py-3"
               placeholder="Engine Model"
