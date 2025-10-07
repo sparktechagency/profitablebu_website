@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Modal, Checkbox, message } from "antd";
+import { Form, Input, Modal, Checkbox, message, Spin } from "antd";
 import {
   usePostCheckoutMutation,
   useLazySingleGetCouponQuery,
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useGetProfileQuery } from "../redux/api/userApi";
 
 const AddSubPlane = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
-
+  const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const [showCoupon, setShowCoupon] = useState(false);
   const [couponCode, setCouponCode] = useState("");
@@ -73,17 +73,14 @@ const AddSubPlane = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
     }
   };
 
-
-
   const handleSubmit = async () => {
     try {
       const payload = {
         subscriptionId: subscriptionId?._id,
         duration: subscriptionId?.duration,
-        price: String(selectedPrice)
-        
+        price: String(selectedPrice),
       };
-
+  setLoading(true);
       if (couponCode && singleCouponData?.data) {
         payload.couponCode = couponCode;
       }
@@ -91,11 +88,12 @@ const AddSubPlane = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
       if (res?.success) {
         window.location.href = `${res?.data}`;
       }
+      setLoading(false);
       handleCancel();
     } catch (err) {
-
-      message.error(err?.data?.message)
+      message.error(err?.data?.message);
       console.error("Checkout Failed:", err?.data?.message);
+      setLoading(false);
     }
   };
 
@@ -180,11 +178,24 @@ const AddSubPlane = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
             >
               Cancel
             </button>
+
             <button
+              className={`w-full py-2 bg-[#0091FF] text-white rounded-md hover:bg-blue-600 ${
+                loading
+                  ? "bg-blue-400 cursor-not-allowed"
+                  : "bg-[#3b82f6] hover:bg-blue-500"
+              }`}
               type="submit"
-              className="w-full py-2 bg-[#0091FF] text-white rounded-md hover:bg-blue-600"
+              disabled={loading}
             >
-              Continue
+              {loading ? (
+                <>
+                  <Spin size="small" />
+                  <span>Submitting...</span>
+                </>
+              ) : (
+                "Continue"
+              )}
             </button>
           </div>
         </Form>
@@ -194,4 +205,3 @@ const AddSubPlane = ({ openAddModal, setOpenAddModal, subscriptionId }) => {
 };
 
 export default AddSubPlane;
-

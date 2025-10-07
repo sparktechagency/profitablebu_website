@@ -1,8 +1,8 @@
-import { Form, Input, Select, Button, message } from "antd";
+import { Form, Input, Select, Button, message, Spin } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useAddInterestMutation, usePostInterestFormationMutation } from "../redux/api/businessApi";
 import { useGetProfileQuery } from "../redux/api/userApi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const { TextArea } = Input;
 
@@ -10,7 +10,7 @@ export default function InterenstFormation({ formationId }) {
     useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
+ const [loading, setLoading] = useState(false);
   const [addInterest] = usePostInterestFormationMutation()
    const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
 
@@ -48,15 +48,16 @@ const data = {
       
       formationId: formationId,
     };
-
+setLoading(true);
     try {
       const res = await addInterest(data).unwrap();
      
         message.success(res?.message);
         form.resetFields();
-    
+    setLoading(false);
     } catch (error) {
       console.error(error);
+      setLoading(false);
       message.error(error?.data?.message || "Failed to schedule call.");
     }
   };
@@ -89,7 +90,7 @@ const data = {
         </div>
 
         <div className="p-6">
-          <Form
+           <Form
             form={form}
             layout="vertical"
             onFinish={onFinish}
@@ -101,9 +102,11 @@ const data = {
             <Form.Item
               label="Full Name"
               name="name"
-              rules={[{ required: true, message: "Please enter your full name" }]}
+              rules={[
+                { required: true, message: "Please enter your full name" },
+              ]}
             >
-              <Input  style={{ height: "48px" }} placeholder="Enter Full Name" />
+              <Input style={{ height: "48px" }} placeholder="Enter Full Name" />
             </Form.Item>
 
             {/* Country Code & Mobile */}
@@ -113,7 +116,7 @@ const data = {
                 name="countryCode"
                 className="md:col-span-1"
               >
-                <Select  style={{ height: "48px" }}>
+                <Select style={{ height: "48px" }}>
                   <Select.Option value="+971">🇦🇪 +971</Select.Option>
                   <Select.Option value="+1">🇺🇸 +1</Select.Option>
                   <Select.Option value="+44">🇬🇧 +44</Select.Option>
@@ -126,9 +129,18 @@ const data = {
                 label="Mobile"
                 name="mobile"
                 className="md:col-span-2"
-                rules={[{ required: true, message: "Please enter your mobile number" }]}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter your mobile number",
+                  },
+                ]}
               >
-                <Input  style={{ height: "48px" }} type="tel" placeholder="Enter mobile number" />
+                <Input
+                  style={{ height: "48px" }}
+                  type="tel"
+                  placeholder="Enter mobile number"
+                />
               </Form.Item>
             </div>
 
@@ -137,10 +149,12 @@ const data = {
               <Form.Item
                 label="Sector"
                 name="sector"
-                rules={[{ required: true, message: "Please select a sector" }]}
+           
               >
-                <Select  style={{ height: "48px" }} placeholder="Select One">
-                  <Select.Option value="food-beverage">Food & Beverage</Select.Option>
+                <Select style={{ height: "48px" }} placeholder="Select One">
+                  <Select.Option value="food-beverage">
+                    Food & Beverage
+                  </Select.Option>
                   <Select.Option value="retail">Retail</Select.Option>
                   <Select.Option value="technology">Technology</Select.Option>
                   <Select.Option value="healthcare">Healthcare</Select.Option>
@@ -154,9 +168,12 @@ const data = {
               <Form.Item
                 label="Activity"
                 name="activity"
-                rules={[{ required: true, message: "Please enter activity" }]}
+            
               >
-                <Input  style={{ height: "48px" }} placeholder="Enter Activity" />
+                <Input
+                  style={{ height: "48px" }}
+                  placeholder="Enter Activity"
+                />
               </Form.Item>
             </div>
 
@@ -170,15 +187,18 @@ const data = {
                   { type: "email", message: "Invalid email address" },
                 ]}
               >
-                <Input  style={{ height: "48px" }} placeholder="Enter Email" />
+                <Input style={{ height: "48px" }} placeholder="Enter Email" />
               </Form.Item>
 
               <Form.Item
                 label="Service Zone"
                 name="serviceZone"
-                rules={[{ required: true, message: "Please enter service zone" }]}
+     
               >
-                <Input  style={{ height: "48px" }} placeholder="Enter Service Zone" />
+                <Input
+                  style={{ height: "48px" }}
+                  placeholder="Enter Service Zone"
+                />
               </Form.Item>
             </div>
 
@@ -186,23 +206,31 @@ const data = {
             <Form.Item
               label="Message"
               name="message"
-              rules={[{ required: true, message: "Please enter your message" }]}
+
             >
-              <TextArea
-                placeholder="Enter Your Message Here"
-                rows={5}
-              />
+              <TextArea placeholder="Enter Your Message Here" rows={5} />
             </Form.Item>
 
             {/* Submit Button */}
             <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="px-8 py-2 rounded-md font-medium"
-              >
-                Submit
-              </Button>
+               <button
+                    className={`w-full py-3 rounded text-white flex justify-center items-center gap-2 transition-all duration-300 ${
+                      loading
+                        ? "bg-blue-400 cursor-not-allowed"
+                        : "bg-[#3b82f6] hover:bg-blue-500"
+                    }`}
+                    type="submit"
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <>
+                        <Spin size="small" />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      "Submit"
+                    )}
+                  </button>
             </Form.Item>
           </Form>
         </div>

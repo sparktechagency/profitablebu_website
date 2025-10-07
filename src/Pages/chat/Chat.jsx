@@ -13,10 +13,10 @@ const Chat = () => {
   const { socket } = useSocket();
   const { data: profileData } = useGetProfileQuery();
   const userId = profileData?.data?._id;
-    const role = profileData?.data?.role;
-    console.log(role)
+  const role = profileData?.data?.role;
+  console.log(role);
   const price = profileData?.data?.subscriptionPlanPrice;
-console.log(profileData)
+  console.log(profileData);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
   const [receiverId, setReceiverId] = useState(null);
@@ -25,20 +25,20 @@ console.log(profileData)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   // ⚡ Block chat if subscription price is 0
-if (price === 0 && role !== "Business Idea Lister") {
-  return (
-    <div className="flex flex-col items-center justify-center h-screen text-center p-4">
-      <p className="text-xl font-semibold mb-4">
-        Please buy a subscription to access the chat.
-      </p>
-      <Link to={"/plane"}>
-        <button className="bg-[#0091FF] px-4 py-2 rounded text-white">
-          Buy Subscription
-        </button>
-      </Link>
-    </div>
-  );
-}
+  if (price === 0 && role !== "Business Idea Lister") {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen text-center p-4">
+        <p className="text-xl font-semibold mb-4">
+          Please buy a subscription to access the chat.
+        </p>
+        <Link to={"/plane"}>
+          <button className="bg-[#0091FF] px-4 py-2 rounded text-white">
+            Buy Subscription
+          </button>
+        </Link>
+      </div>
+    );
+  }
 
   // ✅ Fetch chat messages
   useEffect(() => {
@@ -112,7 +112,7 @@ if (price === 0 && role !== "Business Idea Lister") {
         <Menu className="w-6 h-6" />
       </button>
 
-      <div className="flex h-[76vh] bg-white">
+      <div className="flex h-[76vh] bg-white border">
         {/* Sidebar (Desktop Only) */}
         <div className="hidden md:block border-r">
           <SidbarChat chatId={chatId} />

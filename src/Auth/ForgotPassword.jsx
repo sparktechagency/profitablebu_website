@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Button, Card, Col, Form, Input, Row, Select } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Card, Col, Form, Input, Row, Select, Spin } from "antd";
 import loginImg from "./login.png";
 import { Typography, message } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ function ForgotPassword() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const [loading, setLoading] = useState(false);
   const [fogetPass] = useForgotPasswordMutation();
   const navigate = useNavigate();
   const onFinish = async (values) => {
@@ -24,17 +25,19 @@ function ForgotPassword() {
     };
 
     console.log(data)
-
+  setLoading(true);
     try {
       const res = await fogetPass(data).unwrap();
 
       if (res?.success) {
         message.success(res?.message);
+          setLoading(false);
         localStorage.setItem("email", values?.email);
           localStorage.setItem("role", values?.role);
         navigate("/auth/verification");
       }
     } catch (error) {
+        setLoading(false);
       message.error(error?.data?.message || "Something went wrong");
       console.error("Forgot password error:", error);
     }
@@ -97,7 +100,7 @@ function ForgotPassword() {
                   ]}
                 >
                   <Input
-                    placeholder="esfutui_sch@gmail.com"
+                    placeholder="Enter Your Email Address"
                     style={{ height: "48px" }}
                   />
                 </Form.Item>
@@ -127,21 +130,24 @@ function ForgotPassword() {
                 </Form.Item>
 
                 <Form.Item>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    block
-                    style={{
-                      height: "48px",
-                      background: "#3b82f6",
-                      borderColor: "#3b82f6",
-                      // borderRadius: '8px',
-                      fontSize: "16px",
-                      fontWeight: 500,
-                    }}
+                  <button
+                    className={`w-full py-3 rounded text-white flex justify-center items-center gap-2 transition-all duration-300 ${
+                      loading
+                        ? "bg-blue-400 cursor-not-allowed"
+                        : "bg-[#3b82f6] hover:bg-blue-500"
+                    }`}
+                    type="submit"
+                    disabled={loading}
                   >
-                    Continue
-                  </Button>
+                    {loading ? (
+                      <>
+                        <Spin size="small" />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      "Continue"
+                    )}
+                  </button>
                 </Form.Item>
               </Form>
             </div>

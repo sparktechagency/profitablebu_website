@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Form, Input, Row } from "antd";
+import { Button, Card, Col, Form, Input, Row, Spin } from "antd";
 import loginImg from "./login.png";
 import { Typography, message } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ function Verification() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const [loading, setLoading] = useState(false);
   const [verifyOtp] = useVerifyOtpMutation();
   const navigate = useNavigate();
   const [resentOtp] = useResendOtpMutation();
@@ -33,19 +34,22 @@ function Verification() {
       message.error("Missing email or OTP");
       return;
     }
-
+  setLoading(true);
     try {
       const res = await verifyOtp(data).unwrap();
 
       if (res?.success) {
         message.success(res?.message);
+          setLoading(false);
         localStorage.setItem("otp", code);
         navigate("/auth/update-password");
       } else {
         message.error(res?.message || "Verification failed");
+        setLoading(false);
       }
     } catch (error) {
       message.error(error?.data?.message || "Something went wrong");
+      setLoading(false);
     }
   };
 
@@ -135,21 +139,24 @@ function Verification() {
                 </Form.Item>
 
                 <Form.Item>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    block
-                    style={{
-                      height: "48px",
-                      background: "#3b82f6",
-                      borderColor: "#3b82f6",
-                      // borderRadius: '8px',
-                      fontSize: "16px",
-                      fontWeight: 500,
-                    }}
+                   <button
+                    className={`w-full py-3 rounded text-white flex justify-center items-center gap-2 transition-all duration-300 ${
+                      loading
+                        ? "bg-blue-400 cursor-not-allowed"
+                        : "bg-[#3b82f6] hover:bg-blue-500"
+                    }`}
+                    type="submit"
+                    disabled={loading}
                   >
-                    Verify
-                  </Button>
+                    {loading ? (
+                      <>
+                        <Spin size="small" />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      "Continue"
+                    )}
+                  </button>
                 </Form.Item>
               </Form>
               <Text style={{ marginBottom: "8px", color: "#1f2937" }}>

@@ -6,7 +6,7 @@ import { useGetProfileQuery } from "../redux/api/userApi";
 import { useSocket } from "../../context/ContextProvider";
 import { useState, useCallback, useEffect } from "react";
 import { imageUrl } from "../redux/api/baseApi";
-
+import img from "../../assets/Home/user.png";
 export default function BuyerContactInfo() {
    useEffect(() => {
     window.scrollTo(0, 0);
@@ -57,11 +57,23 @@ export default function BuyerContactInfo() {
         <div className="p-5">
           <div className="flex items-start gap-6">
             <div className=" bg-gray-200 rounded-full">
-              <img
+
+
+{userData?.image ? (
+                        <img
                 src={`${imageUrl}/uploads/profile-image/${userData?.image}`}
                 alt="Profile"
                 className="w-[100px] h-[100px] object-cover rounded-full mx-auto"
               />
+                      ) : (
+                        <img
+                          src={img}
+                          alt="User avatar"
+                          className="w-[100px] h-[100px] object-cover"
+                        />
+                      )}
+
+             
             </div>
 
             <div className="flex-1 space-y-3">
@@ -119,7 +131,7 @@ export default function BuyerContactInfo() {
             </div>
             <div>
               <h4 className="font-semibold text-blue-600 text-lg">Location</h4>
-              <p className="text-gray-700">{userData?.location}</p>
+              <p className="text-gray-700">{userData?.country}</p>
             </div>
           </div>
         </div>

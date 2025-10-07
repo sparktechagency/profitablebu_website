@@ -13,7 +13,7 @@ import { useAddContactMutation } from "../redux/api/businessApi";
 import { useGetProfileQuery } from "../redux/api/userApi";
 import { IoMailOpenOutline } from "react-icons/io5";
 export default function ContactUs() {
-   useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
@@ -48,8 +48,7 @@ export default function ContactUs() {
   };
 
   const handleSubmit = async (values) => {
-
-       setLoading(true);
+    setLoading(true);
     const data = {
       firstName: values.firstName,
       lastName: values.lastName,
@@ -58,16 +57,14 @@ export default function ContactUs() {
       message: values.message,
     };
 
-
     try {
       const res = await addContact(data).unwrap();
-
       message.success(res?.message);
-         setLoading(false);
+      setLoading(false);
       form.resetFields();
     } catch (error) {
       console.error(error);
-         setLoading(false);
+      setLoading(false);
       message.error(error?.data?.message || "Failed to schedule call.");
     }
   };
@@ -102,8 +99,7 @@ export default function ContactUs() {
                   >
                     <Facebook className="w-5 h-5 text-white" />
                   </a>
-               
-             
+
                   <a
                     href="https://www.instagram.com/profitablebusinessesforsale?igsh=MTc5bTVrcWJoZHNtbQ%3D%3D&utm_source=…"
                     className="w-10 h-10 bg-black bg-opacity-20 rounded-lg flex items-center justify-center hover:bg-opacity-30 transition-all"
@@ -124,9 +120,11 @@ export default function ContactUs() {
                 Get In Touch With Us
               </h2>
               <p className="text-gray-600 mb-8 leading-relaxed">
-              At ProfitableBusinessesForSale.com, our team is here to guide you every step of the way. Whether
-you need help creating your listing, choosing the right subscription, or understanding how to attract
-serious buyers and investors, we're only a message away.
+                At ProfitableBusinessesForSale.com, our team is here to guide
+                you every step of the way. Whether you need help creating your
+                listing, choosing the right subscription, or understanding how
+                to attract serious buyers and investors, we're only a message
+                away.
               </p>
 
               <Form
@@ -234,12 +232,23 @@ serious buyers and investors, we're only a message away.
                 {/* Submit Button */}
                 <Form.Item>
                   <button
-            type="submit"
-            className="w-full mt-8 py-2 bg-[#0091FF] text-white rounded "
-            disabled={loading}
-          >
-            {loading ? <Spin size="small" /> : "Send Message"}
-          </button>
+                    className={`w-full py-3 rounded text-white flex justify-center items-center gap-2 transition-all duration-300 ${
+                      loading
+                        ? "bg-blue-400 cursor-not-allowed"
+                        : "bg-[#3b82f6] hover:bg-blue-500"
+                    }`}
+                    type="submit"
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <>
+                        <Spin size="small" />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      "Send Message"
+                    )}
+                  </button>
                 </Form.Item>
               </Form>
             </section>

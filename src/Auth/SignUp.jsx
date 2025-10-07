@@ -10,6 +10,7 @@ import {
   Divider,
   message,
   Select,
+  Spin,
 } from "antd";
 import { ArrowLeft } from "lucide-react";
 import loginImg from "./login.png";
@@ -25,6 +26,7 @@ function SignUp() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const [loading, setLoading] = useState(false);
   const [signUp] = useRegisterUserMutation();
   const location = useLocation();
   const navigate = useNavigate();
@@ -48,15 +50,17 @@ function SignUp() {
         country: values.country,
         role: location?.state,
       };
-
+  setLoading(true);
       const res = await signUp(data).unwrap();
 
       message.success(res?.message);
+      setLoading(false);
       localStorage.setItem("email", values?.email);
       localStorage.setItem("role", location?.state);
       navigate("/auth/verifyCreator");
     } catch (error) {
       message.error(error?.data?.message || "Something went wrong!");
+      setLoading(false);
     }
   };
 
@@ -229,21 +233,24 @@ marketplace of {location?.state }</p> */}
                   />
                 </Form.Item>
                 <Form.Item>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    block
-                    style={{
-                      height: "48px",
-                      background: "#3b82f6",
-                      borderColor: "#3b82f6",
-                      // borderRadius: '8px',
-                      fontSize: "16px",
-                      fontWeight: 500,
-                    }}
+                  <button
+                    className={`w-full py-3 rounded text-white flex justify-center items-center gap-2 transition-all duration-300 ${
+                      loading
+                        ? "bg-blue-400 cursor-not-allowed"
+                        : "bg-[#3b82f6] hover:bg-blue-500"
+                    }`}
+                    type="submit"
+                    disabled={loading}
                   >
-                    Sign Up
-                  </Button>
+                    {loading ? (
+                      <>
+                        <Spin size="small" />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      "Sign Up"
+                    )}
+                  </button>
                 </Form.Item>
               </Form>
 

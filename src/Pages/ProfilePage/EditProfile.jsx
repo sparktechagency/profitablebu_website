@@ -6,6 +6,7 @@ import {
   Input,
   message,
   Select,
+  Spin,
 } from "antd";
 
 import { Navigate } from "../Navigate";
@@ -19,21 +20,20 @@ import { useNavigate } from "react-router-dom";
 import { imageUrl } from "../redux/api/baseApi";
 import { Country } from "country-state-city";
 const EditProfile = () => {
-   useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const { data: profileData, isLoading } = useGetProfileQuery();
-
-  const navigate = useNavigate()
+ const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [updateProfile] = useUpdateProfileMutation();
-    const [image, setImage] = useState();
+  const [image, setImage] = useState();
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
   };
 
-    const [countries, setCountries] = useState([]);
-  
+  const [countries, setCountries] = useState([]);
 
   useEffect(() => {
     setCountries(Country.getAllCountries());
@@ -41,11 +41,11 @@ const EditProfile = () => {
 
   const [form] = Form.useForm();
   const handleSubmit = async (values) => {
-
+    setLoading(true);
     try {
       const formData = new FormData();
 
-   if (image) formData.append("profile-image", image);
+      if (image) formData.append("profile-image", image);
       formData.append("name", values?.name);
       formData.append("mobile", values?.mobile);
       formData.append("country", values?.country);
@@ -53,17 +53,17 @@ const EditProfile = () => {
       formData.append("description", values?.description);
 
       const res = await updateProfile(formData);
-  
+
       message.success(res.data.message);
-      navigate('/profilePage')
+      setLoading(false);
+      navigate("/profilePage");
     } catch (e) {
-      
-      message.error('Image max 1 mb');
+      setLoading(false);
+      message.error("Image max 1 mb");
     } finally {
-   
     }
   };
- useEffect(() => {
+  useEffect(() => {
     if (profileData?.data) {
       const admin = profileData?.data;
       form.setFieldsValue({
@@ -93,7 +93,11 @@ const EditProfile = () => {
               />
               <img
                 className="w-[140px] h-[140px] rounded-full object-cover"
-                src={`${image ? URL.createObjectURL(image) : `${imageUrl}/uploads/profile-image/${profileData?.data?.image}`}`}
+                src={`${
+                  image
+                    ? URL.createObjectURL(image)
+                    : `${imageUrl}/uploads/profile-image/${profileData?.data?.image}`
+                }`}
                 alt="Admin Profile"
               />
 
@@ -105,7 +109,9 @@ const EditProfile = () => {
               </label>
             </div>
 
-            <p className="text-lg font-semibold mt-4">{profileData?.data?.name}</p>
+            <p className="text-lg font-semibold mt-4">
+              {profileData?.data?.name}
+            </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Form.Item
@@ -124,7 +130,7 @@ const EditProfile = () => {
               rules={[{ required: true, message: "Please input Email!" }]}
             >
               <Input
-              disabled
+                disabled
                 className="w-full bg-transparent py-3"
                 placeholder="Email"
               />
@@ -143,56 +149,46 @@ const EditProfile = () => {
                 placeholder="Contact Number"
               />
             </Form.Item>
-            <Form.Item
-              label="Profession"
-              name="profession"
-              rules={[{ required: true, message: "Please input Profession!" }]}
-            >
+            <Form.Item label="Profession" name="profession">
               <Input
                 className="w-full bg-transparent  py-3"
-                placeholder="Fuel Type"
+                placeholder="Profession"
               />
             </Form.Item>
           </div>
 
-           <Form.Item
-                  label="Select Your Country"
-                  name="country"
-                  rules={[
-                    { required: true, message: "Please select your country!" },
-                  ]}
-                >
-                  <Select
-                    placeholder="Select your country"
-                    style={{ height: "48px" }}
-                    showSearch
-                    allowClear
-                    optionLabelProp="label"
-                  >
-                    {countries?.map((country) => (
-                      <Select.Option
-                        key={country?.isoCode}
-                        value={country?.name}
-                        label={country?.name}
-                      >
-                        <div className="flex items-center gap-2">
-                          <img
-                            src={`https://flagcdn.com/w20/${country?.isoCode.toLowerCase()}.png`}
-                            alt={country?.name}
-                            className="w-5 h-3 object-cover"
-                          />
-                          {country?.name}
-                        </div>
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-
           <Form.Item
-            label="Description"
-            name="description"
-            rules={[{ required: true, message: "Please input description!" }]}
+            label="Select Your Country"
+            name="country"
+            rules={[{ required: true, message: "Please select your country!" }]}
           >
+            <Select
+              placeholder="Select your country"
+              style={{ height: "48px" }}
+              showSearch
+              allowClear
+              optionLabelProp="label"
+            >
+              {countries?.map((country) => (
+                <Select.Option
+                  key={country?.isoCode}
+                  value={country?.name}
+                  label={country?.name}
+                >
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={`https://flagcdn.com/w20/${country?.isoCode.toLowerCase()}.png`}
+                      alt={country?.name}
+                      className="w-5 h-3 object-cover"
+                    />
+                    {country?.name}
+                  </div>
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item label="Description" name="description">
             <Input.TextArea
               className="w-full py-2"
               rows={4}
@@ -202,12 +198,23 @@ const EditProfile = () => {
 
           <Form.Item className=" pt-3">
             <button
-              type="primary"
-              htmlType="submit"
-              className="px-11 bg-[#0091FF] text-white py-2"
-            >
-              Update Profile
-            </button>
+                    className={`w-[200px] py-3 rounded text-white flex justify-center items-center gap-2 transition-all duration-300 ${
+                      loading
+                        ? "bg-blue-400 cursor-not-allowed"
+                        : "bg-[#3b82f6] hover:bg-blue-500"
+                    }`}
+                    type="submit"
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <>
+                        <Spin size="small" />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      "Update Profile"
+                    )}
+                  </button>
           </Form.Item>
         </Form>
       </div>

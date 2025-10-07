@@ -1,8 +1,8 @@
-import { Form, Input, Select, Button, message } from "antd";
+import { Form, Input, Select, Button, message, Spin } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useAddInterestMutation } from "../redux/api/businessApi";
 import { useGetProfileQuery } from "../redux/api/userApi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const { TextArea } = Input;
 
@@ -10,6 +10,7 @@ export default function InterestForm({ businessId, businessRole }) {
  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+   const [loading, setLoading] = useState(false);
   const [addInterest] = useAddInterestMutation();
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?._id;
@@ -42,14 +43,16 @@ export default function InterestForm({ businessId, businessRole }) {
       businessId: businessId,
       sector: values.sector,
     };
-
+setLoading(true);
     try {
       const res = await addInterest(data).unwrap();
 
       message.success(res?.message);
       form.resetFields();
+      setLoading(false);
     } catch (error) {
       console.error(error);
+      setLoading(false);
       message.error(error?.data?.message || "Failed to schedule call.");
     }
   };
@@ -204,13 +207,24 @@ export default function InterestForm({ businessId, businessRole }) {
 
             {/* Submit Button */}
             <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="px-8 py-2 rounded-md font-medium"
-              >
-                Submit
-              </Button>
+               <button
+                    className={`w-full py-3 rounded text-white flex justify-center items-center gap-2 transition-all duration-300 ${
+                      loading
+                        ? "bg-blue-400 cursor-not-allowed"
+                        : "bg-[#3b82f6] hover:bg-blue-500"
+                    }`}
+                    type="submit"
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <>
+                        <Spin size="small" />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      "Submit"
+                    )}
+                  </button>
             </Form.Item>
           </Form>
         </div>

@@ -6,6 +6,7 @@ import {
   Input,
   message,
   Select,
+  Spin,
   Upload,
 } from "antd";
 import Dragger from "antd/es/upload/Dragger";
@@ -27,9 +28,10 @@ import { imageUrl } from "../redux/api/baseApi";
 dayjs.extend(customParseFormat);
 
 const EditNewBusiness = () => {
-   useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const [loading, setLoading] = useState(false);
   const { id: businessId } = useParams();
 
   const [fileList, setFileList] = useState([]);
@@ -65,23 +67,50 @@ const EditNewBusiness = () => {
   useEffect(() => {
     setCountries(Country.getAllCountries());
   }, []);
-
-  const handleCountryChange = (value) => {
-    const country = countries.find((c) => c.isoCode === value);
-    setSelectedCountry(country);
-    setStates(State.getStatesOfCountry(value));
-    setCities([]);
-    form.setFieldsValue({ state: undefined, city: undefined });
-  };
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
+  const handleCountryChange = (value) => {
+    const country = countries.find((c) => c.isoCode === value);
+    setSelectedCountry(country);
 
+    // Country অনুযায়ী states fetch
+    const countryStates = State.getStatesOfCountry(value) || [];
+    setStates(countryStates);
+
+    // নতুন country হলে আগের state & city clear
+    if (!countryStates.length) {
+      setSelectedState(null);
+      setSelectedCity(null);
+      setCities([]);
+      form.setFieldsValue({ state: undefined, city: undefined });
+    } else {
+      // states আছে, state & city reset
+      setSelectedState(null);
+      setSelectedCity(null);
+      setCities([]);
+      form.setFieldsValue({ state: undefined, city: undefined });
+    }
+  };
+
+  // State select change
   const handleStateChange = (value) => {
     const state = states.find((s) => s.isoCode === value);
     setSelectedState(state);
-    setCities(City.getCitiesOfState(selectedCountry?.isoCode, value));
-    form.setFieldsValue({ city: undefined });
+
+    // State অনুযায়ী cities fetch
+    const stateCities =
+      City.getCitiesOfState(selectedCountry?.isoCode, value) || [];
+    setCities(stateCities);
+
+    // যদি কোনো city না থাকে
+    if (!stateCities.length) {
+      setSelectedCity(null);
+      form.setFieldsValue({ city: undefined });
+    } else {
+      setSelectedCity(null);
+      form.setFieldsValue({ city: undefined });
+    }
   };
 
   const handleCityChange = (value) => {
@@ -92,31 +121,59 @@ const EditNewBusiness = () => {
   const handleSubmit = async (values) => {
     const id = businessId;
     const user = businessDetails?.data?.business?.user;
+    const oldData = businessDetails?.data?.business;
+
+    setLoading(true);
 
     try {
       const formData = new FormData();
 
-      fileList.forEach((file) => {
-        formData.append("business_image", file.originFileObj);
-      });
+      if (fileList.length > 0 && fileList[0].originFileObj) {
+        formData.append("business_image", fileList[0].originFileObj);
+      }
 
-      formData.append("title", values?.title || "");
-      formData.append("country", selectedCountry?.isoCode);
-      formData.append("countryName", selectedCountry?.name);
+      const appendIfChanged = (key, newValue, oldValue) => {
+        if (
+          newValue !== undefined &&
+          newValue !== null &&
+          newValue !== "" &&
+          newValue !== oldValue
+        ) {
+          formData.append(key, newValue);
+        }
+      };
 
-      formData.append("state", selectedState?.name);
+      appendIfChanged("title", values?.title, oldData?.title);
+      appendIfChanged("country", selectedCountry?.isoCode, oldData?.country);
+      appendIfChanged(
+        "countryName",
+        selectedCountry?.name,
+        oldData?.countryName
+      );
+      appendIfChanged("state", selectedState?.name, oldData?.state);
+      appendIfChanged("city", selectedCity?.name, oldData?.city);
+      appendIfChanged("category", values?.category, oldData?.category);
+      appendIfChanged("subCategory", values?.subCategory, oldData?.subCategory);
+      appendIfChanged("askingPrice", values?.askingPrice, oldData?.askingPrice);
+      appendIfChanged(
+        "businessType",
+        values?.businessType,
+        oldData?.businessType
+      );
+      appendIfChanged("price", values?.price, oldData?.price);
+      appendIfChanged(
+        "ownerShipType",
+        values?.ownerShipType,
+        oldData?.ownerShipType
+      );
+      appendIfChanged("reason", values?.reason, oldData?.reason);
+      appendIfChanged("description", content, oldData?.description);
 
-      formData.append("city", selectedCity?.name);
-      formData.append("category", values?.category || "");
-      formData.append("subCategory", values?.subCategory || "");
-
-      // formData.append("location", values?.location || "");
-      formData.append("askingPrice", values?.askingPrice || "");
-      formData.append("businessType", values?.businessType || "");
-      formData.append("price", values?.price || "");
-      formData.append("ownerShipType", values?.ownerShipType || "");
-      formData.append("reason", values?.reason || "");
-      formData.append("description", content || "");
+      if ([...formData.keys()].length === 0) {
+        message.info("No changes detected!");
+        setLoading(false);
+        return;
+      }
 
       const res = await updateSingleData({
         formData,
@@ -127,11 +184,13 @@ const EditNewBusiness = () => {
       if (res?.data?.success) {
         message.success(res.data.message);
       } else {
-        message.error(res?.data?.error);
+        message.error(res?.data?.error || "Update failed!");
       }
     } catch (error) {
       console.error("Update Error:", error);
       message.error(error?.response?.data?.error || "Update failed!");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -171,13 +230,38 @@ const EditNewBusiness = () => {
   useEffect(() => {
     if (businessDetails?.data) {
       const data = businessDetails?.data?.business;
+
+      // Country set
+      const country = countries.find((c) => c.isoCode === data?.country);
+      setSelectedCountry(country);
+
+      const countryStates = State.getStatesOfCountry(data?.country) || [];
+      setStates(countryStates);
+
+      let stateName = null;
+      let cityName = null;
+
+      if (countryStates.length) {
+        const state = countryStates.find((s) => s.name === data?.state);
+        setSelectedState(state);
+        stateName = state?.name || null;
+
+        const stateCities =
+          City.getCitiesOfState(data?.country, state?.isoCode) || [];
+        setCities(stateCities);
+
+        const city = stateCities.find((c) => c.name === data?.city);
+        setSelectedCity(city);
+        cityName = city?.name || null;
+      }
+
       form.setFieldsValue({
-        city: data?.city,
-        state: data?.state,
+        country: data?.country,
+        state: stateName,
+        city: cityName,
         title: data?.title,
         category: data?.category,
         subCategory: data?.subCategory,
-        country: data?.country,
         askingPrice: data?.askingPrice,
         ownerShipType: data?.ownerShipType,
         businessType: data?.businessType,
@@ -198,7 +282,7 @@ const EditNewBusiness = () => {
         ]);
       }
     }
-  }, [businessDetails, form]);
+  }, [businessDetails, countries, form]);
 
   useEffect(() => {
     if (categorie?.data?.length) {
@@ -221,15 +305,24 @@ const EditNewBusiness = () => {
               fileList={fileList}
               onChange={onChange}
               onPreview={onPreview}
-              multiple={true}
+              multiple={false}
+              maxCount={1}
+              accept=".png,.jpg,.jpeg"
+              beforeUpload={() => false} // prevent auto upload
             >
-              <p className="text-4xl">
-                <InboxOutlined />
-              </p>
-
-              <p>Click or drag file Max 1 MB Only PNG and JPG</p>
-
-              {fileList.length < 1 && "+ Upload"}
+              {fileList.length === 0 && (
+                <div>
+                  <p className="text-4xl text-blue-500">
+                    <InboxOutlined />
+                  </p>
+                  <p className="text-gray-600 text-sm mt-2">
+                    Click or drag file <br /> Max 1 MB — Only PNG & JPG
+                  </p>
+                  <span className="text-blue-500 font-semibold mt-1 inline-block">
+                    + Upload
+                  </span>
+                </div>
+              )}
             </Upload>
           </Form.Item>
           <div className=" ">
@@ -361,25 +454,6 @@ const EditNewBusiness = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* <Form.Item
-              label="Location"
-              name="location"
-              rules={[{ required: true, message: "Please input Location!" }]}
-            >
-              <Select
-                style={{ height: "48px" }}
-                placeholder="Select Location"
-                className="w-full"
-              >
-                <Option value="">Select</Option>
-                <Option value="Dubai">Dubai</Option>
-                <Option value="Sharjah">Sharjah</Option>
-                <Option value="Ajman">Ajman</Option>
-                <Option value="Umm Ai-Quwain">Umm Ai-Quwain</Option>
-                <Option value="Fujairah">Fujairah</Option>
-                <Option value="Ras Ai Khaimah">Ras Ai Khaimah</Option>
-              </Select>
-            </Form.Item> */}
             <Form.Item
               label="Asking Price"
               name="askingPrice"
@@ -465,17 +539,25 @@ const EditNewBusiness = () => {
             tabIndex={1}
             onBlur={(newContent) => setContent(newContent)}
           />
-          <div className="mt-2">
-            Note: Write your description like you’re telling a success story.
-            Focus on what makes your business valuable and exciting for buyers.
-          </div>
+
           <Form.Item className=" pt-3">
             <button
-              type="primary"
-              htmlType="submit"
-              className="px-11 bg-[#0091FF] text-white py-2"
+              className={`w-[200px] py-3 rounded text-white flex justify-center items-center gap-2 transition-all duration-300 ${
+                loading
+                  ? "bg-blue-400 cursor-not-allowed"
+                  : "bg-[#3b82f6] hover:bg-blue-500"
+              }`}
+              type="submit"
+              disabled={loading}
             >
-              Save
+              {loading ? (
+                <>
+                  <Spin size="small" />
+                  <span>Submitting...</span>
+                </>
+              ) : (
+                "Update"
+              )}
             </button>
           </Form.Item>
         </Form>

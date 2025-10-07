@@ -1,7 +1,8 @@
-import { Button, Form, message, Select, Space } from "antd";
+import { Button, Form, message, Select, Space, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import { usePostScheduleMutation } from "../redux/api/metaApi";
 import { useGetProfileQuery } from "../redux/api/userApi";
+import { useState } from "react";
 const { Option } = Select;
 
 const businessCategories = [
@@ -41,6 +42,7 @@ const sortOptions = [
 ];
 
 const SchedualeCall = () => {
+   const [loading, setLoading] = useState(false);
     const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
      const userId = profileData?.data?._id;
   const user = JSON.parse(localStorage.getItem("user"));
@@ -61,14 +63,16 @@ const SchedualeCall = () => {
       topic: values?.meetingTopic,
       note: values?.notes || "",
     };
-
+setLoading(true);
     try {
       const res = await addSchedule(data).unwrap();
 
       message.success(res?.message);
+      setLoading(false);
       form.resetFields();
     } catch (error) {
       console.error(error);
+      setLoading(false);
       message.error(error?.data?.message || "Failed to schedule call.");
     }
   };
@@ -218,12 +222,24 @@ const SchedualeCall = () => {
         </Form.Item>
 
         <Form.Item className="col-span-2">
-          <Button
-            htmlType="submit"
-            className="bg-[#0091FF] text-white font-bold py-6 px-6 rounded-md"
-          >
-            Request A Call
-          </Button>
+            <button
+                    className={`w-[200px] py-3 rounded text-white flex justify-center items-center gap-2 transition-all duration-300 ${
+                      loading
+                        ? "bg-blue-400 cursor-not-allowed"
+                        : "bg-[#3b82f6] hover:bg-blue-500"
+                    }`}
+                    type="submit"
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <>
+                        <Spin size="small" />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      "Request A Call"
+                    )}
+                  </button>
         </Form.Item>
       </Form>
     </div>

@@ -12,7 +12,10 @@ import {
 import ReactPhoneInput from "react-phone-input-2";
 import { UploadOutlined } from "@ant-design/icons";
 import { User, DollarSign } from "lucide-react";
-import { useAddBusinessValuationMutation, useGetCategtoryQuery } from "../redux/api/businessApi";
+import {
+  useAddBusinessValuationMutation,
+  useGetCategtoryQuery,
+} from "../redux/api/businessApi";
 import { useNavigate } from "react-router-dom";
 import { Country } from "country-state-city";
 
@@ -57,11 +60,12 @@ export default function BusinessValuationForm() {
 
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
-    const category = categorie?.data?.find((cat) => cat?.categoryName === value);
+    const category = categorie?.data?.find(
+      (cat) => cat?.categoryName === value
+    );
     setSubCategories(category?.subCategories || []);
     form.setFieldsValue({ subCategory: null });
   };
-
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -259,9 +263,7 @@ export default function BusinessValuationForm() {
           <Form.Item
             label="Buisiness Type"
             name="businessType"
-            rules={[
-              { required: true, message: "Please input business Type!" },
-            ]}
+            rules={[{ required: true, message: "Please input business Type!" }]}
           >
             <Select
               style={{ height: "48px" }}
@@ -277,7 +279,6 @@ export default function BusinessValuationForm() {
               <Option value="Other">Other</Option>
             </Select>
           </Form.Item>
-
         </div>
 
         <div className="md:grid grid-cols-2 gap-4">
@@ -379,14 +380,30 @@ export default function BusinessValuationForm() {
           <Select style={{ height: "48px" }} placeholder="Select Purpose">
             <Option value="Selling My Business">Selling My Business</Option>
             <Option value="europBuying a Businesse">Buying a Business</Option>
-            <Option value="Attracting Investors / Raising Capital">Attracting Investors / Raising Capital</Option>
-            <Option value="Business Loan or Financing Requirement">Business Loan or Financing Requirement</Option>
-            <Option value="Mergers & Acquisitions (M&A)">Mergers & Acquisitions (M&A)</Option>
-            <Option value="Partnership Buy-In / Buy-Out">Partnership Buy-In / Buy-Out</Option>
-            <Option value="Legal or Compliance Requirement">Legal or Compliance Requirement</Option>
-            <Option value="Tax or Accounting Purposes">Tax or Accounting Purposes</Option>
-            <Option value="Succession or Exit Planning">Succession or Exit Planning</Option>
-            <Option value="General Business Valuation / Market Worth">General Business Valuation / Market Worth</Option>
+            <Option value="Attracting Investors / Raising Capital">
+              Attracting Investors / Raising Capital
+            </Option>
+            <Option value="Business Loan or Financing Requirement">
+              Business Loan or Financing Requirement
+            </Option>
+            <Option value="Mergers & Acquisitions (M&A)">
+              Mergers & Acquisitions (M&A)
+            </Option>
+            <Option value="Partnership Buy-In / Buy-Out">
+              Partnership Buy-In / Buy-Out
+            </Option>
+            <Option value="Legal or Compliance Requirement">
+              Legal or Compliance Requirement
+            </Option>
+            <Option value="Tax or Accounting Purposes">
+              Tax or Accounting Purposes
+            </Option>
+            <Option value="Succession or Exit Planning">
+              Succession or Exit Planning
+            </Option>
+            <Option value="General Business Valuation / Market Worth">
+              General Business Valuation / Market Worth
+            </Option>
           </Select>
         </Form.Item>
 
@@ -562,11 +579,22 @@ export default function BusinessValuationForm() {
 
         <Form.Item>
           <button
+            className={`w-[200px] py-3 rounded text-white flex justify-center items-center gap-2 transition-all duration-300 ${
+              loading
+                ? "bg-blue-400 cursor-not-allowed"
+                : "bg-[#3b82f6] hover:bg-blue-500"
+            }`}
             type="submit"
-            className="w-full mt-8 py-2 bg-[#0091FF] text-white rounded "
             disabled={loading}
           >
-            {loading ? <Spin size="small" /> : "Submit"}
+            {loading ? (
+              <>
+                <Spin size="small" />
+                <span>Submitting...</span>
+              </>
+            ) : (
+              "Submit"
+            )}
           </button>
         </Form.Item>
       </Form>

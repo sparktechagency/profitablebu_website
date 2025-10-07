@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Col, Form, Input, Row } from 'antd';
+import { Button, Card, Col, Form, Input, Row, Spin } from 'antd';
 import loginImg from './login.png';
 import { Typography, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ function NewPassword() {
    useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const [loading, setLoading] = useState(false);
   const[newPasseord] = useResetPasswordMutation()
   const navigate = useNavigate();
   const [newPassword, setNewPassword] = useState('');
@@ -38,19 +39,22 @@ function NewPassword() {
       newPassword,
       confirmPassword,
     };
-
+  setLoading(true);
   try {
     const res = await newPasseord(data).unwrap();
 
     if (res?.success) {
       message.success(res?.message);
+      setLoading(false);
       localStorage.removeItem('email');
       navigate('/auth/login');
     } else {
       message.error(res?.message || 'Failed to update password');
+      setLoading(false);
     }
   } catch (error) {
     message.error(error?.data?.message );
+    setLoading(false);
   }
 };
 
@@ -140,21 +144,24 @@ function NewPassword() {
                 </Form.Item>
 
                 <Form.Item>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    block
-                    style={{
-                      height: '48px',
-                      background: '#3b82f6',
-                      borderColor: '#3b82f6',
-                      // borderRadius: '8px',
-                      fontSize: '16px',
-                      fontWeight: 500,
-                    }}
+                   <button
+                    className={`w-full py-3 rounded text-white flex justify-center items-center gap-2 transition-all duration-300 ${
+                      loading
+                        ? "bg-blue-400 cursor-not-allowed"
+                        : "bg-[#3b82f6] hover:bg-blue-500"
+                    }`}
+                    type="submit"
+                    disabled={loading}
                   >
-                    Update Password
-                  </Button>
+                    {loading ? (
+                      <>
+                        <Spin size="small" />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      "Update Password"
+                    )}
+                  </button>
                 </Form.Item>
               </Form>
             </div>

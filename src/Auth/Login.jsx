@@ -11,6 +11,7 @@ import {
   Divider,
   message,
   Select,
+  Spin,
 } from "antd";
 import { ArrowLeft } from "lucide-react";
 import loginImg from "./login.png";
@@ -21,10 +22,11 @@ import { auth } from "./firebase";
 const { Title, Text } = Typography;
 
 export default function Login() {
-   useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
   const [loginUser] = useLoginUserMutation();
   const location = useLocation();
   const navigate = useNavigate();
@@ -32,24 +34,24 @@ export default function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const onFinish = async (values) => {
- 
-     const data = {
-    ...values,
-    email: values.email.toLowerCase(), 
-  };
-  
+    const data = {
+      ...values,
+      email: values.email.toLowerCase(),
+    };
+    setLoading(true);
     try {
       const res = await loginUser(data).unwrap();
 
       if (res?.success) {
         message.success(res?.message);
-
+        setLoading(false);
         localStorage.setItem("accessToken", res.data.accessToken);
         localStorage.setItem("user", JSON.stringify(res.data.user));
         navigate("/");
         window.location.reload();
       }
     } catch (err) {
+      setLoading(false);
       console.error(err);
       message.error(err?.data?.message || "Login failed");
     }
@@ -61,15 +63,9 @@ export default function Login() {
   }, [location?.state, form]);
 
   const handleGoogleLogin = () => {
-
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider).then(async (result) => {
-    
-      
-    });
+    signInWithPopup(auth, provider).then(async (result) => {});
   };
-
- 
 
   return (
     <div className="relative flex items-center justify-center md:p-20 p-4">
@@ -150,7 +146,6 @@ export default function Login() {
                   <Input
                     className="py-3"
                     placeholder="your_email@example.com"
-                    
                   />
                 </Form.Item>
 
@@ -214,18 +209,26 @@ export default function Login() {
                 </Row>
 
                 <Form.Item>
-                  <Button
-                    style={{ height: "48px" }}
-                    type="primary"
-                    htmlType="submit"
-                    block
+                  <button
+                    className={`w-full py-3 rounded text-white flex justify-center items-center gap-2 transition-all duration-300 ${
+                      loading
+                        ? "bg-blue-400 cursor-not-allowed"
+                        : "bg-[#3b82f6] hover:bg-blue-500"
+                    }`}
+                    type="submit"
+                    disabled={loading}
                   >
-                    Log In
-                  </Button>
+                    {loading ? (
+                      <>
+                        <Spin size="small" />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      "Log In"
+                    )}
+                  </button>
                 </Form.Item>
               </Form>
-
-            
 
               <Text
                 style={{

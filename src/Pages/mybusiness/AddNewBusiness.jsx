@@ -6,6 +6,7 @@ import {
   Input,
   message,
   Select,
+  Spin,
   Upload,
 } from "antd";
 const { Option } = Select;
@@ -32,7 +33,6 @@ const props = {
   onChange(info) {
     const { status } = info.file;
     if (status !== "uploading") {
-
     }
     if (status === "done") {
       message.success(`${info.file.name} file uploaded successfully.`);
@@ -40,18 +40,17 @@ const props = {
       message.error(`${info.file.name} file upload failed.`);
     }
   },
-  onDrop(e) {
-
-  },
+  onDrop(e) {},
 };
 const AddNewBusiness = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const [loading, setLoading] = useState(false);
   const { data: categorie, isLoading, isError } = useGetCategtoryQuery();
   const [addBusiness] = useAddBusinessMutation();
   const { data: profileData, isLoading: profileLoading } = useGetProfileQuery();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const role = profileData?.data?.role;
   const editor = useRef(null);
   const [fileList, setFileList] = useState([]);
@@ -75,7 +74,9 @@ const AddNewBusiness = () => {
 
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
-    const category = categorie?.data?.find((cat) => cat?.categoryName === value);
+    const category = categorie?.data?.find(
+      (cat) => cat?.categoryName === value
+    );
     setSubCategories(category?.subCategories || []);
     form.setFieldsValue({ subCategory: null });
   };
@@ -120,8 +121,7 @@ const AddNewBusiness = () => {
     imgWindow?.document.write(image.outerHTML);
   };
   const handleSubmit = async (values) => {
-
-
+    setLoading(true);
     try {
       const formData = new FormData();
 
@@ -149,23 +149,23 @@ const AddNewBusiness = () => {
       formData.append("description", content);
       const res = await addBusiness(formData);
 
-
       if (res.data?.message) {
         message.success(res.data?.message);
+        setLoading(false);
         navigate("/myBusiness/details");
       } else {
         message.error(res?.error?.data?.message);
+        setLoading(false);
       }
     } catch (errr) {
-
+      setLoading(false);
       message.error(errr?.data?.message);
     }
   };
   let placeholderText = "";
 
   if (role === "Seller") {
-    placeholderText =
-      `
+    placeholderText = `
 ❌ Don’ts (What NOT to Include)<br><br>
 - Company name in title or description<br>
 - Personal contact details (phone, email, WhatsApp, website, etc.)<br>
@@ -178,11 +178,8 @@ const AddNewBusiness = () => {
 - Growth opportunities (expansion potential, new markets)<br>
 - Business assets included (equipment, licenses, IP, inventory)<br><br>
 💡 Tip: Write your description like you’re telling a success story. Focus on what makes your business valuable and exciting for buyers.`;
-  }
-
-  else if (role === "Business Idea Lister") {
-    placeholderText =
-      `
+  } else if (role === "Business Idea Lister") {
+    placeholderText = `
 ❌ Don’ts (What NOT to Include)<br><br>
 - Do not add personal contact details (phone, email, WhatsApp, website, etc.)<br>
 - Do not share sensitive or confidential information<br>
@@ -198,11 +195,8 @@ const AddNewBusiness = () => {
 - Specify what kind of investor/support/capital you are looking for<br>
 - Optional: Add market research, pitch deck, or visuals<br><br>
 💡 Tip: Present your idea like a story — highlight the opportunity, show its potential, and explain why investors should get excited about it.`;
-  }
-
-  else if (role === "Broker") {
-    placeholderText =
-      `
+  } else if (role === "Broker") {
+    placeholderText = `
 ❌ Don’ts (What NOT to Do)<br><br>
 - Do not list businesses without the owner’s permission<br>
 - Do not add your agency’s personal contact details<br>
@@ -218,11 +212,8 @@ const AddNewBusiness = () => {
 - Use the right industry/category<br>
 - Keep listings updated<br><br>
 💡 Tip for Brokers: Quality and transparency attract serious buyers.`;
-  }
-
-  else if (role === "Franchise Seller" || role === "Francise Seller") {
-    placeholderText =
-      `
+  } else if (role === "Franchise Seller" || role === "Francise Seller") {
+    placeholderText = `
 ❌ Don’ts (What NOT to Do)<br><br>
 - Do not include personal contact details<br>
 - Do not provide misleading or exaggerated financial promises<br>
@@ -239,11 +230,8 @@ const AddNewBusiness = () => {
 - Share franchisee requirements<br>
 - Include growth opportunities<br><br>
 💡 Tip: Showcase your franchise’s strengths and support systems to attract quality franchisees.`;
-  }
-
-  else if (role === "Asset Seller") {
-    placeholderText =
-      `
+  } else if (role === "Asset Seller") {
+    placeholderText = `
 ❌ Don’ts (What NOT to Do)<br><br>
 - Do not include personal contact details<br>
 - Do not post assets you do not legally own<br>
@@ -287,8 +275,6 @@ const AddNewBusiness = () => {
     }
   }, [categorie]);
 
-
-
   return (
     <div className="container m-auto lg:mt-8 mt-16 lg:px-0 px-4 pb-20 ">
       <Navigate title={"Add New Business Information"}></Navigate>
@@ -304,14 +290,21 @@ const AddNewBusiness = () => {
               multiple={false}
               maxCount={1}
               accept=".png,.jpg,.jpeg"
+              beforeUpload={() => false} // prevent auto upload
             >
-              <p className="text-4xl">
-                <InboxOutlined />
-              </p>
-
-              <p>Click or drag file Max 1 MB Only PNG and JPG</p>
-
-              {fileList.length < 1 && "+ Upload"}
+              {fileList.length === 0 && (
+                <div>
+                  <p className="text-4xl text-blue-500">
+                    <InboxOutlined />
+                  </p>
+                  <p className="text-gray-600 text-sm mt-2">
+                    Click or drag file <br /> Max 1 MB — Only PNG & JPG
+                  </p>
+                  <span className="text-blue-500 font-semibold mt-1 inline-block">
+                    + Upload
+                  </span>
+                </div>
+              )}
             </Upload>
           </Form.Item>
           <div className=" ">
@@ -443,7 +436,6 @@ const AddNewBusiness = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
             <Form.Item
               label="Asking Price"
               name="askingPrice"
@@ -517,7 +509,12 @@ const AddNewBusiness = () => {
             </Form.Item>
           </div>
 
-          <Form.Item  label={role === "Business Idea Lister" ? "Reason" : "Reason for Selling"} name="reason">
+          <Form.Item
+            label={
+              role === "Business Idea Lister" ? "Reason" : "Reason for Selling"
+            }
+            name="reason"
+          >
             <Input
               className="w-full bg-transparent py-3"
               placeholder="Engine Model"
@@ -534,11 +531,22 @@ const AddNewBusiness = () => {
 
           <Form.Item className=" pt-3">
             <button
-              type="primary"
-              htmlType="submit"
-              className="px-11 bg-[#0091FF] text-white py-2"
+              className={`w-[200px] py-3 rounded text-white flex justify-center items-center gap-2 transition-all duration-300 ${
+                loading
+                  ? "bg-blue-400 cursor-not-allowed"
+                  : "bg-[#3b82f6] hover:bg-blue-500"
+              }`}
+              type="submit"
+              disabled={loading}
             >
-              Save
+              {loading ? (
+                <>
+                  <Spin size="small" />
+                  <span>Submitting...</span>
+                </>
+              ) : (
+                "Submit"
+              )}
             </button>
           </Form.Item>
         </Form>
