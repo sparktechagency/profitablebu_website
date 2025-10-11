@@ -62,10 +62,7 @@ export default function Login() {
     }
   }, [location?.state, form]);
 
-  const handleGoogleLogin = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider).then(async (result) => {});
-  };
+
 
   return (
     <div className="relative flex items-center justify-center md:p-20 p-4">

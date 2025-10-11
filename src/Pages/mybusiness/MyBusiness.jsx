@@ -48,7 +48,7 @@ const MyBusiness = () => {
     // Check if the item is a business card (has businessId) or a sold card
     const isBusinessCard = item?.businessId;
 
-    // For Broker: Render both business and sold cards based on item structure
+    
     if (role === "Broker") {
       if (isBusinessCard) {
         // Business card for Broker

@@ -85,7 +85,9 @@ export default function AdvanceSearch() {
 
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
-    const category = categorie?.data?.find((cat) => cat?.categoryName === value);
+    const category = categorie?.data?.find(
+      (cat) => cat?.categoryName === value
+    );
     setSubCategories(category?.subCategories || []);
     form.setFieldsValue({ subCategory: null });
   };
@@ -183,7 +185,11 @@ export default function AdvanceSearch() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-4">
-          <Form.Item label="Select Your Country" name="country">
+          <Form.Item
+            label="Select Your Country"
+            name="country"
+            rules={[{ required: true, message: "Please select your country!" }]}
+          >
             <Select
               placeholder="Select your country"
               style={{ height: "48px" }}
@@ -191,6 +197,9 @@ export default function AdvanceSearch() {
               allowClear
               onChange={handleCountryChange}
               optionLabelProp="label"
+              filterOption={(input, option) =>
+                option?.label?.toLowerCase().includes(input.toLowerCase())
+              }
             >
               {countries?.map((country) => (
                 <Select.Option
@@ -259,7 +268,11 @@ export default function AdvanceSearch() {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Business Type" name="businessType" className="col-span-2">
+        <Form.Item
+          label="Business Type"
+          name="businessType"
+          className="col-span-2"
+        >
           <Select
             placeholder="Select One"
             allowClear

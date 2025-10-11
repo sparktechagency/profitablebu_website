@@ -364,39 +364,40 @@ const AddNewBusiness = () => {
 
           <div className="grid md:grid-cols-3 gap-4">
             {/* Country */}
-            <Form.Item
-              label="Select Your Country"
-              name="country"
-              rules={[
-                { required: true, message: "Please select your country!" },
-              ]}
-            >
-              <Select
-                placeholder="Select your country"
-                style={{ height: "48px" }}
-                showSearch
-                allowClear
-                onChange={handleCountryChange}
-                optionLabelProp="label"
-              >
-                {countries?.map((country) => (
-                  <Select.Option
-                    key={country?.isoCode}
-                    value={country?.isoCode}
-                    label={country?.name}
-                  >
-                    <div className="flex items-center gap-2">
-                      <img
-                        src={`https://flagcdn.com/w20/${country?.isoCode.toLowerCase()}.png`}
-                        alt={country?.name}
-                        className="w-5 h-3 object-cover"
-                      />
-                      {country?.name}
-                    </div>
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
+           <Form.Item
+  label="Select Your Country"
+  name="country"
+  rules={[{ required: true, message: "Please select your country!" }]}
+>
+  <Select
+    placeholder="Select your country"
+    style={{ height: "48px" }}
+    showSearch
+    allowClear
+    onChange={handleCountryChange}
+    optionLabelProp="label"
+    filterOption={(input, option) =>
+      option?.label?.toLowerCase().includes(input.toLowerCase())
+    }
+  >
+    {countries?.map((country) => (
+      <Select.Option
+        key={country?.isoCode}
+        value={country?.isoCode}
+        label={country?.name}
+      >
+        <div className="flex items-center gap-2">
+          <img
+            src={`https://flagcdn.com/w20/${country?.isoCode.toLowerCase()}.png`}
+            alt={country?.name}
+            className="w-5 h-3 object-cover"
+          />
+          {country?.name}
+        </div>
+      </Select.Option>
+    ))}
+  </Select>
+</Form.Item>
 
             {/* State */}
             <Form.Item label="Select State" name="state">

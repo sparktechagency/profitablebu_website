@@ -7,8 +7,7 @@ import {
 } from "@ant-design/icons";
 import {
   Button,
-  Input,
-  Select,
+
   Collapse,
   Card,
   Checkbox,
@@ -26,45 +25,6 @@ import { City, Country, State } from "country-state-city";
 import { Menu, X } from "lucide-react";
 
 const { Panel } = Collapse;
-const { Option } = Select;
-
-const businessCategories = [
-  "Restaurant",
-  "Retail",
-  "E-commerce",
-  "Franchise",
-  "Services",
-  "Manufacturing",
-  "Health & Beauty",
-  "Education",
-  "Automotive",
-  "Other",
-];
-
-// const region = [
-//   "Africa",
-//   "Asia",
-//   "Central America",
-//   "Europe",
-//   "Middle East",
-//   "North America",
-//   "Pacific",
-//   "Rest Of The World / Other",
-//   "South America",
-// ];
-
-const country = [
-  "United States",
-  "United Kingdom",
-  "Canada",
-  "Australia",
-  "Germany",
-  "Franch",
-  "Italy",
-  "Spain",
-  "United Arab Emirates",
-  "India",
-];
 
 const location = [
   "Dubai",
@@ -93,11 +53,7 @@ const businessType = [
   "Other",
 ];
 
-// <Option value="Franchise">Franchise</Option>
-//                 <Option value="Independent">Independent</Option>
-//                 <Option value="Startup">Startup</Option>
-//                 <Option value="Home-Based">Home-Based</Option>
-//                 <Option value="Online">Online</Option>
+
 
 const ownerShipType = [
   "Sole Proprietorship",

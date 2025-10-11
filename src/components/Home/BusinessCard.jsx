@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import backCard from "../../assets/Home/ii.png";
-import card from "../../assets/Home/card1.png"; // fallback image
+import card from "../../assets/Home/card1.png"; 
 import {
   useGetAllBusinessHomeQuery,
   useGetAllBusinessMostViewQuery,
